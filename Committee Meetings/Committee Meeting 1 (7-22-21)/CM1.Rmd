@@ -1,0 +1,236 @@
+---
+title: 'Committee Meeting #1'
+author: "Alison Kleffner"
+date: "7/22/2021"
+output: 
+  beamer_presentation:
+    theme: "PaloAlto"
+    colortheme: "orchid"
+    fonttheme: "structurebold"
+    slide_level: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+```
+
+### Committee Meeting Agenda 
+
+* Approve Paperwork
+* Update on what I have done so far
+* Discussion on Future Work
+
+### Project 1: Arctic Sea Ice Feature Detection
+
+
+```{r, echo=FALSE,out.width="60%", out.height="40%",fig.cap="Figures of Ice Cracks",fig.show='hold',fig.align='center'}
+library(knitr)
+
+knitr::include_graphics(c("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/Ice Chunk.png","C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/Ice Pic.png"))
+
+``` 
+
+
+
+
+
+### Motivation
++ What are We trying to Do?
+  - Develop a method to determine where possible Ice Cracks may form
++ Data Given
+  - Gpid: Identify of part of ice chunk
+  - Location of gpids (x/y)
+  - Observation Time: Have 22 days worth of data
+  - k: image index (sometimes will have multiple observations for a gpid on a day)
+  
+### Sea Ice Motion Animation
+
+```{r, echo=FALSE,out.width="50%", out.height="30%",fig.cap="Ice Motion",fig.show='hold',fig.align='center'}
+
+knitr::include_graphics(c("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/day1.png","C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/day11.png","C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/day16.png","C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/day19.png"))
+
+``` 
+
+
+### Explanation of Problem
+
+```{r trajectories, echo=FALSE, message=FALSE, cache=TRUE}
+library(fields)
+library(tidyverse)
+library(crosstalk)
+library(plotly)
+
+datn = read.delim("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/ice-features/Code/Data/lagrange_n.dat",sep="")
+gpidn = unique(datn[,1]) #3364
+colnames(datn) <- c("gpid","k","obs_time","xmap","ymap")
+datn["location"] <- rep("n", 51926)
+dato = read.delim("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/ice-features/Code/Data/lagrange_o.dat",sep="")
+gpido = unique(dato[,1]) #1941
+colnames(dato) <- c("gpid","k","obs_time","xmap","ymap")
+dato["location"] <- rep("o", 26106)
+datp = read.delim("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/ice-features/Code/Data/lagrange_p.dat",sep="")
+gpidp = unique(datp[,1]) #2034
+colnames(datp) <- c("gpid","k","obs_time","xmap","ymap")
+datp["location"] <- rep("p", 26382)
+datq = read.delim("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/ice-features/Code/Data/lagrange_q.dat",sep="")
+gpidq = unique(datq[,1]) #1472
+colnames(datq) <- c("gpid","k","obs_time","xmap","ymap")
+datq["location"] <- rep("q", 21033)
+
+dat <- rbind(datn, dato, datp, datq)
+gpid=unique(dat[,1]) #8811
+n = length(gpid)
+dat$t = floor(dat$obs_time) 
+t = sort(unique(dat[,"t"]))
+dat_time = split(dat,dat[,"t"]) 
+tmp <- map2_df(dat_time, 1:length(dat_time), function(x, y) mutate(x, i = y))
+
+colnames(tmp) <- c("gpid", "k", "obs_time", "x", "y", "location", "t", "i")
+
+tmp2 <- tmp %>% highlight_key(~gpid)
+
+ggplot(tmp2, aes(x = x, y = y, group = gpid, 
+                      hoverinfo = NULL,
+                      color = factor(gpid %% 10))) + 
+  geom_path(arrow = arrow(length = unit(1, "mm")), alpha = .5) + 
+  scale_color_viridis_d()
+
+#ggplotly(p1, hoverInfo = "none") %>%
+ # animation_opts(1000, redraw = FALSE) %>%
+  #highlight(on = "plotly_hover", off = "plotly_doubleclick")
+
+
+
+```
+
+
+### Challenges
+
++ How gpids are laid out (can't use density-based clustering)
++ Missing chunks of data 
++ Only motion data is observed
++ Typical interpolation methods aren't suitable
+  - Non-smooth spatial process
+  - Nonstationarity due to ice moving as patches. 
+
+### Proposed Method
+
++ Cluster similar trajectories to identify patches of ice
++ Create polygon labels in order to get consistent membership over time
++ Space-time interpolation within each ice pack where ice movements are similar. 
+
+
+### Clustering with Bounding Box
+
++ Included in Bounding Box
+  - Min/Max Latitude
+  - Min/Max Longitude
+  - Length of Latitude
+  - Length of Longitude
+  - Angle/Direction Moved
++ Use the features of the bounding box as inputs into KMeans Clustering
+  - The boundaries of each cluster would be where the ice crack forms
+  - The number of clusters was determined using the silhouette statistic 
+
+
+### Clustering at 1 time point using all available days to Create Bounding Box
+
+
+```{r clustering_at_51, echo=FALSE, message=FALSE, cache=TRUE}
+bbox_summary <- function(df) {
+  # Function takes data frame with k, xmap, ymap
+  # and returns a bounding box and trajectory
+  df <- arrange(df, k) # sort by k
+  df %>%
+    summarize(
+      x = mean(xmap), y = mean(ymap),
+      xmin = min(xmap), xmax = max(xmap),
+      ymin = min(ymap), ymax = max(ymap),
+      xbox = xmax - xmin,
+      ybox = ymax - ymin,
+      dx = xmap[n()] - xmap[1],
+      dy = ymap[n()] - ymap[1],
+      angle = atan2(dy, dx),
+      kmin = min(k),
+      kmax = max(k),
+      npts = n(),
+    )
+}
+
+tmp_features<- tmp %>% 
+  tidyr::nest(data = -gpid) %>% 
+  mutate(summary = map(data, bbox_summary)) %>%
+  unnest(summary)
+#Standardize Variables
+data_scale = data.frame(scale(tmp_features[,3:13]))
+
+names(data_scale) <- c("x_s", "y_s", "xmin_s", "xmax_s", "ymin_s", "ymax_s", "xbox_s", "ybox_s", "dx_s", "dy_s", "angle_s")
+
+tmp_features_s= data.frame(tmp_features, data_scale)
+tmp_features_s = tmp_features_s[,-c(3:13)]
+
+km= kmeans(select(tmp_features_s, c(x_s,y_s,xbox_s:angle_s)), 8, nstart=25)
+cluster_K = as.factor(km$cluster)
+
+tmp_features_km = data.frame(tmp_features_s, cluster_K)
+
+anim_plot_data <- tmp %>%
+  left_join(select(tmp_features_km, gpid, clust = cluster_K)) %>%
+  mutate(imputed = F) %>%
+  complete(crossing(gpid, t), fill = list(imputed = T)) %>%
+  ungroup() %>%
+  arrange(gpid, t) %>%
+  group_by(gpid) %>%
+  fill(xmap, ymap, matches("clust"), .direction = "downup") %>%
+  arrange(gpid)
+
+anim_plot_data51 <- filter(anim_plot_data, t==51)
+
+anim_plot <- anim_plot_data51 %>%
+  ggplot(aes(x = xmap, y = ymap, frame = t, group = gpid, ids = gpid,
+             color = clust, fill = clust, shape = imputed)) + 
+  geom_point() + 
+  scale_shape_manual("Imputed", values = c("FALSE" = 15, "TRUE" = 0)) + 
+  scale_color_viridis_d() + 
+  scale_fill_viridis_d() + ggtitle("KMeans Clustering at t=51")
+
+anim_plot
+
+
+```
+
+
+
+
+
+
+### Currently Working on: Interpolation
+
++ Want to be able to interpolate the missing x/y gpid information
+  - Challenges:
+    + When missing gpid information, missing it in chunks
+    + For spatial- temporal interpolation, in order to calculate the distance matrix, need latitude and longitude. 
++ Our Method: Use of Polygon Intersections
+  - Trying to Find Spatial and temporal neighbors and use these to interpolate onto a grid
+
+  
+### Interpolation Example  
+
+![Weekly Intersections of Polygons](C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/Intersections.png)
+  
+  
+
+
+### Next Steps: Finish Project 1
+
++ Finish Ice Features Project
+  - Now that I have found the Spatial-Temporal Neighbors, use these to interpolate the missing gpids (current)
+  - Interpolation Comparisons 
++ Create a pipeline so can become more automated (for example, if have more days)
+
+### Next Steps: Project 2
++ Next Project: User Interface and Decision Tool for Farmers to Make Trial Decisions. 
+  - Shiny app of report from Trial Planning
+  - Shiny app for analysis 
+

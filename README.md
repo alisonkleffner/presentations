@@ -1,1 +1,1 @@
-# presentations
+This repository contains any presentations that I have given while pursing my PhD in Statistics at the University of Nebraska at Lincoln
