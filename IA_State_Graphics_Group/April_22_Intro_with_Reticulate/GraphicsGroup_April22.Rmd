@@ -18,11 +18,14 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Outline
 
-- Overall Problem - building a Shiny App using both Python and R Scripts
+1. Overall Problem 
+  + Background Information
   + Why this application is being created
-  + Process of App Development
-  + Introduction to Reticulate and how configured with Shiny App
-- Show App and asking for feedback
+2. Process of App Development
+  + Creation of User Interface
+  + Replication of Python App with the Reticulate Package=
+  + Replication of R Markdown code
+3. Shiny App Walkthrough
   
 ---
 
@@ -30,7 +33,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 + Precision Agriculture research seeks to develop new strategies to increase crop yield and profitability [[Source]](https://sustainableamerica.org/blog/what-is-precision-agriculture/)
 
-+ Generally this is conducted through on-farm networks, which involves farmers conducting experiments under local conditions
++ Experiments on strategies can be conducted through on-farm networks, which involves farmers conducting experiments under local conditions
 
   - Generates site-specific data for crop yield for different inputs (think like treatments)
 
@@ -55,9 +58,19 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## End Goal
 
-+ Eventually hook my Shiny app up to their database and after harvest crop yields can be matched with the corresponding farm and it's design.
++ Eventually hook app up to their database and after harvest, crop yields can be matched with the corresponding farm and it's design.
 
-+ Then the data can begin to be analyzed (not my job), to hopefully aid in the development of strategies to increase profitability
++ Then the data can begin to be analyzed to hopefully aid in the development of strategies to increase profitability
+---
+
+## Outline of Developement Process
+
++ At first, goal was to Replicate a Python App already in use in Shiny
+  - Start be creating UI similar to Python app
+  - Connect R and Python
+  - Figure out how to run the Python files
+  - Find out later, best used for wheat field trials
++ Add R Markdown code to create design for corn/soybean trials
 
 ---
 
@@ -75,7 +88,7 @@ knitr::include_graphics("C:/Users/akleffner2/OneDrive - University of Nebraska-L
 
 ## Replicating Python App in Shiny - Setting up UI
 
-+ Set up App Structure
++ Setting up UI:
   - Create Leaflet map capability
   - Dialog Box for Inputs
 
@@ -127,7 +140,7 @@ If you are working on a project, you may want to create a python virtual environ
  - conda create --name [Virtual Environment Name] python=[Version you want to install]
  - conda activate [Virtual Environment Name]
  - load all necessary Python packages in here (conda install pkge)
-+ In R Studio, connect to Python
++ In R Studio, connect to Python Virtual Environment 
   + Tools -> Project Options -> Python -> Conda Environments
 + Check connection using: py_config()
 
@@ -211,15 +224,13 @@ knitr::include_graphics("C:/Users/akleffner2/OneDrive - University of Nebraska-L
 
 ---
 
-## Next Steps
+## Next Steps: App Beautification
 
-+ Work on File Downloads
-  - downloadHandler for Python code
-  - conditioning for ab-line shape files
 + Leaflet map for Corn/Soybean Code
 + Cleaning of Corn/Soybean Inputs
-+ Layout of maps when outputted
++ Layout of maps 
 + Testing to make sure code is working properly
++ Error handling for inputs 
 
 ---
 
