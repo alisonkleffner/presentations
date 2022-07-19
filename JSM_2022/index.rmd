@@ -1,7 +1,7 @@
 ---
-title: "Presentation Title"
-subtitle: "Event Name"
-author: "Author Name"
+title: "A Spatio-Temporal Model for Arctic Sea Ice"
+subtitle: "Joint Statistical Meetings, August 2022"
+author: "Alison KLeffner, Yawen Guan, Susan VanderPlas"
 date: "Department of Statistics, University of Nebraska - Lincoln"
 output:
   xaringan::moon_reader:
@@ -37,6 +37,10 @@ library(RefManageR)
 library(iconr)
 library(fontawesome)
 library(shiny)
+library(fields)
+library(crosstalk)
+library(plotly)
+library(bibtex)
 # download_fontawesome()
 
 # References
@@ -51,6 +55,7 @@ knitr::opts_chunk$set(echo = FALSE,
                       dpi = 300)
 options(htmltools.dir.version = FALSE)
 options(knitr.kable.NA = '')
+
 ```
 
 ```{r, include = F, eval = T, cache = T}
@@ -101,15 +106,15 @@ write("", file = "js-addins.html")
 ```
 
 <br><br><br>
-## Presentation Title
-### Event Name
-#### Presenter/Author name
+## A Spatio-Temporal Model for Arctic Sea Ice
+### Joint Statistical Meetings, August 2022
+#### Alison Kleffner, Yawen Guan, Susan VanderPlas
 #### Department of Statistics, University of Nebraska - Lincoln
-##### `r fa("envelope", fill = "black")` [email.address@huskers.unl.edu](email.address@huskers.unl.edu)
-##### `r fa("home", fill = "black")` [www.homepageurl.com](https://www.homepageurl.com/)
-##### `r fa("github", fill = "black")` [github-user-name](https://github.com/githubname)
+##### `r fa("envelope", fill = "black")` [akleffner@huskers.unl.edu](akleffner@huskers.unl.edu)
+##### `r fa("home", fill = "black")` [https://alison-kleffner.netlify.app/](https://alison-kleffner.netlify.app/)
+##### `r fa("github", fill = "black")` [alisonkleffner](https://github.com/alisonkleffner)
 <br><br>
-.medium[*Slides: https://bit.ly/slide-url*]
+.medium[*Slides: https://alisonkleffner.github.io/presentations/JSM_2022/index.html#1]
 
 ---
 class:primary
@@ -121,18 +126,67 @@ class:primary
 
 
 ---
-class:inverse
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-.center[
-# Inverse section slide
-]
+class: primary
+# Motivation 
+
++ Sea ice is frozen sea water in the Arctic Ocean that generally occurs as an ice pack which can drift over the oceans surface
++ Understanding ice dynamics plays a vital role in climate models
+  - Cracks, or leads, may form in the ice pack due to dynamic processes
+    + Allows for heat from the ocean to be transferred to the atmosphere - accounts for part of the heat flux between the ocean and the atmosphere `r Citep(bib[[c("schreyer_ice_2006")]])`. 
++ Other Ice Crack Detection Methods
+  - Generally involve the use of thermal images or deformation calculations found through satellite images
+    + Satellite images have drawbacks of being low in resolution and are effected by atmospheric conditions, thus may lead to inaccurate calculations
+
+  
+
+---
+class:primary
+# Trajectory Plot
+
+```{r traj-plot}
+
+datn = read.delim("data/lagrange_n.dat",sep="")
+gpidn = unique(datn[,1]) #3364
+colnames(datn) <- c("gpid","k","obs_time","xmap","ymap")
+datn["location"] <- rep("n", 51926)
+dato = read.delim("data/lagrange_o.dat",sep="")
+gpido = unique(dato[,1]) #1941
+colnames(dato) <- c("gpid","k","obs_time","xmap","ymap")
+dato["location"] <- rep("o", 26106)
+datp = read.delim("data/lagrange_p.dat",sep="")
+gpidp = unique(datp[,1]) #2034
+colnames(datp) <- c("gpid","k","obs_time","xmap","ymap")
+datp["location"] <- rep("p", 26382)
+datq = read.delim("data/lagrange_q.dat",sep="")
+gpidq = unique(datq[,1]) #1472
+colnames(datq) <- c("gpid","k","obs_time","xmap","ymap")
+datq["location"] <- rep("q", 21033)
+
+dat <- rbind(datn, dato, datp, datq)
+gpid=unique(dat[,1]) #8811
+n = length(gpid)
+dat$t = floor(dat$obs_time) 
+t = sort(unique(dat[,"t"]))
+dat_time = split(dat,dat[,"t"]) 
+tmp <- map2_df(dat_time, 1:length(dat_time), function(x, y) mutate(x, i = y))
+
+
+colnames(tmp) <- c("gpid", "k", "obs_time", "x", "y", "location", "t", "i") #Why did I do this?
+
+tmp2 <- tmp %>% highlight_key(~gpid)
+
+ggplot(tmp2, aes(x = x, y = y, group = gpid, 
+                      hoverinfo = NULL,
+                      color = factor(gpid %% 10))) + 
+  geom_path(arrow = arrow(length = unit(1, "mm")), alpha = .5) + 
+  scale_color_viridis_d()
+```
+
+---
+class:primary
+# Our Method
+
+
 
 ---
 class:primary
@@ -201,9 +255,10 @@ class:primary
 # References
 <font size="2">
 ```{r, print_refs1, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
-print(bib[[c("vonbergmann_2021")]], 
+print(bib[[c("schreyer_ice_2006")]], 
       .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
       )
+
 ```
 </font>
 
@@ -216,7 +271,7 @@ class:inverse
 # Questions?
 <br>
 <br>
-`r fa("envelope", fill = "white")` **email.address@huskers.unl.edu**
-`r fa("home", fill = "white")` **www.homepageurl.com**
-`r fa("github", fill = "white")` **github-user-name**
+`r fa("envelope", fill = "white")` **akleffner@huskers.unl.edu**
+`r fa("home", fill = "white")` **https://alison-kleffner.netlify.app**
+`r fa("github", fill = "white")` **alisonkleffner**
 ]
