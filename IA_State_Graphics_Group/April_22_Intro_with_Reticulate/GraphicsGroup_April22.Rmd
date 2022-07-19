@@ -76,11 +76,11 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Python App for Wheat Field Trials
 
-[Python App Trying to Replicate](http://trialdesign.difm-cig.org/demo)
+Trying to Replicate a previously made Python App (website no longer active)
 
 ```{r, echo=FALSE,out.width="90%", out.height="90%",fig.cap="Python App Output",fig.show='hold',fig.align='center'}
 
-knitr::include_graphics("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Pictures/Screenshots/Simplefield_py.png")
+knitr::include_graphics("images/Simplefield_py.png")
 
 ``` 
 
@@ -94,7 +94,7 @@ knitr::include_graphics("C:/Users/akleffner2/OneDrive - University of Nebraska-L
 
 ```{r, echo=FALSE,out.width="50%", out.height="90%",fig.cap="Initial App",fig.show='hold',fig.align='center'}
 
-knitr::include_graphics(c("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Pictures/Screenshots/TDS4.png","C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Pictures/Screenshots/TDS2.png"))
+knitr::include_graphics(c("images/TDS4.png","images/TDS2.png"))
 
 ``` 
 
@@ -179,7 +179,7 @@ result$create_field() #actual function to run (creates the field object)
 
 ```{r, echo=FALSE,out.width="100%", out.height="100%",fig.cap="Trial Design Output",fig.show='hold',fig.align='center'}
 
-knitr::include_graphics("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Pictures/Screenshots/plotwithvalues.png")
+knitr::include_graphics("images/plotwithvalues.png")
 
 ``` 
 
@@ -189,7 +189,7 @@ knitr::include_graphics("C:/Users/akleffner2/OneDrive - University of Nebraska-L
 
 ```{r, echo=FALSE,out.width="70%", out.height="70%",fig.cap="Download Tab",fig.show='hold',fig.align='center'}
 
-knitr::include_graphics("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Pictures/Screenshots/TDS3.png")
+knitr::include_graphics("images/TDS3.png")
 
 ``` 
 
@@ -208,19 +208,20 @@ write_map_to_files('prescription_map', field_ = filesDLD())
 
 + Next code for creating Corn and Soybean field trials needed to be added to the app
 + Luckily this code was in R Markdown files
-+ [Example](C:/Users/akleffner2/Downloads/make_trial_design.html)
 + Now selecting desired crop will dictate which form is received and what field creation code will be ran
 + Working, but needs a lot of cleaning up
 
 ```{r, echo=FALSE,out.width="70%", out.height="70%",fig.cap="Choosing Crop",fig.show='hold',fig.align='center'}
 
-knitr::include_graphics("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Pictures/Screenshots/choose_crop.png")
+knitr::include_graphics("images/choose_crop.png")
 
 ``` 
 
 ---
 
 ## Now let's Actually Go to the App!
+
+[Website](http://trialdesign.difm-cig.org/)
 
 ---
 
