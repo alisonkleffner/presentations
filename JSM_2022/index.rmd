@@ -41,6 +41,7 @@ library(fields)
 library(crosstalk)
 library(plotly)
 library(bibtex)
+library(gridExtra)
 # download_fontawesome()
 
 # References
@@ -108,7 +109,7 @@ write("", file = "js-addins.html")
 <br><br><br>
 ## A Spatio-Temporal Model for Arctic Sea Ice
 ### Joint Statistical Meetings, August 2022
-#### Alison Kleffner, Yawen Guan, Susan VanderPlas
+#### Alison Kleffner, Susan VanderPlas, Yawen Guan
 #### Department of Statistics, University of Nebraska - Lincoln
 ##### `r fa("envelope", fill = "black")` [akleffner@huskers.unl.edu](akleffner@huskers.unl.edu)
 ##### `r fa("home", fill = "black")` [https://alison-kleffner.netlify.app/](https://alison-kleffner.netlify.app/)
@@ -118,25 +119,25 @@ write("", file = "js-addins.html")
 
 ---
 class: primary
-# Motivation 
+# Sea Ice Creak Detection 
 
-+ Sea ice is frozen sea water that generally occurs as an ice pack which can drift over the oceans surface
++ Sea ice is frozen sea water that can occur as an ice pack which drifts over the oceans surface
 + Cracks, or leads, may form in the ice pack due to dynamic processes
-  - Allows for heat from the ocean to be transferred to the atmosphere - accounts for part of the heat flux between the ocean and the atmosphere `r Citep(bib[[c("schreyer_ice_2006")]])`. 
+  - Allows for heat from the ocean to be transferred to the atmosphere `r Citep(bib[[c("schreyer_elastic_2006")]])`. 
 + Other Ice Crack Detection Methods
-  - Involve the use of thermal images or deformation calculations found through satellite images
-    + Satellite images have drawbacks of being low in resolution and are effected by atmospheric conditions, thus may lead to inaccurate calculations
+  - Involve the use of thermal images or deformation calculations found through satellite images `r Citep(bib[[c("key_detectability_1993", "peterson_evaluating_2011")]])`.
+    + Satellite images can be low in resolution and are affected by atmospheric conditions `r Citep(bib[[c("willmes_pan-arctic_2015")]])`
 
-```{r, fig.height=4}
+```{r, fig.align='center'}
 knitr::include_graphics("images/RGPS_Open_Mag_51_72.jpg")
 
 ```
 
 ---
 class:primary
-# Trajectory Plot
+# Method Motivation: Trajectory Plot
 
-```{r traj-plot, fig.height=5}
+```{r traj-plot, fig.height=5, cache = TRUE, fig.align='center'}
 
 datn = read.delim("data/lagrange_n.dat",sep="")
 gpidn = unique(datn[,1]) #3364
@@ -172,26 +173,35 @@ ggplot(tmp2, aes(x = x, y = y, group = gpid,
                       hoverinfo = NULL,
                       color = factor(gpid %% 10))) + 
   geom_path(arrow = arrow(length = unit(1, "mm")), alpha = .5) + 
-  scale_color_viridis_d()
+  scale_color_viridis_d() + theme(legend.position="none")
 ```
 
 ---
 class:primary
-# Our Method: Overview
+# Our Proposed Methods: Overview
 
-+ Bounding Box Clustering Method
-  - Uses movement features of trajectory to group like movements
-  - Boundaries of clusters would be where potential clusters would form
-+ Intersection Interpolation Method 
-  - Due to data collection method, tend to be missing data in chunks
-  - Uses spatio-temporal neighbors of missing data using defined clusters
++ Bounding Box Clustering Method - Find Cracks:
+  - Uses movement features of trajectory to group similar trajectories
+  - Boundaries of clusters - location of potential ice cracks
   
+- Intersection Interpolation Method:
+  - Due to data collection method, data tends to be missing in chunks
+  - Uses spatio-temporal neighbors of missing data 
+      + Spatio-Temporal Neighbors are found using the clusters
+  
+```{r plots, cache=TRUE, fig.align='center'}
 
+
+knitr::include_graphics("images/bounding-box.png")
+
+
+
+```
 
 ---
 class:primary
 # Results : Bounding Box Clustering
-```{r, fig.height=4.5}
+```{r bb, fig.height=4.5, cache = TRUE}
 
 bbox_summary <- function(df) {
   # Function takes data frame with k, xmap, ymap
@@ -250,24 +260,38 @@ anim_plot <- anim_plot_data51 %>%
   geom_point() + 
   scale_shape_manual("Imputed", values = c("FALSE" = 15, "TRUE" = 0)) + 
   scale_color_viridis_d() + 
-  scale_fill_viridis_d() + ggtitle("Clustering using all data on last day")
+  scale_fill_viridis_d() + ggtitle("Clustering Using All the Data")
 
 anim_plot
 
 ```
 
-
 ---
 class: primary
 # Results: Intersection Interpolation
 
-```{r}
+```{r int}
 result_cluster1_ice <- data.frame(Cluster = c(1,2,3,4,5,6), X1 = c(3.14, 4.36, 2.64, 3.006,3.95,3.12), Y1 = c(4.27, 4.62, 3.13, 2.87, 3.56, 3.08), X2 <- c(3.19, 0.187, 1.314, 1.396, 0.74, 1.876), Y2 <- c(13.04, 0.356, 3.07, 2.44, 3.036, 5.459))
+
+colnames(result_cluster1_ice) = c("Cluster", 'X', "Y", "X", "Y")
+
 #
-kableExtra::kable(result_cluster1_ice, booktabs = TRUE, caption = "RMSE by Cluster for Week 1 for Interpolation Methods", col.names = c("Cluster", "$X_{int}$", "$Y_{int}$", "$X_{lin}$", "$Y_{lin}$"), escape = FALSE) %>%
-  add_header_above(c(" ", "Intersection" = 2, "Linear" = 2))
+kableExtra::kable(result_cluster1_ice, booktabs = TRUE, caption = "RMSE by Cluster for Week 1 for Interpolation Methods", escape = FALSE, align = "c") %>%
+  add_header_above(c(" ", "Intersection" = 2, "Linear" = 2)) %>% 
+  row_spec(1, color = 'black', background = 'yellow') %>% 
+  row_spec(6, color = 'black', background = 'yellow')
 ```
 
+---
+class:primary
+# References
+<font size="2">
+```{r, print_refs1, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
+print(bib[[c("key_detectability_1993", "peterson_evaluating_2011", "schreyer_elastic_2006", "willmes_pan-arctic_2015")]], 
+      .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
+      )
+```
+</font>
 
 ---
 class:inverse
@@ -287,3 +311,4 @@ knitr::include_graphics("images/frame.png")
 
 
 ]
+
