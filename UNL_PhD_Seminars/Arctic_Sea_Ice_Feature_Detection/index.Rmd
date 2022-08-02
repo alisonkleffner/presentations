@@ -1,12 +1,16 @@
 ---
-title: 'PhD Seminar - Arctic Sea Ice Feature Detection'
+title: "PhD Seminar - Arctic Sea Ice Feature Detection"
 author: "Alison Kleffner"
-date: "11/19/21"
+date: '2021-11-19'
 output: 
-  ioslides_presentation:
-    theme: "bootstrap"
-    slide_level: 3
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = TRUE)
@@ -21,6 +25,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = TR
 * Interpolation of Missing Data
 * Future Work
 
+---
 
 ### Project 1: Arctic Sea Ice Feature Detection
 
@@ -28,11 +33,11 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = TR
 ```{r, echo=FALSE,out.width="50%", out.height="20%",fig.cap="Figures of Ice Cracks",fig.show='hold',fig.align='center', fig.height=3}
 library(knitr)
 
-knitr::include_graphics(c("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/Ice Chunk.png","C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/Ice Pic.png"))
+knitr::include_graphics(c("images/Ice Chunk.png","images/Ice Pic.png"))
 
 ``` 
 
-
+---
 
 ### Motivation
 + What are We trying to Do?
@@ -42,18 +47,21 @@ knitr::include_graphics(c("C:/Users/akleffner2/OneDrive - University of Nebraska
   - Location of gpids (x/y)
   - Observation Time: Have 22 days worth of data
   - k: image index (sometimes will have multiple observations for a gpid on a day)
+
+---
   
 ### Sea Ice Motion Animation
 
 ```{r, echo=FALSE,out.width="50%", out.height="30%",fig.cap="Ice Motion",fig.show='hold',fig.align='center'}
 
-knitr::include_graphics(c("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/day1.png","C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/day11.png","C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/day16.png","C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/day19.png"))
+knitr::include_graphics(c("images/day1.png","images/day11.png","images/day16.png","images/day19.png"))
 ``` 
 
+---
 
 ### Explanation of Problem
 
-```{r trajectories, echo=FALSE, message=FALSE, cache=TRUE}
+```{r trajectories, echo=FALSE, message=FALSE, cache=TRUE, fig.align='center'}
 library(fields)
 library(tidyverse)
 library(crosstalk)
@@ -102,6 +110,8 @@ ggplot(tmp2, aes(x = x, y = y, group = gpid,
 
 ```
 
+---
+
 ### Comparison: Previous Work by Guan et al (2019)
 
 + There is another dataset that has more information (like derivations of estimates of ice deformation)
@@ -109,6 +119,7 @@ ggplot(tmp2, aes(x = x, y = y, group = gpid,
   - Fit a jump in displacement that would account for the observed deformation in a cell.
   - So gives some indication of where cracks may form, and the level of opening of the crack.
 
+---
 
 ### Overview: Spatio-Temporal Clustering
 
@@ -121,6 +132,8 @@ ggplot(tmp2, aes(x = x, y = y, group = gpid,
   - Semantic Based Trajectory Mining
 + Clustering of sub-trajectories (Lee et al (2007))
 
+---
+
 ### Challenges
 
 + How gpids are laid out (can't use density-based clustering)
@@ -130,12 +143,15 @@ ggplot(tmp2, aes(x = x, y = y, group = gpid,
   - Non-smooth spatial process
   - Nonstationarity due to ice moving as patches. 
 
+---
+
 ### Our Proposed Method
 
 + Cluster similar trajectories to identify patches of ice using information from a Bounding Box
   - A way to work around the missing data problem
 + Space-time interpolation within each ice pack where ice movements are similar. 
 
+---
 
 ### Clustering with Bounding Box
 
@@ -149,10 +165,12 @@ ggplot(tmp2, aes(x = x, y = y, group = gpid,
 + Use the features of the bounding box as inputs into KMeans Clustering
   - The boundaries of each cluster would be where the ice crack forms
   - The number of clusters was determined using the silhouette statistic 
+ 
+---
   
 ### Results: Bounding Box of All Days
 
-```{r clustering_at_51, echo=FALSE, message=FALSE, cache=TRUE}
+```{r clustering_at_51, echo=FALSE, message=FALSE, cache=TRUE, fig.align='center'}
 colnames(tmp) <- c("gpid", "k", "obs_time", "xmap", "ymap", "location", "t", "i")
 
 bbox_summary <- function(df) {
@@ -217,24 +235,27 @@ anim_plot
 
 ```
 
+---
+
 ### Comparison to Yawen's Previous Work
 
 ```{r, echo=FALSE,out.width="60%", out.height="60%",fig.cap="RGPS opening magnitude from the kinematic algorithm",fig.show='hold',fig.align='center'}
 
 
-knitr::include_graphics("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/Calibration.png")
+knitr::include_graphics("images/Calibration.png")
 
 ``` 
 
+---
 
 ### Results: Bounding Box By Week
 
 ```{r, echo=FALSE,out.width="50%", out.height="30%",fig.cap="Clustering Bounding Boxes by Week",fig.show='hold',fig.align='center'}
 
-knitr::include_graphics(c("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/week1.png","C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/week2.png","C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/week3.png"))
+knitr::include_graphics(c("images/week1.png","images/week2.png","images/week3.png"))
 ``` 
 
-
+---
 
 ### Next: Interpolation of Missing Information
 
@@ -245,6 +266,7 @@ knitr::include_graphics(c("C:/Users/akleffner2/OneDrive - University of Nebraska
 + Our Method: Use of Polygon Intersections
   - Find Spatial and temporal neighbors and use these to interpolate onto a grid
 
+---
   
 ### Interpolation Process
 
@@ -257,14 +279,16 @@ knitr::include_graphics(c("C:/Users/akleffner2/OneDrive - University of Nebraska
 + Then predict the gpids x or y location using the developed model with the initial value being the grid cell.
   - Current Issues
 
-  
+---
+
 ### Interpolation Pics
 
 ```{r, echo=FALSE,out.width="70%", out.height="70%",fig.cap="Spatial-Temporal Neighbors of Week 1",fig.show='hold',fig.align='center'}
 
-knitr::include_graphics(c("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/intersection12.png"))
+knitr::include_graphics(c("images/intersection12.png"))
 ``` 
 
+---
 
 ### Current Work: Analyzing Nonstationary Spatial Data Using Gaussian Processes
 
@@ -275,6 +299,8 @@ knitr::include_graphics(c("C:/Users/akleffner2/OneDrive - University of Nebraska
 + Problems so far:
   - Methods don't have a time component
   - Developing the Code.
+  
+---
 
 ### Future Work
 
@@ -285,14 +311,13 @@ knitr::include_graphics(c("C:/Users/akleffner2/OneDrive - University of Nebraska
 + Keep exploring the modeling of nonstationary data using Gaussian Processes.
 + Create a pipeline so can become more automated (for example, if have more days)
 
+---
+
 ### Selected References
 
-\small
+
 + Ansari, M.Y., Ahmad, A., Khan, S.S. et al. Spatiotemporal clustering: a review. Artif Intell Rev 53, 2381–2423 (2020). https://doi.org/10.1007/s10462-019-09736-1 
 + Bledar A. Konomi, Huiyan Sang & Bani K. Mallick (2014) Adaptive Bayesian Nonstationary Modeling for Large Spatial Datasets Using Covariance Approximations, Journal of Computational and Graphical Statistics, 23:3, 802-829, DOI: 10.1080/10618600.2013.812872
 + Guan, Y., Sampson, C., Tucker, J.D. et al. Computer Model Calibration Based on Image Warping Metrics: An Application for Sea Ice Deformation. JABES 24, 444–463 (2019). https://doi.org/10.1007/s13253-019-00353-7
 + Kim, H., B. Mallick, and C. Holmes (2005). Analyzing Nonstationary Spatial Data Using Piecewise Gaussian Processes. Journal of the American Statistical Association, 100(470), 653–668. http://www.jstor.org/stable/27590585
-
-
-### Selected References
 + Lee, J. G., Han, J., & Whang, K. Y. (2007). Trajectory clustering: A partition-and-group framework.In SIGMOD 2007: Proceedings of the ACM SIGMOD International Conference on Management of Data (pp. 593-604). https://doi.org/10.1145/1247480.124754
