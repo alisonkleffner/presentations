@@ -3,15 +3,13 @@ title: 'PhD Seminar - Arctic Sea Ice Feature Detection'
 author: "Alison Kleffner"
 date: "11/19/21"
 output: 
-  beamer_presentation:
-    theme: "PaloAlto"
-    colortheme: "orchid"
-    fonttheme: "structurebold"
+  ioslides_presentation:
+    theme: "bootstrap"
     slide_level: 3
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, cache = TRUE)
 
 ```
 
@@ -27,7 +25,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ### Project 1: Arctic Sea Ice Feature Detection
 
 
-```{r, echo=FALSE,out.width="60%", out.height="40%",fig.cap="Figures of Ice Cracks",fig.show='hold',fig.align='center'}
+```{r, echo=FALSE,out.width="50%", out.height="20%",fig.cap="Figures of Ice Cracks",fig.show='hold',fig.align='center', fig.height=3}
 library(knitr)
 
 knitr::include_graphics(c("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/Ice Chunk.png","C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/Ice Pic.png"))
@@ -221,7 +219,7 @@ anim_plot
 
 ### Comparison to Yawen's Previous Work
 
-```{r, echo=FALSE,out.width="80%", out.height="80%",fig.cap="RGPS opening magnitude from the kinematic algorithm",fig.show='hold',fig.align='center'}
+```{r, echo=FALSE,out.width="60%", out.height="60%",fig.cap="RGPS opening magnitude from the kinematic algorithm",fig.show='hold',fig.align='center'}
 
 
 knitr::include_graphics("C:/Users/akleffner2/OneDrive - University of Nebraska-Lincoln/Research (Personal)/Calibration.png")
