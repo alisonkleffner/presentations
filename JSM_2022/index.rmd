@@ -119,7 +119,7 @@ write("", file = "js-addins.html")
 
 ---
 class: primary
-# Sea Ice Creak Detection 
+# Sea Ice Crack Detection 
 
 + Sea ice is frozen sea water that can occur as an ice pack which drifts over the oceans surface
 + Cracks, or leads, may form in the ice pack due to dynamic processes
@@ -200,7 +200,9 @@ knitr::include_graphics("images/bounding-box.png")
 
 ---
 class:primary
-# Results : Bounding Box Clustering
+
+# Results: Bounding Box Clustering 
+
 ```{r bb, fig.height=4.5, cache = TRUE}
 
 bbox_summary <- function(df) {
@@ -265,6 +267,7 @@ anim_plot <- anim_plot_data51 %>%
 anim_plot
 
 ```
+
 
 ---
 class: primary
