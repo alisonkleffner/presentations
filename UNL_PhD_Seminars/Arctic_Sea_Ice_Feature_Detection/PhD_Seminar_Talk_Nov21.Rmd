@@ -3,9 +3,10 @@ title: 'PhD Seminar - Arctic Sea Ice Feature Detection'
 author: "Alison Kleffner"
 date: "11/19/21"
 output: 
-  ioslides_presentation:
-    theme: "bootstrap"
-    slide_level: 3
+  beamer_presentation:
+    theme: "PaloAlto"
+    colortheme: "orchid"
+    fonttheme: "structurebold"
 ---
 
 ```{r setup, include=FALSE}
