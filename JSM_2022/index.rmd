@@ -119,7 +119,7 @@ write("", file = "js-addins.html")
 
 ---
 class: primary
-# Sea Ice Crack Detection 
+# Goal: Sea Ice Crack Detection 
 
 + Sea ice is frozen sea water that can occur as an ice pack which drifts over the oceans surface
 + Cracks, or leads, may form in the ice pack due to dynamic processes
@@ -128,8 +128,8 @@ class: primary
   - Involve the use of thermal images or deformation calculations found through satellite images `r Citep(bib[[c("key_detectability_1993", "peterson_evaluating_2011")]])`.
     + Satellite images can be low in resolution and are affected by atmospheric conditions `r Citep(bib[[c("willmes_pan-arctic_2015")]])`
 
-```{r, fig.align='center'}
-knitr::include_graphics("images/RGPS_Open_Mag_51_72.jpg")
+```{r, fig.align='center',  out.width="60%"}
+knitr::include_graphics("images/Ice Chunk.png")
 
 ```
 
@@ -183,106 +183,12 @@ class:primary
 + Bounding Box Clustering Method - Find Cracks:
   - Uses movement features of trajectory to group similar trajectories
   - Boundaries of clusters - location of potential ice cracks
-  
 - Intersection Interpolation Method:
   - Due to data collection method, data tends to be missing in chunks
   - Uses spatio-temporal neighbors of missing data 
       + Spatio-Temporal Neighbors are found using the clusters
-  
-```{r plots, cache=TRUE, fig.align='center'}
-
-
+```{r plots, cache=TRUE, fig.align='center', fig.cap="Picture of different features of our Bounding Box"}
 knitr::include_graphics("images/bounding-box.png")
-
-
-
-```
-
----
-class:primary
-
-# Results: Bounding Box Clustering 
-
-```{r bb, fig.height=4.5, cache = TRUE}
-
-bbox_summary <- function(df) {
-  # Function takes data frame with k, xmap, ymap
-  # and returns a bounding box and trajectory
-  df <- arrange(df, k) # sort by k
-  df %>%
-    summarize(
-      x = mean(xmap), y = mean(ymap),
-      xmin = min(xmap), xmax = max(xmap),
-      ymin = min(ymap), ymax = max(ymap),
-      xbox = xmax - xmin,
-      ybox = ymax - ymin,
-      dx = xmap[n()] - xmap[1],
-      dy = ymap[n()] - ymap[1],
-      angle = atan2(dy, dx),
-      kmin = min(k),
-      kmax = max(k),
-      npts = n(),
-    )
-}
-
-colnames(tmp) <- c("gpid", "k", "obs_time", "xmap", "ymap", "location", "t", "i")
-
-tmp_features<- tmp %>% 
-  tidyr::nest(data = -gpid) %>% 
-  mutate(summary = map(data, bbox_summary)) %>%
-  unnest(summary)
-#Standardize Variables
-data_scale = data.frame(scale(tmp_features[,3:13]))
-
-names(data_scale) <- c("x_s", "y_s", "xmin_s", "xmax_s", "ymin_s", "ymax_s", "xbox_s", "ybox_s", "dx_s", "dy_s", "angle_s")
-
-tmp_features_s= data.frame(tmp_features, data_scale)
-tmp_features_s = tmp_features_s[,-c(3:13)]
-
-km= kmeans(select(tmp_features_s, c(x_s,y_s,xbox_s:angle_s)), 5, nstart=25)
-cluster_K = as.factor(km$cluster)
-
-tmp_features_km = data.frame(tmp_features_s, cluster_K)
-
-anim_plot_data <- tmp %>%
-  left_join(select(tmp_features_km, gpid, clust = cluster_K)) %>%
-  mutate(imputed = F) %>%
-  complete(crossing(gpid, t), fill = list(imputed = T)) %>%
-  ungroup() %>%
-  arrange(gpid, t) %>%
-  group_by(gpid) %>%
-  fill(xmap, ymap, matches("clust"), .direction = "downup") %>%
-  arrange(gpid)
-
-anim_plot_data51 <- filter(anim_plot_data, t==72)
-
-anim_plot <- anim_plot_data51 %>%
-  ggplot(aes(x = xmap, y = ymap, frame = t, group = gpid, ids = gpid,
-             color = clust, fill = clust, shape = imputed)) + 
-  geom_point() + 
-  scale_shape_manual("Imputed", values = c("FALSE" = 15, "TRUE" = 0)) + 
-  scale_color_viridis_d() + 
-  scale_fill_viridis_d() + ggtitle("Clustering Using All the Data")
-
-anim_plot
-
-```
-
-
----
-class: primary
-# Results: Intersection Interpolation
-
-```{r int}
-result_cluster1_ice <- data.frame(Cluster = c(1,2,3,4,5,6), X1 = c(3.14, 4.36, 2.64, 3.006,3.95,3.12), Y1 = c(4.27, 4.62, 3.13, 2.87, 3.56, 3.08), X2 <- c(3.19, 0.187, 1.314, 1.396, 0.74, 1.876), Y2 <- c(13.04, 0.356, 3.07, 2.44, 3.036, 5.459))
-
-colnames(result_cluster1_ice) = c("Cluster", 'X', "Y", "X", "Y")
-
-#
-kableExtra::kable(result_cluster1_ice, booktabs = TRUE, caption = "RMSE by Cluster for Week 1 for Interpolation Methods", escape = FALSE, align = "c") %>%
-  add_header_above(c(" ", "Intersection" = 2, "Linear" = 2)) %>% 
-  row_spec(1, color = 'black', background = 'yellow') %>% 
-  row_spec(6, color = 'black', background = 'yellow')
 ```
 
 ---

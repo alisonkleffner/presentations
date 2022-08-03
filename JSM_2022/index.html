@@ -8,8 +8,6 @@
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
     <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
-    <script src="libs/kePrint/kePrint.js"></script>
-    <link href="libs/lightable/lightable.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/modal.css" type="text/css" />
     <link rel="stylesheet" href="css/sizeformat.css" type="text/css" />
   </head>
@@ -226,7 +224,7 @@ body {
 
 ---
 class: primary
-# Sea Ice Crack Detection 
+# Goal: Sea Ice Crack Detection 
 
 + Sea ice is frozen sea water that can occur as an ice pack which drifts over the oceans surface
 + Cracks, or leads, may form in the ice pack due to dynamic processes
@@ -235,7 +233,7 @@ class: primary
   - Involve the use of thermal images or deformation calculations found through satellite images (Key, Stone, Maslanik, et al., 1993; Peterson and Sulsky, 2011).
     + Satellite images can be low in resolution and are affected by atmospheric conditions (Willmes and Heinemann, 2015)
 
-&lt;img src="images/RGPS_Open_Mag_51_72.jpg" width="614" style="display: block; margin: auto;" /&gt;
+&lt;img src="images/Ice Chunk.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 class:primary
@@ -250,87 +248,14 @@ class:primary
 + Bounding Box Clustering Method - Find Cracks:
   - Uses movement features of trajectory to group similar trajectories
   - Boundaries of clusters - location of potential ice cracks
-  
 - Intersection Interpolation Method:
   - Due to data collection method, data tends to be missing in chunks
   - Uses spatio-temporal neighbors of missing data 
       + Spatio-Temporal Neighbors are found using the clusters
-  
-&lt;img src="images/bounding-box.png" width="291" style="display: block; margin: auto;" /&gt;
-
----
-class:primary
-
-# Results: Bounding Box Clustering 
-
-![](index_files/figure-html/bb-1.png)&lt;!-- --&gt;
-
-
----
-class: primary
-# Results: Intersection Interpolation
-
-&lt;table&gt;
-&lt;caption&gt;RMSE by Cluster for Week 1 for Interpolation Methods&lt;/caption&gt;
- &lt;thead&gt;
-&lt;tr&gt;
-&lt;th style="empty-cells: hide;border-bottom:hidden;" colspan="1"&gt;&lt;/th&gt;
-&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Intersection&lt;/div&gt;&lt;/th&gt;
-&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Linear&lt;/div&gt;&lt;/th&gt;
-&lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:center;"&gt; Cluster &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 3.140 &lt;/td&gt;
-   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 4.27 &lt;/td&gt;
-   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 3.190 &lt;/td&gt;
-   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 13.040 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 4.360 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 4.62 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0.187 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0.356 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 2.640 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 3.13 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 1.314 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 3.070 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 3.006 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 2.87 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 1.396 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 2.440 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;"&gt; 5 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 3.950 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 3.56 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0.740 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 3.036 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 3.120 &lt;/td&gt;
-   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 3.08 &lt;/td&gt;
-   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 1.876 &lt;/td&gt;
-   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 5.459 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="images/bounding-box.png" alt="Picture of different features of our Bounding Box" width="291" /&gt;
+&lt;p class="caption"&gt;Picture of different features of our Bounding Box&lt;/p&gt;
+&lt;/div&gt;
 
 ---
 class:primary
