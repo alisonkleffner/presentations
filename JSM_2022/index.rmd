@@ -180,13 +180,13 @@ ggplot(tmp2, aes(x = x, y = y, group = gpid,
 class:primary
 # Our Proposed Methods: Overview
 
-+ Bounding Box Clustering Method - Find Cracks:
++ Clustering Method: Bounding Box - Find Cracks:
   - Uses movement features of trajectory to group similar trajectories
   - Boundaries of clusters - location of potential ice cracks
-- Intersection Interpolation Method:
+- Spatio-Temporal Interpolation Method: Intersections
   - Due to data collection method, data tends to be missing in chunks
   - Uses spatio-temporal neighbors of missing data 
-      + Spatio-Temporal Neighbors are found using the clusters
+      + Found using the clusters
 ```{r plots, cache=TRUE, fig.align='center', fig.cap="Picture of different features of our Bounding Box"}
 knitr::include_graphics("images/bounding-box.png")
 ```
