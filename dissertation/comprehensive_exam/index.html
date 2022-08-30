@@ -229,9 +229,22 @@ body {
 class:primary
 # Outline
 
-<i class="fa fa-chart-bar" role="presentation" aria-label="chart-bar icon"></i> Background
+
+<i class="fa fa-arrows" role="presentation" aria-label="arrows icon"></i> Motivation and Background
 
 <i class="fa fa-list" role="presentation" aria-label="list icon"></i> Research Objectives
+
+<i class="fa fa-info" role="presentation" aria-label="info icon"></i> Spatio-Temporal Clustering: Bounding Box
+
+<i class="fa fa-info" role="presentation" aria-label="info icon"></i> Spatio-Temporal Interpolation: Intersection Model
+
+<i class="fa fa-ruler" role="presentation" aria-label="ruler icon"></i> Simulation Study
+
+<i class="fa fa-ruler" role="presentation" aria-label="ruler icon"></i> Results with Ice Data
+
+<i class="fa fa-check-double" role="presentation" aria-label="check-double icon"></i> Overall conclusion
+
+<i class="fa fa-spinner" role="presentation" aria-label="spinner icon"></i> Future Work
 
 
 ---
@@ -245,8 +258,133 @@ class:inverse
 &lt;br&gt;
 &lt;br&gt;
 .center[
-# Inverse section slide
+# Motivation and Background
 ]
+
+---
+class:primary
+
+# Arctic Sea Ice/Cracks - Why important
+
++ Sea ice is frozen sea water that can occur as an ice pack which drifts over the oceans surface
++ Cracks, or leads, may form in the ice pack due to dynamic processes
+  - Allows for heat from the ocean to be transferred to the atmosphere (Schreyer, Sulsky, Munday, et al., 2006). 
++ Other Ice Crack Detection Methods
+  - Involve the use of thermal images or deformation calculations found through satellite images (Key, Stone, Maslanik, et al., 1993; Peterson and Sulsky, 2011).
+    + Satellite images can be low in resolution and are affected by atmospheric conditions (Willmes and Heinemann, 2015)
+
+&lt;img src="images/Ice Chunk.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+class:primary
+
+# Previous Methods
+
+
+---
+class:primary
+
+# Data
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgrgps_grid' src='images/rgps_grid.jpg' alt=' Grid Over Crack' width='40%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalrgps_grid' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalrgps_grid'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionrgps_grid' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+---
+class:primary
+
+# Motivating Picture
+
+
+---
+class:primary
+
+# Research Objectives
+
+
+
+
+---
+class:inverse
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+# Spatio-temporal Clustering: Bounding Box
+]
+
+---
+class:inverse
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+# Spatio-temporal Interpolation: Model in Intersections
+]
+
+
+---
+class:inverse
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+# Simulation Study
+]
+
+---
+class:inverse
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+# Ice Data Results
+]
+
+---
+class:inverse
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+# Discussion and Conclusion
+]
+
 
 ---
 class:primary
@@ -268,9 +406,9 @@ class:primary
 
 **Include in-text citations**
 
-(Rost, 2020; Romano, Sotis, Dominioni, et al., 2020; Bavel, Baicker, Boggio, et al., 2020)
+&lt;!-- --&gt;
 
-Rost (2020); Romano, Sotis, Dominioni, et al. (2020); Bavel, Baicker, Boggio, et al. (2020)
+&lt;!-- --&gt;
 
 ---
 class:primary
@@ -328,10 +466,7 @@ class:primary
 class:primary
 # References
 &lt;font size="2"&gt;
-&lt;p&gt;&lt;cite&gt;Von Bergmann, J.
-(2021).
-&lt;em&gt;xkcd_exponential: Public Health vs Scientists&lt;/em&gt;.
-URL: &lt;a href="https://github.com/mountainMath/xkcd_exponential"&gt;https://github.com/mountainMath/xkcd_exponential&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
+
 &lt;/font&gt;
 
 ---
@@ -423,6 +558,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 
 <script>
         /* Get the modal*/
+          var modalexample1 = document.getElementById('modalexample1');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgexample1 = document.getElementById('imgexample1');
+          var modalImgexample1 = document.getElementById('imgmodalexample1');
+          var captionTextexample1 = document.getElementById('captionexample1');
+          imgexample1.onclick = function(){
+            modalexample1.style.display = 'block';
+            modalImgexample1.src = this.src;
+            captionTextexample1.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgexample1.onclick = function() {
+            modalexample1.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
           var modalexample2 = document.getElementById('modalexample2');
         /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
           var imgexample2 = document.getElementById('imgexample2');
@@ -487,6 +639,159 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgexample5.onclick = function() {
             modalexample5.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalexample2 = document.getElementById('modalexample2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgexample2 = document.getElementById('imgexample2');
+          var modalImgexample2 = document.getElementById('imgmodalexample2');
+          var captionTextexample2 = document.getElementById('captionexample2');
+          imgexample2.onclick = function(){
+            modalexample2.style.display = 'block';
+            modalImgexample2.src = this.src;
+            captionTextexample2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgexample2.onclick = function() {
+            modalexample2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalexample2 = document.getElementById('modalexample2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgexample2 = document.getElementById('imgexample2');
+          var modalImgexample2 = document.getElementById('imgmodalexample2');
+          var captionTextexample2 = document.getElementById('captionexample2');
+          imgexample2.onclick = function(){
+            modalexample2.style.display = 'block';
+            modalImgexample2.src = this.src;
+            captionTextexample2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgexample2.onclick = function() {
+            modalexample2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalexample3 = document.getElementById('modalexample3');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgexample3 = document.getElementById('imgexample3');
+          var modalImgexample3 = document.getElementById('imgmodalexample3');
+          var captionTextexample3 = document.getElementById('captionexample3');
+          imgexample3.onclick = function(){
+            modalexample3.style.display = 'block';
+            modalImgexample3.src = this.src;
+            captionTextexample3.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgexample3.onclick = function() {
+            modalexample3.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalexample4 = document.getElementById('modalexample4');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgexample4 = document.getElementById('imgexample4');
+          var modalImgexample4 = document.getElementById('imgmodalexample4');
+          var captionTextexample4 = document.getElementById('captionexample4');
+          imgexample4.onclick = function(){
+            modalexample4.style.display = 'block';
+            modalImgexample4.src = this.src;
+            captionTextexample4.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgexample4.onclick = function() {
+            modalexample4.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalexample5 = document.getElementById('modalexample5');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgexample5 = document.getElementById('imgexample5');
+          var modalImgexample5 = document.getElementById('imgmodalexample5');
+          var captionTextexample5 = document.getElementById('captionexample5');
+          imgexample5.onclick = function(){
+            modalexample5.style.display = 'block';
+            modalImgexample5.src = this.src;
+            captionTextexample5.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgexample5.onclick = function() {
+            modalexample5.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalrgps_grid = document.getElementById('modalrgps_grid');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgrgps_grid = document.getElementById('imgrgps_grid');
+          var modalImgrgps_grid = document.getElementById('imgmodalrgps_grid');
+          var captionTextrgps_grid = document.getElementById('captionrgps_grid');
+          imgrgps_grid.onclick = function(){
+            modalrgps_grid.style.display = 'block';
+            modalImgrgps_grid.src = this.src;
+            captionTextrgps_grid.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgrgps_grid.onclick = function() {
+            modalrgps_grid.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalrgps_grid = document.getElementById('modalrgps_grid');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgrgps_grid = document.getElementById('imgrgps_grid');
+          var modalImgrgps_grid = document.getElementById('imgmodalrgps_grid');
+          var captionTextrgps_grid = document.getElementById('captionrgps_grid');
+          imgrgps_grid.onclick = function(){
+            modalrgps_grid.style.display = 'block';
+            modalImgrgps_grid.src = this.src;
+            captionTextrgps_grid.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgrgps_grid.onclick = function() {
+            modalrgps_grid.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalrgps_grid = document.getElementById('modalrgps_grid');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgrgps_grid = document.getElementById('imgrgps_grid');
+          var modalImgrgps_grid = document.getElementById('imgmodalrgps_grid');
+          var captionTextrgps_grid = document.getElementById('captionrgps_grid');
+          imgrgps_grid.onclick = function(){
+            modalrgps_grid.style.display = 'block';
+            modalImgrgps_grid.src = this.src;
+            captionTextrgps_grid.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgrgps_grid.onclick = function() {
+            modalrgps_grid.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalrgps_grid = document.getElementById('modalrgps_grid');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgrgps_grid = document.getElementById('imgrgps_grid');
+          var modalImgrgps_grid = document.getElementById('imgmodalrgps_grid');
+          var captionTextrgps_grid = document.getElementById('captionrgps_grid');
+          imgrgps_grid.onclick = function(){
+            modalrgps_grid.style.display = 'block';
+            modalImgrgps_grid.src = this.src;
+            captionTextrgps_grid.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgrgps_grid.onclick = function() {
+            modalrgps_grid.style.display = 'none';
           }
 </script>
 
