@@ -9,7 +9,7 @@ output:
     includes:
       after_body:
         "js-addins.html"
-    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    #mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
     css: ["default", "metropolis-fonts", "metropolis" ,"css/modal.css", "css/sizeformat.css"]
     lib_dir: libs
     nature:
@@ -139,11 +139,11 @@ class:primary
 
 # Importance of Arctic Sea Ice Crack Detection
 
-+ Sea ice is a barrier between atmosphere and ocean
++ Sea ice is a barrier between the atmosphere and the ocean
 + Cracks, or leads, may form in the ice pack due to dynamic processes
   - Allows for heat from the ocean to be transferred to the atmosphere `r Citep(bib[[c("schreyer_elastic_2006")]])`. 
-  - Account for half of the heat flux between the ocean and atmosphere `r Citep(bib[[c("badgley_1961")]])`
-+ Prior Ice Crack detection methods can generally be split into two categories: thermal and deformation. 
+  - Accounts for half of the heat flux between the ocean and atmosphere `r Citep(bib[[c("badgley_1961")]])`
++ Previous ice crack detection methods can generally be split into two categories: thermal and deformation. 
   
 
 .center[
@@ -164,27 +164,26 @@ class:primary
 
 # Data
 
-+ Sea Ice is tracked by NASA's RADARSTAT Geophysical Processor System (RGPS), which uses synthetic aperture radar (SAR) images to track the trajectory of points on Arctic Sea Ice.
-+ Each grid cell vertex is assigned an identifier (gpid) that is tracked
-+ Set of all tracked trajectories: 
-
-$$\mathcal{T} = (g_1, ..., g_n)$$
-where 
-$$g_{k} = <s_{1,j},...,s_{t,j}>$$ and \textbf{$$s_{i,j}} = $(x_{i,j}, y_{i,j})$$
-
-
 .center[
 ```{r grid-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
 
-#knitr::include_graphics("images/rgps_grid.png")
-
-i1 <- img_modal(src = "images/rgps_grid.jpg", alt = " Grid Over Crack", other=list(width="40%"))
+i1 <- img_modal(src = "images/rgps_grid.jpg", alt = "Example of initial grid used to track movement", other=list(width="30%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i1, "\\n", simplify = T)[3:9]
   ) %>% paste(collapse = "\n") %>% cat()
 
 ```
+]
+
++ Sea Ice is tracked by NASA's RADARSTAT Geophysical Processor System (RGPS), which uses synthetic aperture radar (SAR) images to track the trajectory of points on an ice sheet.
++ Each grid cell vertex is assigned an identifier (gpid) which is used for tracking
++ Set of all trajectories: 
+
+.center[
+$\mathcal{T} = (g_1, ..., g_n)$ $\\$
+where $g_{n} = <s_{1,j},...,s_{t,j}>$ and $s_{i,j} = (x_{i,j}, y_{i,j})$ $\\$
+$n = 1,..., 8811$ and $j = 1,2$
 ]
 
 
@@ -220,15 +219,17 @@ class:primary
 
 # Calculating Sea Ice Deformation
 
-+ Deformation of a cell is determined by the motion of points (vertices of cells that make up a grid) `r Citep(bib[[c("peterson_evaluating_2011")]])`
-  - RGPS uses SAR imagery to extract sea ice motion
-+ Not as high of resolution as thermal methods
-+ The error in the deformation product may be strongly underestimated `r Citep(bib[[c("bouillon_producing_2015")]])`
++ Deformation of a cell is determined by the motion of points `r Citep(bib[[c("peterson_evaluating_2011")]])`
+    - Finds the determinant of deformation gradient to measure accumulated area changes to show persistent diverged regions. 
+    - Can find the size and orientation of the crack
++ Drawbacks
+  - Not as high of resolution as thermal methods
+  - The error in the deformation product may be strongly underestimated `r Citep(bib[[c("bouillon_producing_2015")]])`
 
 .center[
 ```{r deformation-pics,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
 
-i1 <- img_modal(src = "images/grid_example.png", alt = "Example of how find deformation (Peterson & Sulsky, 2011", other=list(width="40%"))
+i1 <- img_modal(src = "images/grid_example.png", alt = "Example of how find deformation (Peterson & Sulsky, 2011)", other=list(width="40%"))
 i2 <- img_modal(src = "images/kinematic_crack_algorithm.png", alt = "Example of detected leads using a kinematic crack algorithm which uses the determinant of the deformation gradient to detect leads (Peterson & Sulsky, 2011)", other=list(width="30%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
@@ -265,10 +266,11 @@ class:primary
 
 # Research Objectives
 
-+ Develop a ice crack detection method based solely on the movement of the ice sheet
-  - Motivated by the visualization of the movement
+1. Develop a ice crack detection method based solely on the movement of the ice sheet
   - Cluster trajectories based on movement, where the boundaries would be possible locations of ice cracks
-+ Using the information gained from the clustering, developed a spatio-interpolation method to predict missing points along a trajectory 
+2. Develop a spatio-interpolation method to predict missing points along a trajectory 
+  - Using the information gained from the clustering
+  - Take into account nonstationarity of the data
 
 ---
 class:inverse
@@ -296,8 +298,9 @@ class:primary
 
 + To represent it's movement, a bounding box is created around each of the trajectories.
 + Feautures:
-  - Length travel in x/y between the minimum and maximum location ($x_{max} - x_{min}$ and $y_{max} - y_{min}$)
-  - Length travel in x/y between latest and earliest observation ($x_{1} - x_{0}$ and $y_{1} - y_{0}$)
+  - Length travel in x/y between the minimum and maximum location 
+  ( $x_{max} - x_{min}$ and $y_{max} - y_{min}$)
+  - Length travel in x/y between latest and earliest observation ( $x_{1} - x_{0}$ and $y_{1} - y_{0}$)
   - Angle of movement
   - Average x/y value
   - Sub-tracteroires - previous time information
@@ -455,15 +458,14 @@ class:inverse
 class:primary
 #Simulating Data
 
-1. Create Underlying Process Grid $$ U_{d,c}(s,t) \sim GP(\mu_{d,c}, C_{d,c}(\theta)) $$
++ Create Underlying Process Grid  $$U_{d,c}(s,t) \sim GP(\mu_{d,c}, C_{d,c}(\theta))$$
   - Initial grid is created and shifted seven times to represent movement.
   - This data is then used in the exponential space-time covariance function.
-  - Covariance parameters and defined mean trend is different for each cluster
-2. Create Observed Grid
+  - Covariance parameters and defined mean trend is different for each cluster $\\$
++ Create Observed Grid
   - Movement of an observed point is determined by the value fo the nearest point of the underlying process for that day
   - Process is continued until t=7 to obtain a week's worth of simulated data
   $$(x_{t,j}, y_{t,j}) = (U^{X}_{t-1,c,g}, U^{Y}_{t-1,c,g}) + (x_{t-1,j}, y_{t-1,j})$$
-
 
 .center[
 ```{r grid-combo-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}

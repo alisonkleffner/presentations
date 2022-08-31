@@ -262,11 +262,11 @@ class:primary
 
 # Importance of Arctic Sea Ice Crack Detection
 
-+ Sea ice is a barrier between atmosphere and ocean
++ Sea ice is a barrier between the atmosphere and the ocean
 + Cracks, or leads, may form in the ice pack due to dynamic processes
   - Allows for heat from the ocean to be transferred to the atmosphere (Schreyer, Sulsky, Munday, et al., 2006). 
-  - Account for half of the heat flux between the ocean and atmosphere (Badgley, 1961)
-+ Prior Ice Crack detection methods can generally be split into two categories: thermal and deformation. 
+  - Accounts for half of the heat flux between the ocean and atmosphere (Badgley, 1961)
++ Previous ice crack detection methods can generally be split into two categories: thermal and deformation. 
   
 
 .center[
@@ -286,18 +286,9 @@ class:primary
 
 # Data
 
-+ Sea Ice is tracked by NASA's RADARSTAT Geophysical Processor System (RGPS), which uses synthetic aperture radar (SAR) images to track the trajectory of points on Arctic Sea Ice.
-+ Each grid cell vertex is assigned an identifier (gpid) that is tracked
-+ Set of all tracked trajectories: 
-
-`$$\mathcal{T} = (g_1, ..., g_n)$$`
-where 
-`$$g_{k} = &lt;s_{1,j},...,s_{t,j}&gt;$$` and \textbf{$$s_{i,j}} = $(x_{i,j}, y_{i,j})$$
-
-
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgrgps_grid' src='images/rgps_grid.jpg' alt=' Grid Over Crack' width='40%'&gt;
+&lt;img id='imgrgps_grid' src='images/rgps_grid.jpg' alt='Example of initial grid used to track movement' width='30%'&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modalrgps_grid' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -305,6 +296,16 @@ where
   &lt;!-- Modal Caption (Image Text) --&gt;
   &lt;div id='captionrgps_grid' class='modal-caption'&gt;&lt;/div&gt;
 &lt;/div&gt;
+]
+
++ Sea Ice is tracked by NASA's RADARSTAT Geophysical Processor System (RGPS), which uses synthetic aperture radar (SAR) images to track the trajectory of points on an ice sheet.
++ Each grid cell vertex is assigned an identifier (gpid) which is used for tracking
++ Set of all trajectories: 
+
+.center[
+`\(\mathcal{T} = (g_1, ..., g_n)\)` `\(\\\)`
+where `\(g_{n} = &lt;s_{1,j},...,s_{t,j}&gt;\)` and `\(s_{i,j} = (x_{i,j}, y_{i,j})\)` `\(\\\)`
+`\(n = 1,..., 8811\)` and `\(j = 1,2\)`
 ]
 
 
@@ -339,14 +340,16 @@ class:primary
 
 # Calculating Sea Ice Deformation
 
-+ Deformation of a cell is determined by the motion of points (vertices of cells that make up a grid) (Peterson and Sulsky, 2011)
-  - RGPS uses SAR imagery to extract sea ice motion
-+ Not as high of resolution as thermal methods
-+ The error in the deformation product may be strongly underestimated (Bouillon and Rampal, 2015)
++ Deformation of a cell is determined by the motion of points (Peterson and Sulsky, 2011)
+    - Finds the determinant of deformation gradient to measure accumulated area changes to show persistent diverged regions. 
+    - Can find the size and orientation of the crack
++ Drawbacks
+  - Not as high of resolution as thermal methods
+  - The error in the deformation product may be strongly underestimated (Bouillon and Rampal, 2015)
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imggrid_example' src='images/grid_example.png' alt='Example of how find deformation (Peterson &amp; Sulsky, 2011' width='40%'&gt;
+&lt;img id='imggrid_example' src='images/grid_example.png' alt='Example of how find deformation (Peterson &amp; Sulsky, 2011)' width='40%'&gt;
 &lt;!-- Trigger the Modal --&gt;
 &lt;img id='imgkinematic_crack_algorithm' src='images/kinematic_crack_algorithm.png' alt='Example of detected leads using a kinematic crack algorithm which uses the determinant of the deformation gradient to detect leads (Peterson &amp; Sulsky, 2011)' width='30%'&gt;
 &lt;!-- The Modal --&gt;
@@ -389,10 +392,11 @@ class:primary
 
 # Research Objectives
 
-+ Develop a ice crack detection method based solely on the movement of the ice sheet
-  - Motivated by the visualization of the movement
+1. Develop a ice crack detection method based solely on the movement of the ice sheet
   - Cluster trajectories based on movement, where the boundaries would be possible locations of ice cracks
-+ Using the information gained from the clustering, developed a spatio-interpolation method to predict missing points along a trajectory 
+2. Develop a spatio-interpolation method to predict missing points along a trajectory 
+  - Using the information gained from the clustering
+  - Take into account nonstationarity of the data
 
 ---
 class:inverse
@@ -420,8 +424,9 @@ class:primary
 
 + To represent it's movement, a bounding box is created around each of the trajectories.
 + Feautures:
-  - Length travel in x/y between the minimum and maximum location ($x_{max} - x_{min}$ and `\(y_{max} - y_{min}\)`)
-  - Length travel in x/y between latest and earliest observation ($x_{1} - x_{0}$ and `\(y_{1} - y_{0}\)`)
+  - Length travel in x/y between the minimum and maximum location 
+  ( `\(x_{max} - x_{min}\)` and `\(y_{max} - y_{min}\)`)
+  - Length travel in x/y between latest and earliest observation ( `\(x_{1} - x_{0}\)` and `\(y_{1} - y_{0}\)`)
   - Angle of movement
   - Average x/y value
   - Sub-tracteroires - previous time information
@@ -575,15 +580,14 @@ class:inverse
 class:primary
 #Simulating Data
 
-1. Create Underlying Process Grid $$ U_{d,c}(s,t) \sim GP(\mu_{d,c}, C_{d,c}(\theta)) $$
++ Create Underlying Process Grid  `$$U_{d,c}(s,t) \sim GP(\mu_{d,c}, C_{d,c}(\theta))$$`
   - Initial grid is created and shifted seven times to represent movement.
   - This data is then used in the exponential space-time covariance function.
-  - Covariance parameters and defined mean trend is different for each cluster
-2. Create Observed Grid
+  - Covariance parameters and defined mean trend is different for each cluster `\(\\\)`
++ Create Observed Grid
   - Movement of an observed point is determined by the value fo the nearest point of the underlying process for that day
   - Process is continued until t=7 to obtain a week's worth of simulated data
   `$$(x_{t,j}, y_{t,j}) = (U^{X}_{t-1,c,g}, U^{Y}_{t-1,c,g}) + (x_{t-1,j}, y_{t-1,j})$$`
-
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
@@ -916,7 +920,7 @@ class:primary
 
 #Ice Data Results: Clustering by Week
 
-+ Image from a Day in the Data set of recurring leads based on visible infrared Advanaced Very High Resolution Radiometer (AVHRR) data 
++ Image from a Day in the Data set of recurring leads based on visible infrared Advanaced Very High Resolution Radiometer (AVHRR) data (Eicken, Shapiro, Gaylord, et al., 2009)
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
@@ -1334,244 +1338,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 
 <script>
         /* Get the modal*/
-          var modalexample1 = document.getElementById('modalexample1');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgexample1 = document.getElementById('imgexample1');
-          var modalImgexample1 = document.getElementById('imgmodalexample1');
-          var captionTextexample1 = document.getElementById('captionexample1');
-          imgexample1.onclick = function(){
-            modalexample1.style.display = 'block';
-            modalImgexample1.src = this.src;
-            captionTextexample1.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgexample1.onclick = function() {
-            modalexample1.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalexample2 = document.getElementById('modalexample2');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgexample2 = document.getElementById('imgexample2');
-          var modalImgexample2 = document.getElementById('imgmodalexample2');
-          var captionTextexample2 = document.getElementById('captionexample2');
-          imgexample2.onclick = function(){
-            modalexample2.style.display = 'block';
-            modalImgexample2.src = this.src;
-            captionTextexample2.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgexample2.onclick = function() {
-            modalexample2.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalexample3 = document.getElementById('modalexample3');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgexample3 = document.getElementById('imgexample3');
-          var modalImgexample3 = document.getElementById('imgmodalexample3');
-          var captionTextexample3 = document.getElementById('captionexample3');
-          imgexample3.onclick = function(){
-            modalexample3.style.display = 'block';
-            modalImgexample3.src = this.src;
-            captionTextexample3.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgexample3.onclick = function() {
-            modalexample3.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalexample4 = document.getElementById('modalexample4');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgexample4 = document.getElementById('imgexample4');
-          var modalImgexample4 = document.getElementById('imgmodalexample4');
-          var captionTextexample4 = document.getElementById('captionexample4');
-          imgexample4.onclick = function(){
-            modalexample4.style.display = 'block';
-            modalImgexample4.src = this.src;
-            captionTextexample4.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgexample4.onclick = function() {
-            modalexample4.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalexample5 = document.getElementById('modalexample5');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgexample5 = document.getElementById('imgexample5');
-          var modalImgexample5 = document.getElementById('imgmodalexample5');
-          var captionTextexample5 = document.getElementById('captionexample5');
-          imgexample5.onclick = function(){
-            modalexample5.style.display = 'block';
-            modalImgexample5.src = this.src;
-            captionTextexample5.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgexample5.onclick = function() {
-            modalexample5.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalexample2 = document.getElementById('modalexample2');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgexample2 = document.getElementById('imgexample2');
-          var modalImgexample2 = document.getElementById('imgmodalexample2');
-          var captionTextexample2 = document.getElementById('captionexample2');
-          imgexample2.onclick = function(){
-            modalexample2.style.display = 'block';
-            modalImgexample2.src = this.src;
-            captionTextexample2.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgexample2.onclick = function() {
-            modalexample2.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalexample2 = document.getElementById('modalexample2');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgexample2 = document.getElementById('imgexample2');
-          var modalImgexample2 = document.getElementById('imgmodalexample2');
-          var captionTextexample2 = document.getElementById('captionexample2');
-          imgexample2.onclick = function(){
-            modalexample2.style.display = 'block';
-            modalImgexample2.src = this.src;
-            captionTextexample2.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgexample2.onclick = function() {
-            modalexample2.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalexample3 = document.getElementById('modalexample3');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgexample3 = document.getElementById('imgexample3');
-          var modalImgexample3 = document.getElementById('imgmodalexample3');
-          var captionTextexample3 = document.getElementById('captionexample3');
-          imgexample3.onclick = function(){
-            modalexample3.style.display = 'block';
-            modalImgexample3.src = this.src;
-            captionTextexample3.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgexample3.onclick = function() {
-            modalexample3.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalexample4 = document.getElementById('modalexample4');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgexample4 = document.getElementById('imgexample4');
-          var modalImgexample4 = document.getElementById('imgmodalexample4');
-          var captionTextexample4 = document.getElementById('captionexample4');
-          imgexample4.onclick = function(){
-            modalexample4.style.display = 'block';
-            modalImgexample4.src = this.src;
-            captionTextexample4.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgexample4.onclick = function() {
-            modalexample4.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalexample5 = document.getElementById('modalexample5');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgexample5 = document.getElementById('imgexample5');
-          var modalImgexample5 = document.getElementById('imgmodalexample5');
-          var captionTextexample5 = document.getElementById('captionexample5');
-          imgexample5.onclick = function(){
-            modalexample5.style.display = 'block';
-            modalImgexample5.src = this.src;
-            captionTextexample5.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgexample5.onclick = function() {
-            modalexample5.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalrgps_grid = document.getElementById('modalrgps_grid');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgrgps_grid = document.getElementById('imgrgps_grid');
-          var modalImgrgps_grid = document.getElementById('imgmodalrgps_grid');
-          var captionTextrgps_grid = document.getElementById('captionrgps_grid');
-          imgrgps_grid.onclick = function(){
-            modalrgps_grid.style.display = 'block';
-            modalImgrgps_grid.src = this.src;
-            captionTextrgps_grid.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgrgps_grid.onclick = function() {
-            modalrgps_grid.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalrgps_grid = document.getElementById('modalrgps_grid');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgrgps_grid = document.getElementById('imgrgps_grid');
-          var modalImgrgps_grid = document.getElementById('imgmodalrgps_grid');
-          var captionTextrgps_grid = document.getElementById('captionrgps_grid');
-          imgrgps_grid.onclick = function(){
-            modalrgps_grid.style.display = 'block';
-            modalImgrgps_grid.src = this.src;
-            captionTextrgps_grid.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgrgps_grid.onclick = function() {
-            modalrgps_grid.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalrgps_grid = document.getElementById('modalrgps_grid');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgrgps_grid = document.getElementById('imgrgps_grid');
-          var modalImgrgps_grid = document.getElementById('imgmodalrgps_grid');
-          var captionTextrgps_grid = document.getElementById('captionrgps_grid');
-          imgrgps_grid.onclick = function(){
-            modalrgps_grid.style.display = 'block';
-            modalImgrgps_grid.src = this.src;
-            captionTextrgps_grid.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgrgps_grid.onclick = function() {
-            modalrgps_grid.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalrgps_grid = document.getElementById('modalrgps_grid');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgrgps_grid = document.getElementById('imgrgps_grid');
-          var modalImgrgps_grid = document.getElementById('imgmodalrgps_grid');
-          var captionTextrgps_grid = document.getElementById('captionrgps_grid');
-          imgrgps_grid.onclick = function(){
-            modalrgps_grid.style.display = 'block';
-            modalImgrgps_grid.src = this.src;
-            captionTextrgps_grid.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgrgps_grid.onclick = function() {
-            modalrgps_grid.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
           var modalIceChunk = document.getElementById('modalIceChunk');
         /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
           var imgIceChunk = document.getElementById('imgIceChunk');
@@ -1589,121 +1355,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 </script>
 <script>
         /* Get the modal*/
-          var modalthermal_example = document.getElementById('modalthermal_example');
+          var modalrgps_grid = document.getElementById('modalrgps_grid');
         /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgthermal_example = document.getElementById('imgthermal_example');
-          var modalImgthermal_example = document.getElementById('imgmodalthermal_example');
-          var captionTextthermal_example = document.getElementById('captionthermal_example');
-          imgthermal_example.onclick = function(){
-            modalthermal_example.style.display = 'block';
-            modalImgthermal_example.src = this.src;
-            captionTextthermal_example.innerHTML = this.alt;
+          var imgrgps_grid = document.getElementById('imgrgps_grid');
+          var modalImgrgps_grid = document.getElementById('imgmodalrgps_grid');
+          var captionTextrgps_grid = document.getElementById('captionrgps_grid');
+          imgrgps_grid.onclick = function(){
+            modalrgps_grid.style.display = 'block';
+            modalImgrgps_grid.src = this.src;
+            captionTextrgps_grid.innerHTML = this.alt;
           }
           /* When the user clicks on the modalImg, close it*/
-          modalImgthermal_example.onclick = function() {
-            modalthermal_example.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalthermal_example = document.getElementById('modalthermal_example');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgthermal_example = document.getElementById('imgthermal_example');
-          var modalImgthermal_example = document.getElementById('imgmodalthermal_example');
-          var captionTextthermal_example = document.getElementById('captionthermal_example');
-          imgthermal_example.onclick = function(){
-            modalthermal_example.style.display = 'block';
-            modalImgthermal_example.src = this.src;
-            captionTextthermal_example.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgthermal_example.onclick = function() {
-            modalthermal_example.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalthermal_example = document.getElementById('modalthermal_example');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgthermal_example = document.getElementById('imgthermal_example');
-          var modalImgthermal_example = document.getElementById('imgmodalthermal_example');
-          var captionTextthermal_example = document.getElementById('captionthermal_example');
-          imgthermal_example.onclick = function(){
-            modalthermal_example.style.display = 'block';
-            modalImgthermal_example.src = this.src;
-            captionTextthermal_example.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgthermal_example.onclick = function() {
-            modalthermal_example.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalthermal_example = document.getElementById('modalthermal_example');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgthermal_example = document.getElementById('imgthermal_example');
-          var modalImgthermal_example = document.getElementById('imgmodalthermal_example');
-          var captionTextthermal_example = document.getElementById('captionthermal_example');
-          imgthermal_example.onclick = function(){
-            modalthermal_example.style.display = 'block';
-            modalImgthermal_example.src = this.src;
-            captionTextthermal_example.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgthermal_example.onclick = function() {
-            modalthermal_example.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalthermal_example = document.getElementById('modalthermal_example');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgthermal_example = document.getElementById('imgthermal_example');
-          var modalImgthermal_example = document.getElementById('imgmodalthermal_example');
-          var captionTextthermal_example = document.getElementById('captionthermal_example');
-          imgthermal_example.onclick = function(){
-            modalthermal_example.style.display = 'block';
-            modalImgthermal_example.src = this.src;
-            captionTextthermal_example.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgthermal_example.onclick = function() {
-            modalthermal_example.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalthermal_example = document.getElementById('modalthermal_example');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgthermal_example = document.getElementById('imgthermal_example');
-          var modalImgthermal_example = document.getElementById('imgmodalthermal_example');
-          var captionTextthermal_example = document.getElementById('captionthermal_example');
-          imgthermal_example.onclick = function(){
-            modalthermal_example.style.display = 'block';
-            modalImgthermal_example.src = this.src;
-            captionTextthermal_example.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgthermal_example.onclick = function() {
-            modalthermal_example.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalthermal_example = document.getElementById('modalthermal_example');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgthermal_example = document.getElementById('imgthermal_example');
-          var modalImgthermal_example = document.getElementById('imgmodalthermal_example');
-          var captionTextthermal_example = document.getElementById('captionthermal_example');
-          imgthermal_example.onclick = function(){
-            modalthermal_example.style.display = 'block';
-            modalImgthermal_example.src = this.src;
-            captionTextthermal_example.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgthermal_example.onclick = function() {
-            modalthermal_example.style.display = 'none';
+          modalImgrgps_grid.onclick = function() {
+            modalrgps_grid.style.display = 'none';
           }
 </script>
 <script>
@@ -1759,108 +1423,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 </script>
 <script>
         /* Get the modal*/
-          var modalkinematic_crack_algorithm = document.getElementById('modalkinematic_crack_algorithm');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgkinematic_crack_algorithm = document.getElementById('imgkinematic_crack_algorithm');
-          var modalImgkinematic_crack_algorithm = document.getElementById('imgmodalkinematic_crack_algorithm');
-          var captionTextkinematic_crack_algorithm = document.getElementById('captionkinematic_crack_algorithm');
-          imgkinematic_crack_algorithm.onclick = function(){
-            modalkinematic_crack_algorithm.style.display = 'block';
-            modalImgkinematic_crack_algorithm.src = this.src;
-            captionTextkinematic_crack_algorithm.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgkinematic_crack_algorithm.onclick = function() {
-            modalkinematic_crack_algorithm.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalgrid_example = document.getElementById('modalgrid_example');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imggrid_example = document.getElementById('imggrid_example');
-          var modalImggrid_example = document.getElementById('imgmodalgrid_example');
-          var captionTextgrid_example = document.getElementById('captiongrid_example');
-          imggrid_example.onclick = function(){
-            modalgrid_example.style.display = 'block';
-            modalImggrid_example.src = this.src;
-            captionTextgrid_example.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImggrid_example.onclick = function() {
-            modalgrid_example.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalkinematic_crack_algorithm = document.getElementById('modalkinematic_crack_algorithm');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgkinematic_crack_algorithm = document.getElementById('imgkinematic_crack_algorithm');
-          var modalImgkinematic_crack_algorithm = document.getElementById('imgmodalkinematic_crack_algorithm');
-          var captionTextkinematic_crack_algorithm = document.getElementById('captionkinematic_crack_algorithm');
-          imgkinematic_crack_algorithm.onclick = function(){
-            modalkinematic_crack_algorithm.style.display = 'block';
-            modalImgkinematic_crack_algorithm.src = this.src;
-            captionTextkinematic_crack_algorithm.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgkinematic_crack_algorithm.onclick = function() {
-            modalkinematic_crack_algorithm.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modaltraj_plot = document.getElementById('modaltraj_plot');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgtraj_plot = document.getElementById('imgtraj_plot');
-          var modalImgtraj_plot = document.getElementById('imgmodaltraj_plot');
-          var captionTexttraj_plot = document.getElementById('captiontraj_plot');
-          imgtraj_plot.onclick = function(){
-            modaltraj_plot.style.display = 'block';
-            modalImgtraj_plot.src = this.src;
-            captionTexttraj_plot.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgtraj_plot.onclick = function() {
-            modaltraj_plot.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modaltraj_plot = document.getElementById('modaltraj_plot');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgtraj_plot = document.getElementById('imgtraj_plot');
-          var modalImgtraj_plot = document.getElementById('imgmodaltraj_plot');
-          var captionTexttraj_plot = document.getElementById('captiontraj_plot');
-          imgtraj_plot.onclick = function(){
-            modaltraj_plot.style.display = 'block';
-            modalImgtraj_plot.src = this.src;
-            captionTexttraj_plot.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgtraj_plot.onclick = function() {
-            modaltraj_plot.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modaltraj_plot = document.getElementById('modaltraj_plot');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgtraj_plot = document.getElementById('imgtraj_plot');
-          var modalImgtraj_plot = document.getElementById('imgmodaltraj_plot');
-          var captionTexttraj_plot = document.getElementById('captiontraj_plot');
-          imgtraj_plot.onclick = function(){
-            modaltraj_plot.style.display = 'block';
-            modalImgtraj_plot.src = this.src;
-            captionTexttraj_plot.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgtraj_plot.onclick = function() {
-            modaltraj_plot.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
           var modaltraj_plot = document.getElementById('modaltraj_plot');
         /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
           var imgtraj_plot = document.getElementById('imgtraj_plot');
@@ -1895,873 +1457,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 </script>
 <script>
         /* Get the modal*/
-          var modalboundingbox = document.getElementById('modalboundingbox');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgboundingbox = document.getElementById('imgboundingbox');
-          var modalImgboundingbox = document.getElementById('imgmodalboundingbox');
-          var captionTextboundingbox = document.getElementById('captionboundingbox');
-          imgboundingbox.onclick = function(){
-            modalboundingbox.style.display = 'block';
-            modalImgboundingbox.src = this.src;
-            captionTextboundingbox.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgboundingbox.onclick = function() {
-            modalboundingbox.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalgrid_combo = document.getElementById('modalgrid_combo');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imggrid_combo = document.getElementById('imggrid_combo');
-          var modalImggrid_combo = document.getElementById('imgmodalgrid_combo');
-          var captionTextgrid_combo = document.getElementById('captiongrid_combo');
-          imggrid_combo.onclick = function(){
-            modalgrid_combo.style.display = 'block';
-            modalImggrid_combo.src = this.src;
-            captionTextgrid_combo.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImggrid_combo.onclick = function() {
-            modalgrid_combo.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalgrid_combo = document.getElementById('modalgrid_combo');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imggrid_combo = document.getElementById('imggrid_combo');
-          var modalImggrid_combo = document.getElementById('imgmodalgrid_combo');
-          var captionTextgrid_combo = document.getElementById('captiongrid_combo');
-          imggrid_combo.onclick = function(){
-            modalgrid_combo.style.display = 'block';
-            modalImggrid_combo.src = this.src;
-            captionTextgrid_combo.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImggrid_combo.onclick = function() {
-            modalgrid_combo.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsim_traj = document.getElementById('modalsim_traj');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgsim_traj = document.getElementById('imgsim_traj');
-          var modalImgsim_traj = document.getElementById('imgmodalsim_traj');
-          var captionTextsim_traj = document.getElementById('captionsim_traj');
-          imgsim_traj.onclick = function(){
-            modalsim_traj.style.display = 'block';
-            modalImgsim_traj.src = this.src;
-            captionTextsim_traj.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsim_traj.onclick = function() {
-            modalsim_traj.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsim_traj = document.getElementById('modalsim_traj');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgsim_traj = document.getElementById('imgsim_traj');
-          var modalImgsim_traj = document.getElementById('imgmodalsim_traj');
-          var captionTextsim_traj = document.getElementById('captionsim_traj');
-          imgsim_traj.onclick = function(){
-            modalsim_traj.style.display = 'block';
-            modalImgsim_traj.src = this.src;
-            captionTextsim_traj.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsim_traj.onclick = function() {
-            modalsim_traj.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsim_traj = document.getElementById('modalsim_traj');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgsim_traj = document.getElementById('imgsim_traj');
-          var modalImgsim_traj = document.getElementById('imgmodalsim_traj');
-          var captionTextsim_traj = document.getElementById('captionsim_traj');
-          imgsim_traj.onclick = function(){
-            modalsim_traj.style.display = 'block';
-            modalImgsim_traj.src = this.src;
-            captionTextsim_traj.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsim_traj.onclick = function() {
-            modalsim_traj.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsim_initclust = document.getElementById('modalsim_initclust');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgsim_initclust = document.getElementById('imgsim_initclust');
-          var modalImgsim_initclust = document.getElementById('imgmodalsim_initclust');
-          var captionTextsim_initclust = document.getElementById('captionsim_initclust');
-          imgsim_initclust.onclick = function(){
-            modalsim_initclust.style.display = 'block';
-            modalImgsim_initclust.src = this.src;
-            captionTextsim_initclust.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsim_initclust.onclick = function() {
-            modalsim_initclust.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsim_last_clust = document.getElementById('modalsim_last_clust');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgsim_last_clust = document.getElementById('imgsim_last_clust');
-          var modalImgsim_last_clust = document.getElementById('imgmodalsim_last_clust');
-          var captionTextsim_last_clust = document.getElementById('captionsim_last_clust');
-          imgsim_last_clust.onclick = function(){
-            modalsim_last_clust.style.display = 'block';
-            modalImgsim_last_clust.src = this.src;
-            captionTextsim_last_clust.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsim_last_clust.onclick = function() {
-            modalsim_last_clust.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsim_initclust = document.getElementById('modalsim_initclust');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgsim_initclust = document.getElementById('imgsim_initclust');
-          var modalImgsim_initclust = document.getElementById('imgmodalsim_initclust');
-          var captionTextsim_initclust = document.getElementById('captionsim_initclust');
-          imgsim_initclust.onclick = function(){
-            modalsim_initclust.style.display = 'block';
-            modalImgsim_initclust.src = this.src;
-            captionTextsim_initclust.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsim_initclust.onclick = function() {
-            modalsim_initclust.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsim_last_clust = document.getElementById('modalsim_last_clust');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgsim_last_clust = document.getElementById('imgsim_last_clust');
-          var modalImgsim_last_clust = document.getElementById('imgmodalsim_last_clust');
-          var captionTextsim_last_clust = document.getElementById('captionsim_last_clust');
-          imgsim_last_clust.onclick = function(){
-            modalsim_last_clust.style.display = 'block';
-            modalImgsim_last_clust.src = this.src;
-            captionTextsim_last_clust.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsim_last_clust.onclick = function() {
-            modalsim_last_clust.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsim_init_clust = document.getElementById('modalsim_init_clust');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgsim_init_clust = document.getElementById('imgsim_init_clust');
-          var modalImgsim_init_clust = document.getElementById('imgmodalsim_init_clust');
-          var captionTextsim_init_clust = document.getElementById('captionsim_init_clust');
-          imgsim_init_clust.onclick = function(){
-            modalsim_init_clust.style.display = 'block';
-            modalImgsim_init_clust.src = this.src;
-            captionTextsim_init_clust.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsim_init_clust.onclick = function() {
-            modalsim_init_clust.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsim_last_clust = document.getElementById('modalsim_last_clust');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgsim_last_clust = document.getElementById('imgsim_last_clust');
-          var modalImgsim_last_clust = document.getElementById('imgmodalsim_last_clust');
-          var captionTextsim_last_clust = document.getElementById('captionsim_last_clust');
-          imgsim_last_clust.onclick = function(){
-            modalsim_last_clust.style.display = 'block';
-            modalImgsim_last_clust.src = this.src;
-            captionTextsim_last_clust.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsim_last_clust.onclick = function() {
-            modalsim_last_clust.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsim_init_clust = document.getElementById('modalsim_init_clust');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgsim_init_clust = document.getElementById('imgsim_init_clust');
-          var modalImgsim_init_clust = document.getElementById('imgmodalsim_init_clust');
-          var captionTextsim_init_clust = document.getElementById('captionsim_init_clust');
-          imgsim_init_clust.onclick = function(){
-            modalsim_init_clust.style.display = 'block';
-            modalImgsim_init_clust.src = this.src;
-            captionTextsim_init_clust.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsim_init_clust.onclick = function() {
-            modalsim_init_clust.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalsim_last_clust = document.getElementById('modalsim_last_clust');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgsim_last_clust = document.getElementById('imgsim_last_clust');
-          var modalImgsim_last_clust = document.getElementById('imgmodalsim_last_clust');
-          var captionTextsim_last_clust = document.getElementById('captionsim_last_clust');
-          imgsim_last_clust.onclick = function(){
-            modalsim_last_clust.style.display = 'block';
-            modalImgsim_last_clust.src = this.src;
-            captionTextsim_last_clust.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgsim_last_clust.onclick = function() {
-            modalsim_last_clust.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalall_clustjpg = document.getElementById('modalall_clustjpg');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgall_clustjpg = document.getElementById('imgall_clustjpg');
-          var modalImgall_clustjpg = document.getElementById('imgmodalall_clustjpg');
-          var captionTextall_clustjpg = document.getElementById('captionall_clustjpg');
-          imgall_clustjpg.onclick = function(){
-            modalall_clustjpg.style.display = 'block';
-            modalImgall_clustjpg.src = this.src;
-            captionTextall_clustjpg.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgall_clustjpg.onclick = function() {
-            modalall_clustjpg.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalall_clust = document.getElementById('modalall_clust');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgall_clust = document.getElementById('imgall_clust');
-          var modalImgall_clust = document.getElementById('imgmodalall_clust');
-          var captionTextall_clust = document.getElementById('captionall_clust');
-          imgall_clust.onclick = function(){
-            modalall_clust.style.display = 'block';
-            modalImgall_clust.src = this.src;
-            captionTextall_clust.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgall_clust.onclick = function() {
-            modalall_clust.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalall_clust = document.getElementById('modalall_clust');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgall_clust = document.getElementById('imgall_clust');
-          var modalImgall_clust = document.getElementById('imgmodalall_clust');
-          var captionTextall_clust = document.getElementById('captionall_clust');
-          imgall_clust.onclick = function(){
-            modalall_clust.style.display = 'block';
-            modalImgall_clust.src = this.src;
-            captionTextall_clust.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgall_clust.onclick = function() {
-            modalall_clust.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalclust_by_week = document.getElementById('modalclust_by_week');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgclust_by_week = document.getElementById('imgclust_by_week');
-          var modalImgclust_by_week = document.getElementById('imgmodalclust_by_week');
-          var captionTextclust_by_week = document.getElementById('captionclust_by_week');
-          imgclust_by_week.onclick = function(){
-            modalclust_by_week.style.display = 'block';
-            modalImgclust_by_week.src = this.src;
-            captionTextclust_by_week.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgclust_by_week.onclick = function() {
-            modalclust_by_week.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalweek_comp = document.getElementById('modalweek_comp');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgweek_comp = document.getElementById('imgweek_comp');
-          var modalImgweek_comp = document.getElementById('imgmodalweek_comp');
-          var captionTextweek_comp = document.getElementById('captionweek_comp');
-          imgweek_comp.onclick = function(){
-            modalweek_comp.style.display = 'block';
-            modalImgweek_comp.src = this.src;
-            captionTextweek_comp.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgweek_comp.onclick = function() {
-            modalweek_comp.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalclust_by_week = document.getElementById('modalclust_by_week');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgclust_by_week = document.getElementById('imgclust_by_week');
-          var modalImgclust_by_week = document.getElementById('imgmodalclust_by_week');
-          var captionTextclust_by_week = document.getElementById('captionclust_by_week');
-          imgclust_by_week.onclick = function(){
-            modalclust_by_week.style.display = 'block';
-            modalImgclust_by_week.src = this.src;
-            captionTextclust_by_week.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgclust_by_week.onclick = function() {
-            modalclust_by_week.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalweek_comp = document.getElementById('modalweek_comp');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgweek_comp = document.getElementById('imgweek_comp');
-          var modalImgweek_comp = document.getElementById('imgmodalweek_comp');
-          var captionTextweek_comp = document.getElementById('captionweek_comp');
-          imgweek_comp.onclick = function(){
-            modalweek_comp.style.display = 'block';
-            modalImgweek_comp.src = this.src;
-            captionTextweek_comp.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgweek_comp.onclick = function() {
-            modalweek_comp.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalweek_comp = document.getElementById('modalweek_comp');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgweek_comp = document.getElementById('imgweek_comp');
-          var modalImgweek_comp = document.getElementById('imgmodalweek_comp');
-          var captionTextweek_comp = document.getElementById('captionweek_comp');
-          imgweek_comp.onclick = function(){
-            modalweek_comp.style.display = 'block';
-            modalImgweek_comp.src = this.src;
-            captionTextweek_comp.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgweek_comp.onclick = function() {
-            modalweek_comp.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalclust_by_week = document.getElementById('modalclust_by_week');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgclust_by_week = document.getElementById('imgclust_by_week');
-          var modalImgclust_by_week = document.getElementById('imgmodalclust_by_week');
-          var captionTextclust_by_week = document.getElementById('captionclust_by_week');
-          imgclust_by_week.onclick = function(){
-            modalclust_by_week.style.display = 'block';
-            modalImgclust_by_week.src = this.src;
-            captionTextclust_by_week.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgclust_by_week.onclick = function() {
-            modalclust_by_week.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalweek_comp = document.getElementById('modalweek_comp');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgweek_comp = document.getElementById('imgweek_comp');
-          var modalImgweek_comp = document.getElementById('imgmodalweek_comp');
-          var captionTextweek_comp = document.getElementById('captionweek_comp');
-          imgweek_comp.onclick = function(){
-            modalweek_comp.style.display = 'block';
-            modalImgweek_comp.src = this.src;
-            captionTextweek_comp.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgweek_comp.onclick = function() {
-            modalweek_comp.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalclust_by_week = document.getElementById('modalclust_by_week');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgclust_by_week = document.getElementById('imgclust_by_week');
-          var modalImgclust_by_week = document.getElementById('imgmodalclust_by_week');
-          var captionTextclust_by_week = document.getElementById('captionclust_by_week');
-          imgclust_by_week.onclick = function(){
-            modalclust_by_week.style.display = 'block';
-            modalImgclust_by_week.src = this.src;
-            captionTextclust_by_week.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgclust_by_week.onclick = function() {
-            modalclust_by_week.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalweek_comp = document.getElementById('modalweek_comp');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgweek_comp = document.getElementById('imgweek_comp');
-          var modalImgweek_comp = document.getElementById('imgmodalweek_comp');
-          var captionTextweek_comp = document.getElementById('captionweek_comp');
-          imgweek_comp.onclick = function(){
-            modalweek_comp.style.display = 'block';
-            modalImgweek_comp.src = this.src;
-            captionTextweek_comp.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgweek_comp.onclick = function() {
-            modalweek_comp.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalclust_by_week = document.getElementById('modalclust_by_week');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgclust_by_week = document.getElementById('imgclust_by_week');
-          var modalImgclust_by_week = document.getElementById('imgmodalclust_by_week');
-          var captionTextclust_by_week = document.getElementById('captionclust_by_week');
-          imgclust_by_week.onclick = function(){
-            modalclust_by_week.style.display = 'block';
-            modalImgclust_by_week.src = this.src;
-            captionTextclust_by_week.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgclust_by_week.onclick = function() {
-            modalclust_by_week.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalweekcomp = document.getElementById('modalweekcomp');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgweekcomp = document.getElementById('imgweekcomp');
-          var modalImgweekcomp = document.getElementById('imgmodalweekcomp');
-          var captionTextweekcomp = document.getElementById('captionweekcomp');
-          imgweekcomp.onclick = function(){
-            modalweekcomp.style.display = 'block';
-            modalImgweekcomp.src = this.src;
-            captionTextweekcomp.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgweekcomp.onclick = function() {
-            modalweekcomp.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalclust_by_week = document.getElementById('modalclust_by_week');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgclust_by_week = document.getElementById('imgclust_by_week');
-          var modalImgclust_by_week = document.getElementById('imgmodalclust_by_week');
-          var captionTextclust_by_week = document.getElementById('captionclust_by_week');
-          imgclust_by_week.onclick = function(){
-            modalclust_by_week.style.display = 'block';
-            modalImgclust_by_week.src = this.src;
-            captionTextclust_by_week.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgclust_by_week.onclick = function() {
-            modalclust_by_week.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalweekcomp = document.getElementById('modalweekcomp');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgweekcomp = document.getElementById('imgweekcomp');
-          var modalImgweekcomp = document.getElementById('imgmodalweekcomp');
-          var captionTextweekcomp = document.getElementById('captionweekcomp');
-          imgweekcomp.onclick = function(){
-            modalweekcomp.style.display = 'block';
-            modalImgweekcomp.src = this.src;
-            captionTextweekcomp.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgweekcomp.onclick = function() {
-            modalweekcomp.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalclust_by_week = document.getElementById('modalclust_by_week');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgclust_by_week = document.getElementById('imgclust_by_week');
-          var modalImgclust_by_week = document.getElementById('imgmodalclust_by_week');
-          var captionTextclust_by_week = document.getElementById('captionclust_by_week');
-          imgclust_by_week.onclick = function(){
-            modalclust_by_week.style.display = 'block';
-            modalImgclust_by_week.src = this.src;
-            captionTextclust_by_week.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgclust_by_week.onclick = function() {
-            modalclust_by_week.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalweekcomp = document.getElementById('modalweekcomp');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgweekcomp = document.getElementById('imgweekcomp');
-          var modalImgweekcomp = document.getElementById('imgmodalweekcomp');
-          var captionTextweekcomp = document.getElementById('captionweekcomp');
-          imgweekcomp.onclick = function(){
-            modalweekcomp.style.display = 'block';
-            modalImgweekcomp.src = this.src;
-            captionTextweekcomp.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgweekcomp.onclick = function() {
-            modalweekcomp.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalclust_by_week = document.getElementById('modalclust_by_week');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgclust_by_week = document.getElementById('imgclust_by_week');
-          var modalImgclust_by_week = document.getElementById('imgmodalclust_by_week');
-          var captionTextclust_by_week = document.getElementById('captionclust_by_week');
-          imgclust_by_week.onclick = function(){
-            modalclust_by_week.style.display = 'block';
-            modalImgclust_by_week.src = this.src;
-            captionTextclust_by_week.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgclust_by_week.onclick = function() {
-            modalclust_by_week.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalweekcomp = document.getElementById('modalweekcomp');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgweekcomp = document.getElementById('imgweekcomp');
-          var modalImgweekcomp = document.getElementById('imgmodalweekcomp');
-          var captionTextweekcomp = document.getElementById('captionweekcomp');
-          imgweekcomp.onclick = function(){
-            modalweekcomp.style.display = 'block';
-            modalImgweekcomp.src = this.src;
-            captionTextweekcomp.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgweekcomp.onclick = function() {
-            modalweekcomp.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalclust_by_week = document.getElementById('modalclust_by_week');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgclust_by_week = document.getElementById('imgclust_by_week');
-          var modalImgclust_by_week = document.getElementById('imgmodalclust_by_week');
-          var captionTextclust_by_week = document.getElementById('captionclust_by_week');
-          imgclust_by_week.onclick = function(){
-            modalclust_by_week.style.display = 'block';
-            modalImgclust_by_week.src = this.src;
-            captionTextclust_by_week.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgclust_by_week.onclick = function() {
-            modalclust_by_week.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalweek_comp = document.getElementById('modalweek_comp');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgweek_comp = document.getElementById('imgweek_comp');
-          var modalImgweek_comp = document.getElementById('imgmodalweek_comp');
-          var captionTextweek_comp = document.getElementById('captionweek_comp');
-          imgweek_comp.onclick = function(){
-            modalweek_comp.style.display = 'block';
-            modalImgweek_comp.src = this.src;
-            captionTextweek_comp.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgweek_comp.onclick = function() {
-            modalweek_comp.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalclust_by_week = document.getElementById('modalclust_by_week');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgclust_by_week = document.getElementById('imgclust_by_week');
-          var modalImgclust_by_week = document.getElementById('imgmodalclust_by_week');
-          var captionTextclust_by_week = document.getElementById('captionclust_by_week');
-          imgclust_by_week.onclick = function(){
-            modalclust_by_week.style.display = 'block';
-            modalImgclust_by_week.src = this.src;
-            captionTextclust_by_week.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgclust_by_week.onclick = function() {
-            modalclust_by_week.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalweek_comp = document.getElementById('modalweek_comp');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgweek_comp = document.getElementById('imgweek_comp');
-          var modalImgweek_comp = document.getElementById('imgmodalweek_comp');
-          var captionTextweek_comp = document.getElementById('captionweek_comp');
-          imgweek_comp.onclick = function(){
-            modalweek_comp.style.display = 'block';
-            modalImgweek_comp.src = this.src;
-            captionTextweek_comp.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgweek_comp.onclick = function() {
-            modalweek_comp.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalclust_by_week = document.getElementById('modalclust_by_week');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgclust_by_week = document.getElementById('imgclust_by_week');
-          var modalImgclust_by_week = document.getElementById('imgmodalclust_by_week');
-          var captionTextclust_by_week = document.getElementById('captionclust_by_week');
-          imgclust_by_week.onclick = function(){
-            modalclust_by_week.style.display = 'block';
-            modalImgclust_by_week.src = this.src;
-            captionTextclust_by_week.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgclust_by_week.onclick = function() {
-            modalclust_by_week.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalweek_comp = document.getElementById('modalweek_comp');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgweek_comp = document.getElementById('imgweek_comp');
-          var modalImgweek_comp = document.getElementById('imgmodalweek_comp');
-          var captionTextweek_comp = document.getElementById('captionweek_comp');
-          imgweek_comp.onclick = function(){
-            modalweek_comp.style.display = 'block';
-            modalImgweek_comp.src = this.src;
-            captionTextweek_comp.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgweek_comp.onclick = function() {
-            modalweek_comp.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalclust_by_week = document.getElementById('modalclust_by_week');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgclust_by_week = document.getElementById('imgclust_by_week');
-          var modalImgclust_by_week = document.getElementById('imgmodalclust_by_week');
-          var captionTextclust_by_week = document.getElementById('captionclust_by_week');
-          imgclust_by_week.onclick = function(){
-            modalclust_by_week.style.display = 'block';
-            modalImgclust_by_week.src = this.src;
-            captionTextclust_by_week.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgclust_by_week.onclick = function() {
-            modalclust_by_week.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalweek_comp = document.getElementById('modalweek_comp');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgweek_comp = document.getElementById('imgweek_comp');
-          var modalImgweek_comp = document.getElementById('imgmodalweek_comp');
-          var captionTextweek_comp = document.getElementById('captionweek_comp');
-          imgweek_comp.onclick = function(){
-            modalweek_comp.style.display = 'block';
-            modalImgweek_comp.src = this.src;
-            captionTextweek_comp.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgweek_comp.onclick = function() {
-            modalweek_comp.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalclust_by_week = document.getElementById('modalclust_by_week');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgclust_by_week = document.getElementById('imgclust_by_week');
-          var modalImgclust_by_week = document.getElementById('imgmodalclust_by_week');
-          var captionTextclust_by_week = document.getElementById('captionclust_by_week');
-          imgclust_by_week.onclick = function(){
-            modalclust_by_week.style.display = 'block';
-            modalImgclust_by_week.src = this.src;
-            captionTextclust_by_week.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgclust_by_week.onclick = function() {
-            modalclust_by_week.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalweek_comp = document.getElementById('modalweek_comp');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgweek_comp = document.getElementById('imgweek_comp');
-          var modalImgweek_comp = document.getElementById('imgmodalweek_comp');
-          var captionTextweek_comp = document.getElementById('captionweek_comp');
-          imgweek_comp.onclick = function(){
-            modalweek_comp.style.display = 'block';
-            modalImgweek_comp.src = this.src;
-            captionTextweek_comp.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgweek_comp.onclick = function() {
-            modalweek_comp.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalweek_comp = document.getElementById('modalweek_comp');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgweek_comp = document.getElementById('imgweek_comp');
-          var modalImgweek_comp = document.getElementById('imgmodalweek_comp');
-          var captionTextweek_comp = document.getElementById('captionweek_comp');
-          imgweek_comp.onclick = function(){
-            modalweek_comp.style.display = 'block';
-            modalImgweek_comp.src = this.src;
-            captionTextweek_comp.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgweek_comp.onclick = function() {
-            modalweek_comp.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalw1_c1_traj = document.getElementById('modalw1_c1_traj');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgw1_c1_traj = document.getElementById('imgw1_c1_traj');
-          var modalImgw1_c1_traj = document.getElementById('imgmodalw1_c1_traj');
-          var captionTextw1_c1_traj = document.getElementById('captionw1_c1_traj');
-          imgw1_c1_traj.onclick = function(){
-            modalw1_c1_traj.style.display = 'block';
-            modalImgw1_c1_traj.src = this.src;
-            captionTextw1_c1_traj.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgw1_c1_traj.onclick = function() {
-            modalw1_c1_traj.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalw1_c1_traj = document.getElementById('modalw1_c1_traj');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgw1_c1_traj = document.getElementById('imgw1_c1_traj');
-          var modalImgw1_c1_traj = document.getElementById('imgmodalw1_c1_traj');
-          var captionTextw1_c1_traj = document.getElementById('captionw1_c1_traj');
-          imgw1_c1_traj.onclick = function(){
-            modalw1_c1_traj.style.display = 'block';
-            modalImgw1_c1_traj.src = this.src;
-            captionTextw1_c1_traj.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgw1_c1_traj.onclick = function() {
-            modalw1_c1_traj.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalw1_c1_traj = document.getElementById('modalw1_c1_traj');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgw1_c1_traj = document.getElementById('imgw1_c1_traj');
-          var modalImgw1_c1_traj = document.getElementById('imgmodalw1_c1_traj');
-          var captionTextw1_c1_traj = document.getElementById('captionw1_c1_traj');
-          imgw1_c1_traj.onclick = function(){
-            modalw1_c1_traj.style.display = 'block';
-            modalImgw1_c1_traj.src = this.src;
-            captionTextw1_c1_traj.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgw1_c1_traj.onclick = function() {
-            modalw1_c1_traj.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalw1_c5_traj = document.getElementById('modalw1_c5_traj');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgw1_c5_traj = document.getElementById('imgw1_c5_traj');
-          var modalImgw1_c5_traj = document.getElementById('imgmodalw1_c5_traj');
-          var captionTextw1_c5_traj = document.getElementById('captionw1_c5_traj');
-          imgw1_c5_traj.onclick = function(){
-            modalw1_c5_traj.style.display = 'block';
-            modalImgw1_c5_traj.src = this.src;
-            captionTextw1_c5_traj.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgw1_c5_traj.onclick = function() {
-            modalw1_c5_traj.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalw1_c1_traj = document.getElementById('modalw1_c1_traj');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgw1_c1_traj = document.getElementById('imgw1_c1_traj');
-          var modalImgw1_c1_traj = document.getElementById('imgmodalw1_c1_traj');
-          var captionTextw1_c1_traj = document.getElementById('captionw1_c1_traj');
-          imgw1_c1_traj.onclick = function(){
-            modalw1_c1_traj.style.display = 'block';
-            modalImgw1_c1_traj.src = this.src;
-            captionTextw1_c1_traj.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgw1_c1_traj.onclick = function() {
-            modalw1_c1_traj.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalw2_c5_traj = document.getElementById('modalw2_c5_traj');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgw2_c5_traj = document.getElementById('imgw2_c5_traj');
-          var modalImgw2_c5_traj = document.getElementById('imgmodalw2_c5_traj');
-          var captionTextw2_c5_traj = document.getElementById('captionw2_c5_traj');
-          imgw2_c5_traj.onclick = function(){
-            modalw2_c5_traj.style.display = 'block';
-            modalImgw2_c5_traj.src = this.src;
-            captionTextw2_c5_traj.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgw2_c5_traj.onclick = function() {
-            modalw2_c5_traj.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
           var modallinpic2 = document.getElementById('modallinpic2');
         /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
           var imglinpic2 = document.getElementById('imglinpic2');
@@ -2775,57 +1470,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImglinpic2.onclick = function() {
             modallinpic2.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modallinpic2 = document.getElementById('modallinpic2');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imglinpic2 = document.getElementById('imglinpic2');
-          var modalImglinpic2 = document.getElementById('imgmodallinpic2');
-          var captionTextlinpic2 = document.getElementById('captionlinpic2');
-          imglinpic2.onclick = function(){
-            modallinpic2.style.display = 'block';
-            modalImglinpic2.src = this.src;
-            captionTextlinpic2.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImglinpic2.onclick = function() {
-            modallinpic2.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modallinpic2 = document.getElementById('modallinpic2');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imglinpic2 = document.getElementById('imglinpic2');
-          var modalImglinpic2 = document.getElementById('imgmodallinpic2');
-          var captionTextlinpic2 = document.getElementById('captionlinpic2');
-          imglinpic2.onclick = function(){
-            modallinpic2.style.display = 'block';
-            modalImglinpic2.src = this.src;
-            captionTextlinpic2.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImglinpic2.onclick = function() {
-            modallinpic2.style.display = 'none';
-          }
-</script>
-<script>
-        /* Get the modal*/
-          var modalintersection_ex = document.getElementById('modalintersection_ex');
-        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgintersection_ex = document.getElementById('imgintersection_ex');
-          var modalImgintersection_ex = document.getElementById('imgmodalintersection_ex');
-          var captionTextintersection_ex = document.getElementById('captionintersection_ex');
-          imgintersection_ex.onclick = function(){
-            modalintersection_ex.style.display = 'block';
-            modalImgintersection_ex.src = this.src;
-            captionTextintersection_ex.innerHTML = this.alt;
-          }
-          /* When the user clicks on the modalImg, close it*/
-          modalImgintersection_ex.onclick = function() {
-            modalintersection_ex.style.display = 'none';
           }
 </script>
 <script>
@@ -2864,53 +1508,87 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 </script>
 <script>
         /* Get the modal*/
-          var modalall_weeks_comp_correct = document.getElementById('modalall_weeks_comp_correct');
+          var modalgrid_combo = document.getElementById('modalgrid_combo');
         /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgall_weeks_comp_correct = document.getElementById('imgall_weeks_comp_correct');
-          var modalImgall_weeks_comp_correct = document.getElementById('imgmodalall_weeks_comp_correct');
-          var captionTextall_weeks_comp_correct = document.getElementById('captionall_weeks_comp_correct');
-          imgall_weeks_comp_correct.onclick = function(){
-            modalall_weeks_comp_correct.style.display = 'block';
-            modalImgall_weeks_comp_correct.src = this.src;
-            captionTextall_weeks_comp_correct.innerHTML = this.alt;
+          var imggrid_combo = document.getElementById('imggrid_combo');
+          var modalImggrid_combo = document.getElementById('imgmodalgrid_combo');
+          var captionTextgrid_combo = document.getElementById('captiongrid_combo');
+          imggrid_combo.onclick = function(){
+            modalgrid_combo.style.display = 'block';
+            modalImggrid_combo.src = this.src;
+            captionTextgrid_combo.innerHTML = this.alt;
           }
           /* When the user clicks on the modalImg, close it*/
-          modalImgall_weeks_comp_correct.onclick = function() {
-            modalall_weeks_comp_correct.style.display = 'none';
+          modalImggrid_combo.onclick = function() {
+            modalgrid_combo.style.display = 'none';
           }
 </script>
 <script>
         /* Get the modal*/
-          var modalall_weeks_comp_correct = document.getElementById('modalall_weeks_comp_correct');
+          var modalsim_traj = document.getElementById('modalsim_traj');
         /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgall_weeks_comp_correct = document.getElementById('imgall_weeks_comp_correct');
-          var modalImgall_weeks_comp_correct = document.getElementById('imgmodalall_weeks_comp_correct');
-          var captionTextall_weeks_comp_correct = document.getElementById('captionall_weeks_comp_correct');
-          imgall_weeks_comp_correct.onclick = function(){
-            modalall_weeks_comp_correct.style.display = 'block';
-            modalImgall_weeks_comp_correct.src = this.src;
-            captionTextall_weeks_comp_correct.innerHTML = this.alt;
+          var imgsim_traj = document.getElementById('imgsim_traj');
+          var modalImgsim_traj = document.getElementById('imgmodalsim_traj');
+          var captionTextsim_traj = document.getElementById('captionsim_traj');
+          imgsim_traj.onclick = function(){
+            modalsim_traj.style.display = 'block';
+            modalImgsim_traj.src = this.src;
+            captionTextsim_traj.innerHTML = this.alt;
           }
           /* When the user clicks on the modalImg, close it*/
-          modalImgall_weeks_comp_correct.onclick = function() {
-            modalall_weeks_comp_correct.style.display = 'none';
+          modalImgsim_traj.onclick = function() {
+            modalsim_traj.style.display = 'none';
           }
 </script>
 <script>
         /* Get the modal*/
-          var modalall_weeks_comp_correct = document.getElementById('modalall_weeks_comp_correct');
+          var modalsim_init_clust = document.getElementById('modalsim_init_clust');
         /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
-          var imgall_weeks_comp_correct = document.getElementById('imgall_weeks_comp_correct');
-          var modalImgall_weeks_comp_correct = document.getElementById('imgmodalall_weeks_comp_correct');
-          var captionTextall_weeks_comp_correct = document.getElementById('captionall_weeks_comp_correct');
-          imgall_weeks_comp_correct.onclick = function(){
-            modalall_weeks_comp_correct.style.display = 'block';
-            modalImgall_weeks_comp_correct.src = this.src;
-            captionTextall_weeks_comp_correct.innerHTML = this.alt;
+          var imgsim_init_clust = document.getElementById('imgsim_init_clust');
+          var modalImgsim_init_clust = document.getElementById('imgmodalsim_init_clust');
+          var captionTextsim_init_clust = document.getElementById('captionsim_init_clust');
+          imgsim_init_clust.onclick = function(){
+            modalsim_init_clust.style.display = 'block';
+            modalImgsim_init_clust.src = this.src;
+            captionTextsim_init_clust.innerHTML = this.alt;
           }
           /* When the user clicks on the modalImg, close it*/
-          modalImgall_weeks_comp_correct.onclick = function() {
-            modalall_weeks_comp_correct.style.display = 'none';
+          modalImgsim_init_clust.onclick = function() {
+            modalsim_init_clust.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalsim_last_clust = document.getElementById('modalsim_last_clust');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgsim_last_clust = document.getElementById('imgsim_last_clust');
+          var modalImgsim_last_clust = document.getElementById('imgmodalsim_last_clust');
+          var captionTextsim_last_clust = document.getElementById('captionsim_last_clust');
+          imgsim_last_clust.onclick = function(){
+            modalsim_last_clust.style.display = 'block';
+            modalImgsim_last_clust.src = this.src;
+            captionTextsim_last_clust.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgsim_last_clust.onclick = function() {
+            modalsim_last_clust.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalall_clust = document.getElementById('modalall_clust');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgall_clust = document.getElementById('imgall_clust');
+          var modalImgall_clust = document.getElementById('imgmodalall_clust');
+          var captionTextall_clust = document.getElementById('captionall_clust');
+          imgall_clust.onclick = function(){
+            modalall_clust.style.display = 'block';
+            modalImgall_clust.src = this.src;
+            captionTextall_clust.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgall_clust.onclick = function() {
+            modalall_clust.style.display = 'none';
           }
 </script>
 <script>
@@ -2928,6 +1606,142 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgallweekscomp.onclick = function() {
             modalallweekscomp.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalclust_by_week = document.getElementById('modalclust_by_week');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgclust_by_week = document.getElementById('imgclust_by_week');
+          var modalImgclust_by_week = document.getElementById('imgmodalclust_by_week');
+          var captionTextclust_by_week = document.getElementById('captionclust_by_week');
+          imgclust_by_week.onclick = function(){
+            modalclust_by_week.style.display = 'block';
+            modalImgclust_by_week.src = this.src;
+            captionTextclust_by_week.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgclust_by_week.onclick = function() {
+            modalclust_by_week.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalweek_comp = document.getElementById('modalweek_comp');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgweek_comp = document.getElementById('imgweek_comp');
+          var modalImgweek_comp = document.getElementById('imgmodalweek_comp');
+          var captionTextweek_comp = document.getElementById('captionweek_comp');
+          imgweek_comp.onclick = function(){
+            modalweek_comp.style.display = 'block';
+            modalImgweek_comp.src = this.src;
+            captionTextweek_comp.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgweek_comp.onclick = function() {
+            modalweek_comp.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalw1_c1_traj = document.getElementById('modalw1_c1_traj');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgw1_c1_traj = document.getElementById('imgw1_c1_traj');
+          var modalImgw1_c1_traj = document.getElementById('imgmodalw1_c1_traj');
+          var captionTextw1_c1_traj = document.getElementById('captionw1_c1_traj');
+          imgw1_c1_traj.onclick = function(){
+            modalw1_c1_traj.style.display = 'block';
+            modalImgw1_c1_traj.src = this.src;
+            captionTextw1_c1_traj.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgw1_c1_traj.onclick = function() {
+            modalw1_c1_traj.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalw2_c5_traj = document.getElementById('modalw2_c5_traj');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgw2_c5_traj = document.getElementById('imgw2_c5_traj');
+          var modalImgw2_c5_traj = document.getElementById('imgmodalw2_c5_traj');
+          var captionTextw2_c5_traj = document.getElementById('captionw2_c5_traj');
+          imgw2_c5_traj.onclick = function(){
+            modalw2_c5_traj.style.display = 'block';
+            modalImgw2_c5_traj.src = this.src;
+            captionTextw2_c5_traj.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgw2_c5_traj.onclick = function() {
+            modalw2_c5_traj.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalrgps_grid = document.getElementById('modalrgps_grid');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgrgps_grid = document.getElementById('imgrgps_grid');
+          var modalImgrgps_grid = document.getElementById('imgmodalrgps_grid');
+          var captionTextrgps_grid = document.getElementById('captionrgps_grid');
+          imgrgps_grid.onclick = function(){
+            modalrgps_grid.style.display = 'block';
+            modalImgrgps_grid.src = this.src;
+            captionTextrgps_grid.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgrgps_grid.onclick = function() {
+            modalrgps_grid.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalrgps_grid = document.getElementById('modalrgps_grid');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgrgps_grid = document.getElementById('imgrgps_grid');
+          var modalImgrgps_grid = document.getElementById('imgmodalrgps_grid');
+          var captionTextrgps_grid = document.getElementById('captionrgps_grid');
+          imgrgps_grid.onclick = function(){
+            modalrgps_grid.style.display = 'block';
+            modalImgrgps_grid.src = this.src;
+            captionTextrgps_grid.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgrgps_grid.onclick = function() {
+            modalrgps_grid.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalgrid_example = document.getElementById('modalgrid_example');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imggrid_example = document.getElementById('imggrid_example');
+          var modalImggrid_example = document.getElementById('imgmodalgrid_example');
+          var captionTextgrid_example = document.getElementById('captiongrid_example');
+          imggrid_example.onclick = function(){
+            modalgrid_example.style.display = 'block';
+            modalImggrid_example.src = this.src;
+            captionTextgrid_example.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImggrid_example.onclick = function() {
+            modalgrid_example.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalkinematic_crack_algorithm = document.getElementById('modalkinematic_crack_algorithm');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgkinematic_crack_algorithm = document.getElementById('imgkinematic_crack_algorithm');
+          var modalImgkinematic_crack_algorithm = document.getElementById('imgmodalkinematic_crack_algorithm');
+          var captionTextkinematic_crack_algorithm = document.getElementById('captionkinematic_crack_algorithm');
+          imgkinematic_crack_algorithm.onclick = function(){
+            modalkinematic_crack_algorithm.style.display = 'block';
+            modalImgkinematic_crack_algorithm.src = this.src;
+            captionTextkinematic_crack_algorithm.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgkinematic_crack_algorithm.onclick = function() {
+            modalkinematic_crack_algorithm.style.display = 'none';
           }
 </script>
 
@@ -2955,7 +1769,7 @@ slideshow._releaseMath(document);
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);
