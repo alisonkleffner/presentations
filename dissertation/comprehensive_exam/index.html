@@ -242,21 +242,6 @@ body {
 
 <i class="fa fa-spinner" role="presentation" aria-label="spinner icon"></i> Future Work
 
-
----
-class:inverse
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-.center[
-# Motivation and Background
-]
-
 ---
 class:primary
 
@@ -288,7 +273,7 @@ class:primary
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgrgps_grid' src='images/rgps_grid.jpg' alt='Example of initial grid used to track movement' width='30%'&gt;
+&lt;img id='imgrgps_grid' src='images/rgps_grid.jpg' alt='Example of initial grid used to track movement (Peterson &amp; Sulsky, 2011)' width='25%'&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modalrgps_grid' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -298,15 +283,17 @@ class:primary
 &lt;/div&gt;
 ]
 
-+ Sea Ice is tracked by NASA's RADARSTAT Geophysical Processor System (RGPS), which uses synthetic aperture radar (SAR) images to track the trajectory of points on an ice sheet.
-+ Each grid cell vertex is assigned an identifier (gpid) which is used for tracking
++ Sea Ice can be tracked by NASA's RADARSTAT Geophysical Processor System (RGPS), which uses synthetic aperture radar (SAR) images to track the trajectory of points on an ice sheet.
++ Each grid cell vertex is assigned an identifier (id) which is used for tracking
 + Set of all trajectories: 
 
 .center[
-`\(\mathcal{T} = (g_1, ..., g_n)\)` `\(\\\)`
-where `\(g_{n} = &lt;s_{1,j},...,s_{t,j}&gt;\)` and `\(s_{i,j} = (x_{i,j}, y_{i,j})\)` `\(\\\)`
-`\(n = 1,..., 8811\)` and `\(j = 1,2\)`
+`\(\mathcal{G} = (g_1, ..., g_n)\)` `\(\\\)`
+where `\(g_{j}\)` = \{ `\({s_{t_{j}}: t \in \tau_j}\)`\}, `\(\tau_j \subset \left\{t=1...T\right\}\)` a collection of time points where `\(id_j\)` is observed `\(\\\)`
+and `\({s_{t_{j}}}\)` = `\((x_{t_{j}}, y_{t_{j}})\)`
 ]
+
++ For our study region, n = 8811 ids, and T = 21 days
 
 
 
@@ -317,7 +304,7 @@ class:primary
 
 + Surface temperature differs between a crack and the surrounding sea ice.
 + Use thermal channels of the Advanced Very High Resolution Radiometer (AVHRR) (Key, Stone, Maslanik, et al., 1993) 
-  - Heavily dependent on clear skies
+  - Heavily dependent on clear skies and thin ice
 + Methods have been proposed to reduce the impact of clouds 
   - Moderate Resolution Imagery Spectroradiometer (MODIS)  (Willmes and Heinemann, 2015)
   - Fuzzy Cloud Artifact (FCAF) (Willmes and Heinemann, 2015)
@@ -338,13 +325,13 @@ class:primary
 ---
 class:primary
 
-# Calculating Sea Ice Deformation
+# Deformation Ice Crack Detection Methods
 
 + Deformation of a cell is determined by the motion of points (Peterson and Sulsky, 2011)
     - Finds the determinant of deformation gradient to measure accumulated area changes to show persistent diverged regions. 
     - Can find the size and orientation of the crack
 + Drawbacks
-  - Not as high of resolution as thermal methods
+  - Need complete set of space-time observations to calculate deformation
   - The error in the deformation product may be strongly underestimated (Bouillon and Rampal, 2015)
 
 .center[
@@ -374,9 +361,11 @@ class:primary
 
 # Motivating Picture
 
++ Each line is a `\(g_j\)` plotted over time
+
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgtraj_plot' src='images/traj_plot.png' alt='Plot of gpid trajectories to show movement and directiction of movement' width='100%'&gt;
+&lt;img id='imgtraj_plot' src='images/traj_plot.png' alt='Plot of id trajectories to show movement and directiction of movement' width='90%'&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modaltraj_plot' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -392,44 +381,67 @@ class:primary
 
 # Research Objectives
 
-1. Develop a ice crack detection method based solely on the movement of the ice sheet
+1. Develop a ice crack detection method
+  - Using only the movement of the ice sheet
   - Cluster trajectories based on movement, where the boundaries would be possible locations of ice cracks
 2. Develop a spatio-interpolation method to predict missing points along a trajectory 
   - Using the information gained from the clustering
   - Take into account nonstationarity of the data
 
 ---
-class:inverse
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-.center[
-# Spatio-temporal Clustering: Bounding Box
-]
+class:primary
+
+# Other Spatio-Temporal Clustering Methods
+
++ Combination of geographic location with time introduces new challenges in cluster, where a cluster is now determined based on spatial and temporal similarity `\(\\\)` `\(\\\)`
++ Similarity Measures
+  - One of the components of a clustering algorithm is to determine how to measure similarity
+  - Similarity measures have been developed for spatio-temporal data, but many rely on having trajectories of the same length or are sensitive to noise
++ Density-Based
+  - Objects that are densely packed in a region should be grouped together in a cluster
+  - Can cluster objects into any shape and number of clusters do not need to be pre-defined
+  - However, since our data is based on a grid, point density will be consistent across the domain
++ Model-Based 
+  - Can assume a model for each cluster, where the best fitting data for the model is found in order to determine cluster membership
+  - Can be difficulty in finding the assume model
 
 ---
 class:primary
 
 # Other Spatio-Temporal Clustering Methods
 
++ Nonstationary Models (Kim, Mallick, and Holmes, 2005)
+  - Data can be partitioned and a model can be developed for each partition
+  - Partitioning can be accomplished through a Voronoi Tesselation and then use a Piecewise Gaussian Process to model the nonstationary process
+  - Currently these methods are only for a spatial domain 
+  
+  .center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgvoronoi_tesselation' src='images/voronoi_tesselation.png' alt='Example of a Voronoi Tesselation' width='30%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalvoronoi_tesselation' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalvoronoi_tesselation'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionvoronoi_tesselation' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+  
+  
+
 ---
 class:primary
 
 # Bounding Box
 
-+ To represent it's movement, a bounding box is created around each of the trajectories.
-+ Feautures:
++ A bounding box can be created around each trajectory to represent it's movement.
++ Bounding Box Features:
   - Length travel in x/y between the minimum and maximum location 
   ( `\(x_{max} - x_{min}\)` and `\(y_{max} - y_{min}\)`)
   - Length travel in x/y between latest and earliest observation ( `\(x_{1} - x_{0}\)` and `\(y_{1} - y_{0}\)`)
   - Angle of movement
   - Average x/y value
-  - Sub-tracteroires - previous time information
+  - Sub-trajectories - previous time information
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
@@ -449,38 +461,78 @@ class:primary
 
 #Clustering with K-Means
 
-- Bounding Box features were used as input into K-Means clustering, which partitions n observations into k clusters.
-- Drawback: Clusters must be specified prior to clustering
-  + Number of Clusters determined using the Silhouette statistic
++ Bounding Box features were used as input into K-Means clustering, which partitions n observations into k clusters.
++ K-Means Clustering (Steinley, 2006)
+  - All observations must belong to a cluster and each cluster, k, must have at least one observation
+  - Minimize squared Euclidean distance between an observation and the centroid vector of a cluster
+  - Centroid vector found by averaging the features of each cluster member
+  - Iterative Procedure 
 
 ---
-class:inverse
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
+class:primary
+
+#Clustering with K-Means
+
++ **Drawback**: Clusters must be specified prior to clustering
+  - Number of Clusters determined using the Silhouette statistic
++ Silhouette Statistic (Kodinariya and Makwana, 2013)
+  - Compares within cluster distances to between cluster distances
+  
 .center[
-# Spatio-temporal Interpolation: Model in Intersections
+`\(s(i) = \frac{b(i) - a(i)}{max(a(i), b(i))}\)` `\(\\\)`
+where `\(a(i)\)` is the average distance between i and observations in same cluster and `\(b(i)\)` is the minimum average distance between i and observations in other clusters
 ]
+
+  - Number of clusters determined by largest average silhoutte width
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgsilhouette_stat' src='images/silhouette_stat.jpeg' alt='Silhouette Statistic for Clustering using all of our Data' width='40%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalsilhouette_stat' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalsilhouette_stat'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionsilhouette_stat' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+
+---
+class:primary
+
+#Missing Data
+
++ Data collection methods may fail, leaving positions in a trajectory unknown or may want to overcome sampling sparseness
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgdata_example' src='images/data_example.jpeg' alt='Missing Data within the Ice Sheet' width='80%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modaldata_example' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodaldata_example'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captiondata_example' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+
 
 ---
 class:primary
 
 #Other Trajectory Interpolation Methods
 
-+ Data collection method may fail, leaving positions in a trajectory unknown or may want to overcome sampling sparseness
-+ Popular methods for trajectory interpolation generally are put into four categories: linear, curve, kinematic, and random walk.
 + Linear interpolation 
-  - Popular due to easy in implementation
-  - Performs best for linearly moving objects, or can potentially move well if sample in high frequency (Guo, Mou, Chen, et al., 2021)
+  - Popular due to ease in implementation
+  - Performs best for linearly moving objects, or can potentially work well with non-linear data if sample in high frequency (Guo, Mou, Chen, et al., 2021)
+  
+&lt;br&gt;
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imglinpic2' src='images/lin-pic2.png' alt='How Linear Interpolation Calculates a Missing Point' width='50%'&gt;
+&lt;img id='imglinpic2' src='images/lin-pic2.png' alt='How Linear Interpolation Calculates a Missing Point' width='60%'&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modallinpic2' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -497,8 +549,11 @@ class:primary
 #Finding Spatio-Temporal Neighbors
 
 + Using information gained from clusters to identify spatio-temporal neighbors
-  - If know how other points in the cluster move at a time point, would expect the missing point to move similarly
+  - Know how other points in the cluster move at a time point
+  - Would expect a missing point  at that time to move similarly
 + Cluster By Week
+  - Clustering sub-trajectories is beneficial as may lost information if clustering the whole trajectory.
++ Use the by Week clusters to find neighbors
   - Intersection of one week's clusters with the week before and week after would create groups
   - Each member of a group is then a spatio-temporal neighbor of the other members as they are in a similar geographic region over time. 
   
@@ -507,10 +562,13 @@ class:primary
 
 #Finding Spatio-Temporal Neighbors - Steps
 
-1. Create a polygon around each cluster for a week - boundary coordinates of clusters
+1. Create a polygon around each cluster for a week 
+  - Finding boundary coordinates of the clusters
   - Done in a sequential manner
-2. After a polygon is created, all gpids located in that polygon are removed.
-3. Find the intersection of the polygons for the weeks. All of the points within that intersection are then spatio-temporal neighbors.
+2. After a polygon is created, all ids located in that polygon are removed.
+  - Make sure all ids are found within a polygon
+3. Find the intersection of the weekly polygons
+  - All of the points within that intersection are spatio-temporal neighbors.
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
@@ -527,67 +585,114 @@ class:primary
 ---
 class:primary
 
-#Univariate Interpolation
+#Gaussian Process (GP) for Spatial Data
+
+`\(\left\{X(s): s \in R^2\right\}\)` is a Gaussian Process where, `\(X(s) = (x(s_1),...,x(s_n))\)`
+
+In a GP, the data are modeled as, `\(X(s) \sim N(\mu, \Sigma_{\theta})\)`
+
+Can define `\(\Sigma_{\theta}\)` as the Exponential Covariance Function (Guinness and Katzfuss, 2021)
+
+.center[
+`\(\Sigma_{\theta} = \sigma^2exp(-||x-y||/\phi)\)` `\(\\\)`
+where `\(\sigma^2\)` is the variance and `\(\phi\)` is the range
+]
+
+Joint density of the observations can be written as a product of conditional densities (Guinness, 2018)
+.center[
+`\(f(x_1,...,x_n) = \prod^n_{i=2} f(x_i|x_1,...,x_{i-1})\)` 
+
+]
+
+
+This can be a computationally complex process due to the inversion of `\(\Sigma_{\theta}\)`
+
+---
+class:primary
+
+#GP for Spatial-Temporal Data
+
+Now, the covariance function is an Exponential Space-Time (Guinness and Katzfuss, 2021)
+
+`$$C(\theta) = \sigma^2e^{-||D^{-1}(x-y)||}.$$` where 
+
+.center[
+&lt;img src="images/cov_function.png" width="50%" /&gt;
+`\(\\\)`
+where `\(\sigma^2\)` =  variance, `\(\phi\)` = spatial range, `\(\tau\)` = temporal range, `\(c_0\)` = nugget 
+
+]
+
+This is a Separable covariance function, meaning it has the form: `$$\Sigma_{s}\otimes\Sigma_{t}$$`
+
+Separability can speed up computations if no missing data, but we do...
+
+---
+class:primary
+
+#Vecchia's Approximation for a GP
+
++ **Goal:** To speed up calculation of a GP
++ Writes the joint density as a product of conditional distributions, where only a subset of the data is used to create the conditional distributions (Guinness, 2018)
+
+.center[
+`\(f(x_1,...,x_n) = \prod^n_{i=2} f(x_i|x_{n(i)})\)` `\(\\\)`
+where `\(n(i)\)` are the neighbors of observation `\(i\)`
+]
+
++ Neighbors are obtained from the order of points (Vecchia, 1988)
+
++ Vecchia's Approximation is implemented in the GpGp package, where updates to the ordering method and a grouping method were introduced to speed up calculations (Guinness and Katzfuss, 2021)
+
+
+---
+class:primary
+
+#Spatio-Temporal Interpolation
 
 + Individual model developed for both x and y using the GpGp package in R (Guinness and Katzfuss, 2021)
-  - Uses the Vecchia's Approximation for a Gaussian Process
-+ Vecchia's Approximation (Vecchia, 1988)
-  - Writes the joint density as a product of conditional distributions, where only a subset of the data is used to create the conditional distributions.
-  - Subset is formed by the neighbors of the observations
-  - Neighbors are obtained by an ordering the points
-- Used exponential space-time covariance function
-- Output is the maximum likelihood estimates for the mean and covariance parameters
+  - Within each intersection
++ Use Exponential Space-Time covariance function (as previously defined)
++ Output is the maximum likelihood estimates for the mean and covariance parameters
++ Determining estimates of missing locations
+  - From the conditional expectation of the model
+  - Create a grid encompassing our ice sheet to give a starting value of the missing locations. 
+  - The model will then adjust this location using it's known neighbors
+
+
+---
+class:primary
+#Simulation Study
+
++ Create Underlying Process Grid 
+  - Simulating movement of ocean that causes observations to move
+  - Initial grid was created and shifted seven times to represent seven days of movement.
+  - This data is then used to create the covariance matrix, `\(C_{d,c}(\theta)\)`
+  - Covariance parameters and defined mean trend ( `\(\mu_{d,c}\)` ) is different for each cluster `\(\\\)`
+
+.center[
+`\(U_{d,c}(s,t) \sim GP(\mu_{d,c}, C_{d,c}(\theta))\)` `\(\\\)`
+
+where `\(U_{d,c}(s,t)\)` is the displacement at location `\(s\)` &amp; time `\(t\)` `\(\\\)` for dimension `\(d\)` ( `\(d\)` =x, y), cluster `\(c\)`
+
+]
+
+**Note**: Only simulated 2 clusters for simplicity
 
 ---
 class:primary
 
-#Univariate Interpolation
+#Simulation Study
 
-+ Predictions for x or y are made by finding the conditional expectation of the model developed.
-+ Create a grid encompassing our ice sheet to give an initial estimation of the missing locations.     - The model will then adjust this location using it's known neighbors
-+ Grid cell size is 10km by 10km, which allows for a max of four gpids to be located in a cell
-  - The centroid of the gpids were used to estimate each grid cell
-  - The size of the grid cell can impact the results
-
-
-.center[
-&lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgicegridex' src='images/ice-grid-ex.jpeg' alt='Grid of Estimated Locations' width='50%'&gt;
-&lt;!-- The Modal --&gt;
-&lt;div id='modalicegridex' class='modal'&gt;
-  &lt;!-- Modal Content (The Image) --&gt;
-  &lt;img class='modal-content' id='imgmodalicegridex'&gt;
-  &lt;!-- Modal Caption (Image Text) --&gt;
-  &lt;div id='captionicegridex' class='modal-caption'&gt;&lt;/div&gt;
-&lt;/div&gt;
-]
-
----
-class:inverse
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-.center[
-# Simulation Study
-]
-
----
-class:primary
-#Simulating Data
-
-+ Create Underlying Process Grid  `$$U_{d,c}(s,t) \sim GP(\mu_{d,c}, C_{d,c}(\theta))$$`
-  - Initial grid is created and shifted seven times to represent movement.
-  - This data is then used in the exponential space-time covariance function.
-  - Covariance parameters and defined mean trend is different for each cluster `\(\\\)`
 + Create Observed Grid
-  - Movement of an observed point is determined by the value fo the nearest point of the underlying process for that day
-  - Process is continued until t=7 to obtain a week's worth of simulated data
-  `$$(x_{t,j}, y_{t,j}) = (U^{X}_{t-1,c,g}, U^{Y}_{t-1,c,g}) + (x_{t-1,j}, y_{t-1,j})$$`
+  - Movement of an observed point is determined by the value fo the nearest point of the underlying process for that day ( `\(g\)` )
+  - Obtained a week's worth of simulated data
+  
+.center[
+  `\((x_{t,j}, y_{t,j}) = (U^{X}_{t-1,c,g}, U^{Y}_{t-1,c,g}) + (x_{t-1,j}, y_{t-1,j})\)` `\(\\\)`
+  where t=1,...,7 (time), j = 1,...,121 (id), `\(\\\)` U is the underlying process value at `\(t-1\)` for cluster ( `\(c\)` ) and grid id ( `\(g\)` )
+]
+
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
@@ -603,9 +708,9 @@ class:primary
 
 ---
 class:primary
-#Simulating Data
+#Simulated Data
 
-Created 3 different simulated datasets, each with different parameter values.
+Created 3 different scenarios, each with different parameter values.
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
@@ -624,6 +729,9 @@ class:primary
 
 #Simulated Clustering Results
 
++ Results are shown at two different time points
+  - On initial grid ( `\(t=0\)` )
+  - On last day of the week ( `\(t=7\)` )
 &lt;br&gt;
 &lt;br&gt;
 &lt;br&gt;
@@ -658,11 +766,13 @@ class:primary
 
 + Simulated and clustered another week of data.
 + 10% of the data for the first week are randomly assigned to be missing.
-+ Compared our method to two others:
++ Other methods for comparison:
   - Linear Interpolation
   - Instead of running model inside each intersection, a model was developed using all known points (essentially ignoring the nonstationarity aspect of our data)
+
+&lt;br&gt;
   
-&lt;table&gt;
+&lt;table style="width:80%;"&gt;
 &lt;caption&gt;RMSE for Interpolation Methods&lt;/caption&gt;
  &lt;thead&gt;
 &lt;tr&gt;
@@ -809,14 +919,16 @@ class:primary
 #Simulated Interpolation Results
 
 + A benefit of using a model-based approach is that are able to determine the uncertainty of the estimate. 
-+ 30 simulations of predictions are done and used to calculate the standard deviation
++ Conducted 30 simulations of predictions, which are used to calculate the standard deviation
 
-&lt;table&gt;
+&lt;br&gt;
+
+&lt;table style='width:80%;'&gt;
 &lt;caption&gt;Proportion of Intervals Contained Observed Value&lt;/caption&gt;
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style="text-align:center;"&gt; Simulation &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; x &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
    &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
@@ -839,20 +951,6 @@ class:primary
 &lt;/tbody&gt;
 &lt;/table&gt;
 
-
----
-class:inverse
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-.center[
-# Ice Data Results
-]
 
 
 ---
@@ -914,27 +1012,6 @@ class:primary
 
 ]
 
-
----
-class:primary
-
-#Ice Data Results: Clustering by Week
-
-+ Image from a Day in the Data set of recurring leads based on visible infrared Advanaced Very High Resolution Radiometer (AVHRR) data (Eicken, Shapiro, Gaylord, et al., 2009)
-
-.center[
-&lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgweek_comp' src='images/week_comp.png' alt='Comparison of a Weeks Clustering Result to AVHRR' width='60%'&gt;
-&lt;!-- The Modal --&gt;
-&lt;div id='modalweek_comp' class='modal'&gt;
-  &lt;!-- Modal Content (The Image) --&gt;
-  &lt;img class='modal-content' id='imgmodalweek_comp'&gt;
-  &lt;!-- Modal Caption (Image Text) --&gt;
-  &lt;div id='captionweek_comp' class='modal-caption'&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-]
-
 ---
 class:primary
 
@@ -988,7 +1065,7 @@ class:primary
 
 #Interpolation Results along Border for Week 2
 
-&lt;table&gt;
+&lt;table style="width:80%;"&gt;
 &lt;caption&gt;RMSE for Interpolation Methods by cluster for Week 2&lt;/caption&gt;
  &lt;thead&gt;
 &lt;tr&gt;
@@ -1078,8 +1155,10 @@ class:primary
 
 #Coverage Proportion by Cluster
 
-&lt;table&gt;
-&lt;caption&gt;Proportion of Prediction Interval Containing Observed Value by cluster for Week 2&lt;/caption&gt;
+&lt;br&gt;
+
+&lt;table style="width:75%;"&gt;
+&lt;caption&gt;Proportion of Intervals Containing Observed Value by cluster for Week 2&lt;/caption&gt;
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style="text-align:center;"&gt; Cluster &lt;/th&gt;
@@ -1117,21 +1196,6 @@ class:primary
 &lt;/table&gt;
 
 
-
----
-class:inverse
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-.center[
-# Discussion and Conclusion
-]
-
 ---
 class:primary
 
@@ -1158,14 +1222,14 @@ class:primary
 ---
 class:primary
 
-#Issues with model development
+#Model Development
 
 + Log-likelihood does not converge 
   - Temporal range value is exceptionally large especially in comparison to the spatial range
 + Impractical Covariance Parameter estimates - large temporal range
   - This may be due to only working with small amount of data that is not moving much over time
   - With the simulated data, as more days were added to the dataset, the temporal range does slowly decrease
-+ Potentially not a ton of data in the intersection
++ Potentially not a lot of data in the intersection
   - Some intersections are small
   - Need variation in time
   
@@ -1219,6 +1283,17 @@ DOI: &lt;a href="https://doi.org/10.1016/j.oceaneng.2021.109256"&gt;10.1016/j.oc
 In: &lt;em&gt;Annals of Glaciology&lt;/em&gt; 17, pp. 227&amp;ndash;232.
 DOI: &lt;a href="https://doi.org/10.3189/S026030550001288X"&gt;10.3189/S026030550001288X&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
 
+&lt;p&gt;&lt;cite&gt;&lt;a id='bib-kim_analyzing_2005'&gt;&lt;/a&gt;&lt;a href="#cite-kim_analyzing_2005"&gt;Kim, H., B. K. Mallick, and C. Holmes&lt;/a&gt;
+(2005).
+&amp;ldquo;Analyzing Nonstationary Spatial Data Using Piecewise Gaussian Processes&amp;rdquo;.
+In: &lt;em&gt;Journal of the American Statistical Association&lt;/em&gt; 100.470, pp. 653&amp;ndash;668.
+DOI: &lt;a href="https://doi.org/10.1198/016214504000002014"&gt;10.1198/016214504000002014&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;cite&gt;&lt;a id='bib-kodinariya_2013'&gt;&lt;/a&gt;&lt;a href="#cite-kodinariya_2013"&gt;Kodinariya, T. and P. Makwana&lt;/a&gt;
+(2013).
+&amp;ldquo;Review on Determining of Cluster in K-means Clustering&amp;rdquo;.
+In: &lt;em&gt;International Journal of Advance Research in Computer Science and Management Studies&lt;/em&gt; 1, pp. 90&amp;ndash;95.&lt;/cite&gt;&lt;/p&gt;
+
 &lt;p&gt;&lt;cite&gt;&lt;a id='bib-peterson_evaluating_2011'&gt;&lt;/a&gt;&lt;a href="#cite-peterson_evaluating_2011"&gt;Peterson, K. and D. Sulsky&lt;/a&gt;
 (2011).
 &amp;ldquo;Evaluating Sea Ice Deformation in the Beaufort Sea Using a Kinematic Crack Algorithm with RGPS Data&amp;rdquo;.
@@ -1238,6 +1313,17 @@ DOI: &lt;a href="https://doi.org/10.5194/tc-6-343-2012"&gt;10.5194/tc-6-343-2012
 &amp;ldquo;Elastic-decohesive constitutive model for sea ice&amp;rdquo;.
 In: &lt;em&gt;Journal of Geophysical Research: Oceans&lt;/em&gt; 111.C11.
 DOI: &lt;a href="https://doi.org/10.1029/2005JC003334"&gt;10.1029/2005JC003334&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
+&lt;/font&gt;
+
+---
+class:primary
+# References
+&lt;font size="2"&gt;
+&lt;p&gt;&lt;cite&gt;&lt;a id='bib-steinley_kmeans_2006'&gt;&lt;/a&gt;&lt;a href="#cite-steinley_kmeans_2006"&gt;Steinley, D.&lt;/a&gt;
+(2006).
+&amp;ldquo;K-means clustering: A half-century synthesis&amp;rdquo;.
+In: &lt;em&gt;British Journal of Mathematical and Statistical Psychology&lt;/em&gt; 59.1, pp. 1&amp;ndash;34.
+DOI: &lt;a href="https://doi.org/10.1348/000711005X48266"&gt;10.1348/000711005X48266&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;cite&gt;&lt;a id='bib-vecchia1988estimation'&gt;&lt;/a&gt;&lt;a href="#cite-vecchia1988estimation"&gt;Vecchia, A. V.&lt;/a&gt;
 (1988).
@@ -1742,6 +1828,261 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgkinematic_crack_algorithm.onclick = function() {
             modalkinematic_crack_algorithm.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalrgps_grid = document.getElementById('modalrgps_grid');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgrgps_grid = document.getElementById('imgrgps_grid');
+          var modalImgrgps_grid = document.getElementById('imgmodalrgps_grid');
+          var captionTextrgps_grid = document.getElementById('captionrgps_grid');
+          imgrgps_grid.onclick = function(){
+            modalrgps_grid.style.display = 'block';
+            modalImgrgps_grid.src = this.src;
+            captionTextrgps_grid.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgrgps_grid.onclick = function() {
+            modalrgps_grid.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalrgps_grid = document.getElementById('modalrgps_grid');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgrgps_grid = document.getElementById('imgrgps_grid');
+          var modalImgrgps_grid = document.getElementById('imgmodalrgps_grid');
+          var captionTextrgps_grid = document.getElementById('captionrgps_grid');
+          imgrgps_grid.onclick = function(){
+            modalrgps_grid.style.display = 'block';
+            modalImgrgps_grid.src = this.src;
+            captionTextrgps_grid.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgrgps_grid.onclick = function() {
+            modalrgps_grid.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaltraj_plot = document.getElementById('modaltraj_plot');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgtraj_plot = document.getElementById('imgtraj_plot');
+          var modalImgtraj_plot = document.getElementById('imgmodaltraj_plot');
+          var captionTexttraj_plot = document.getElementById('captiontraj_plot');
+          imgtraj_plot.onclick = function(){
+            modaltraj_plot.style.display = 'block';
+            modalImgtraj_plot.src = this.src;
+            captionTexttraj_plot.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgtraj_plot.onclick = function() {
+            modaltraj_plot.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaltraj_plot = document.getElementById('modaltraj_plot');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgtraj_plot = document.getElementById('imgtraj_plot');
+          var modalImgtraj_plot = document.getElementById('imgmodaltraj_plot');
+          var captionTexttraj_plot = document.getElementById('captiontraj_plot');
+          imgtraj_plot.onclick = function(){
+            modaltraj_plot.style.display = 'block';
+            modalImgtraj_plot.src = this.src;
+            captionTexttraj_plot.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgtraj_plot.onclick = function() {
+            modaltraj_plot.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalvoronoi_tesselation = document.getElementById('modalvoronoi_tesselation');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgvoronoi_tesselation = document.getElementById('imgvoronoi_tesselation');
+          var modalImgvoronoi_tesselation = document.getElementById('imgmodalvoronoi_tesselation');
+          var captionTextvoronoi_tesselation = document.getElementById('captionvoronoi_tesselation');
+          imgvoronoi_tesselation.onclick = function(){
+            modalvoronoi_tesselation.style.display = 'block';
+            modalImgvoronoi_tesselation.src = this.src;
+            captionTextvoronoi_tesselation.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgvoronoi_tesselation.onclick = function() {
+            modalvoronoi_tesselation.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalvoronoi_tesselation = document.getElementById('modalvoronoi_tesselation');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgvoronoi_tesselation = document.getElementById('imgvoronoi_tesselation');
+          var modalImgvoronoi_tesselation = document.getElementById('imgmodalvoronoi_tesselation');
+          var captionTextvoronoi_tesselation = document.getElementById('captionvoronoi_tesselation');
+          imgvoronoi_tesselation.onclick = function(){
+            modalvoronoi_tesselation.style.display = 'block';
+            modalImgvoronoi_tesselation.src = this.src;
+            captionTextvoronoi_tesselation.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgvoronoi_tesselation.onclick = function() {
+            modalvoronoi_tesselation.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalvoronoi_tesselation = document.getElementById('modalvoronoi_tesselation');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgvoronoi_tesselation = document.getElementById('imgvoronoi_tesselation');
+          var modalImgvoronoi_tesselation = document.getElementById('imgmodalvoronoi_tesselation');
+          var captionTextvoronoi_tesselation = document.getElementById('captionvoronoi_tesselation');
+          imgvoronoi_tesselation.onclick = function(){
+            modalvoronoi_tesselation.style.display = 'block';
+            modalImgvoronoi_tesselation.src = this.src;
+            captionTextvoronoi_tesselation.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgvoronoi_tesselation.onclick = function() {
+            modalvoronoi_tesselation.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalsilhouette_stat = document.getElementById('modalsilhouette_stat');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgsilhouette_stat = document.getElementById('imgsilhouette_stat');
+          var modalImgsilhouette_stat = document.getElementById('imgmodalsilhouette_stat');
+          var captionTextsilhouette_stat = document.getElementById('captionsilhouette_stat');
+          imgsilhouette_stat.onclick = function(){
+            modalsilhouette_stat.style.display = 'block';
+            modalImgsilhouette_stat.src = this.src;
+            captionTextsilhouette_stat.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgsilhouette_stat.onclick = function() {
+            modalsilhouette_stat.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalsilhouette_stat = document.getElementById('modalsilhouette_stat');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgsilhouette_stat = document.getElementById('imgsilhouette_stat');
+          var modalImgsilhouette_stat = document.getElementById('imgmodalsilhouette_stat');
+          var captionTextsilhouette_stat = document.getElementById('captionsilhouette_stat');
+          imgsilhouette_stat.onclick = function(){
+            modalsilhouette_stat.style.display = 'block';
+            modalImgsilhouette_stat.src = this.src;
+            captionTextsilhouette_stat.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgsilhouette_stat.onclick = function() {
+            modalsilhouette_stat.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalsilhouette_stat = document.getElementById('modalsilhouette_stat');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgsilhouette_stat = document.getElementById('imgsilhouette_stat');
+          var modalImgsilhouette_stat = document.getElementById('imgmodalsilhouette_stat');
+          var captionTextsilhouette_stat = document.getElementById('captionsilhouette_stat');
+          imgsilhouette_stat.onclick = function(){
+            modalsilhouette_stat.style.display = 'block';
+            modalImgsilhouette_stat.src = this.src;
+            captionTextsilhouette_stat.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgsilhouette_stat.onclick = function() {
+            modalsilhouette_stat.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaldata_example = document.getElementById('modaldata_example');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgdata_example = document.getElementById('imgdata_example');
+          var modalImgdata_example = document.getElementById('imgmodaldata_example');
+          var captionTextdata_example = document.getElementById('captiondata_example');
+          imgdata_example.onclick = function(){
+            modaldata_example.style.display = 'block';
+            modalImgdata_example.src = this.src;
+            captionTextdata_example.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgdata_example.onclick = function() {
+            modaldata_example.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaldata_example = document.getElementById('modaldata_example');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgdata_example = document.getElementById('imgdata_example');
+          var modalImgdata_example = document.getElementById('imgmodaldata_example');
+          var captionTextdata_example = document.getElementById('captiondata_example');
+          imgdata_example.onclick = function(){
+            modaldata_example.style.display = 'block';
+            modalImgdata_example.src = this.src;
+            captionTextdata_example.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgdata_example.onclick = function() {
+            modaldata_example.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaldata_example = document.getElementById('modaldata_example');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgdata_example = document.getElementById('imgdata_example');
+          var modalImgdata_example = document.getElementById('imgmodaldata_example');
+          var captionTextdata_example = document.getElementById('captiondata_example');
+          imgdata_example.onclick = function(){
+            modaldata_example.style.display = 'block';
+            modalImgdata_example.src = this.src;
+            captionTextdata_example.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgdata_example.onclick = function() {
+            modaldata_example.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modallinpic2 = document.getElementById('modallinpic2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imglinpic2 = document.getElementById('imglinpic2');
+          var modalImglinpic2 = document.getElementById('imgmodallinpic2');
+          var captionTextlinpic2 = document.getElementById('captionlinpic2');
+          imglinpic2.onclick = function(){
+            modallinpic2.style.display = 'block';
+            modalImglinpic2.src = this.src;
+            captionTextlinpic2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImglinpic2.onclick = function() {
+            modallinpic2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaltraj_plot = document.getElementById('modaltraj_plot');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgtraj_plot = document.getElementById('imgtraj_plot');
+          var modalImgtraj_plot = document.getElementById('imgmodaltraj_plot');
+          var captionTexttraj_plot = document.getElementById('captiontraj_plot');
+          imgtraj_plot.onclick = function(){
+            modaltraj_plot.style.display = 'block';
+            modalImgtraj_plot.src = this.src;
+            captionTexttraj_plot.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgtraj_plot.onclick = function() {
+            modaltraj_plot.style.display = 'none';
           }
 </script>
 
