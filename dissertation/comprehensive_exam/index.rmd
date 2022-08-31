@@ -1,11 +1,11 @@
 ---
 title: "A Spatio-Temporal Model of Arctic Sea Ice"
-subtitle: "Department of Statistics, University of Nebraska - Lincoln"
+subtitle: "Comprehensive Exam"
 author: "Alison Kleffner"
-date: "September 2, 2022"
+date: "Department of Statistics, University of Nebraska - Lincoln"
 output:
   xaringan::moon_reader:
-    seal: false
+    seal: true
     includes:
       after_body:
         "js-addins.html"
@@ -17,7 +17,7 @@ output:
       highlightlines: true
       countIncrementalSlides: true
 ---
-class:title-slide-custom
+class:primary
 
 ```{r, child = "style.Rmd"}
 ```
@@ -100,19 +100,6 @@ img_modal <- function(src, alt = "", id = clean_file_name(src), other = "") {
 write("", file = "js-addins.html")
 ```
 
-<br><br><br>
-# A Spatio-Temporal Model of Arctic Sea Ice
-### PhD Comprehensive Exam, September 2, 2022
-#### Alison Kleffner
-#### Department of Statistics, University of Nebraska - Lincoln
-
-<!-- ##### `r fa("envelope", fill = "black")` [akleffner@huskers.unl.edu](akleffner@huskers.unl.edu) -->
-<!-- ##### `r fa("home", fill = "black")` [https://alison-kleffner.netlify.app/](https://alison-kleffner.netlify.app/) -->
-<!-- ##### `r fa("github", fill = "black")` [alisonkleffner](https://github.com/alisonkleffner) -->
-<!-- <br><br> -->
-<!-- .medium[*Slides: https://bit.ly/3ENZmOZ*] -->
----
-class:primary
 # Outline
 
 
@@ -128,7 +115,7 @@ class:primary
 
 `r fa_i("ruler")` Results with Ice Data
 
-`r fa_i("check-double")` Overall conclusion
+`r fa_i("check-double")` Discussion and Conclusion
 
 `r fa_i("spinner")` Future Work
 
@@ -150,33 +137,41 @@ class:inverse
 ---
 class:primary
 
-# Arctic Sea Ice/Cracks - Why important
+# Importance of Arctic Sea Ice Crack Detection
 
-+ Sea ice is frozen sea water that can occur as an ice pack which drifts over the oceans surface
++ Sea ice is a barrier between atmosphere and ocean
 + Cracks, or leads, may form in the ice pack due to dynamic processes
   - Allows for heat from the ocean to be transferred to the atmosphere `r Citep(bib[[c("schreyer_elastic_2006")]])`. 
-+ Other Ice Crack Detection Methods
-  - Involve the use of thermal images or deformation calculations found through satellite images `r Citep(bib[[c("key_detectability_1993", "peterson_evaluating_2011")]])`.
-    + Satellite images can be low in resolution and are affected by atmospheric conditions `r Citep(bib[[c("willmes_pan-arctic_2015")]])`
+  - Account for half of the heat flux between the ocean and atmosphere `r Citep(bib[[c("badgley_1961")]])`
++ Prior Ice Crack detection methods can generally be split into two categories: thermal and deformation. 
+  
 
-```{r ice-pick, fig.align='center',  out.width="40%"}
+.center[
+```{r ice-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
 
-knitr::include_graphics("images/Ice Chunk.png")
+
+i1 <- img_modal(src = "images/Ice Chunk.png", alt = " Artice Sea Ice with Crack", other=list(width="40%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
 
 ```
-
-
-
----
-class:primary
-
-# Previous Methods
-
+]
 
 ---
 class:primary
 
 # Data
+
++ Sea Ice is tracked by NASA's RADARSTAT Geophysical Processor System (RGPS), which uses synthetic aperture radar (SAR) images to track the trajectory of points on Arctic Sea Ice.
++ Each grid cell vertex is assigned an identifier (gpid) that is tracked
++ Set of all tracked trajectories: 
+
+$$\mathcal{T} = (g_1, ..., g_n)$$
+where 
+$$g_{k} = <s_{1,j},...,s_{t,j}>$$ and \textbf{$$s_{i,j}} = $(x_{i,j}, y_{i,j})$$
+
 
 .center[
 ```{r grid-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
@@ -192,10 +187,77 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 
+
+
+---
+class:primary
+
+# Thermal Ice Crack Detection Methods
+
++ Surface temperature differs between a crack and the surrounding sea ice.
++ Use thermal channels of the Advanced Very High Resolution Radiometer (AVHRR) `r Citep(bib[[c("key_detectability_1993")]])` 
+  - Heavily dependent on clear skies
++ Methods have been proposed to reduce the impact of clouds 
+  - Moderate Resolution Imagery Spectroradiometer (MODIS)  `r Citep(bib[[c("willmes_pan-arctic_2015")]])`
+  - Fuzzy Cloud Artifact (FCAF) `r Citep(bib[[c("willmes_pan-arctic_2015")]])`
+  - Passive Microwave Data  `r Citep(bib[[c("rohrs_algorithm_2012")]])`
+.center[
+```{r thermal-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/thermal_example.png", alt = " Output from a Thermal Algorithm (Rohrs et al, 2012)", other=list(width="30%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+
+---
+class:primary
+
+# Calculating Sea Ice Deformation
+
++ Deformation of a cell is determined by the motion of points (vertices of cells that make up a grid) `r Citep(bib[[c("peterson_evaluating_2011")]])`
+  - RGPS uses SAR imagery to extract sea ice motion
++ Not as high of resolution as thermal methods
++ The error in the deformation product may be strongly underestimated `r Citep(bib[[c("bouillon_producing_2015")]])`
+
+.center[
+```{r deformation-pics,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/grid_example.png", alt = "Example of how find deformation (Peterson & Sulsky, 2011", other=list(width="40%"))
+i2 <- img_modal(src = "images/kinematic_crack_algorithm.png", alt = "Example of detected leads using a kinematic crack algorithm which uses the determinant of the deformation gradient to detect leads (Peterson & Sulsky, 2011)", other=list(width="30%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9],
+  str_split(i2, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+
+]
+
 ---
 class:primary
 
 # Motivating Picture
+
+.center[
+```{r traj-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/traj_plot.png", alt = "Plot of gpid trajectories to show movement and directiction of movement", other=list(width="100%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
 
 
 ---
@@ -203,8 +265,10 @@ class:primary
 
 # Research Objectives
 
-
-
++ Develop a ice crack detection method based solely on the movement of the ice sheet
+  - Motivated by the visualization of the movement
+  - Cluster trajectories based on movement, where the boundaries would be possible locations of ice cracks
++ Using the information gained from the clustering, developed a spatio-interpolation method to predict missing points along a trajectory 
 
 ---
 class:inverse
@@ -221,6 +285,47 @@ class:inverse
 ]
 
 ---
+class:primary
+
+# Other Spatio-Temporal Clustering Methods
+
+---
+class:primary
+
+# Bounding Box
+
++ To represent it's movement, a bounding box is created around each of the trajectories.
++ Feautures:
+  - Length travel in x/y between the minimum and maximum location ($x_{max} - x_{min}$ and $y_{max} - y_{min}$)
+  - Length travel in x/y between latest and earliest observation ($x_{1} - x_{0}$ and $y_{1} - y_{0}$)
+  - Angle of movement
+  - Average x/y value
+  - Sub-tracteroires - previous time information
+
+.center[
+```{r bb-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/bounding-box.png", alt = "Points used to Develop Bounding Box", other=list(width="30%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+
+---
+class:primary
+
+#Clustering with K-Means
+
+- Bounding Box features were used as input into K-Means clustering, which partitions n observations into k clusters.
+- Drawback: Clusters must be specified prior to clustering
+  + Number of Clusters determined using the Silhouette statistic
+
+---
 class:inverse
 <br>
 <br>
@@ -234,6 +339,103 @@ class:inverse
 # Spatio-temporal Interpolation: Model in Intersections
 ]
 
+---
+class:primary
+
+#Other Trajectory Interpolation Methods
+
++ Data collection method may fail, leaving positions in a trajectory unknown or may want to overcome sampling sparseness
++ Popular methods for trajectory interpolation generally are put into four categories: linear, curve, kinematic, and random walk.
++ Linear interpolation 
+  - Popular due to easy in implementation
+  - Performs best for linearly moving objects, or can potentially move well if sample in high frequency `r Citep(bib[[c("guo_improved_2021")]])`
+
+.center[
+```{r lin-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/lin-pic2.png", alt = "How Linear Interpolation Calculates a Missing Point", other=list(width="50%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+
+---
+class:primary
+
+#Finding Spatio-Temporal Neighbors
+
++ Using information gained from clusters to identify spatio-temporal neighbors
+  - If know how other points in the cluster move at a time point, would expect the missing point to move similarly
++ Cluster By Week
+  - Intersection of one week's clusters with the week before and week after would create groups
+  - Each member of a group is then a spatio-temporal neighbor of the other members as they are in a similar geographic region over time. 
+  
+---
+class:primary
+
+#Finding Spatio-Temporal Neighbors - Steps
+
+1. Create a polygon around each cluster for a week - boundary coordinates of clusters
+  - Done in a sequential manner
+2. After a polygon is created, all gpids located in that polygon are removed.
+3. Find the intersection of the polygons for the weeks. All of the points within that intersection are then spatio-temporal neighbors.
+
+.center[
+```{r int-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/intersection_ex.jpeg", alt = "Example of finding Intersection Polygons", other=list(width="50%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+---
+class:primary
+
+#Univariate Interpolation
+
++ Individual model developed for both x and y using the GpGp package in R `r Citep(bib[[c("gpgp_pkg")]])`
+  - Uses the Vecchia's Approximation for a Gaussian Process
++ Vecchia's Approximation `r Citep(bib[[c("vecchia1988estimation")]])`
+  - Writes the joint density as a product of conditional distributions, where only a subset of the data is used to create the conditional distributions.
+  - Subset is formed by the neighbors of the observations
+  - Neighbors are obtained by an ordering the points
+- Used exponential space-time covariance function
+- Output is the maximum likelihood estimates for the mean and covariance parameters
+
+---
+class:primary
+
+#Univariate Interpolation
+
++ Predictions for x or y are made by finding the conditional expectation of the model developed.
++ Create a grid encompassing our ice sheet to give an initial estimation of the missing locations.     - The model will then adjust this location using it's known neighbors
++ Grid cell size is 10km by 10km, which allows for a max of four gpids to be located in a cell
+  - The centroid of the gpids were used to estimate each grid cell
+  - The size of the grid cell can impact the results
+
+
+.center[
+```{r ice-grid-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/ice-grid-ex.jpeg", alt = "Grid of Estimated Locations", other=list(width="50%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
 
 ---
 class:inverse
@@ -250,6 +452,131 @@ class:inverse
 ]
 
 ---
+class:primary
+#Simulating Data
+
+1. Create Underlying Process Grid $$ U_{d,c}(s,t) \sim GP(\mu_{d,c}, C_{d,c}(\theta)) $$
+  - Initial grid is created and shifted seven times to represent movement.
+  - This data is then used in the exponential space-time covariance function.
+  - Covariance parameters and defined mean trend is different for each cluster
+2. Create Observed Grid
+  - Movement of an observed point is determined by the value fo the nearest point of the underlying process for that day
+  - Process is continued until t=7 to obtain a week's worth of simulated data
+  $$(x_{t,j}, y_{t,j}) = (U^{X}_{t-1,c,g}, U^{Y}_{t-1,c,g}) + (x_{t-1,j}, y_{t-1,j})$$
+
+
+.center[
+```{r grid-combo-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/grid_combo.png", alt = "Underlying and Observed Grid Plotted Together", other=list(width="40%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+---
+class:primary
+#Simulating Data
+
+Created 3 different simulated datasets, each with different parameter values.
+
+.center[
+```{r sim-traj-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/sim_traj.png", alt = "Simulated Trajectories for Each Simulation", other=list(width="90%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+---
+class:primary
+
+#Simulated Clustering Results
+
+<br>
+<br>
+<br>
+
+.center[
+```{r sim-clust,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/sim_init_clust.png", alt = "Clusters for each Simulation at t=0", other=list(width="40%"))
+i2 <- img_modal(src = "images/sim_last_clust.png", alt = "Clusters for each Simulation at t=7", other=list(width="40%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9],
+  str_split(i2, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+
+]
+
+
+---
+class:primary
+
+#Simulated Interpolation Results
+
++ Simulated and clustered another week of data.
++ 10% of the data for the first week are randomly assigned to be missing.
++ Compared our method to two others:
+  - Linear Interpolation
+  - Instead of running model inside each intersection, a model was developed using all known points (essentially ignoring the nonstationarity aspect of our data)
+  
+```{r sim-results-tab1}
+
+result_data <- data.frame(sim = c(1,2,3), X1 = c(1.496, 1.628, 1.342), Y1 = c(1.517, 1.58, 1.338), X2 = c(1.042, 1.455, 0.95), Y2 = c(1.226, 1.54, 0.92), X3 = c(1.438, 1.474, 1.458), Y3 = c(1.295, 1.488, 1.489))
+ 
+kableExtra::kable(result_data, booktabs = TRUE, caption = "RMSE for Interpolation Methods", col.names = c("Simulation", "X", "Y", "X", "Y", "X", "Y"), escape = FALSE) %>% 
+  add_header_above(c("", "Intersection" = 2, "Linear" = 2, "No Intersection" = 2))
+
+
+```
+
+---
+class:primary
+
+#Simulated Interpolation Results
+
+
+```{r sim-results-tab2, message=FALSE, warning = FALSE}
+
+result_data2 <- data.frame(sim = c(1, "", 2, "", 3, ""), Cluster = c(1,2,1,2,1,2), X1 = c(1.383, 1.573, 1.7, 1.584, 1.318,1.353), Y1 = c(1.555, 1.488, 1.653, 1.534, 1.346, 1.334), X2 = c(0.815, 1.188, 1.316, 1.503, 1.156, 0.647), Y2 = c(1.163, 1.272, 1.329, 1.612, 1.096, 0.673), X3 = c(1.562, 1.337, 1.658, 1.407, 1.434, 1.484), Y3 = c(1.29, 1.298, 1.596, 1.451, 1.405, 1.581))
+
+kableExtra::kable(result_data2, booktabs = TRUE, caption = "RMSE for Interpolation Methods by cluster", col.names = c("Simulation", "Cluster", "X", "Y", "X", "Y", "X", "Y"), escape = FALSE, align = "c") %>% add_header_above(c(" " = 2, "Intersection" = 2, "Linear" = 2, "No Intersection" = 2)) %>% row_spec(4, color = 'black', background = 'yellow') 
+
+```
+
+
+---
+class:primary
+
+#Simulated Interpolation Results
+
++ A benefit of using a model-based approach is that are able to determine the uncertainty of the estimate. 
++ 30 simulations of predictions are done and used to calculate the standard deviation
+
+```{r sim-results-tab3, message=FALSE, warning = FALSE}
+
+result_data3 <- data.frame(sim = c(1, 2, 3), x = c(0.158, 0.094, 0.167), y = c(0.14, 0.125, 0.25))
+
+kableExtra::kable(result_data3, booktabs = TRUE, caption = "Proportion of Intervals Contained Observed Value", col.names = c("Simulation", "x", "Y"), escape = FALSE, align = "c") 
+
+```
+
+
+---
 class:inverse
 <br>
 <br>
@@ -262,6 +589,160 @@ class:inverse
 .center[
 # Ice Data Results
 ]
+
+
+---
+class:primary
+
+#Ice Data Results: Clustering Using All Data
+
+
+
+.center[
+```{r clust-all,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/all_clust.jpeg", alt = "Clustering of Ice Trajectories using All Data in Bounding Box", other=list(width="90%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+---
+class:primary
+
+#Clustering Using All Data - Comparison
+
++  Can compare our results with deformation data found using a kinematic crack algorithm calculated using the RGPS data `r Citep(bib[[c("peterson_evaluating_2011")]])`
+  - Note that this image does not represent the true ice cracks, just the cracks determined by this method.
+
+.center[
+```{r all-comp-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/all-weeks-comp.png", alt = "Comparison of Our Results to a Kinematic Crack Algorithm", other=list(width="80%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+
+
+---
+class:primary
+
+#Ice Data Results: Clustering by Week
+
+.center[
+```{r clust-week,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/clust_by_week.png", alt = "Results of Clustering by Week", other=list(width="90%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+
+```
+
+]
+
+
+---
+class:primary
+
+#Ice Data Results: Clustering by Week
+
++ Image from a Day in the Data set of recurring leads based on visible infrared Advanaced Very High Resolution Radiometer (AVHRR) data `r Citep(bib[[c("lead_pic_2009")]])`
+
+.center[
+```{r clust-week-comp,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/week_comp.png", alt = "Comparison of a Weeks Clustering Result to AVHRR", other=list(width="60%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+
+```
+
+]
+
+---
+class:primary
+
+#Overall Interpolation Results along Border
+
++ Took a random hold-out of points along the border, as the border may be locations of irregular movement
+  
+```{r ice-results-tab1}
+
+result_data4 <- data.frame(Week = c(1,2,3), X1 = c(3.215, 3.539, 3.031), Y1 = c(3.408, 3.256, 2.958), X2 = c(1.606, 2.034, 0.991), Y2 = c(4.494, 1.832, 1.24))
+ 
+kableExtra::kable(result_data4, booktabs = TRUE, caption = "RMSE for Interpolation Methods along Border", col.names = c("Week", "X", "Y", "X", "Y"), escape = FALSE) %>% 
+  add_header_above(c("", "Intersection" = 2, "Linear" = 2)) %>% row_spec(1, color = 'black', background = 'yellow') 
+
+
+```
+
+---
+class:primary
+
+#Interpolation Results along Border for Week 2
+
+```{r ice-results-tab2, message=FALSE, warning = FALSE}
+
+result_data5 <- data.frame(Cluster = c(1,2,3,4,5), X1 = c(2.81, 2.94, 2.94, 3.26, 4.14), Y1 = c(3.04, 2.96, 3.07, 3.2, 3.88), X2 = c(3.82, 2.39, 1.46, 1.32, 0.43), Y2 = c(5.19, 0.99,1.97, 0.54, 0.34))
+
+kableExtra::kable(result_data5, booktabs = TRUE, caption = "RMSE for Interpolation Methods by cluster for Week 2", col.names = c( "Cluster", "X", "Y", "X", "Y"), escape = FALSE, align = "c") %>% add_header_above(c(" ", "Intersection" = 2, "Linear" = 2)) %>% row_spec(1, color = 'black', background = 'yellow') 
+
+```
+
+---
+class:primary
+
+#Interpolation Results along Border by Week
+
++ Cluster 1: Data is More Spread out and not linear
++ Cluster 5: Data does not move much
+
+.center[
+```{r clust-help,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/w1_c1_traj.jpeg", alt = "Cluster Trajectories where our method performs the best", other=list(width="40%"))
+i2 <- img_modal(src = "images/w2_c5_traj.jpeg", alt = "CCluster Trajectories where Linear Interpolation performs the best", other=list(width="40%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9],
+  str_split(i2, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+
+]
+
+---
+class:primary
+
+#Coverage Proportion by Cluster
+
+```{r ice-results-tab3, message=FALSE, warning = FALSE}
+
+result_data6 <- data.frame(Cluster = c(1,2,3,4,5), X1 = c(0.467, 0.28, 0.337, 0.26, 0.149), Y1 = c(0.413, 0.278, 0.351, 0.251, 0.163))
+
+kableExtra::kable(result_data6, booktabs = TRUE, caption = "Proportion of Prediction Interval Containing Observed Value by cluster for Week 2", col.names = c( "Cluster", "X", "Y"), escape = FALSE, align = "c") %>% row_spec(1, color = 'black', background = 'yellow') 
+
+```
+
+
 
 ---
 class:inverse
@@ -277,75 +758,63 @@ class:inverse
 # Discussion and Conclusion
 ]
 
-
 ---
 class:primary
-# Include columns
 
-.pull-left[
-**Bold text** 
-].pull-right[
-*Italic text*
-]
+# Clustering with Bounding Box
 
++ Advantages
+  - Provides information about how the data is moving
+  - Shown through simulations and the ice data to provide a reasonable estimation of the locations of cracks
++ Drawbacks
+  - Relies on a pre-defined number of clusters, which generally is not known
+  - Have a set number of cluster, so a limit on how many cluster boundaries, thus cracks, that can be identified.
+  
 ---
 class:primary
-# Special text
 
-**Math typeset**
+#Intersection Model Interpolation
 
-$$y = \beta_0 + \beta_1 \cdot x$$
-
-**Include in-text citations**
-
-<!-- `r Citep(bib[[c("", "", "")]])`-->
-
-<!-- `r Citet(bib[[c("", "", "")]])`-->
-
++ Advantages
+  - Takes into account the nonstationarity of the data
+  - Showed some improvement, in terms of RMSE, over linear interpolation for curved data that is not highly sampled
+  - Able to estimate data on first and last day of a dataset, which linear interpolation is not able to do. 
+  - Able to calculate uncertainty
+  
 ---
 class:primary
-# Include basic image
 
-Can also use .png
+#Issues with model development
 
-.center[
-```{r, out.width = "55%"}
-knitr::include_graphics("images/example1.jpg")
-```
-]
-
++ Log-likelihood does not converge 
+  - Temporal range value is exceptionally large especially in comparison to the spatial range
++ Impractical Covariance Parameter estimates - large temporal range
+  - This may be due to only working with small amount of data that is not moving much over time
+  - With the simulated data, as more days were added to the dataset, the temporal range does slowly decrease
++ Potentially not a ton of data in the intersection
+  - Some intersections are small
+  - Need variation in time
+  
+  
 ---
 class:primary
-# Include popup images when clicked
 
-```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/example2.jpg", alt = "Alternative text description goes here.",other=list(width="50%"))
+# Future Work
 
-c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-```
++ Visualization and comparison of spatial field data
++ Explaining Machine Learning Output for Spatial Data
+  - To explain what the optimal management decisions are for profitability for a farmer's field, accounting for a range of factors. 
+  - Develop a user-interface which will be designed around explaining machine learning output to non-experts, 
+  - Build trust in the model predictions without requiring farmers to learn the details of statistical modeling.
 
-```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/example3.jpg", alt = "Alternative text description goes here.", other=list(width="30%"))
-i2 <- img_modal(src = "images/example4.jpg", alt = "Alternative text description goes here.", other=list(width="30%"))
-i3 <- img_modal(src = "images/example5.jpg", alt = "Alternative text description goes here.", other=list(width="30%"))
 
-c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i2, "\\n", simplify = T)[1:2],
-  str_split(i3, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9],
-  str_split(i2, "\\n", simplify = T)[3:9],
-  str_split(i3, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-```
 
 ---
 class:primary
 # References
 <font size="2">
 ```{r, print_refs1, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
-print(bib[[c("")]], 
+print(bib[[c("schreyer_elastic_2006", "badgley_1961", "key_detectability_1993", "willmes_pan-arctic_2015", "guo_improved_2021", "gpgp_pkg", "peterson_evaluating_2011", "lead_pic_2009", "vecchia1988estimation", "bouillon_producing_2015", "rohrs_algorithm_2012")]], 
       .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
       )
 ```
@@ -360,7 +829,5 @@ class:inverse
 # Questions?
 <br>
 <br>
-`r fa("envelope", fill = "white")` **email.address@huskers.unl.edu**
-`r fa("home", fill = "white")` **www.homepageurl.com**
-`r fa("github", fill = "white")` **github-user-name**
+
 ]
