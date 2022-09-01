@@ -117,7 +117,7 @@ write("", file = "js-addins.html")
 
 `r fa_i("check-double")` Discussion and Conclusion
 
-`r fa_i("spinner")` Future Work
+`r fa_i("spinner")` Steps for Program Completion
 
 ---
 class:primary
@@ -171,7 +171,7 @@ where $g_{j}$ = \{ ${s_{t_{j}}: t \in \tau_j}$\}, $\tau_j \subset \left\{t=1...T
 and ${s_{t_{j}}}$ = $(x_{t_{j}}, y_{t_{j}})$
 ]
 
-+ For our study region, n = 8811 ids, and T = 21 days
++ For our study region, n = 8811, and T = 22
 
 
 
@@ -182,7 +182,7 @@ class:primary
 
 + Surface temperature differs between a crack and the surrounding sea ice.
 + Use thermal channels of the Advanced Very High Resolution Radiometer (AVHRR) `r Citep(bib[[c("key_detectability_1993")]])` 
-  - Heavily dependent on clear skies and thin ice
+  - Heavily dependent on clear skies and has issues with thin ice
 + Methods have been proposed to reduce the impact of clouds 
   - Moderate Resolution Imagery Spectroradiometer (MODIS)  `r Citep(bib[[c("willmes_pan-arctic_2015")]])`
   - Fuzzy Cloud Artifact (FCAF) `r Citep(bib[[c("willmes_pan-arctic_2015")]])`
@@ -267,17 +267,20 @@ class:primary
 
 # Other Spatio-Temporal Clustering Methods
 
-+ Combination of geographic location with time introduces new challenges in cluster, where a cluster is now determined based on spatial and temporal similarity $\\$ $\\$
++ Combination of geographic location with time introduces new challenges in clustering, where a cluster is now determined based on spatial and temporal similarity $\\$ $\\$
 + Similarity Measures
   - One of the components of a clustering algorithm is to determine how to measure similarity
   - Similarity measures have been developed for spatio-temporal data, but many rely on having trajectories of the same length or are sensitive to noise
-+ Density-Based
++ Density-Based Clustering
   - Objects that are densely packed in a region should be grouped together in a cluster
   - Can cluster objects into any shape and number of clusters do not need to be pre-defined
   - However, since our data is based on a grid, point density will be consistent across the domain
-+ Model-Based 
++ Model-Based Clustering
   - Can assume a model for each cluster, where the best fitting data for the model is found in order to determine cluster membership
   - Can be difficulty in finding the assume model
+
+
+(Info from `r Citep(bib["ansari_spatiotemporal_2020"])`)
 
 ---
 class:primary
@@ -314,7 +317,7 @@ class:primary
   - Length travel in x/y between the minimum and maximum location 
   ( $x_{max} - x_{min}$ and $y_{max} - y_{min}$)
   - Length travel in x/y between latest and earliest observation ( $x_{1} - x_{0}$ and $y_{1} - y_{0}$)
-  - Angle of movement
+  - Angle of movement (direction)
   - Average x/y value
   - Sub-trajectories - previous time information
 
@@ -340,9 +343,10 @@ class:primary
 + Bounding Box features were used as input into K-Means clustering, which partitions n observations into k clusters.
 + K-Means Clustering `r Citep(bib[[c("steinley_kmeans_2006")]])`
   - All observations must belong to a cluster and each cluster, k, must have at least one observation
+  - Iterative Procedure 
   - Minimize squared Euclidean distance between an observation and the centroid vector of a cluster
   - Centroid vector found by averaging the features of each cluster member
-  - Iterative Procedure 
+
 
 ---
 class:primary
@@ -404,7 +408,7 @@ class:primary
 
 + Linear interpolation 
   - Popular due to ease in implementation
-  - Performs best for linearly moving objects, or can potentially work well with non-linear data if sample in high frequency `r Citep(bib[[c("guo_improved_2021")]])`
+  - Performs best for linearly moving objects, or can potentially work well with non-linear data if sample in high enough frequency `r Citep(bib[[c("guo_improved_2021")]])`
   
 <br>
 
@@ -429,10 +433,8 @@ class:primary
 
 + Using information gained from clusters to identify spatio-temporal neighbors
   - Know how other points in the cluster move at a time point
-  - Would expect a missing point  at that time to move similarly
-+ Cluster By Week
-  - Clustering sub-trajectories is beneficial as may lost information if clustering the whole trajectory.
-+ Use the by Week clusters to find neighbors
+  - Would expect a missing point  at that time to move similarly to known points
++ Cluster by Weekly trajectories to find neighbors
   - Intersection of one week's clusters with the week before and week after would create groups
   - Each member of a group is then a spatio-temporal neighbor of the other members as they are in a similar geographic region over time. 
   
@@ -494,7 +496,7 @@ class:primary
 
 Now, the covariance function is an Exponential Space-Time `r Citep(bib[[c("gpgp_pkg")]])`
 
-$$C(\theta) = \sigma^2e^{-||D^{-1}(x-y)||}.$$ where 
+$$\Sigma_{\theta} = \sigma^2e^{-||D^{-1}(x-y)||}.$$ where 
 
 .center[
 ```{r cov-pic, echo = F, include = T, cache = T, eval = TRUE, out.width="50%"}
@@ -539,7 +541,7 @@ class:primary
   - Within each intersection
 + Use Exponential Space-Time covariance function (as previously defined)
 + Output is the maximum likelihood estimates for the mean and covariance parameters
-+ Determining estimates of missing locations
++ Use model to determine estimates of missing locations
   - From the conditional expectation of the model
   - Create a grid encompassing our ice sheet to give a starting value of the missing locations. 
   - The model will then adjust this location using it's known neighbors
@@ -551,18 +553,18 @@ class:primary
 
 + Create Underlying Process Grid 
   - Simulating movement of ocean that causes observations to move
-  - Initial grid was created and shifted seven times to represent seven days of movement.
+  - Initial grid was created and shifted seven times to represent seven days of movement in the underlying process.
   - This data is then used to create the covariance matrix, $C_{d,c}(\theta)$
   - Covariance parameters and defined mean trend ( $\mu_{d,c}$ ) is different for each cluster $\\$
 
 .center[
 $U_{d,c}(s,t) \sim GP(\mu_{d,c}, C_{d,c}(\theta))$ $\\$
 
-where $U_{d,c}(s,t)$ is the displacement at location $s$ & time $t$ $\\$ for dimension $d$ ( $d$ =x, y), cluster $c$
+where $U_{d,c}(s,t)$ is the displacement at location $s$ & time $t$ $\\$ for $d$ = x or y, cluster $c$
 
 ]
 
-**Note**: Only simulated 2 clusters for simplicity
+**Note**: Only 2 clusters for simplicity
 
 ---
 class:primary
@@ -570,7 +572,7 @@ class:primary
 #Simulation Study
 
 + Create Observed Grid
-  - Movement of an observed point is determined by the value fo the nearest point of the underlying process for that day ( $g$ )
+  - Movement of an observed point is determined by the value of the nearest point of the underlying process for that day ( $g$ )
   - Obtained a week's worth of simulated data
   
 .center[
@@ -583,7 +585,7 @@ class:primary
 ```{r grid-combo-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
 
 
-i1 <- img_modal(src = "images/grid_combo.png", alt = "Underlying and Observed Grid Plotted Together", other=list(width="40%"))
+i1 <- img_modal(src = "images/both_grid2.jpeg", alt = "Underlying and Observed Grid Plotted Together", other=list(width="40%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i1, "\\n", simplify = T)[3:9]
@@ -657,8 +659,8 @@ class:primary
 
 result_data <- data.frame(sim = c(1,2,3), X1 = c(1.496, 1.628, 1.342), Y1 = c(1.517, 1.58, 1.338), X2 = c(1.042, 1.455, 0.95), Y2 = c(1.226, 1.54, 0.92), X3 = c(1.438, 1.474, 1.458), Y3 = c(1.295, 1.488, 1.489))
  
-kableExtra::kable(result_data, booktabs = TRUE, caption = "RMSE for Interpolation Methods", col.names = c("Simulation", "X", "Y", "X", "Y", "X", "Y"), escape = FALSE,  table.attr = "style='width:80%;'") %>% 
-  add_header_above(c("", "Intersection" = 2, "Linear" = 2, "No Intersection" = 2))
+kableExtra::kable(result_data, booktabs = TRUE, caption = "RMSE for Interpolation Methods", col.names = c("Simulation", "X", "Y", "X", "Y", "X", "Y"), escape = FALSE,  table.attr = "style='width:80%;'", align = "c") %>% 
+  add_header_above(c("", "Intersection Model" = 2, "Linear" = 2, "No Intersection Model" = 2))
 
 
 ```
@@ -685,12 +687,15 @@ class:primary
 
 + A benefit of using a model-based approach is that are able to determine the uncertainty of the estimate. 
 + Conducted 30 simulations of predictions, which are used to calculate the standard deviation
-
-<br>
++ Found Intervals by
+.center[
+$\hat{x} \pm (2*\sigma_x)$ and $\hat{y} \pm (2*\sigma_y)$ 
+]
++ Then found the proportion of intervals that contained the true value
 
 ```{r sim-results-tab3, message=FALSE, warning = FALSE}
 
-result_data3 <- data.frame(sim = c(1, 2, 3), x = c(0.158, 0.094, 0.167), y = c(0.14, 0.125, 0.25))
+result_data3 <- data.frame(sim = c(1, 2, 3), x = c(0.281, 0.188, 0.291), y = c(0.298, 0.25, 0.375))
 
 kableExtra::kable(result_data3, booktabs = TRUE, caption = "Proportion of Intervals Contained Observed Value", col.names = c("Simulation", "X", "Y"), escape = FALSE, align = "c", table.attr = "style='width:80%;'") 
 
@@ -771,7 +776,7 @@ class:primary
 
 result_data4 <- data.frame(Week = c(1,2,3), X1 = c(3.215, 3.539, 3.031), Y1 = c(3.408, 3.256, 2.958), X2 = c(1.606, 2.034, 0.991), Y2 = c(4.494, 1.832, 1.24))
  
-kableExtra::kable(result_data4, booktabs = TRUE, caption = "RMSE for Interpolation Methods along Border", col.names = c("Week", "X", "Y", "X", "Y"), escape = FALSE) %>% 
+kableExtra::kable(result_data4, booktabs = TRUE, caption = "RMSE for Interpolation Methods along Border", col.names = c("Week", "X", "Y", "X", "Y"), escape = FALSE, table.attr = "style='width:80%;'") %>% 
   add_header_above(c("", "Intersection" = 2, "Linear" = 2)) %>% row_spec(1, color = 'black', background = 'yellow') 
 
 
@@ -840,7 +845,7 @@ class:primary
   - Shown through simulations and the ice data to provide a reasonable estimation of the locations of cracks
 + Drawbacks
   - Relies on a pre-defined number of clusters, which generally is not known
-  - Have a set number of cluster, so a limit on how many cluster boundaries, thus cracks, that can be identified.
+  - Have a set number of cluster, so a limit on how many cluster boundaries, thus cracks.
   
 ---
 class:primary
@@ -856,7 +861,7 @@ class:primary
 ---
 class:primary
 
-#Model Development
+#Comments on Model Development
 
 + Log-likelihood does not converge 
   - Temporal range value is exceptionally large especially in comparison to the spatial range
@@ -871,8 +876,11 @@ class:primary
 ---
 class:primary
 
-# Future Work
-
+# Steps for Program Completion 
++ Modeling Arctic Sea Ice
+  - Bivariate Interpolation
+  - Visualization of results
+  - Investigate model further (why covariance parameter estimates impractical)
 + Visualization and comparison of spatial field data
 + Explaining Machine Learning Output for Spatial Data
   - To explain what the optimal management decisions are for profitability for a farmer's field, accounting for a range of factors. 
@@ -886,7 +894,7 @@ class:primary
 # References
 <font size="2">
 ```{r, print_refs1, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
-print(bib[[c("schreyer_elastic_2006", "badgley_1961", "key_detectability_1993", "guo_improved_2021", "gpgp_pkg", "peterson_evaluating_2011", "bouillon_producing_2015", "rohrs_algorithm_2012", "kim_analyzing_2005", "kodinariya_2013")]], 
+print(bib[[c("schreyer_elastic_2006", "badgley_1961", "key_detectability_1993", "guo_improved_2021", "gpgp_pkg", "peterson_evaluating_2011", "bouillon_producing_2015", "rohrs_algorithm_2012", "kim_analyzing_2005", "kodinariya_2013", "ansari_spatiotemporal_2020")]], 
       .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
       )
 ```

@@ -662,3 +662,20 @@
             modaltraj_plot.style.display = 'none';
           }
 </script>
+<script>
+        /* Get the modal*/
+          var modalboth_grid2 = document.getElementById('modalboth_grid2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgboth_grid2 = document.getElementById('imgboth_grid2');
+          var modalImgboth_grid2 = document.getElementById('imgmodalboth_grid2');
+          var captionTextboth_grid2 = document.getElementById('captionboth_grid2');
+          imgboth_grid2.onclick = function(){
+            modalboth_grid2.style.display = 'block';
+            modalImgboth_grid2.src = this.src;
+            captionTextboth_grid2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgboth_grid2.onclick = function() {
+            modalboth_grid2.style.display = 'none';
+          }
+</script>
