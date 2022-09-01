@@ -477,7 +477,7 @@ class:primary
 
 #Clustering with K-Means
 
-+ **Drawback**: Clusters must be specified prior to clustering
++ **Drawback**: Number of Clusters must be specified prior to clustering
   - Number of Clusters determined using the Silhouette statistic
 + Silhouette Statistic (Kodinariya and Makwana, 2013)
   - Compares within cluster distances to between cluster distances
@@ -659,7 +659,7 @@ class:primary
 + Use model to determine estimates of missing locations
   - From the conditional expectation of the model
   - Create a grid encompassing our ice sheet to give a starting value of the missing locations. 
-  - The model will then adjust this location using it's known neighbors
+  - The model will then adjust this location using its known neighbors
 
 
 ---
@@ -829,6 +829,36 @@ class:primary
 
 #Simulated Interpolation Results
 
++ Visualizing results from previous slide
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgrmse_sim_X' src='images/rmse_sim_X.jpeg' alt='RMSE values for the Interpolation Methods for each Simulation' width='50%'&gt;
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgrmse_sim_y' src='images/rmse_sim_y.jpeg' alt='RMSE values for the Interpolation Methods for each Simulation' width='50%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalrmse_sim_X' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalrmse_sim_X'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionrmse_sim_X' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalrmse_sim_y' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalrmse_sim_y'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionrmse_sim_y' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+]
+
+
+---
+class:primary
+
+#Simulated Interpolation Results
+
 
 &lt;table&gt;
 &lt;caption&gt;RMSE for Interpolation Methods by cluster&lt;/caption&gt;
@@ -929,7 +959,7 @@ class:primary
 + Then found the proportion of intervals that contained the true value
 
 &lt;table style='width:80%;'&gt;
-&lt;caption&gt;Proportion of Intervals Contained Observed Value&lt;/caption&gt;
+&lt;caption&gt;Coverage&lt;/caption&gt;
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style="text-align:center;"&gt; Simulation &lt;/th&gt;
@@ -1163,7 +1193,7 @@ class:primary
 &lt;br&gt;
 
 &lt;table style="width:75%;"&gt;
-&lt;caption&gt;Proportion of Intervals Containing Observed Value by cluster for Week 2&lt;/caption&gt;
+&lt;caption&gt;&lt;b&gt;Coverage&lt;/b&gt;&lt;/caption&gt;
  &lt;thead&gt;
   &lt;tr&gt;
    &lt;th style="text-align:center;"&gt; Cluster &lt;/th&gt;
@@ -2114,6 +2144,74 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgboth_grid2.onclick = function() {
             modalboth_grid2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalrmse_sim_X = document.getElementById('modalrmse_sim_X');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgrmse_sim_X = document.getElementById('imgrmse_sim_X');
+          var modalImgrmse_sim_X = document.getElementById('imgmodalrmse_sim_X');
+          var captionTextrmse_sim_X = document.getElementById('captionrmse_sim_X');
+          imgrmse_sim_X.onclick = function(){
+            modalrmse_sim_X.style.display = 'block';
+            modalImgrmse_sim_X.src = this.src;
+            captionTextrmse_sim_X.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgrmse_sim_X.onclick = function() {
+            modalrmse_sim_X.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalrmse_sim_y = document.getElementById('modalrmse_sim_y');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgrmse_sim_y = document.getElementById('imgrmse_sim_y');
+          var modalImgrmse_sim_y = document.getElementById('imgmodalrmse_sim_y');
+          var captionTextrmse_sim_y = document.getElementById('captionrmse_sim_y');
+          imgrmse_sim_y.onclick = function(){
+            modalrmse_sim_y.style.display = 'block';
+            modalImgrmse_sim_y.src = this.src;
+            captionTextrmse_sim_y.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgrmse_sim_y.onclick = function() {
+            modalrmse_sim_y.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalrmse_sim_X = document.getElementById('modalrmse_sim_X');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgrmse_sim_X = document.getElementById('imgrmse_sim_X');
+          var modalImgrmse_sim_X = document.getElementById('imgmodalrmse_sim_X');
+          var captionTextrmse_sim_X = document.getElementById('captionrmse_sim_X');
+          imgrmse_sim_X.onclick = function(){
+            modalrmse_sim_X.style.display = 'block';
+            modalImgrmse_sim_X.src = this.src;
+            captionTextrmse_sim_X.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgrmse_sim_X.onclick = function() {
+            modalrmse_sim_X.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalrmse_sim_y = document.getElementById('modalrmse_sim_y');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgrmse_sim_y = document.getElementById('imgrmse_sim_y');
+          var modalImgrmse_sim_y = document.getElementById('imgmodalrmse_sim_y');
+          var captionTextrmse_sim_y = document.getElementById('captionrmse_sim_y');
+          imgrmse_sim_y.onclick = function(){
+            modalrmse_sim_y.style.display = 'block';
+            modalImgrmse_sim_y.src = this.src;
+            captionTextrmse_sim_y.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgrmse_sim_y.onclick = function() {
+            modalrmse_sim_y.style.display = 'none';
           }
 </script>
 
