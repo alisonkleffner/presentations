@@ -352,7 +352,7 @@ where `\(g_{j} = \left\{s_{jt} : t \in \mathcal{T}_j\right\}\)`, `\(\mathcal{T}_
 and `\({s_{jt}}\)` = `\((x_{jt}, y_{jt})\)`
 ]
 
-+ For our study region, n = 8811, and T = 22
++ For our study region, `\(n\)` = 8811, and `\(T\)` = 22
 
 ???
 
@@ -392,7 +392,7 @@ class:primary
   - Using only the movement of the ice sheet
   - Cluster trajectories based on movement
   - The boundaries would be possible locations of ice cracks
-2. Develop a spatio-interpolation (ST) method to predict missing points along a trajectory 
+2. Develop a spatio-temporal (ST) interpolation method to predict missing points along a trajectory 
   - Using the information gained from the clustering
   - Take into account nonstationarity of the data (estimate parameters separately for each cluster)
 
@@ -611,7 +611,7 @@ class:primary
 ie. `\(X(s) \sim GP(0,c(.|.))\)`
 ]
 
-Meaning, for `\(\left\{s_1,...,s_n\right\}\)`, `\(x\)` = `\((x_1,...,x_n)^T \sim MVN(\mu, \Sigma_{\theta})\)`
+Meaning, for `\(\left\{s_1,...,s_n\right\}\)`, `\(x\)` = `\((x_1,...,x_n)^T \sim MVN(0, \Sigma_{\theta})\)`
 
 Can define `\(\Sigma_{\theta}\)` as the Exponential Covariance Function (Guinness and Katzfuss, 2021)
 
