@@ -747,3 +747,20 @@
             modalrmse_sim_y.style.display = 'none';
           }
 </script>
+<script>
+        /* Get the modal*/
+          var modalboundingbox = document.getElementById('modalboundingbox');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgboundingbox = document.getElementById('imgboundingbox');
+          var modalImgboundingbox = document.getElementById('imgmodalboundingbox');
+          var captionTextboundingbox = document.getElementById('captionboundingbox');
+          imgboundingbox.onclick = function(){
+            modalboundingbox.style.display = 'block';
+            modalImgboundingbox.src = this.src;
+            captionTextboundingbox.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgboundingbox.onclick = function() {
+            modalboundingbox.style.display = 'none';
+          }
+</script>

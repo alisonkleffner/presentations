@@ -247,7 +247,7 @@ class:primary
 
 # Importance of Arctic Sea Ice Crack Detection
 
-+ Sea ice is a barrier between the atmosphere and the ocean
++ Sea ice serves as a barrier between the atmosphere and the ocean
 + Cracks, or leads, may form in the ice pack due to dynamic processes
   - Allows for heat from the ocean to be transferred to the atmosphere (Schreyer, Sulsky, Munday, et al., 2006). 
   - Accounts for half of the heat flux between the ocean and atmosphere (Badgley, 1961)
@@ -265,37 +265,6 @@ class:primary
   &lt;div id='captionIceChunk' class='modal-caption'&gt;&lt;/div&gt;
 &lt;/div&gt;
 ]
-
----
-class:primary
-
-# Data
-
-.center[
-&lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgrgps_grid' src='images/rgps_grid.jpg' alt='Example of initial grid used to track movement (Peterson &amp; Sulsky, 2011)' width='25%'&gt;
-&lt;!-- The Modal --&gt;
-&lt;div id='modalrgps_grid' class='modal'&gt;
-  &lt;!-- Modal Content (The Image) --&gt;
-  &lt;img class='modal-content' id='imgmodalrgps_grid'&gt;
-  &lt;!-- Modal Caption (Image Text) --&gt;
-  &lt;div id='captionrgps_grid' class='modal-caption'&gt;&lt;/div&gt;
-&lt;/div&gt;
-]
-
-+ Sea Ice can be tracked by NASA's RADARSTAT Geophysical Processor System (RGPS), which uses synthetic aperture radar (SAR) images to track the trajectory of points on an ice sheet.
-+ Each grid cell vertex is assigned an identifier (id) which is used for tracking
-+ Set of all trajectories: 
-
-.center[
-`\(\mathcal{G} = (g_1, ..., g_n)\)` `\(\\\)`
-where `\(g_{j}\)` = \{ `\({s_{t_{j}}: t \in \tau_j}\)`\}, `\(\tau_j \subset \left\{t=1...T\right\}\)` a collection of time points where `\(id_j\)` is observed `\(\\\)`
-and `\({s_{t_{j}}}\)` = `\((x_{t_{j}}, y_{t_{j}})\)`
-]
-
-+ For our study region, n = 8811, and T = 22
-
-
 
 ---
 class:primary
@@ -359,9 +328,47 @@ class:primary
 ---
 class:primary
 
+# Data
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgrgps_grid' src='images/rgps_grid.jpg' alt='Example of initial grid used to track movement (Peterson &amp; Sulsky, 2011)' width='25%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalrgps_grid' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalrgps_grid'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionrgps_grid' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
++ Sea Ice can be tracked by NASA's RADARSTAT Geophysical Processor System (RGPS), which uses synthetic aperture radar (SAR) images to track the trajectory of points on an ice sheet.
++ Each grid cell vertex is assigned an identifier (cell `\(j=1,...,n\)`) which is used for tracking
++ Set of all trajectories: 
+
+.center[
+`\(\mathcal{G} = \left\{g_1, ..., g_n\right\}\)` `\(\\\)`
+where `\(g_{j} = \left\{s_{jt} : t \in \mathcal{T}_j\right\}\)`, `\(\mathcal{T}_j \subset \left\{t=1...T\right\}\)` a collection of time points where `\(cell_j\)` is observed `\(\\\)`
+and `\({s_{jt}}\)` = `\((x_{jt}, y_{jt})\)`
+]
+
++ For our study region, n = 8811, and T = 22
+
+???
+
+An illustration of RGPS data is
+shown in Fig. 7.1, where satellite views of a 50 km by 50 km region of Arctic ice
+have a 5 km × 5 km RGPS grid superimposed. The time span between the first
+and second observation is 18.5 h and the satellite images were recorded in mid May
+2002. 
+
+
+---
+class:primary
+
 # Motivating Picture
 
-+ Each line is a `\(g_j\)` plotted over time
++ Each line is a trajectory, `\(g_j\)`, plotted in an x-y coordinate
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
@@ -383,15 +390,16 @@ class:primary
 
 1. Develop a ice crack detection method
   - Using only the movement of the ice sheet
-  - Cluster trajectories based on movement, where the boundaries would be possible locations of ice cracks
-2. Develop a spatio-interpolation method to predict missing points along a trajectory 
+  - Cluster trajectories based on movement
+  - The boundaries would be possible locations of ice cracks
+2. Develop a spatio-interpolation (ST) method to predict missing points along a trajectory 
   - Using the information gained from the clustering
-  - Take into account nonstationarity of the data
+  - Take into account nonstationarity of the data (estimate parameters separately for each cluster)
 
 ---
 class:primary
 
-# Other Spatio-Temporal Clustering Methods
+# Existing ST Clustering Methods
 
 + Combination of geographic location with time introduces new challenges in clustering, where a cluster is now determined based on spatial and temporal similarity `\(\\\)` `\(\\\)`
 + Similarity Measures
@@ -411,7 +419,7 @@ class:primary
 ---
 class:primary
 
-# Other Spatio-Temporal Clustering Methods
+# Existing ST Clustering Methods
 
 + Nonstationary Models (Kim, Mallick, and Holmes, 2005)
   - Data can be partitioned and a model can be developed for each partition
@@ -435,20 +443,23 @@ class:primary
 ---
 class:primary
 
-# Bounding Box
+# Find Ice Trajectory Features: Bounding Box
 
-+ A bounding box can be created around each trajectory to represent it's movement.
++ We create a bounding box around for each trajectory to represent it's movement
 + Bounding Box Features:
   - Length travel in x/y between the minimum and maximum location 
-  ( `\(x_{max} - x_{min}\)` and `\(y_{max} - y_{min}\)`)
-  - Length travel in x/y between latest and earliest observation ( `\(x_{1} - x_{0}\)` and `\(y_{1} - y_{0}\)`)
+.center[
+( `\(x_{max} - x_{min}\)` and `\(y_{max} - y_{min}\)`)]
+  - Length travel in x/y between latest and earliest observation 
+  .center[
+  ( `\(x_{1} - x_{0}\)` and `\(y_{1} - y_{0}\)`)]
   - Angle of movement (direction)
   - Average x/y value
-  - Sub-trajectories - previous time information
+  - If clustering a sub-trajectory, can also include previous features 
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgboundingbox' src='images/bounding-box.png' alt='Points used to Develop Bounding Box' width='30%'&gt;
+&lt;img id='imgboundingbox' src='images/bounding-box.png' alt='Points used to Develop Bounding Box' width='25%'&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modalboundingbox' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -507,7 +518,8 @@ class:primary
 
 #Missing Data
 
-+ Data collection methods may fail, leaving positions in a trajectory unknown or may want to overcome sampling sparseness
++ In general, data collection methods may fail, leaving positions in a trajectory unknown or may want to overcome sampling sparseness
++ In our case, missing data is due to the path of the satellite used to collect the data. 
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
@@ -526,11 +538,11 @@ class:primary
 ---
 class:primary
 
-#Other Trajectory Interpolation Methods
+#Linear Interpolation for Ice Trajectory
 
-+ Linear interpolation 
-  - Popular due to ease in implementation
-  - Performs best for linearly moving objects, or can potentially work well with non-linear data if sample in high enough frequency (Guo, Mou, Chen, et al., 2021)
+
++ Popular due to ease in implementation
++ Performs best for linearly moving objects, or can potentially work well with non-linear data if sample in high enough frequency (Guo, Mou, Chen, et al., 2021)
   
 &lt;br&gt;
 
@@ -556,6 +568,7 @@ class:primary
   - Know how other points in the cluster move at a time point
   - Would expect a missing point  at that time to move similarly to known points
 + Cluster by Weekly trajectories to find neighbors
+  - Cluster by weeks because as smallest interval could detect movement and also see some continuity between weeks
   - Intersection of one week's clusters with the week before and week after would create groups
   - Each member of a group is then a spatio-temporal neighbor of the other members as they are in a similar geographic region over time. 
   
@@ -567,8 +580,9 @@ class:primary
 1. Create a polygon around each cluster for a week 
   - Finding boundary coordinates of the clusters
   - Done in a sequential manner
-2. After a polygon is created, all ids located in that polygon are removed.
-  - Make sure all ids are found within a polygon
+2. After a polygon is created, all `\(cell_j\)` located in that polygon are removed from the dataset.
+  - This was done to decrease the amount of overlapping polygons
+  - Make sure each `\(cell_j\)` is found within a polygon - do not want to lose data
 3. Find the intersection of the weekly polygons
   - All of the points within that intersection are spatio-temporal neighbors.
 
@@ -587,22 +601,28 @@ class:primary
 ---
 class:primary
 
-#Gaussian Process (GP) for Spatial Data
+#Gaussian Process (GP) 
 
-`\(\left\{X(s): s \in R^2\right\}\)` is a Gaussian Process where, `\(X(s) = (x(s_1),...,x(s_n))\)`
+**For Spatial Data**
 
-In a GP, the data are modeled as, `\(X(s) \sim N(\mu, \Sigma_{\theta})\)`
+`\(\left\{X(s): s \in D \subset R^2\right\}\)` is a Gaussian Process if all its finite-dimensional distributions are Gaussian
+
+.center[
+ie. `\(X(s) \sim GP(0,c(.|.))\)`
+]
+
+Meaning, for `\(\left\{s_1,...,s_n\right\}\)`, `\(x\)` = `\((x_1,...,x_n)^T \sim MVN(\mu, \Sigma_{\theta})\)`
 
 Can define `\(\Sigma_{\theta}\)` as the Exponential Covariance Function (Guinness and Katzfuss, 2021)
 
 .center[
-`\(\Sigma_{\theta} = \sigma^2exp(-||x-y||/\phi)\)` `\(\\\)`
+`\(\Sigma_{\theta} = \sigma^2\exp(-||x-y||/\phi)\)` `\(\\\)`
 where `\(\sigma^2\)` is the variance and `\(\phi\)` is the range
 ]
 
 Joint density of the observations can be written as a product of conditional densities (Guinness, 2018)
 .center[
-`\(f(x_1,...,x_n) = \prod^n_{i=2} f(x_i|x_1,...,x_{i-1})\)` 
+`\(f(x_1,...,x_n) = f(x_1)\prod^n_{i=2} f(x_{i}|x_{1},...,x_{i-1})\)` 
 
 ]
 
@@ -612,20 +632,20 @@ This can be a computationally complex process due to the inversion of `\(\Sigma_
 ---
 class:primary
 
-#GP for Spatial-Temporal Data
+#Gaussian Process (GP) 
 
-Now, the covariance function is an Exponential Space-Time (Guinness and Katzfuss, 2021)
+**Extension to ST Data**
 
-`$$\Sigma_{\theta} = \sigma^2e^{-||D^{-1}(x-y)||}.$$` where 
+Now, the covariance function is an Exponential Space-Time, which is a separable covariance function (Wikle et al, 2019)
 
 .center[
-&lt;img src="images/cov_function.png" width="50%" /&gt;
-`\(\\\)`
-where `\(\sigma^2\)` =  variance, `\(\phi\)` = spatial range, `\(\tau\)` = temporal range, `\(c_0\)` = nugget 
+`\(\Sigma_{\theta}(s;t) = \Sigma_{\theta}^{(s)}*\Sigma_{\theta}^{(t)}\)` `\(\\\)` where 
+`\(\Sigma_{\theta}^{(s)} = \sigma^2\exp\left\{-||x-y||/\phi\right\}\)`  and `\(\Sigma_{\theta}^{(t)} = \sigma^2\exp\left\{-|t|/\tau\right\}\)`
 
+
+where `\(\sigma^2\)` =  variance, `\(\phi\)` = spatial range, `\(\tau\)` = temporal range
 ]
 
-This is a Separable covariance function, meaning it has the form: `$$\Sigma_{s}\otimes\Sigma_{t}$$`
 
 Separability can speed up computations if no missing data, but we do...
 
@@ -638,7 +658,7 @@ class:primary
 + Writes the joint density as a product of conditional distributions, where only a subset of the data is used to create the conditional distributions (Guinness, 2018)
 
 .center[
-`\(f(x_1,...,x_n) = \prod^n_{i=2} f(x_i|x_{n(i)})\)` `\(\\\)`
+`\(f(x_1,...,x_n) = f(x_1)\prod^n_{i=2} f(x_i|x_{n(i)})\)` `\(\\\)`
 where `\(n(i)\)` are the neighbors of observation `\(i\)`
 ]
 
@@ -654,6 +674,7 @@ class:primary
 
 + Individual model developed for both x and y using the GpGp package in R (Guinness and Katzfuss, 2021)
   - Within each intersection
+  - Due this to take into account the nonstationarity
 + Use Exponential Space-Time covariance function (as previously defined)
 + Output is the maximum likelihood estimates for the mean and covariance parameters
 + Use model to determine estimates of missing locations
@@ -823,35 +844,6 @@ class:primary
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-
----
-class:primary
-
-#Simulated Interpolation Results
-
-+ Visualizing results from previous slide
-
-.center[
-&lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgrmse_sim_X' src='images/rmse_sim_X.jpeg' alt='RMSE values for the Interpolation Methods for each Simulation' width='50%'&gt;
-&lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgrmse_sim_y' src='images/rmse_sim_y.jpeg' alt='RMSE values for the Interpolation Methods for each Simulation' width='50%'&gt;
-&lt;!-- The Modal --&gt;
-&lt;div id='modalrmse_sim_X' class='modal'&gt;
-  &lt;!-- Modal Content (The Image) --&gt;
-  &lt;img class='modal-content' id='imgmodalrmse_sim_X'&gt;
-  &lt;!-- Modal Caption (Image Text) --&gt;
-  &lt;div id='captionrmse_sim_X' class='modal-caption'&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;!-- The Modal --&gt;
-&lt;div id='modalrmse_sim_y' class='modal'&gt;
-  &lt;!-- Modal Content (The Image) --&gt;
-  &lt;img class='modal-content' id='imgmodalrmse_sim_y'&gt;
-  &lt;!-- Modal Caption (Image Text) --&gt;
-  &lt;div id='captionrmse_sim_y' class='modal-caption'&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-]
 
 
 ---
@@ -1234,7 +1226,9 @@ class:primary
 ---
 class:primary
 
-# Clustering with Bounding Box
+# Discussion of Methods
+
+**Clustering with Bounding Box:**
 
 + Advantages
   - Provides information about how the data is moving
@@ -1243,10 +1237,7 @@ class:primary
   - Relies on a pre-defined number of clusters, which generally is not known
   - Have a set number of cluster, so a limit on how many cluster boundaries, thus cracks.
   
----
-class:primary
-
-#Intersection Model Interpolation
+**ST Interpolation with Intersection Models:**
 
 + Advantages
   - Takes into account the nonstationarity of the data
@@ -1278,7 +1269,7 @@ class:primary
   - Visualization of results
   - Investigate model further (why covariance parameter estimates impractical)
 + Visualization and comparison of spatial field data
-+ Explaining Machine Learning Output for Spatial Data
++ Explaining Machine Learning Output for Spatial Data (Next Step)
   - To explain what the optimal management decisions are for profitability for a farmer's field, accounting for a range of factors. 
   - Develop a user-interface which will be designed around explaining machine learning output to non-experts, 
   - Build trust in the model predictions without requiring farmers to learn the details of statistical modeling.
@@ -1288,6 +1279,7 @@ class:primary
 ---
 class:primary
 # References
+
 &lt;font size="2"&gt;
 &lt;p&gt;&lt;cite&gt;&lt;a id='bib-ansari_spatiotemporal_2020'&gt;&lt;/a&gt;&lt;a href="#cite-ansari_spatiotemporal_2020"&gt;Ansari, M. Y., A. Ahmad, S. S. Khan, et al.&lt;/a&gt;
 (2020).
@@ -1379,7 +1371,11 @@ In: &lt;em&gt;Journal of the Royal Statistical Society: Series B (Methodological
 &amp;ldquo;Pan-Arctic lead detection from MODIS thermal infrared imagery&amp;rdquo;.
 In: &lt;em&gt;Annals of Glaciology&lt;/em&gt; 56, pp. 29&amp;ndash;37.
 DOI: &lt;a href="https://doi.org/10.3189/2015AoG69A615"&gt;10.3189/2015AoG69A615&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
+
+Wikle, C.K., Zammit-Mangion, A., and Cressie, N. (2019). Spatio-Temporal Statistics with R. Chapman &amp; Hall/CRC, Boca Raton, FL.
+
 &lt;/font&gt;
+
 
 ---
 class:inverse
@@ -2212,6 +2208,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgrmse_sim_y.onclick = function() {
             modalrmse_sim_y.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalboundingbox = document.getElementById('modalboundingbox');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgboundingbox = document.getElementById('imgboundingbox');
+          var modalImgboundingbox = document.getElementById('imgmodalboundingbox');
+          var captionTextboundingbox = document.getElementById('captionboundingbox');
+          imgboundingbox.onclick = function(){
+            modalboundingbox.style.display = 'block';
+            modalImgboundingbox.src = this.src;
+            captionTextboundingbox.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgboundingbox.onclick = function() {
+            modalboundingbox.style.display = 'none';
           }
 </script>
 
