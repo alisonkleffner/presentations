@@ -37,10 +37,11 @@ library(RefManageR)
 library(iconr)
 library(fontawesome)
 library(shiny)
+
 # download_fontawesome()
 
 # References
-bib <- ReadBib("bib/thesis.bib", check = FALSE)
+bib <- ReadBib("bib/thesis.bib")
 ui <- "- "
 
 # R markdown options

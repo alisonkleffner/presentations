@@ -19,10 +19,18 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # A Spatio-Temporal Model of Arctic Sea Ice
+]
+.subtitle[
 ## Comprehensive Exam
+]
+.author[
 ### Alison Kleffner
+]
+.date[
 ### Department of Statistics, University of Nebraska - Lincoln
+]
 
 ---
 
@@ -226,21 +234,21 @@ body {
 # Outline
 
 
-<i class="fa fa-arrows" role="presentation" aria-label="arrows icon"></i> Motivation and Background
+<i class="fas fa-arrows-up-down-left-right" role="presentation" aria-label="arrows-up-down-left-right icon"></i> Motivation and Background
 
-<i class="fa fa-list" role="presentation" aria-label="list icon"></i> Research Objectives
+<i class="fas fa-list" role="presentation" aria-label="list icon"></i> Research Objectives
 
-<i class="fa fa-info" role="presentation" aria-label="info icon"></i> Spatio-Temporal Clustering: Bounding Box
+<i class="fas fa-info" role="presentation" aria-label="info icon"></i> Spatio-Temporal Clustering: Bounding Box
 
-<i class="fa fa-info" role="presentation" aria-label="info icon"></i> Spatio-Temporal Interpolation: Intersection Model
+<i class="fas fa-info" role="presentation" aria-label="info icon"></i> Spatio-Temporal Interpolation: Intersection Model
 
-<i class="fa fa-ruler" role="presentation" aria-label="ruler icon"></i> Simulation Study
+<i class="fas fa-ruler" role="presentation" aria-label="ruler icon"></i> Simulation Study
 
-<i class="fa fa-ruler" role="presentation" aria-label="ruler icon"></i> Results with Ice Data
+<i class="fas fa-ruler" role="presentation" aria-label="ruler icon"></i> Results with Ice Data
 
-<i class="fa fa-check-double" role="presentation" aria-label="check-double icon"></i> Discussion and Conclusion
+<i class="fas fa-check-double" role="presentation" aria-label="check-double icon"></i> Discussion and Conclusion
 
-<i class="fa fa-spinner" role="presentation" aria-label="spinner icon"></i> Steps for Program Completion
+<i class="fas fa-spinner" role="presentation" aria-label="spinner icon"></i> Steps for Program Completion
 
 ---
 class:primary
@@ -249,7 +257,7 @@ class:primary
 
 + Sea ice serves as a barrier between the atmosphere and the ocean
 + Cracks, or leads, may form in the ice pack due to dynamic processes
-  - Allows for heat from the ocean to be transferred to the atmosphere (Schreyer, Sulsky, Munday, et al., 2006). 
+  - Allows for heat from the ocean to be transferred to the atmosphere (Schreyer, Sulsky, Munday, Coon, and Kwok, 2006). 
   - Accounts for half of the heat flux between the ocean and atmosphere (Badgley, 1961)
 + Previous ice crack detection methods can generally be split into two categories: thermal and deformation. 
   
@@ -272,12 +280,12 @@ class:primary
 # Thermal Ice Crack Detection Methods
 
 + Surface temperature differs between a crack and the surrounding sea ice.
-+ Use thermal channels of the Advanced Very High Resolution Radiometer (AVHRR) (Key, Stone, Maslanik, et al., 1993) 
++ Use thermal channels of the Advanced Very High Resolution Radiometer (AVHRR) (Key, Stone, Maslanik, and Ellefsen, 1993) 
   - Heavily dependent on clear skies and has issues with thin ice
 + Methods have been proposed to reduce the impact of clouds 
   - Moderate Resolution Imagery Spectroradiometer (MODIS)  (Willmes and Heinemann, 2015)
   - Fuzzy Cloud Artifact (FCAF) (Willmes and Heinemann, 2015)
-  - Passive Microwave Data  (Rohrs, Kaleschke, Brohan, et al., 2012)
+  - Passive Microwave Data  (Rohrs, Kaleschke, Brohan, and Siligam, 2012)
 .center[
 &lt;!-- Trigger the Modal --&gt;
 &lt;img id='imgthermal_example' src='images/thermal_example.png' alt=' Output from a Thermal Algorithm (Rohrs et al, 2012)' width='30%'&gt;
@@ -414,7 +422,7 @@ class:primary
   - Can be difficulty in finding the assume model
 
 
-(Info from (Ansari, Ahmad, Khan, et al., 2020))
+(Info from (Ansari, Ahmad, Khan, Bhushan, and others, 2020))
 
 ---
 class:primary
@@ -542,7 +550,7 @@ class:primary
 
 
 + Popular due to ease in implementation
-+ Performs best for linearly moving objects, or can potentially work well with non-linear data if sample in high enough frequency (Guo, Mou, Chen, et al., 2021)
++ Performs best for linearly moving objects, or can potentially work well with non-linear data if sample in high enough frequency (Guo, Mou, Chen, and Chen, 2021)
   
 &lt;br&gt;
 
@@ -1435,6 +1443,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
