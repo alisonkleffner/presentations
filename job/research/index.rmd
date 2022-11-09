@@ -37,6 +37,7 @@ library(RefManageR)
 library(iconr)
 library(fontawesome)
 library(shiny)
+library(RColorBrewer)
 # download_fontawesome()
 
 # References
@@ -293,26 +294,163 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 ---
 class:primary
-# Preattentive Perception
+# Preattentive Processing
 
+Pre-Attentive Features are things that "jump out" in less than 250 ms
+
+  - Color, shape, angle, movement, spatial localization
+
+There is a hierarchy of features
+
+ - Color is stronger than shape
+ 
+Reduces the amount of work your views have to do when view your chart
 
 ---
 class:primary
 # Perceptual Grouping
 
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/gestalt.png", alt = "Gestalt Laws of Perception",other=list(width="70%"))
 
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
++ Proximity: Things that are spatially near to one another are related
++ Similarity: Thing that look alike are related
++ Closure: Incomplete items are seen as complete
++ Enclosure: Related elements are surrounded with a visual element
+
+---
+class:primary
+# Example of Gestalt in Data Visualization
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/gestalt-viz.png", alt = "Gestalt Laws of Proximity and Similarity",other=list(width="70%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
++ Proximity
++ Similarity
 
 ---
 class:primary
 # Visual Limitations
 
+Not all graphical representations are equally accurate
+ 
+Designing Plots for disabilities
+- Low visual activity
+  + High contrast (bright/dark)
+  + large font size
+  + textures/patterns can be hard to make out
+- Color-blindness
+
+
 ---
 class:primary
-# Accuracy of Graphical Judgements
+# Accuracy of Graphical Judgements 
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/percep-tasks.png", alt = "Types of Graphical Judgements (Cleveland and McGill, 1984)",other=list(width="30%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+Rankings `r Citep(bib[[c("cleveland_mcgill_1984")]])`: 
+1. Position along a common scale (most accurate)
+2. Positions along nonaligned scales
+3. Length (bar chart)
+4. Angle, Slope (pie chart)
+5. Area (bubble chart)
+6. Volume, Density, Color saturation (heatmap)
+7. Color hue (least accurate)
+
+---
+class:primary
+# Color
+
++ Hue: shade of color
++ Color and hue are pre-attentive
+  - Bigger contrasts correspond to faster detection
++ Want color mapping to be perceptually optimal
++ Be conscious on what color means
++ Avoid rainbow gradients
+
+---
+class:primary
+#Gradients
+
+Qualitative schemes: no more than 7 colors
+
+```{r, echo=FALSE, fig.width=3, fig.height=1, out.height="40%", out.width="40%"}
+data <- data.frame(x = 1:7, 
+                   blues = brewer.pal(7, "Blues"), 
+                   set1 = brewer.pal(7, "Set1"), 
+                   diverge = brewer.pal(7,"RdBu"))
+
+qplot(xmin = x-.5, xmax = x+.5, ymin = 0, ymax = 1, data = data, geom = "rect", color = I("black"), fill = set1) + 
+    scale_fill_identity() + 
+    ylab("") + 
+    xlab("") + 
+    theme(axis.text = element_blank(), 
+          axis.ticks = element_blank(), 
+          rect = element_blank()) + 
+    coord_fixed(ratio = 1) + 
+    theme_void()
+```
+
+Quantitative schemes: use color gradient with only one hue for positive values
+
+```{r, echo=FALSE, fig.width=3, fig.height=1, out.height="40%",  out.width="40%"}
+qplot(xmin = x-.5, xmax = x+.5, ymin = 0, ymax = 1, data = data, geom = "rect", color = I("black"), fill = blues) + 
+    scale_fill_identity() + 
+    ylab("") + 
+    xlab("") + 
+    theme(axis.text = element_blank(), 
+          axis.ticks = element_blank(), 
+          rect = element_blank()) + 
+    coord_fixed(ratio = 1) + 
+    theme_void()
+```
+
+
+Quantitative schemes: use color gradient with two hues for positive and negative values. Gradient should go through a light, neutral color (white)
+
+```{r, echo=FALSE, fig.width=3, fig.height=1, out.height="40%", out.width="40%"}
+qplot(xmin = x-.5, xmax = x+.5, ymin = 0, ymax = 1, data = data, geom = "rect", color = I("black"), fill = diverge) + 
+    scale_fill_identity() + 
+    ylab("") + 
+    xlab("") + 
+    theme(axis.text = element_blank(), 
+          axis.ticks = element_blank(), 
+          rect = element_blank()) + 
+    coord_fixed(ratio = 1) + 
+    theme_void()
+```
 
 
 ---
-# Designing for Accessibility
+class:primary
+#Color Blindness
+
++ Safest: design for a black-and-white photocopier
++ If you need a 2-color gradient, use blue/purple - white - orange (safe for most types of colorblindness)
+
+
+
 
 
 
@@ -348,7 +486,7 @@ class:primary
 
 .center[
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/Trial_Design.png", alt = "Example of A Trial Design",other=list(width="50%"))
+i1 <- img_modal(src = "images/Trial_Design.png", alt = "Example of A Trial Design",other=list(width="60%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i1, "\\n", simplify = T)[3:9]
