@@ -742,12 +742,15 @@ Quantitative schemes: use color gradient with two hues for positive and negative
 class:primary
 #Color Blindness
 
+Not everyone perceives color in the same way. Some individuals have [colorblindness or color deficiencies](https://en.wikipedia.org/wiki/Color_blindness).
+
+You can take a test designed to screen for colorblindness [here](https://www.eyeque.com/color-blind-test/test/).
+
+
 + Safest: design for a black-and-white photocopier
 + If you need a 2-color gradient, use blue/purple - white - orange (safe for most types of colorblindness)
-
-
-
-
++ double encoding - where you use color, use another aesthetic (line type, shape)
++ If you are using a color gradient, use a monochromatic color scheme where possible.
 
 
 ---
@@ -845,6 +848,41 @@ class:primary
 &lt;/div&gt;
 ]
 
+---
+class:primary
+# Other Yield Plots in Literature
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgyieldplot1' src='images/yield-plot1.png' alt='Zhang, Li, Liu, and Wang (2008)' width='30%'&gt;
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgyieldplot2' src='images/yield-plot2.png' alt='Searcy (1997)' width='30%'&gt;
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgyieldplot3' src='images/yield-plot3.png' alt='www.aspexit.com' width='30%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalyieldplot1' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalyieldplot1'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionyieldplot1' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalyieldplot2' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalyieldplot2'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionyieldplot2' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalyieldplot3' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalyieldplot3'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionyieldplot3' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+Plenty of  other iterations of yield maps used in the literature. Here's some examples
 
 ---
 class:primary
@@ -858,7 +896,6 @@ class:primary
   - Drawbacks: Issues with clutter
   - Useful when spatial location is a key component of the comparison (Wang, Haleem, Shi, Wu, Zhao, Fu, and Qu, 2018)
   
-
 .center[
 &lt;!-- Trigger the Modal --&gt;
 &lt;img id='imgjuxvssup' src='images/jux-vs-sup.png' alt='Juxtaposed vs Superimposed Comparative Graphs (Gleicher, Albers, Walker, et al., 2011)' width='50%'&gt;
@@ -906,11 +943,69 @@ class:primary
  - This is due to working memory limits as it is harder for the user to distinguish between colors and remember the meaning of colors. Hence, it is more difficult to
  associate a color with the correct yield category (Macdonald, 1999)
   - Practically, the load on the user’s working memory then increases the comprehensive time of the plot (Vanderplas, Cook, and Hofmann, 2020)
+  
 
 ---
 class:primary
 #Redesign: Iteration 1
 
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgAttempt1' src='images/Attempt1.png' alt='First Iteration' width='50%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalAttempt1' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalAttempt1'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionAttempt1' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
++ Superimposed the treatment and yield plots
++ Use of transparency to show both at same time
++ Interactive plot with *leaflet*
+  - Can add and remove plot layer
++ Work that still needs to be done
+  - Color needs some work (no bivariate scale)
+  - Maybe not as good for paper plots
+
+---
+class:primary
+#Redesign: Iteration 2
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgAttempt2_1' src='images/Attempt2_1.jpeg' alt='Second Iteration' width='50%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalAttempt2_1' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalAttempt2_1'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionAttempt2_1' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
++ Discrete Scale for Trial Design 
+ 
+---
+class:primary
+#Redesign: Correlation between as Applied and treatment
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgcorrplot1' src='images/corr-plot1.jpeg' alt='Correlation' width='50%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalcorrplot1' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalcorrplot1'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captioncorrplot1' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+---
+class:primary
+# Conclusion
 
 ---
 class:inverse
@@ -925,6 +1020,20 @@ class:inverse
 .center[
 # Future Work
 ]
+
+---
+class:primary
+#DIFM Project
+
++ Explain what the optimal decision management decisions are, accounting for environmental and economic conditions, the range of possible weather, and other factors.
+  - Develop a R Shiny app to explaining machine learning output to non-experts helping to build trust in the model predictions without requiring farmers to learn the details of statistical modeling.
++ In general, want to lead this into work on spatial visualizations, especially in the comparative framework
+
+---
+class:primary
+#Remote Sensing Data
+  
+
 
 ---
 class:primary
@@ -2323,6 +2432,295 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgold_map.onclick = function() {
             modalold_map.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttempt1 = document.getElementById('modalAttempt1');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt1 = document.getElementById('imgAttempt1');
+          var modalImgAttempt1 = document.getElementById('imgmodalAttempt1');
+          var captionTextAttempt1 = document.getElementById('captionAttempt1');
+          imgAttempt1.onclick = function(){
+            modalAttempt1.style.display = 'block';
+            modalImgAttempt1.src = this.src;
+            captionTextAttempt1.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt1.onclick = function() {
+            modalAttempt1.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttempt2_1 = document.getElementById('modalAttempt2_1');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt2_1 = document.getElementById('imgAttempt2_1');
+          var modalImgAttempt2_1 = document.getElementById('imgmodalAttempt2_1');
+          var captionTextAttempt2_1 = document.getElementById('captionAttempt2_1');
+          imgAttempt2_1.onclick = function(){
+            modalAttempt2_1.style.display = 'block';
+            modalImgAttempt2_1.src = this.src;
+            captionTextAttempt2_1.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt2_1.onclick = function() {
+            modalAttempt2_1.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrplot1 = document.getElementById('modalcorrplot1');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrplot1 = document.getElementById('imgcorrplot1');
+          var modalImgcorrplot1 = document.getElementById('imgmodalcorrplot1');
+          var captionTextcorrplot1 = document.getElementById('captioncorrplot1');
+          imgcorrplot1.onclick = function(){
+            modalcorrplot1.style.display = 'block';
+            modalImgcorrplot1.src = this.src;
+            captionTextcorrplot1.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrplot1.onclick = function() {
+            modalcorrplot1.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalyieldplot1 = document.getElementById('modalyieldplot1');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgyieldplot1 = document.getElementById('imgyieldplot1');
+          var modalImgyieldplot1 = document.getElementById('imgmodalyieldplot1');
+          var captionTextyieldplot1 = document.getElementById('captionyieldplot1');
+          imgyieldplot1.onclick = function(){
+            modalyieldplot1.style.display = 'block';
+            modalImgyieldplot1.src = this.src;
+            captionTextyieldplot1.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgyieldplot1.onclick = function() {
+            modalyieldplot1.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalyieldplot2 = document.getElementById('modalyieldplot2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgyieldplot2 = document.getElementById('imgyieldplot2');
+          var modalImgyieldplot2 = document.getElementById('imgmodalyieldplot2');
+          var captionTextyieldplot2 = document.getElementById('captionyieldplot2');
+          imgyieldplot2.onclick = function(){
+            modalyieldplot2.style.display = 'block';
+            modalImgyieldplot2.src = this.src;
+            captionTextyieldplot2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgyieldplot2.onclick = function() {
+            modalyieldplot2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalyieldplot2 = document.getElementById('modalyieldplot2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgyieldplot2 = document.getElementById('imgyieldplot2');
+          var modalImgyieldplot2 = document.getElementById('imgmodalyieldplot2');
+          var captionTextyieldplot2 = document.getElementById('captionyieldplot2');
+          imgyieldplot2.onclick = function(){
+            modalyieldplot2.style.display = 'block';
+            modalImgyieldplot2.src = this.src;
+            captionTextyieldplot2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgyieldplot2.onclick = function() {
+            modalyieldplot2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaljuxvssup = document.getElementById('modaljuxvssup');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgjuxvssup = document.getElementById('imgjuxvssup');
+          var modalImgjuxvssup = document.getElementById('imgmodaljuxvssup');
+          var captionTextjuxvssup = document.getElementById('captionjuxvssup');
+          imgjuxvssup.onclick = function(){
+            modaljuxvssup.style.display = 'block';
+            modalImgjuxvssup.src = this.src;
+            captionTextjuxvssup.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgjuxvssup.onclick = function() {
+            modaljuxvssup.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalold_map = document.getElementById('modalold_map');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgold_map = document.getElementById('imgold_map');
+          var modalImgold_map = document.getElementById('imgmodalold_map');
+          var captionTextold_map = document.getElementById('captionold_map');
+          imgold_map.onclick = function(){
+            modalold_map.style.display = 'block';
+            modalImgold_map.src = this.src;
+            captionTextold_map.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgold_map.onclick = function() {
+            modalold_map.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttempt1 = document.getElementById('modalAttempt1');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt1 = document.getElementById('imgAttempt1');
+          var modalImgAttempt1 = document.getElementById('imgmodalAttempt1');
+          var captionTextAttempt1 = document.getElementById('captionAttempt1');
+          imgAttempt1.onclick = function(){
+            modalAttempt1.style.display = 'block';
+            modalImgAttempt1.src = this.src;
+            captionTextAttempt1.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt1.onclick = function() {
+            modalAttempt1.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttempt2_1 = document.getElementById('modalAttempt2_1');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt2_1 = document.getElementById('imgAttempt2_1');
+          var modalImgAttempt2_1 = document.getElementById('imgmodalAttempt2_1');
+          var captionTextAttempt2_1 = document.getElementById('captionAttempt2_1');
+          imgAttempt2_1.onclick = function(){
+            modalAttempt2_1.style.display = 'block';
+            modalImgAttempt2_1.src = this.src;
+            captionTextAttempt2_1.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt2_1.onclick = function() {
+            modalAttempt2_1.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrplot1 = document.getElementById('modalcorrplot1');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrplot1 = document.getElementById('imgcorrplot1');
+          var modalImgcorrplot1 = document.getElementById('imgmodalcorrplot1');
+          var captionTextcorrplot1 = document.getElementById('captioncorrplot1');
+          imgcorrplot1.onclick = function(){
+            modalcorrplot1.style.display = 'block';
+            modalImgcorrplot1.src = this.src;
+            captionTextcorrplot1.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrplot1.onclick = function() {
+            modalcorrplot1.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalyieldplot1 = document.getElementById('modalyieldplot1');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgyieldplot1 = document.getElementById('imgyieldplot1');
+          var modalImgyieldplot1 = document.getElementById('imgmodalyieldplot1');
+          var captionTextyieldplot1 = document.getElementById('captionyieldplot1');
+          imgyieldplot1.onclick = function(){
+            modalyieldplot1.style.display = 'block';
+            modalImgyieldplot1.src = this.src;
+            captionTextyieldplot1.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgyieldplot1.onclick = function() {
+            modalyieldplot1.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalyieldplot2 = document.getElementById('modalyieldplot2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgyieldplot2 = document.getElementById('imgyieldplot2');
+          var modalImgyieldplot2 = document.getElementById('imgmodalyieldplot2');
+          var captionTextyieldplot2 = document.getElementById('captionyieldplot2');
+          imgyieldplot2.onclick = function(){
+            modalyieldplot2.style.display = 'block';
+            modalImgyieldplot2.src = this.src;
+            captionTextyieldplot2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgyieldplot2.onclick = function() {
+            modalyieldplot2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalyieldplot3 = document.getElementById('modalyieldplot3');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgyieldplot3 = document.getElementById('imgyieldplot3');
+          var modalImgyieldplot3 = document.getElementById('imgmodalyieldplot3');
+          var captionTextyieldplot3 = document.getElementById('captionyieldplot3');
+          imgyieldplot3.onclick = function(){
+            modalyieldplot3.style.display = 'block';
+            modalImgyieldplot3.src = this.src;
+            captionTextyieldplot3.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgyieldplot3.onclick = function() {
+            modalyieldplot3.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalyieldplot1 = document.getElementById('modalyieldplot1');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgyieldplot1 = document.getElementById('imgyieldplot1');
+          var modalImgyieldplot1 = document.getElementById('imgmodalyieldplot1');
+          var captionTextyieldplot1 = document.getElementById('captionyieldplot1');
+          imgyieldplot1.onclick = function(){
+            modalyieldplot1.style.display = 'block';
+            modalImgyieldplot1.src = this.src;
+            captionTextyieldplot1.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgyieldplot1.onclick = function() {
+            modalyieldplot1.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalyieldplot2 = document.getElementById('modalyieldplot2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgyieldplot2 = document.getElementById('imgyieldplot2');
+          var modalImgyieldplot2 = document.getElementById('imgmodalyieldplot2');
+          var captionTextyieldplot2 = document.getElementById('captionyieldplot2');
+          imgyieldplot2.onclick = function(){
+            modalyieldplot2.style.display = 'block';
+            modalImgyieldplot2.src = this.src;
+            captionTextyieldplot2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgyieldplot2.onclick = function() {
+            modalyieldplot2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalyieldplot3 = document.getElementById('modalyieldplot3');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgyieldplot3 = document.getElementById('imgyieldplot3');
+          var modalImgyieldplot3 = document.getElementById('imgmodalyieldplot3');
+          var captionTextyieldplot3 = document.getElementById('captionyieldplot3');
+          imgyieldplot3.onclick = function(){
+            modalyieldplot3.style.display = 'block';
+            modalImgyieldplot3.src = this.src;
+            captionTextyieldplot3.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgyieldplot3.onclick = function() {
+            modalyieldplot3.style.display = 'none';
           }
 </script>
 
