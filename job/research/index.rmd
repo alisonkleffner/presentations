@@ -38,6 +38,7 @@ library(iconr)
 library(fontawesome)
 library(shiny)
 library(RColorBrewer)
+library(ggpubr)
 # download_fontawesome()
 
 # References
@@ -110,7 +111,7 @@ write("", file = "js-addins.html")
 ##### `r fa("home", fill = "black")` [https://alison-kleffner.netlify.app/](https://alison-kleffner.netlify.app/)
 ##### `r fa("github", fill = "black")` [alisonkleffner](https://github.com/alisonkleffner)
 <br><br>
-.medium[*Slides: https://bit.ly/slide-url*]
+.medium[*Slides: https://alisonkleffner.github.io/presentations/job/research/index.html#1*]
 
 ---
 class:primary
@@ -118,7 +119,18 @@ class:primary
 
 `r fa_i("chart-bar")` What makes a Good Graph?
 
++ Why Visualization?
++ Graphical Perception
+
 `r fa_i("list")` Redesigning Yield Plots
+
++ Data Intensive Farm Management
++ Current yield plots and why they need improvement
++ Redesign Process
++ Conclusion 
+
+`r fa_i("spinner")` Future Work
+
 
 ---
 class:inverse
@@ -264,39 +276,53 @@ ggplot(quartet, aes(x, y)) +
         strip.text = element_text(size = 14))
 ```
 
+---
+class:primary
+# Effective Visualization
 
+We are surrounded by visuals
+
+Cleveland (1984) found that 30% of graphs in *Science* has an error `r Citep(bib[[c("MIDWAY2020100141")]])`:
+  - Incorrectly displaying data
+  - Ineffective design elements
+  
+In a more recent sample, Gordan and Finch (2015) categorized 40% of the 97 graphs they sampled as having an error
+
+So need more education on how to make more effective visualizations.
 
 ---
 class:primary
-# Good Graphs
+# What makes a Good Graph?
 
 Good Graphs take advantage of how the brain works:
 1. Preattentive Processing
 2. Perceptual Grouping
 3. Awareness of Visual Limitations
 
+Good Graphs exploit external cognition so users can think about the data instead of the chart.
+
 ---
 class:primary
-# Find the Target
+# Example
 
 .center[
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/circle1.png", alt = "Find the Red Circle", other=list(width="40%"))
-i2 <- img_modal(src = "images/circle2.png", alt = "Find the Red Circle", other=list(width="40%"))
+i1 <- img_modal(src = "images/birthday.png", alt = "How common is your birthday? (Vanderplas, Cook, and Hofmann, 2020)",other=list(width="70%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i2, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9],
-  str_split(i2, "\\n", simplify = T)[3:9]
+  str_split(i1, "\\n", simplify = T)[3:9]
   ) %>% paste(collapse = "\n") %>% cat()
 ```
 ]
+
+
+[Interactive Version](https://thedailyviz.com/2016/09/17/how-common-is-your-birthday-dailyviz/)
 
 ---
 class:primary
 # Preattentive Processing
 
-Pre-Attentive Features are things that "jump out" in less than 250 ms
+Pre-Attentive Features are things that "jump out" in less than 500 ms `r Citep(bib[[c("vanderplas2020")]])`
 
   - Color, shape, angle, movement, spatial localization
 
@@ -306,9 +332,36 @@ There is a hierarchy of features
  
 Reduces the amount of work your views have to do when view your chart
 
+
 ---
 class:primary
-# Perceptual Grouping
+# Find the Target
+
+```{r, fig.align="center", out.height="60%", out.width="60%"}
+data <- data.frame(expand.grid(x = 1:6, y = 1:6), color = factor(sample(c(1, 2), 36, replace = TRUE)))
+data$x <- data$x + rnorm(36, 0, .25)
+data$y <- data$y + rnorm(36, 0, .25)
+data$shape <- factor(c(rep(2, 15), 1, rep(2,20)))
+
+ggplot(data, aes(x, y)) + geom_point(aes(shape = shape), size = 5, colour = "#1B9E77") + theme_void() + theme(legend.position = "none")
+```
+
+???
+how quickly did you spot the circle?
+
+---
+class:primary
+# Find the Target
+
+```{r, fig.align="center", out.height="60%", out.width="60%"}
+data$shape <- factor(c(rep(2, 25), 1, rep(2, 10)))
+
+ggplot(data, aes(x, y)) + geom_point(aes(colour = shape), size = 5, shape = I(19)) + theme_void() + theme(legend.position = "none") + scale_colour_brewer(palette="Dark2")
+```
+
+---
+class:primary
+# Perceptual Grouping: Gestalt Principles
 
 .center[
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
@@ -320,10 +373,33 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 
+What this looks like in visualization `r Citep(bib[[c("todorovic2008gestalt")]])`:
+
 + Proximity: Things that are spatially near to one another are related
 + Similarity: Thing that look alike are related
 + Closure: Incomplete items are seen as complete
 + Enclosure: Related elements are surrounded with a visual element
+
+???
+
+Gestalt principles: predictable ways by which we organize sensory information
+
+
+---
+class:primary
+
+# Gestalt Principles
+
+```{r gestalt-hierarchy}
+tibble("Gestalt Hierarchy" = c("Enclosure", "Connection", "Proximitiy", "Similarity"),
+       "Graphs" = c("Facets", "Lines", "White Space", "Color/Shape")) %>% knitr::kable()
+```
+
+**Implications for practice**
++ Know how we perceive groups
++ Know that we perceive some groups before others
++ Design to facilitate and emphasize the most important comparisons
+
 
 ---
 class:primary
@@ -348,7 +424,7 @@ class:primary
 
 Not all graphical representations are equally accurate
  
-Designing Plots for disabilities
+Designing Plots for disabilities:
 - Low visual activity
   + High contrast (bright/dark)
   + large font size
@@ -380,14 +456,55 @@ Rankings `r Citep(bib[[c("cleveland_mcgill_1984")]])`:
 
 ---
 class:primary
+#Example: Length vs Angle
+
+
+.pull-left[
+```{r diamonds1}
+diamonds_summary <- diamonds %>%
+  group_by(cut) %>%
+  summarise(Percent = n()/nrow(.) * 100)
+
+ggplot(diamonds, aes(x = "", fill = cut)) + 
+  geom_bar() +
+  coord_polar(theta = "y") + ggtitle("Pie Chart")
+
+
+
+```
+]
+.pull-right[
+```{r diamonds2}
+diamonds %>% ggplot() + geom_bar(aes(x=cut,fill = cut)) + ggtitle("Bar Chart")
+
+```
+]
+
+---
+class:primary
 # Color
 
-+ Hue: shade of color
+Our eyes are optimized for perceiving the yellow/green region of the color spectrum.
+
+.center[
+<img src="images/color.svg" alt="" style="width:170px;"/>
+
+Sensitivity of the human eye to different wavelengths of visual light 
+
+(Image from Wikimedia commons)
+]
+
 + Color and hue are pre-attentive
   - Bigger contrasts correspond to faster detection
-+ Want color mapping to be perceptually optimal
++ Want mappings from data to color to be ***perceptually*** uniform
+  - Avoid color gradients
 + Be conscious on what color means
-+ Avoid rainbow gradients
+  - Leverage common associations
+  - Color always means something  `r Citep(bib[[c("MIDWAY2020100141")]])`
+
+
+???
+Hue: shade of color
 
 ---
 class:primary
@@ -450,11 +567,11 @@ Not everyone perceives color in the same way. Some individuals have [colorblindn
 
 You can take a test designed to screen for colorblindness [here](https://www.eyeque.com/color-blind-test/test/).
 
-
-+ Safest: design for a black-and-white photocopier
-+ If you need a 2-color gradient, use blue/purple - white - orange (safe for most types of colorblindness)
-+ double encoding - where you use color, use another aesthetic (line type, shape)
-+ If you are using a color gradient, use a monochromatic color scheme where possible.
+Suggestions:
++ Design for a black-and-white photocopier
++ Use a monochromatic color gradient scheme where possible.
++ Suggested 2-color gradient: blue/purple - white - orange (safe for most types of colorblindness)
++ Utilize double encoding: use color and another aesthetic (line type, shape)
 
 
 ---
@@ -475,15 +592,34 @@ class:inverse
 class:primary
 # Data Intensive Farm Management (DIFM)
 
-+ On-Farm Precision Experimentation
-  - Run OFPEs and develop infrastructure to develop and analyze these experiments
-  - Conduct experiments on a field using field specific inputs and GPS-reliant technology
-+ Want to learn the economically optimal treatment rate to increase efficiency while also reducing negative environmental impacts
-+ Precision agriculture is used to elaborate strategies to make efficient use of available farming resources
+**Problem**: Address inefficient application of crop inputs to farm fields worldwide
+
+**Methods**: On-Farm Precision Experimentation
+- Conduct experiments using site-specific inputs 
+- GPS-reliant technology 
+
+**Goals**
+- Develop infrastructure to develop and analyze these experiments
+- Find economically optimal application rate to increase profit while reducing environmental impacts. 
+
+[Project Website](http://difm-cig.org/)
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/logo.png", alt = "Data Intensive Farma Management (DIFM) Project",other=list(width="30%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+
+]
 
 ---
 class:primary
 # Trial Design
+
+**Step 1**: Develop infrastructure to develop experiments using site-specific inputs
 
 [Trial Design Tool](http://trialdesign.difm-cig.org/)
 
@@ -497,13 +633,17 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 
+**Output**: shape files that can be put into a farmer's tractor that allows them to carry out the experiments
+
 ---
 class:primary
 # Data Collection
 
+**Step 2** Conduct experiments and collect data
+
 .center[
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/data_collection.png", alt = "How Data is collected",other=list(width="50%"))
+i1 <- img_modal(src = "images/data_collection.png", alt = "How Data is collected",other=list(width="45%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i1, "\\n", simplify = T)[3:9]
@@ -511,21 +651,33 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 
+Examples of Data Collected:
+- As-applied
+- yield
+- location of measurements
+
+???
+Utilize GPS on tractors
+
 
 ---
 class:primary
-# Goal
+# Explain the Results
 
-+ Help explain the optimal decision management decisions, accounting for environmental and economic conditions, the range of possible weather, and other factors
-  - Create a user interface, designed around explaining machine learning output to non-experts helping to build trust in the model predictions without requiring farmers to learn the details of statistical modeling
-+ Want to learn how crop yield respond to different input application rates, field characteristics, and weather to hopefully increase profits
-+ One way to begin to explore the relationship between input application and yield is through a graph.
-  - Want to show the spatial correlations between the as applied factors and yield in a way that is understandable to farmers and consultants, not spatial statisticians
-+ Develop perceptually optimal plots that communicate this relationship. 
+**Step 3**: Explain the optimal decision management decisions, accounting for various factors
+
+**How**: create a user interface, designed around explaining machine learning output to non-experts
+  - Build trust in models
+  - Learn how crop yield responds to different input application rates, field characteristics, and weather to hopefully increase profits. 
+  
+**One way to do this**: Visually explore the relationship between input application and yield through a graph
+  - Show the spatial correlations between the application/treatment and yield in a way that is understandable to farmers and consultants. 
+  - Develop perceptually optimal plots that communication this relationship. 
+  
 
 ---
 class:primary
-#What is currently being used
+#Yield Maps Currently Used by DIFM
 
 .center[
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
@@ -558,9 +710,11 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i3, "\\n", simplify = T)[3:9]
   ) %>% paste(collapse = "\n") %>% cat()
 ```
+
+Plenty of other iterations of yield maps used in the literature. Here's some examples
+
 ]
 
-Plenty of  other iterations of yield maps used in the literature. Here's some examples
 
 ---
 class:primary
@@ -571,7 +725,7 @@ class:primary
   - Drawbacks: comparative burden is placed on the user
 + Superimposed graphs - multiple objects in same coordinate system `r Citep(bib[[c("gleicher2011")]])`
   - Benefits: Easier to compare as users can use perception rather than memory
-  - Drawbacks: Issues with clutter
+  - Drawbacks: clutter
   - Useful when spatial location is a key component of the comparison `r Citep(bib[[c("Wang2018TowardsEC")]])`
   
 .center[
@@ -585,15 +739,13 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ]
 
 
-
-
 ---
 class:primary
 #Data Clutter with Superimposed Graphs
 
-+ General principle of Graphical Design: Show data clearly `r Citep(bib[[c("cleveland_1984", "gordon_2015")]])`
++ General principle of graphical design: Show data clearly `r Citep(bib[[c("cleveland_1984", "gordon_2015")]])`
 + Overlap - multiple dots on top of one another
-  - obscures true number of dots
+  - obscures true number of dots, harder to find patterns
   - Visual cues, like color, becomes partially obstructed, thereby reducing search efficiency `r Citep(bib[[c("BRAVO2004b", "BRAVO2004a")]])`
   - Solutions include: jittering, distortion, refinement, and aggregation `r Citep(bib[[c("chua_2017")]])`
   - Can overburden human perception, causing errors in performing tasks `r Citep(bib[[c("huang2009")]])`
@@ -613,10 +765,14 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 class:primary
 #Number of Categories
 
-+ Number of categorical scales should be limited to 5-7 categories
- - This is due to working memory limits as it is harder for the user to distinguish between colors and remember the meaning of colors. Hence, it is more difficult to
- associate a color with the correct yield category `r Citep(bib[[c("macdonald_1999")]])`
-  - Practically, the load on the user’s working memory then increases the comprehensive time of the plot `r Citep(bib[[c("vanderplas2020")]])`
+Number of categorical scales should be limited to **5-7 categories**
+  - Due to working memory limits `r Citep(bib[[c("macdonald_1999")]])`
+    + Harder for the user to distinguish between colors and remember the meaning of colors. 
+    + More difficult to associate a color with the correct yield category 
+  - The load on the user’s working memory leads to an increase the comprehensive time of the plot `r Citep(bib[[c("vanderplas2020")]])`
+  
+
+**Next** Redesign Process
   
 
 ---
@@ -633,13 +789,14 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 
-+ Superimposed the treatment and yield plots
+**Focus**: Superimpose the treatment and yield plots, while reducing the clutter 
 + Use of transparency to show both at same time
-+ Interactive plot with *leaflet*
++ Interactive plot with *leaflet* `r Citep(bib[[c("leaflet")]])`
   - Can add and remove plot layer
-+ Work that still needs to be done
-  - Color needs some work (no bivariate scale)
-  - Maybe not as good for paper plots
+
+Work that still needs to be done:
++ Color needs some work (no bivariate scale)
++ Not as good for paper plots
 
 ---
 class:primary
@@ -647,7 +804,7 @@ class:primary
 
 .center[
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/Attempt2_1.jpeg", alt = "Second Iteration", other=list(width="50%"))
+i1 <- img_modal(src = "images/Attempt2_new2.jpeg", alt = "Second Iteration", other=list(width="50%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i1, "\\n", simplify = T)[3:9]
@@ -655,15 +812,26 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 
-+ Discrete Scale for Trial Design 
+**Focus**: Color/Scales
++ Remove additional colors
++ Working on blending using transparency
++ Categorical Groups for both variables
+  - Trial Design treatment is a factor
+  - Reduce number of colors for yield
+  - Use quantiles to determine categories for yield `r Citep(bib[[c("brewer_2002")]])`
+
+
  
 ---
 class:primary
-#Redesign: Correlation between as Applied and treatment
+#Redesign: Correlation
 
 .center[
+
+Correlations between As Applied treatments and Yield
+
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/corr-plot1.jpeg", alt = "Correlation", other=list(width="60%"))
+i1 <- img_modal(src = "images/corr-plot2.jpeg", alt = "Correlation", other=list(width="50%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i1, "\\n", simplify = T)[3:9]
@@ -671,17 +839,19 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 
+**Focus**: Wanted to give a more direct statement of correlation while maintaining some spatial orientation 
 + Bivariate color scale to show difference between positive and negative correlation values
 + Maintain some spatial information. 
-  - Know which part of the field as correlations may be impacted by other things, like soil type. Eventually add that information to the plot. 
+  - Correlations may be impacted by field location
+  - Eventually add other information to the plot, like soil. 
 
 ---
 class:primary
 # Conclusion
 
 + Designing graphics is a process
-+ Our maps make improvements over the previous
-  - Reduce Clutter on Superimposed graphics
++ Utilize what is known about perception to improve previous Yield Plots
+  - Reduce clutter on superimposed graphics 
   - Better colors
   - less categories
   
@@ -704,25 +874,31 @@ class:inverse
 class:primary
 #DIFM Project
 
-+ Explain what the optimal decision management decisions are, accounting for environmental and economic conditions, the range of possible weather, and other factors.
-  - Develop a R Shiny app to explaining machine learning output to non-experts helping to build trust in the model predictions without requiring farmers to learn the details of statistical modeling.
-+ In general, want to lead this into work on spatial visualizations, especially in the comparative framework
+**Next Step**: Develop a R Shiny app to explaining machine learning output to non-experts
+- Build trust in the model predictions without requiring farmers to learn the details of statistical modeling.
+- Will utilize these plots, among others
+  + For example, accuracy of as applied treatment compared to trial design
+
+
+**In general**, want this work to lead into work on spatial visualizations, especially in the comparative framework
   - Do testing on the graphics that I just made to see if farmers and consultants are interpreting the information correctly.
+  - Many other areas work with graphics (break down barriers to information)
 
 ---
 class:primary
-#Remote Sensing Data: Arctic Sea Ice
+#Other Project: Remote Sensing Data
 
-+ Developing a non-stationary spatio-temporal model for Arctic Sea Ice motion
+Developing a non-stationary spatio-temporal model for Arctic Sea Ice motion
+
 + Process
-  -  Cluster regions with similar spatio-temporal movement. The boundaries between clusters would be locations where ice cracks would form.
-  - Model is developed within each cluster. 
+  -  Cluster regions with similar movement. The boundaries between clusters would be locations where ice cracks would form.
+  - Model is developed using cluster information
   - Use the model to interpolate missing data, yielding a complete data set. 
   
 .center[
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/data_example.jpeg", alt = "Missing Data in Sea Ice", other=list(width="30%"))
-i2 <- img_modal(src = "images/traj_plot.png", alt = "Sea Ice Movement", other=list(width="30%"))
+i1 <- img_modal(src = "images/data_example.jpeg", alt = "Missing Data in Sea Ice", other=list(width="25%"))
+i2 <- img_modal(src = "images/traj_plot.png", alt = "Sea Ice Movement", other=list(width="25%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i2, "\\n", simplify = T)[1:2],
@@ -731,11 +907,8 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
   ) %>% paste(collapse = "\n") %>% cat()
 ```
 ]
----
-class:primary
-#Remote Sensing Data: Arctic Sea Ice
 
-+ In the future
+**In the future**
   - Bivariate Model
   - Find other applications
   - Computational efficiency (reduce to one-step)
@@ -745,11 +918,23 @@ class:primary
 # References
 <font size="2">
 ```{r, print_refs1, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
-print(bib[[c("vonbergmann_2021")]], 
+print(bib[[c("gleicher2011","huang2009", "BRAVO2004b", "BRAVO2004a", "leaflet", "gordon_2015", "macdonald_1999", "chua_2017", "cleveland_1984", "cleveland_mcgill_1984", "brewer_2002", "map_2020")]], 
       .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
       )
 ```
 </font>
+
+---
+class:primary
+# References
+<font size="2">
+```{r, print_refs2, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
+print(bib[[c("searcy1997precision", "vanderplas2020", "Wang2018TowardsEC", "zhang_2008", "MIDWAY2020100141", "todorovic2008gestalt")]], 
+      .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
+      )
+```
+</font>
+
 
 ---
 class:inverse
@@ -761,6 +946,5 @@ class:inverse
 <br>
 <br>
 `r fa("envelope", fill = "white")` **akleffner@huskers.unl.edu**
-`r fa("home", fill = "white")` **https://alison-kleffner.netlify.app/**
 `r fa("github", fill = "white")` **alisonkleffner**
 ]
