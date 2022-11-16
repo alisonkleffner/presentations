@@ -1,6 +1,6 @@
 ---
 title: "Redesigning Yield Map Plots for Comprehension and Usability"
-subtitle: "Texas Christian University"
+subtitle: "Xavier University"
 author: "Alison Kleffner"
 date: "Department of Statistics, University of Nebraska - Lincoln"
 output:
@@ -9,7 +9,7 @@ output:
     includes:
       after_body:
         "js-addins.html"
-    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    #mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
     css: ["default", "metropolis-fonts", "metropolis" ,"css/modal.css", "css/sizeformat.css"]
     lib_dir: libs
     nature:
@@ -104,7 +104,7 @@ write("", file = "js-addins.html")
 
 <br><br><br>
 ## Redesigning Yield Map Plots for Comprehension and Usability
-### Texas Chirstian University
+### Xavier University
 #### Alison Kleffner
 #### Department of Statistics, University of Nebraska - Lincoln
 ##### `r fa("envelope", fill = "black")` [akleffner@huskers.unl.edu](akleffner@huskers.unl.edu)
@@ -117,10 +117,13 @@ write("", file = "js-addins.html")
 class:primary
 # Outline
 
+.pull-left[
+
 `r fa_i("chart-bar")` What makes a Good Graph?
 
 + Why Visualization?
 + Graphical Perception
+
 
 `r fa_i("list")` Redesigning Yield Plots
 
@@ -131,6 +134,108 @@ class:primary
 
 `r fa_i("spinner")` Future Work
 
+]
+
+.pull-right[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/qrcode-slides.png", alt = "Link to Slides",other=list(width="50%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+
+
+]
+
+---
+class:primary
+# About Me
+
+- Current PhD Candidate at the University of Nebraska at Lincoln
+
+- Research Areas: Visualization, Spatio-Temporal Modeling, Environmental Applications of Statistics
+
+Publications:
+
+[[In Progress]](https://alisonkleffner.github.io/spatio-temporal-model-arctic-sea-ice/spatio-temporal-model-arctic-sea-ice.pdf) *A. Kleffner, S. VanderPlas and Y. Guan. A Spatio-Temporal Model for Arctic Sea Ice.* To be submitted to the Journal of Agricultural, Biological, and Environmental Statistics. 
+
+---
+class:primary
+#Other Project: Modeling Arctic Sea Ice
+
+Developing a non-stationary spatio-temporal model for Arctic Sea Ice motion
+
++ Process
+  -  Cluster regions with similar movement. The boundaries between clusters would be locations where ice cracks would form.
+  - Model is developed using cluster information
+  - Use the model to interpolate missing data, yielding a complete data set. 
+  
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/data_example.jpeg", alt = "Missing Data in Sea Ice", other=list(width="25%"))
+i2 <- img_modal(src = "images/traj_plot.png", alt = "Sea Ice Movement", other=list(width="25%"))
+i3 <- img_modal(src = "images/all-weeks-comp.png", alt = "Comparison of our ice crack detection method to one in the literature.",other=list(width="25%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i3, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9],
+  str_split(i2, "\\n", simplify = T)[3:9],
+  str_split(i3, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
+---
+class:primary
+
+#Modeling: Gaussian Process (GP) 
+
+**For Spatial Data**
+
+$\left\{X(s): s \in D \subset R^2\right\}$ is a Gaussian Process if all its finite-dimensional distributions are Gaussian
+
+.center[
+ie. $X(s) \sim GP(0,c(.|.))$
+]
+
+Meaning, for $\left\{s_1,...,s_n\right\}$, $x$ = $(x_1,...,x_n)^T \sim MVN(0, \Sigma_{\theta})$
+
+Can define $\Sigma_{\theta}$ as the Exponential Covariance Function `r Citep(bib[[c("gpgp_pkg")]])`
+
+.center[
+$\Sigma_{\theta} = \sigma^2\exp(-||x-y||/\phi)$ $\\$
+where $\sigma^2$ is the variance and $\phi$ is the range
+]
+
+Joint density of the observations can be written as a product of conditional densities 
+.center[
+$f(x_1,...,x_n) = f(x_1)\prod^n_{i=2} f(x_{i}|x_{1},...,x_{i-1})$ 
+
+]
+
+
+This can be a computationally complex process due to the inversion of $\Sigma_{\theta}$
+
+---
+class:primary
+
+#Gaussian Process (GP) 
+
+**Extension to ST Data**
+
+Now, the covariance function is an Exponential Space-Time, which is a separable covariance function (Wilke et al, 2019)
+
+.center[
+$\Sigma_{\theta}(s;t) = \Sigma_{\theta}^{(s)}*\Sigma_{\theta}^{(t)}$ $\\$ where 
+$\Sigma_{\theta}^{(s)} = \sigma^2\exp\left\{-||x-y||/\phi\right\}$  and $\Sigma_{\theta}^{(t)} = \sigma^2\exp\left\{-|t|/\tau\right\}$
+
+
+where $\sigma^2$ =  variance, $\phi$ = spatial range, $\tau$ = temporal range
+]
+
+**Results:** Our model tends to interpolate better than linear interpolation for low-sampled, curved data.
 
 ---
 class:inverse
@@ -159,99 +264,56 @@ Visualization offers an alternative way of communicating numbers
 
 .center[
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/Minard.png", alt = "Napoleon March Map",other=list(width="50%"))
+#i1 <- img_modal(src = "images/Minard.png", alt = "Napoleon March #Map",other=list(width="50%"))
+
+i1 <- img_modal(src = "images/sun-pic.png", alt = "Life Cycle of Star",other=list(width="50%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i1, "\\n", simplify = T)[3:9]
   ) %>% paste(collapse = "\n") %>% cat()
 ```
 
+<!--
 [Napoleon March Map](https://en.wikipedia.org/wiki/Charles_Joseph_Minard) by Charles Joseph Minard
+-->
 
 ]
 
 ---
 class:primary
-# Example: Anscombe's Quartet
+# Example: The Datasaurus
 
--  4 data sets that have nearly identical simple statistical properties that appear very different when graphed
+-  13 data sets that have nearly identical simple statistical properties that appear very different when graphed
 
 - demonstrate both the importance of graphing data before analyzing it and the effect of outliers on statistical properties
 
-- 11 (x,y) points
+- 142 (x,y) points
 
 - the same mean, median, standard deviation, and correlation coefficient between x and y
 
----
-class:primary
-# Anscombe's Quartet: data
-
-.pull-left[
-.pull-left[
-```{r, anscombe-set1}
-quartet_setI <- anscombe %>%
-  select(x1, y1) %>%
-  mutate(set = "I") %>%
-  rename(x = x1, 
-         y = y1)
-quartet_setI %>% select(x, y) %>% knitr::kable(caption = "Set I")
-```
-].pull-right[
-```{r anscombe-set2}
-quartet_setII <- anscombe %>%
-  select(x2, y2) %>%
-  mutate(set = "II") %>%
-  rename(x = x2, 
-         y = y2)
-quartet_setII %>% select(x, y) %>% knitr::kable(caption = "Set II")
-```
-]].pull-right[
-.pull-left[
-```{r anscombe-set3}
-quartet_setIII <- anscombe %>%
-  select(x3, y3) %>%
-  mutate(set = "III") %>%
-  rename(x = x3, 
-         y = y3)
-quartet_setIII %>% select(x, y) %>% knitr::kable(caption = "Set III")
-```
-].pull-right[
-```{r anscombe-set4}
-quartet_setIV <- anscombe %>%
-  select(x4, y4) %>%
-  mutate(set = "IV") %>%
-  rename(x = x4, 
-         y = y4)
-quartet_setIV %>% select(x, y) %>% knitr::kable(caption = "Set IV")
-```
-]]
+[About Datasaurus](https://cran.r-project.org/web/packages/datasauRus/vignettes/Datasaurus.html)
 
 ---
 class:primary
-# Anscombe's Quartet: summary statistics
+# The Datasaurus: summary statistics
 
 <br>
 <br>
 
 ```{r, quartet-summary}
-quartet <- rbind(quartet_setI,
-                 quartet_setII,
-                 quartet_setIII,
-                 quartet_setIV) %>%
-  select(set, x, y)
+library(datasauRus)
 
-quartet_summary <- quartet %>%
-  group_by(set) %>%
-  summarize("mean(x)"  = round(mean(x),2), 
-            "sd(x)"    = round(sd(x),2), 
-            "mean(y)"  = round(mean(y),2), 
-            "sd(y)"    = round(sd(y),2), 
-            "cor(x,y)" = round(cor(x,y),2)) %>% 
-  t()
+datasaurus_dozen_filter <- filter(datasaurus_dozen, dataset == "dino" | dataset == "star"| dataset == "v_lines"| dataset == "bullseye" | dataset == "dots" | dataset == "away")
 
-colnames(quartet_summary) <- quartet_summary[1,]
-quartet_summary <- quartet_summary[-1,] %>%
-  as.data.frame()
+quartet_summary <-   datasaurus_dozen_filter %>% 
+    group_by(dataset) %>% 
+    summarize(
+      mean_x    = mean(x),
+      mean_y    = mean(y),
+      std_dev_x = sd(x),
+      std_dev_y = sd(y),
+      corr_x_y  = cor(x, y)
+    )
 
 quartet_summary %>%
   knitr::kable(digits = 2)
@@ -265,15 +327,13 @@ class:primary
 # Anscombe's Quartet: plots
 
 ```{r, , quartet-plots, fig.height = 4, fig.width = 6, fig.align = "center"}
-ggplot(quartet, aes(x, y)) + 
-  geom_point(colour = "green4", size = 2.5) + 
-  geom_smooth(method = lm, se = FALSE, colour = "gray", alpha = .5) +
-  facet_wrap(~ set) +
-  theme_bw() +
-  theme(aspect.ratio = 1,
-        axis.text = element_text(size = 14),
-        axis.title = element_text(size = 14),
-        strip.text = element_text(size = 14))
+
+ggplot(datasaurus_dozen_filter, aes(x = x, y = y, colour = dataset))+
+    geom_point()+
+    theme_void()+
+    theme(legend.position = "none")+
+    facet_wrap(~dataset, ncol = 3)
+
 ```
 
 ---
@@ -282,7 +342,7 @@ class:primary
 
 We are surrounded by visuals
 
-Cleveland (1984) found that 30% of graphs in *Science* has an error `r Citep(bib[[c("MIDWAY2020100141")]])`:
+Cleveland (1984) found that 30% of graphs in *Science* have an error, where an error is defined as `r Citep(bib[[c("MIDWAY2020100141")]])`:
   - Incorrectly displaying data
   - Ineffective design elements
   
@@ -498,9 +558,10 @@ Sensitivity of the human eye to different wavelengths of visual light
   - Bigger contrasts correspond to faster detection
 + Want mappings from data to color to be ***perceptually*** uniform
   - Avoid color gradients
-+ Be conscious on what color means
++ Be conscious of what color means
   - Leverage common associations
   - Color always means something  `r Citep(bib[[c("MIDWAY2020100141")]])`
+
 
 
 ???
@@ -572,6 +633,18 @@ Suggestions:
 + Use a monochromatic color gradient scheme where possible.
 + Suggested 2-color gradient: blue/purple - white - orange (safe for most types of colorblindness)
 + Utilize double encoding: use color and another aesthetic (line type, shape)
+
+
+  .center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/dual-encode.png", alt = "Dueal Encoding Example",other=list(width="25%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
 
 
 ---
@@ -769,10 +842,10 @@ Number of categorical scales should be limited to **5-7 categories**
   - Due to working memory limits `r Citep(bib[[c("macdonald_1999")]])`
     + Harder for the user to distinguish between colors and remember the meaning of colors. 
     + More difficult to associate a color with the correct yield category 
-  - The load on the user’s working memory leads to an increase the comprehensive time of the plot `r Citep(bib[[c("vanderplas2020")]])`
+  - The load on the user’s working memory leads to an increase in the time it takes for the user to comprehend the plot `r Citep(bib[[c("vanderplas2020")]])`
   
 
-**Next** Redesign Process
+**Next:** Redesign Process
   
 
 ---
@@ -781,10 +854,13 @@ class:primary
 
 .center[
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/Attempt1.png", alt = "First Iteration", other=list(width="50%"))
+i1 <- img_modal(src = "images/Attempt1_2.png", alt = "First Iteration", other=list(width="35%"))
+i2 <- img_modal(src = "images/Attemp1_3.png", alt = "First Iteration without Trial Design Plot", other=list(width="35%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9]
+  str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9],
+  str_split(i2, "\\n", simplify = T)[3:9]
   ) %>% paste(collapse = "\n") %>% cat()
 ```
 ]
@@ -792,10 +868,12 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 **Focus**: Superimpose the treatment and yield plots, while reducing the clutter 
 + Use of transparency to show both at same time
 + Interactive plot with *leaflet* `r Citep(bib[[c("leaflet")]])`
-  - Can add and remove plot layer
+  - Can add and remove trial plot layer
 
 Work that still needs to be done:
-+ Color needs some work (no bivariate scale)
++ Color needs some work
+  + Blending
+  + different color schemes
 + Not as good for paper plots
 
 ---
@@ -813,8 +891,8 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ]
 
 **Focus**: Color/Scales
-+ Remove additional colors
 + Working on blending using transparency
+  - **ggblend**
 + Categorical Groups for both variables
   - Trial Design treatment is a factor
   - Reduce number of colors for yield
@@ -850,7 +928,7 @@ class:primary
 # Conclusion
 
 + Designing graphics is a process
-+ Utilize what is known about perception to improve previous Yield Plots
++ We can use the  knowledge about perception to improve geospatial experiment result visualizations.
   - Reduce clutter on superimposed graphics 
   - Better colors
   - less categories
@@ -878,6 +956,8 @@ class:primary
 - Build trust in the model predictions without requiring farmers to learn the details of statistical modeling.
 - Will utilize these plots, among others
   + For example, accuracy of as applied treatment compared to trial design
+- Possibility of linked graphics
+  - Show correlation between applied treatment and yield in a scatterplot, which then links to the spatial plot
 
 
 **In general**, want this work to lead into work on spatial visualizations, especially in the comparative framework
@@ -890,35 +970,32 @@ class:primary
 
 Developing a non-stationary spatio-temporal model for Arctic Sea Ice motion
 
-+ Process
-  -  Cluster regions with similar movement. The boundaries between clusters would be locations where ice cracks would form.
-  - Model is developed using cluster information
-  - Use the model to interpolate missing data, yielding a complete data set. 
-  
-.center[
-```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/data_example.jpeg", alt = "Missing Data in Sea Ice", other=list(width="25%"))
-i2 <- img_modal(src = "images/traj_plot.png", alt = "Sea Ice Movement", other=list(width="25%"))
-
-c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i2, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9],
-  str_split(i2, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-```
-]
-
 **In the future**
   - Bivariate Model
   - Find other applications
   - Computational efficiency (reduce to one-step)
+  
+**In general**
+  - Work with remote sensing data
+    + Interesting problems with missing data and computational efficiency
+  - Environmental Applications
+
+.center[  
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/satellite.png", alt = "Visual of Satellite path over the Earth", other=list(width="30%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
 
 ---
 class:primary
 # References
 <font size="2">
 ```{r, print_refs1, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
-print(bib[[c("gleicher2011","huang2009", "BRAVO2004b", "BRAVO2004a", "leaflet", "gordon_2015", "macdonald_1999", "chua_2017", "cleveland_1984", "cleveland_mcgill_1984", "brewer_2002", "map_2020")]], 
+print(bib[[c("gleicher2011","huang2009", "BRAVO2004b", "BRAVO2004a", "leaflet", "gordon_2015", "chua_2017", "cleveland_1984", "cleveland_mcgill_1984", "brewer_2002", "map_2020", "gpgp_pkg")]], 
       .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
       )
 ```
@@ -929,7 +1006,7 @@ class:primary
 # References
 <font size="2">
 ```{r, print_refs2, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
-print(bib[[c("searcy1997precision", "vanderplas2020", "Wang2018TowardsEC", "zhang_2008", "MIDWAY2020100141", "todorovic2008gestalt")]], 
+print(bib[[c("searcy1997precision", "vanderplas2020", "Wang2018TowardsEC", "zhang_2008", "MIDWAY2020100141", "todorovic2008gestalt", "spacetime_wilke_2019", "macdonald_1999", "sar_2020")]], 
       .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
       )
 ```
@@ -948,3 +1025,183 @@ class:inverse
 `r fa("envelope", fill = "white")` **akleffner@huskers.unl.edu**
 `r fa("github", fill = "white")` **alisonkleffner**
 ]
+
+
+---
+class:primary
+
+# Clustering Like Movements: Bounding Box
+
++ We create a bounding box around for each trajectory to represent it's movement
++ Bounding Box Features:
+  - Length travel in x/y between the minimum and maximum location 
+.center[
+( $x_{max} - x_{min}$ and $y_{max} - y_{min}$)]
+  - Length travel in x/y between latest and earliest observation 
+  .center[
+  ( $x_{1} - x_{0}$ and $y_{1} - y_{0}$)]
+  - Angle of movement (direction)
+  - Average x/y value
+  - If clustering a sub-trajectory, can also include previous features 
++ Bounding Box features were used as input into K-Means clustering, which partitions n observations into k clusters.
+
+.center[
+```{r bb-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/bounding-box.png", alt = "Points used to Develop Bounding Box", other=list(width="20%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+---
+class:primary
+
+#Spatio-Temporal Interpolation
+
++ Individual model developed for both x and y using the GpGp package in R `r Citep(bib[[c("gpgp_pkg")]])`
+  - Within each intersection
+  - Due this to take into account the nonstationarity
++ Use Exponential Space-Time covariance function (as previously defined)
++ Output is the maximum likelihood estimates for the mean and covariance parameters
++ Use model to determine estimates of missing locations
+  - From the conditional expectation of the model
+  - Create a grid encompassing our ice sheet to give a starting value of the missing locations. 
+  - The model will then adjust this location using its known neighbors
+
+
+---
+class:primary
+#Simulation Study
+
++ Create Underlying Process Grid 
+  - Simulating movement of ocean that causes observations to move
+  - Initial grid was created and shifted seven times to represent seven days of movement in the underlying process.
+  - This data is then used to create the covariance matrix, $C_{d,c}(\theta)$
+  - Covariance parameters and defined mean trend ( $\mu_{d,c}$ ) is different for each cluster $\\$
+
+.center[
+$U_{d,c}(s,t) \sim GP(\mu_{d,c}, C_{d,c}(\theta))$ $\\$
+
+where $U_{d,c}(s,t)$ is the displacement at location $s$ & time $t$ $\\$ for $d$ = x or y, cluster $c$
+
+]
+
+**Note**: Only 2 clusters for simplicity
+
+---
+class:primary
+
+#Simulation Study
+
++ Create Observed Grid
+  - Movement of an observed point is determined by the value of the nearest point of the underlying process for that day ( $g$ )
+  - Obtained a week's worth of simulated data
+  
+.center[
+  $(x_{t,j}, y_{t,j}) = (U^{X}_{t-1,c,g}, U^{Y}_{t-1,c,g}) + (x_{t-1,j}, y_{t-1,j})$ $\\$
+  where t=1,...,7 (time), j = 1,...,121 (id), $\\$ U is the underlying process value at $t-1$ for cluster ( $c$ ) and grid id ( $g$ )
+]
+
+
+.center[
+```{r grid-combo-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/both_grid2.jpeg", alt = "Underlying and Observed Grid Plotted Together", other=list(width="40%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+---
+class:primary
+#Simulated Data
+
+Created 3 different scenarios, each with different parameter values.
+
+.center[
+```{r sim-traj-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/sim_traj.png", alt = "Simulated Trajectories for Each Simulation", other=list(width="90%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+---
+class:primary
+
+#Simulated Clustering Results
+
+
+<br>
+<br>
+<br>
+
+.center[
+```{r sim-clust,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/sim-clust.png", alt = "Clusters for each Simulation Data", other=list(width="60%"))
+
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9],
+  str_split(i2, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+
+]
+
+
+---
+class:primary
+
+#Simulated Interpolation Results
+
++ Simulated and clustered another week of data.
++ 10% of the data for the first week are randomly assigned to be missing.
++ Other methods for comparison:
+  - Linear Interpolation
+  - Instead of running model inside each intersection, a model was developed using all known points (essentially ignoring the nonstationarity aspect of our data)
+
+<br>
+  
+```{r sim-results-tab1}
+
+result_data <- data.frame(sim = c(1,2,3), X1 = c(1.496, 1.628, 1.342), Y1 = c(1.517, 1.58, 1.338), X2 = c(1.042, 1.455, 0.95), Y2 = c(1.226, 1.54, 0.92), X3 = c(1.438, 1.474, 1.458), Y3 = c(1.295, 1.488, 1.489))
+ 
+kableExtra::kable(result_data, booktabs = TRUE, caption = "RMSE for Interpolation Methods", col.names = c("Simulation", "X", "Y", "X", "Y", "X", "Y"), escape = FALSE,  table.attr = "style='width:80%;'", align = "c") %>% 
+  add_header_above(c("", "Intersection Model" = 2, "Linear" = 2, "No Intersection Model" = 2))
+
+
+```
+
+
+---
+class:primary
+
+#Simulated Interpolation Results
+
+
+```{r sim-results-tab2, message=FALSE, warning = FALSE}
+
+result_data2 <- data.frame(sim = c(1, "", 2, "", 3, ""), Cluster = c(1,2,1,2,1,2), X1 = c(1.383, 1.573, 1.7, 1.584, 1.318,1.353), Y1 = c(1.555, 1.488, 1.653, 1.534, 1.346, 1.334), X2 = c(0.815, 1.188, 1.316, 1.503, 1.156, 0.647), Y2 = c(1.163, 1.272, 1.329, 1.612, 1.096, 0.673), X3 = c(1.562, 1.337, 1.658, 1.407, 1.434, 1.484), Y3 = c(1.29, 1.298, 1.596, 1.451, 1.405, 1.581))
+
+kableExtra::kable(result_data2, booktabs = TRUE, caption = "RMSE for Interpolation Methods by cluster", col.names = c("Simulation", "Cluster", "X", "Y", "X", "Y", "X", "Y"), escape = FALSE, align = "c") %>% add_header_above(c(" " = 2, "Intersection" = 2, "Linear" = 2, "No Intersection" = 2)) %>% row_spec(4, color = 'black', background = 'yellow') 
+
+```
+
+
