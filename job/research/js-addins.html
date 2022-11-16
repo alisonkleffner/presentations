@@ -4810,3 +4810,20 @@
             modalsimclust.style.display = 'none';
           }
 </script>
+<script>
+        /* Get the modal*/
+          var modalattempt2_new2 = document.getElementById('modalattempt2_new2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgattempt2_new2 = document.getElementById('imgattempt2_new2');
+          var modalImgattempt2_new2 = document.getElementById('imgmodalattempt2_new2');
+          var captionTextattempt2_new2 = document.getElementById('captionattempt2_new2');
+          imgattempt2_new2.onclick = function(){
+            modalattempt2_new2.style.display = 'block';
+            modalImgattempt2_new2.src = this.src;
+            captionTextattempt2_new2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgattempt2_new2.onclick = function() {
+            modalattempt2_new2.style.display = 'none';
+          }
+</script>

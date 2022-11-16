@@ -1059,13 +1059,13 @@ class:primary
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgAttempt2_new2' src='images/Attempt2_new2.jpeg' alt='Second Iteration' width='50%'&gt;
+&lt;img id='imgattempt2_new2' src='images/attempt2_new2.jpeg' alt='Second Iteration' width='50%'&gt;
 &lt;!-- The Modal --&gt;
-&lt;div id='modalAttempt2_new2' class='modal'&gt;
+&lt;div id='modalattempt2_new2' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
-  &lt;img class='modal-content' id='imgmodalAttempt2_new2'&gt;
+  &lt;img class='modal-content' id='imgmodalattempt2_new2'&gt;
   &lt;!-- Modal Caption (Image Text) --&gt;
-  &lt;div id='captionAttempt2_new2' class='modal-caption'&gt;&lt;/div&gt;
+  &lt;div id='captionattempt2_new2' class='modal-caption'&gt;&lt;/div&gt;
 &lt;/div&gt;
 ]
 
@@ -6508,6 +6508,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgsimclust.onclick = function() {
             modalsimclust.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalattempt2_new2 = document.getElementById('modalattempt2_new2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgattempt2_new2 = document.getElementById('imgattempt2_new2');
+          var modalImgattempt2_new2 = document.getElementById('imgmodalattempt2_new2');
+          var captionTextattempt2_new2 = document.getElementById('captionattempt2_new2');
+          imgattempt2_new2.onclick = function(){
+            modalattempt2_new2.style.display = 'block';
+            modalImgattempt2_new2.src = this.src;
+            captionTextattempt2_new2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgattempt2_new2.onclick = function() {
+            modalattempt2_new2.style.display = 'none';
           }
 </script>
 
