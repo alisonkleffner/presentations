@@ -919,6 +919,10 @@ class:inverse
 # Yield Plots Redesign
 ]
 
+???
+
+Next let's talk about some of my actual research
+
 ---
 class:primary
 # Data Intensive Farm Management (DIFM)
@@ -948,6 +952,10 @@ class:primary
 
 ]
 
+???
+
+A common issue with farming practices across the world is the inefficient application of crop inputs, like nitrogen, on farm fields. This inefficient application of crop input impacts profit and the environment. For example nitrogen fertilizer input that is not used by crops can pollute water bodies by causing the overstimulation of growth of aquatic plants and algae, impacting light. Thus, research needs to be conducted to study this issue so steps can be taken to address it. The purpose of the data intensive farm management project, a grant funded by the USDA-NRCS, is to generate the data necessary to understand this effect of crop input application on yield, so a more optimal level can be chosen. The data is generated through the use of On-Farm precision experimentation (OFPE). In an OFPE experiments are conducted on a field using field specific inputs where the experiment is implemented using a tractor that has GPS-reliant technology. DIFM wants to develop infrastructure (including the development of apps) to easily develop and analyze these experiments, with the end goal of finding economically optimal application rate to increase profits while reducing environmental impacts.  
+
 ---
 class:primary
 # Trial Design
@@ -970,11 +978,16 @@ class:primary
 
 **Output**: shape files that can be put into a farmer's tractor that allows them to carry out the experiments
 
+
+???
+
+First step is to develop the infrastructure to develop the experiments using site specific inputs. This was a project that I worked on last spring, where I developed a R Shiny app that is used as a prototype. In this tool, farmers are able to create site-specific experiments, using their field boundaries, desired plot lengths, and desired treatment variations they wanted to test. After the trial is designed, they can download shape files that they can put into their tractor to implement the study. Note: I did not write the background code for the trial design, my work was more on the design and usability. I helped enough with the background code to get everything to work. 
+
 ---
 class:primary
 # Data Collection
 
-**Step 2** Conduct experiments and collect data
+**Step 2**: Conduct experiments and collect data
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
@@ -994,7 +1007,8 @@ Examples of Data Collected:
 - location of measurements
 
 ???
-Utilize GPS on tractors
+
+This picture is an example of how the data we are using is collected. The blue/white dots in the middle are the treatment and the location at which the treatment is applied to the field. They yellow dots are locations where a crop is harvested and a yield measurement is taken. This process utilizes GPS and other equipment on tractors to collect the information. Examples, of some of the data that is collected that we utilize is the location of measurements and treatment, yield measure, and as-applied (amount of treatment that is actually applied to the field. Goal is the trial design, but sometimes a lag between different trial plots)
 
 
 ---
@@ -1011,6 +1025,10 @@ class:primary
   - Show the spatial correlations between the application/treatment and yield in a way that is understandable to farmers and consultants. 
   - Develop perceptually optimal plots that communication this relationship. 
   
+???
+
+The last general step in this process is to analyze the data and explain the optimal decision management decisions, accounting for various factors (like weather, environmental and economics conditions). So we want to develop an user interface that is designed around explaining the machine learning output to non-experts to help inform decision. We want to do this to build farmer's trust in the models (we are providing them with useful information). Additionally, as a whole this will help us learn how crop yield responds to different input application rates, field characteristics, and weather with the goal to help increase profits. Currently we are working on the pieces to help explain these results, before putting it all together in an R Shiny app. One of these pieces of information that needs to be explained is to explore the relationship between input application and yield. As seen in previous parts of this presentation, there is a great benefit of plotting data, so we wanted to explore this relationship visually. Hence, we want to show the spatial correlations between the treatment application and yield in a way that is understandable to farmers and consultants. Additionally, we need to develop these plots so they are perceptually optimal.  
+
 
 ---
 class:primary
@@ -1036,6 +1054,12 @@ class:primary
   &lt;div id='captionjuxtaposedex' class='modal-caption'&gt;&lt;/div&gt;
 &lt;/div&gt;
 ]
+
+???
+
+Currently, here is two examples of the plots that are currently given in DIFM reports to farmers. 
+
+Ask the audience what principles of good graphics these violate?
 
 ---
 class:primary
@@ -1073,6 +1097,10 @@ class:primary
 Plenty of other iterations of yield maps used in the literature. Here's some examples
 
 ]
+
+???
+
+Plenty of other yield maps that have been used in the literature, so while don't give trial plot information still provides yield information over space. These have some of the same problems as seen before. The first interpolates, so losing the site-specific information and continuous yield may not make sense. The second, has too many categories and coloring is not great (rainbow). The last plot uses suboptimal color scheme (bivariate color scheme in inappropriate, also doesn't go through white, members of the target audience (farmers) may be more likely to be colorblind, so avoid reds and greens)
 
 
 ---
@@ -1123,6 +1151,10 @@ class:primary
 &lt;/div&gt;
 ]
 
+???
+
+One of the first things we need to decided is whether we want to juxtapose or superimpose the trial design and yield information. Juxtaposed graphs are side by side plots that tend to have less issues with visual clutter and they are easier to create. A drawback however, is that the comparative burden is placed on the user (have to match things up correctly). The other option is to superimpose the graphs where multiple objects are in the same coordinate system. The benefit is that it is easier to compare as users can use perception rather than memory. These are additionally useful when spatial location is a key component of the comparison. However, the major drawback, as we saw with the DIFM plot is that clutter is a major issue. We decided to use superimposed graphs since spatial location is a key component for us and may be hard to compare in two different plot (hard to match up)
+
 
 ---
 class:primary
@@ -1136,6 +1168,12 @@ Number of categorical scales should be limited to **5-7 categories**
   
 
 **Next:** Redesign Process
+
+???
+
+Additionally, the number of categories on our scale for yield should be limited to 5-7 categories (DIFM plot and other plot 2 violates this). The categories need to be limited due to working memory limits and it makes it harder for the user to distinguish between colors and remember the meaning of what group the color is representing (might associate a color with the incorrect category). This load on the user's working memory lead to an increase in time for them to comprehend the plot, which is not something we want especially for non-experts. 
+
+Next I am going to walk through our redesign process (still currently in progress).
   
 
 ---
@@ -1174,6 +1212,12 @@ Work that still needs to be done:
   + different color schemes
 + Not as good for paper plots
 
+???
+
+My first iteration of the plot I was working on superimposing both the treatment and yield plot, but reducing some of the clutter. The yield points were transformed into polygons using the distance between points, swath width, and heading (green space around plot). This was done so each polygon is on it's own unique space and not overlapping. Used transparency for the trial plot to try and blend the colors with the trial design plot. Here is used an interactive plot using the leaflet package in R, which creates interactive web maps with JavaScript. This can be beneficial as can add/remove the trial plot so can only see the yield results if desirable.
+
+So the plot now is not cluttered in the sense there's overlapping data points, but there's still work that needs to be done. For example, the coloring needs more work. Due to colorblind, red and green may not be good colors to use, they are just the default for those working on this project. Additionally, color blending still needs to be worked on to help differentiate high treatment/high yield, etc. Finally, the shading piece may not be as effective for paper plots, which some farmers may want to use. So eventually need to think how to do this with no color.  
+
 ---
 class:primary
 #Redesign: Iteration 2
@@ -1192,14 +1236,17 @@ class:primary
 
 **Focus**: Color/Scales
 + Working on blending using transparency
-  - **ggblend**
+  - [**ggblend**](https://mjskay.github.io/ggblend/)
 + Categorical Groups for both variables
   - Trial Design treatment is a factor
   - Reduce number of colors for yield
   - Use quantiles to determine categories for yield (Brewer and Pickle, 2002)
 
 
- 
+???
+Played with the transparency a bit more. Eventually would like to use the ggblend package, which is developing for the blending of objects. However, it doesn't work for polygon on top of polygon. Submit a bug report. Additionally, we introduced categorical groups for both variables. Trial Design was categorical to begin width. And I decided to use a categorial scale for yield to cut down on what needed to be blended. The breaks for yield were created using quantiles for the breaks. This has been shown in some research to be the best pereptually for cateogorical breaks.  
+
+
 ---
 class:primary
 #Redesign: Correlation
@@ -1224,6 +1271,10 @@ Correlations between As Applied treatments and Yield
 + Maintain some spatial information. 
   - Correlations may be impacted by field location
   - Eventually add other information to the plot, like soil. 
+  
+???
+
+Finally we can directly state the correlation between As Applied and Yield (explain how as applied differs from treatment design), while also keeping some of the spatial relationship. Can see for the most part, as application amount increase, so does the yield. Some areas where the inverse is true (more investigation, maybe lower, dirt differs, etc). Used a bivariate color scheme go through white color for zero. Maintaining some spatial information is importanct as correlation is impacted by field location. Eventually this information can be added to the plot (interactivity)
 
 ---
 class:primary
@@ -1259,12 +1310,17 @@ class:primary
 - Will utilize these plots, among others
   + For example, accuracy of as applied treatment compared to trial design
 - Possibility of linked graphics
-  - Show correlation between applied treatment and yield in a scatterplot, which then links to the spatial plot
+  - Show trial design plot, can then click on a trial plot to view the scatterplot between applied treatment and yield. 
 
 
 **In general**, want this work to lead into work on spatial visualizations, especially in the comparative framework
   - Do testing on the graphics that I just made to see if farmers and consultants are interpreting the information correctly.
   - Many other areas work with graphics (break down barriers to information)
+
+???
+
+Mention wanting to develop an R package to create these plots to automate some of these things for future use.
+
 
 ---
 class:primary
