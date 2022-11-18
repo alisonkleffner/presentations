@@ -235,13 +235,10 @@ class:primary
 + M.S from University of Nebraska - Lincoln in 2020
 + PhD Candidate at the University of Nebraska at Lincoln with expected graduation in August 2023
 
-**Experience**
-+ Teaching at UNL
-  - Simulation-based introductory statistics
-  - Multiple and Logistic Regression
-  - Basic experimental design
-+ Research Assistantship: Data Intensive Farm Management Project
-+ Research Areas: Visualization, Spatio-Temporal Modeling, Environmental Applications
+**Research Areas**
++ Visualization
++ Spatio-Temporal Modeling
++ Environmental Applications
 
 
 **Publications**
@@ -572,7 +569,7 @@ There is a hierarchy of features
 
  - Color is stronger than shape
  
-Reduces the amount of work users of you graph have to do when view they view it
+Reduces the amount of work users of your graph have to do when they view it
 
 ???
 
@@ -616,28 +613,10 @@ class:primary
   &lt;!-- Modal Caption (Image Text) --&gt;
   &lt;div id='captiongestalt' class='modal-caption'&gt;&lt;/div&gt;
 &lt;/div&gt;
-]
 
 What this looks like in visualization (Todorovic, 2008):
 
-+ Proximity: Things that are spatially near to one another are related
-+ Similarity: Thing that look alike are related
-+ Continuity: Partially hidden objects are completed into familiar shapes.
-+ Enclosure: Related elements are surrounded with a visual element
-
-???
-
-How to take advantage of brain to make graphs part two
-
-We look for structure all the time. We are so good at it that we will find it in random data, given time. (This is one of the reasons that data visualization can hardly be a replacement for statistical modeling.) The strong inferences we make about relationships between visual elements from relatively sparse visual information are called “gestalt rules”. They are not pure perceptual effects. Rather, they describe our tendency to infer relationships between the objects we are looking at in a way that goes beyond what is strictly visible.
-
-Gestalt principles are the predictable ways by which we organize sensory information (how we interpret ambiguity in a visual scene). We will just touch on the main ones here that are highly used in visualization, but there are others. The first is proximity which says that things that are close together are likely part of the same unit. For example, the black boxes to connect the E are attached, so perceived as the letter. Next is the law of similarity that says that thing that are viewed as part of a group if they look similar (the two T's). And finally the law of continuation says that figure with edges that are smooth are more likely to be continuous than things with edges that are sharp angles (we are more likely to perceive continuous, smooth flowing lines rather than jagged, broken lines - elements that are arranged on a line or curve are perceived to be more related than elements not on the line or curve.). 
-
-
----
-class:primary
-
-# Gestalt Principles
+]
 
 &lt;table&gt;
  &lt;thead&gt;
@@ -666,12 +645,19 @@ class:primary
 &lt;/tbody&gt;
 &lt;/table&gt;
 
+
+???
+
+How to take advantage of brain to make graphs part two
+
+We look for structure all the time. We are so good at it that we will find it in random data, given time. (This is one of the reasons that data visualization can hardly be a replacement for statistical modeling.) The strong inferences we make about relationships between visual elements from relatively sparse visual information are called “gestalt rules”. They are not pure perceptual effects. Rather, they describe our tendency to infer relationships between the objects we are looking at in a way that goes beyond what is strictly visible.
+
+Gestalt principles are the predictable ways by which we organize sensory information (how we interpret ambiguity in a visual scene). We will just touch on the main ones here that are highly used in visualization, but there are others. The first is proximity which says that things that are close together are likely part of the same unit. For example, the black boxes to connect the E are attached, so perceived as the letter. Next is the law of similarity that says that thing that are viewed as part of a group if they look similar (the two T's). And finally the law of continuation says that figure with edges that are smooth are more likely to be continuous than things with edges that are sharp angles (we are more likely to perceive continuous, smooth flowing lines rather than jagged, broken lines - elements that are arranged on a line or curve are perceived to be more related than elements not on the line or curve.). 
+
 **Implications for practice**
 + Know how we perceive groups
 + Know that we perceive some groups before others
 + Design to facilitate and emphasize the most important comparisons
-
-???
 
 This table shows some of the ways the gestalt principles can be implemented on a graph. For example, with the enclosure principle this can be implemented through facets (bring up datasaurus example - faceting by dataset).  For continuity, if you want items to be perceived as continuous, use a line (like a time series). We'll have example of proximity and similarity on the next slide, but for proximity can make use of white space (ie. more white space, items are more spread out). Similarity uses the same color or shape to denotes similar objects. So we can use this principles in practice because they let us know how we perceive groups and maybe why some group are more noticeable at first than other (think back to preattentive features with shape/color). Understanding these helps us to emphasize the important comparisons we need to make. 
 
@@ -1113,9 +1099,8 @@ class:primary
 
 + General principle of graphical design: Show data clearly (Cleveland, 1984; Gordon and Finch, 2015)
 + Overlap - multiple dots on top of one another
-  - obscures true number of dots, harder to find patterns
+  - Obscures true number of dots, harder to find patterns
   - Visual cues, like color, becomes partially obstructed, thereby reducing search efficiency (Bravo and Farid, 2004a; Bravo and Farid, 2004b)
-  - Solutions include: jittering, distortion, refinement, and aggregation (Chua and Moere, 2017)
   - Can overburden human perception, causing errors in performing tasks (Huang, Eades, and Hong, 2009)
   
 .center[
@@ -1260,7 +1245,7 @@ class:primary
 # Conclusion
 
 + Designing graphics is a process
-+ We can use the  knowledge about perception to improve geospatial experiment result visualizations.
++ We can use the  knowledge about perception to improve visualizations of geospatial experiment results.
   - Reduce clutter on superimposed graphics 
   - Better colors
   - less categories
@@ -1368,7 +1353,7 @@ Library&lt;/em&gt;.
 R package version 2.1.1.
 URL: &lt;a href="https://CRAN.R-project.org/package=leaflet"&gt;https://CRAN.R-project.org/package=leaflet&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;cite&gt;&lt;a id='bib-chua_2017'&gt;&lt;/a&gt;&lt;a href="#cite-chua_2017"&gt;Chua, A. and A. V. Moere&lt;/a&gt;
+&lt;p&gt;&lt;cite&gt;Chua, A. and A. V. Moere
 (2017).
 &amp;ldquo;BinSq: visualizing geographic dot density patterns with gridded maps&amp;rdquo;.
 In: &lt;em&gt;Cartography and Geographic Information Science&lt;/em&gt; 44.5, pp. 390&amp;ndash;409.&lt;/cite&gt;&lt;/p&gt;
@@ -1399,11 +1384,6 @@ DOI: &lt;a href="https://doi.org/10.1080/10618600.2014.989324"&gt;10.1080/106186
 &lt;em&gt;GpGp: fast Gaussian process computation using Vecchia’s approximation&lt;/em&gt;.
 R package version 0.4.0.
 URL: &lt;a href="https://cran.r-project.org/web/packages/GpGp"&gt;https://cran.r-project.org/web/packages/GpGp&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;cite&gt;&lt;a id='bib-huang2009'&gt;&lt;/a&gt;&lt;a href="#cite-huang2009"&gt;Huang, W., P. Eades, and S. Hong&lt;/a&gt;
-(2009).
-&amp;ldquo;Measuring Effectiveness of Graph Visualizations: A Cognitive Load Perspective&amp;rdquo;.
-In: &lt;em&gt;Information Visualization&lt;/em&gt; 8.3, pp. 139&amp;ndash;152.&lt;/cite&gt;&lt;/p&gt;
 &lt;/font&gt;
 
 ---

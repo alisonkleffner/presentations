@@ -122,13 +122,10 @@ class:primary
 + M.S from University of Nebraska - Lincoln in 2020
 + PhD Candidate at the University of Nebraska at Lincoln with expected graduation in August 2023
 
-**Experience**
-+ Teaching at UNL
-  - Simulation-based introductory statistics
-  - Multiple and Logistic Regression
-  - Basic experimental design
-+ Research Assistantship: Data Intensive Farm Management Project
-+ Research Areas: Visualization, Spatio-Temporal Modeling, Environmental Applications
+**Research Areas**
++ Visualization
++ Spatio-Temporal Modeling
++ Environmental Applications
 
 
 **Publications**
@@ -412,7 +409,7 @@ There is a hierarchy of features
 
  - Color is stronger than shape
  
-Reduces the amount of work users of you graph have to do when view they view it
+Reduces the amount of work users of your graph have to do when they view it
 
 ???
 
@@ -465,14 +462,16 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i1, "\\n", simplify = T)[3:9]
   ) %>% paste(collapse = "\n") %>% cat()
 ```
-]
 
 What this looks like in visualization `r Citep(bib[[c("todorovic2008gestalt")]])`:
 
-+ Proximity: Things that are spatially near to one another are related
-+ Similarity: Thing that look alike are related
-+ Continuity: Partially hidden objects are completed into familiar shapes.
-+ Enclosure: Related elements are surrounded with a visual element
+]
+
+```{r gestalt-hierarchy}
+tibble("Gestalt Hierarchy" = c("Enclosure", "Continuity", "Proximitiy", "Similarity"),
+       "Graphs" = c("Facets", "Lines", "White Space", "Color/Shape")) %>% knitr::kable()
+```
+
 
 ???
 
@@ -482,23 +481,10 @@ We look for structure all the time. We are so good at it that we will find it in
 
 Gestalt principles are the predictable ways by which we organize sensory information (how we interpret ambiguity in a visual scene). We will just touch on the main ones here that are highly used in visualization, but there are others. The first is proximity which says that things that are close together are likely part of the same unit. For example, the black boxes to connect the E are attached, so perceived as the letter. Next is the law of similarity that says that thing that are viewed as part of a group if they look similar (the two T's). And finally the law of continuation says that figure with edges that are smooth are more likely to be continuous than things with edges that are sharp angles (we are more likely to perceive continuous, smooth flowing lines rather than jagged, broken lines - elements that are arranged on a line or curve are perceived to be more related than elements not on the line or curve.). 
 
-
----
-class:primary
-
-# Gestalt Principles
-
-```{r gestalt-hierarchy}
-tibble("Gestalt Hierarchy" = c("Enclosure", "Continuity", "Proximitiy", "Similarity"),
-       "Graphs" = c("Facets", "Lines", "White Space", "Color/Shape")) %>% knitr::kable()
-```
-
 **Implications for practice**
 + Know how we perceive groups
 + Know that we perceive some groups before others
 + Design to facilitate and emphasize the most important comparisons
-
-???
 
 This table shows some of the ways the gestalt principles can be implemented on a graph. For example, with the enclosure principle this can be implemented through facets (bring up datasaurus example - faceting by dataset).  For continuity, if you want items to be perceived as continuous, use a line (like a time series). We'll have example of proximity and similarity on the next slide, but for proximity can make use of white space (ie. more white space, items are more spread out). Similarity uses the same color or shape to denotes similar objects. So we can use this principles in practice because they let us know how we perceive groups and maybe why some group are more noticeable at first than other (think back to preattentive features with shape/color). Understanding these helps us to emphasize the important comparisons we need to make. 
 
@@ -953,9 +939,8 @@ class:primary
 
 + General principle of graphical design: Show data clearly `r Citep(bib[[c("cleveland_1984", "gordon_2015")]])`
 + Overlap - multiple dots on top of one another
-  - obscures true number of dots, harder to find patterns
+  - Obscures true number of dots, harder to find patterns
   - Visual cues, like color, becomes partially obstructed, thereby reducing search efficiency `r Citep(bib[[c("BRAVO2004b", "BRAVO2004a")]])`
-  - Solutions include: jittering, distortion, refinement, and aggregation `r Citep(bib[[c("chua_2017")]])`
   - Can overburden human perception, causing errors in performing tasks `r Citep(bib[[c("huang2009")]])`
   
 .center[
@@ -1086,7 +1071,7 @@ class:primary
 # Conclusion
 
 + Designing graphics is a process
-+ We can use the  knowledge about perception to improve geospatial experiment result visualizations.
++ We can use the  knowledge about perception to improve visualizations of geospatial experiment results.
   - Reduce clutter on superimposed graphics 
   - Better colors
   - less categories
@@ -1158,7 +1143,7 @@ class:primary
 # References
 <font size="2">
 ```{r, print_refs1, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
-print(bib[[c("gleicher2011","huang2009", "BRAVO2004b", "BRAVO2004a", "leaflet", "gordon_2015", "chua_2017", "cleveland_1984", "cleveland_mcgill_1984", "brewer_2002", "map_2020", "gpgp_pkg", "badgley_1961")]], 
+print(bib[[c("gleicher2011","BRAVO2004b", "BRAVO2004a", "leaflet", "gordon_2015", "chua_2017", "cleveland_1984", "cleveland_mcgill_1984", "brewer_2002", "map_2020", "gpgp_pkg", "badgley_1961")]], 
       .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
       )
 ```
