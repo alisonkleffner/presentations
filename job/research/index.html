@@ -559,27 +559,6 @@ Good Graphs exploit external cognition so users can think about the data instead
 
 Effective graphics take advantage of how people's brains work. This can be divided into three categories, where we will talk more in-depth about each of them: preattentive processing, perceptual grouping, awareness of visual limitations. So we want to exploit how we know the brain work so users can focus on the data instead of deciphering the chart.  
 
----
-class:primary
-# Example
-
-.center[
-&lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgbirthday' src='images/birthday.png' alt='How common is your birthday? (Vanderplas, Cook, and Hofmann, 2020)' width='70%'&gt;
-&lt;!-- The Modal --&gt;
-&lt;div id='modalbirthday' class='modal'&gt;
-  &lt;!-- Modal Content (The Image) --&gt;
-  &lt;img class='modal-content' id='imgmodalbirthday'&gt;
-  &lt;!-- Modal Caption (Image Text) --&gt;
-  &lt;div id='captionbirthday' class='modal-caption'&gt;&lt;/div&gt;
-&lt;/div&gt;
-]
-
-
-[Interactive Version](https://thedailyviz.com/2016/09/17/how-common-is-your-birthday-dailyviz/)
-
-???
-Here's an example of a "good graph" where readers can more easily see a pattern than they would in the table (which they have too on their website). By engaging with the interactive chart, a reader could easily deduce that there are relatively few babies born on major holidays, such as Memorial Day, Independence Day, and Christmas; there are also considerably more babies born in the summer months than in the winter.
 
 ---
 class:primary
@@ -603,7 +582,7 @@ First, we want to take advantage of preattentive processing of the brain. Preatt
 class:primary
 # Find the Target
 
-&lt;img src="index_files/figure-html/unnamed-chunk-7-1.png" width="60%" height="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" width="60%" height="60%" style="display: block; margin: auto;" /&gt;
 
 ???
 Find the target?
@@ -614,7 +593,7 @@ how quickly did you spot the circle?
 class:primary
 # Find the Target
 
-&lt;img src="index_files/figure-html/unnamed-chunk-8-1.png" width="60%" height="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-7-1.png" width="60%" height="60%" style="display: block; margin: auto;" /&gt;
 
 ???
 
@@ -652,7 +631,7 @@ How to take advantage of brain to make graphs part two
 
 We look for structure all the time. We are so good at it that we will find it in random data, given time. (This is one of the reasons that data visualization can hardly be a replacement for statistical modeling.) The strong inferences we make about relationships between visual elements from relatively sparse visual information are called “gestalt rules”. They are not pure perceptual effects. Rather, they describe our tendency to infer relationships between the objects we are looking at in a way that goes beyond what is strictly visible.
 
-Gestalt principles are the predictable ways by which we organize sensory information (how we interpret ambiguity in a visual scene). We will just touch on the main ones here that are highly used in visualization, but there are others. The first is proximity which says that things that are close together are likely part of the same unit. For example, the black boxes to connect the E are attached, so perceived as the letter. Next is the law of similarity that says that thing that are viewed as part of a group if they look similar (the two T's). The law of enclosure says that it is easier to interpret things if you imagine them as a closed figure (G). And finally the law of continuation says that figure with edges that are smooth are more likely to be continuous than things with edges that are sharp angles (we are more likely to perceive continuous, smooth flowing lines rather than jagged, broken lines - elements that are arranged on a line or curve are perceived to be more related than elements not on the line or curve.). 
+Gestalt principles are the predictable ways by which we organize sensory information (how we interpret ambiguity in a visual scene). We will just touch on the main ones here that are highly used in visualization, but there are others. The first is proximity which says that things that are close together are likely part of the same unit. For example, the black boxes to connect the E are attached, so perceived as the letter. Next is the law of similarity that says that thing that are viewed as part of a group if they look similar (the two T's). And finally the law of continuation says that figure with edges that are smooth are more likely to be continuous than things with edges that are sharp angles (we are more likely to perceive continuous, smooth flowing lines rather than jagged, broken lines - elements that are arranged on a line or curve are perceived to be more related than elements not on the line or curve.). 
 
 
 ---
@@ -780,7 +759,7 @@ In some cases, we only care about relative accuracy - for those, things like col
 
 You may have heard people talk about how awful pie charts are - that’s because anything that can be put into a pie chart can also be put into a bar chart, which will be read more accurately. 
 
-The image above hear is ordered in some of the accuracy of numerical judgements. For example, length is higher up then angle, so always prefer bar chart over pie chart.
+The image above here is ordered in some of the accuracy of numerical judgement. For example, length is higher up then angle, so always prefer bar chart over pie chart.
 
 ---
 class:primary
@@ -842,16 +821,16 @@ class:primary
 
 Qualitative schemes: no more than 7 colors
 
-&lt;img src="index_files/figure-html/unnamed-chunk-12-1.png" width="35%" height="35%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-11-1.png" width="35%" height="35%" /&gt;
 
 Quantitative schemes: use color gradient with only one hue for positive values
 
-&lt;img src="index_files/figure-html/unnamed-chunk-13-1.png" width="35%" height="35%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-12-1.png" width="35%" height="35%" /&gt;
 
 
 Quantitative schemes: use color gradient with two hues for positive and negative values. Gradient should go through a light, neutral color (white)
 
-&lt;img src="index_files/figure-html/unnamed-chunk-14-1.png" width="35%" height="35%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-13-1.png" width="35%" height="35%" /&gt;
 
 
 ???
@@ -7323,6 +7302,329 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgdualencode.onclick = function() {
             modaldualencode.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalgestalt = document.getElementById('modalgestalt');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imggestalt = document.getElementById('imggestalt');
+          var modalImggestalt = document.getElementById('imgmodalgestalt');
+          var captionTextgestalt = document.getElementById('captiongestalt');
+          imggestalt.onclick = function(){
+            modalgestalt.style.display = 'block';
+            modalImggestalt.src = this.src;
+            captionTextgestalt.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImggestalt.onclick = function() {
+            modalgestalt.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalgestaltviz = document.getElementById('modalgestaltviz');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imggestaltviz = document.getElementById('imggestaltviz');
+          var modalImggestaltviz = document.getElementById('imgmodalgestaltviz');
+          var captionTextgestaltviz = document.getElementById('captiongestaltviz');
+          imggestaltviz.onclick = function(){
+            modalgestaltviz.style.display = 'block';
+            modalImggestaltviz.src = this.src;
+            captionTextgestaltviz.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImggestaltviz.onclick = function() {
+            modalgestaltviz.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalperceptasks = document.getElementById('modalperceptasks');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgperceptasks = document.getElementById('imgperceptasks');
+          var modalImgperceptasks = document.getElementById('imgmodalperceptasks');
+          var captionTextperceptasks = document.getElementById('captionperceptasks');
+          imgperceptasks.onclick = function(){
+            modalperceptasks.style.display = 'block';
+            modalImgperceptasks.src = this.src;
+            captionTextperceptasks.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgperceptasks.onclick = function() {
+            modalperceptasks.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaldualencode = document.getElementById('modaldualencode');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgdualencode = document.getElementById('imgdualencode');
+          var modalImgdualencode = document.getElementById('imgmodaldualencode');
+          var captionTextdualencode = document.getElementById('captiondualencode');
+          imgdualencode.onclick = function(){
+            modaldualencode.style.display = 'block';
+            modalImgdualencode.src = this.src;
+            captionTextdualencode.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgdualencode.onclick = function() {
+            modaldualencode.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modallogo = document.getElementById('modallogo');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imglogo = document.getElementById('imglogo');
+          var modalImglogo = document.getElementById('imgmodallogo');
+          var captionTextlogo = document.getElementById('captionlogo');
+          imglogo.onclick = function(){
+            modallogo.style.display = 'block';
+            modalImglogo.src = this.src;
+            captionTextlogo.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImglogo.onclick = function() {
+            modallogo.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalTrial_Design = document.getElementById('modalTrial_Design');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgTrial_Design = document.getElementById('imgTrial_Design');
+          var modalImgTrial_Design = document.getElementById('imgmodalTrial_Design');
+          var captionTextTrial_Design = document.getElementById('captionTrial_Design');
+          imgTrial_Design.onclick = function(){
+            modalTrial_Design.style.display = 'block';
+            modalImgTrial_Design.src = this.src;
+            captionTextTrial_Design.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgTrial_Design.onclick = function() {
+            modalTrial_Design.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaldata_collection = document.getElementById('modaldata_collection');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgdata_collection = document.getElementById('imgdata_collection');
+          var modalImgdata_collection = document.getElementById('imgmodaldata_collection');
+          var captionTextdata_collection = document.getElementById('captiondata_collection');
+          imgdata_collection.onclick = function(){
+            modaldata_collection.style.display = 'block';
+            modalImgdata_collection.src = this.src;
+            captionTextdata_collection.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgdata_collection.onclick = function() {
+            modaldata_collection.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalold_map = document.getElementById('modalold_map');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgold_map = document.getElementById('imgold_map');
+          var modalImgold_map = document.getElementById('imgmodalold_map');
+          var captionTextold_map = document.getElementById('captionold_map');
+          imgold_map.onclick = function(){
+            modalold_map.style.display = 'block';
+            modalImgold_map.src = this.src;
+            captionTextold_map.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgold_map.onclick = function() {
+            modalold_map.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaljuxtaposedex = document.getElementById('modaljuxtaposedex');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgjuxtaposedex = document.getElementById('imgjuxtaposedex');
+          var modalImgjuxtaposedex = document.getElementById('imgmodaljuxtaposedex');
+          var captionTextjuxtaposedex = document.getElementById('captionjuxtaposedex');
+          imgjuxtaposedex.onclick = function(){
+            modaljuxtaposedex.style.display = 'block';
+            modalImgjuxtaposedex.src = this.src;
+            captionTextjuxtaposedex.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgjuxtaposedex.onclick = function() {
+            modaljuxtaposedex.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalyieldplot1 = document.getElementById('modalyieldplot1');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgyieldplot1 = document.getElementById('imgyieldplot1');
+          var modalImgyieldplot1 = document.getElementById('imgmodalyieldplot1');
+          var captionTextyieldplot1 = document.getElementById('captionyieldplot1');
+          imgyieldplot1.onclick = function(){
+            modalyieldplot1.style.display = 'block';
+            modalImgyieldplot1.src = this.src;
+            captionTextyieldplot1.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgyieldplot1.onclick = function() {
+            modalyieldplot1.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalyieldplot2 = document.getElementById('modalyieldplot2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgyieldplot2 = document.getElementById('imgyieldplot2');
+          var modalImgyieldplot2 = document.getElementById('imgmodalyieldplot2');
+          var captionTextyieldplot2 = document.getElementById('captionyieldplot2');
+          imgyieldplot2.onclick = function(){
+            modalyieldplot2.style.display = 'block';
+            modalImgyieldplot2.src = this.src;
+            captionTextyieldplot2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgyieldplot2.onclick = function() {
+            modalyieldplot2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalyieldplot3 = document.getElementById('modalyieldplot3');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgyieldplot3 = document.getElementById('imgyieldplot3');
+          var modalImgyieldplot3 = document.getElementById('imgmodalyieldplot3');
+          var captionTextyieldplot3 = document.getElementById('captionyieldplot3');
+          imgyieldplot3.onclick = function(){
+            modalyieldplot3.style.display = 'block';
+            modalImgyieldplot3.src = this.src;
+            captionTextyieldplot3.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgyieldplot3.onclick = function() {
+            modalyieldplot3.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaljuxvssup = document.getElementById('modaljuxvssup');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgjuxvssup = document.getElementById('imgjuxvssup');
+          var modalImgjuxvssup = document.getElementById('imgmodaljuxvssup');
+          var captionTextjuxvssup = document.getElementById('captionjuxvssup');
+          imgjuxvssup.onclick = function(){
+            modaljuxvssup.style.display = 'block';
+            modalImgjuxvssup.src = this.src;
+            captionTextjuxvssup.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgjuxvssup.onclick = function() {
+            modaljuxvssup.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalold_map = document.getElementById('modalold_map');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgold_map = document.getElementById('imgold_map');
+          var modalImgold_map = document.getElementById('imgmodalold_map');
+          var captionTextold_map = document.getElementById('captionold_map');
+          imgold_map.onclick = function(){
+            modalold_map.style.display = 'block';
+            modalImgold_map.src = this.src;
+            captionTextold_map.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgold_map.onclick = function() {
+            modalold_map.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttempt1_2 = document.getElementById('modalAttempt1_2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt1_2 = document.getElementById('imgAttempt1_2');
+          var modalImgAttempt1_2 = document.getElementById('imgmodalAttempt1_2');
+          var captionTextAttempt1_2 = document.getElementById('captionAttempt1_2');
+          imgAttempt1_2.onclick = function(){
+            modalAttempt1_2.style.display = 'block';
+            modalImgAttempt1_2.src = this.src;
+            captionTextAttempt1_2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt1_2.onclick = function() {
+            modalAttempt1_2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttemp1_3 = document.getElementById('modalAttemp1_3');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttemp1_3 = document.getElementById('imgAttemp1_3');
+          var modalImgAttemp1_3 = document.getElementById('imgmodalAttemp1_3');
+          var captionTextAttemp1_3 = document.getElementById('captionAttemp1_3');
+          imgAttemp1_3.onclick = function(){
+            modalAttemp1_3.style.display = 'block';
+            modalImgAttemp1_3.src = this.src;
+            captionTextAttemp1_3.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttemp1_3.onclick = function() {
+            modalAttemp1_3.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalattempt2_new2 = document.getElementById('modalattempt2_new2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgattempt2_new2 = document.getElementById('imgattempt2_new2');
+          var modalImgattempt2_new2 = document.getElementById('imgmodalattempt2_new2');
+          var captionTextattempt2_new2 = document.getElementById('captionattempt2_new2');
+          imgattempt2_new2.onclick = function(){
+            modalattempt2_new2.style.display = 'block';
+            modalImgattempt2_new2.src = this.src;
+            captionTextattempt2_new2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgattempt2_new2.onclick = function() {
+            modalattempt2_new2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrplot2 = document.getElementById('modalcorrplot2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrplot2 = document.getElementById('imgcorrplot2');
+          var modalImgcorrplot2 = document.getElementById('imgmodalcorrplot2');
+          var captionTextcorrplot2 = document.getElementById('captioncorrplot2');
+          imgcorrplot2.onclick = function(){
+            modalcorrplot2.style.display = 'block';
+            modalImgcorrplot2.src = this.src;
+            captionTextcorrplot2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrplot2.onclick = function() {
+            modalcorrplot2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalsatellite = document.getElementById('modalsatellite');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgsatellite = document.getElementById('imgsatellite');
+          var modalImgsatellite = document.getElementById('imgmodalsatellite');
+          var captionTextsatellite = document.getElementById('captionsatellite');
+          imgsatellite.onclick = function(){
+            modalsatellite.style.display = 'block';
+            modalImgsatellite.src = this.src;
+            captionTextsatellite.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgsatellite.onclick = function() {
+            modalsatellite.style.display = 'none';
           }
 </script>
 
