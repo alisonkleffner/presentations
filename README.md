@@ -9,3 +9,5 @@ This repository contains any presentations that I have given while pursing my Ph
 
 + Teaching Talk on Confidence Intervals:
 https://alisonkleffner.github.io/presentations/job/teaching/teaching-demonstration2.pdf
+
++ CI Worksheet: https://alisonkleffner.github.io/presentations/job/teaching/Confidence%20Interval%20Practice.pdf
