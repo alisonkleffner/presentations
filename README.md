@@ -7,6 +7,8 @@ This repository contains any presentations that I have given while pursing my Ph
 
 + Comprehesive Exam Slides: https://alisonkleffner.github.io/presentations/dissertation/comprehensive_exam/index.html#1
 
++ Redesigning Yield Plot (Research Talk): https://alisonkleffner.github.io/presentations/job/research/index.html#1
+
 + Teaching Talk on Confidence Intervals:
 https://alisonkleffner.github.io/presentations/job/teaching/teaching-demonstration2.pdf
 
