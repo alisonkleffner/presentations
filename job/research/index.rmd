@@ -1,6 +1,6 @@
 ---
 title: "Redesigning Yield Map Plots for Comprehension and Usability"
-subtitle: "Xavier University"
+subtitle: "TCU"
 author: "Alison Kleffner"
 date: "Department of Statistics, University of Nebraska - Lincoln"
 output:
@@ -104,7 +104,7 @@ write("", file = "js-addins.html")
 
 <br><br><br>
 ## Redesigning Yield Map Plots for Comprehension and Usability
-### Xavier University
+### TCU
 #### Alison Kleffner
 #### Department of Statistics, University of Nebraska - Lincoln
 ##### `r fa("envelope", fill = "black")` [akleffner@huskers.unl.edu](akleffner@huskers.unl.edu)
@@ -844,7 +844,7 @@ This picture is an example of how the data we are using is collected. The blue/w
 class:primary
 # Explain the Results
 
-**Step 3**: Explain the optimal decision management decisions, accounting for various factors
+**Step 3**: Explain the optimal management decisions, accounting for various factors
 
 **How**: create a user interface, designed around explaining machine learning output to non-experts
   - Build trust in models
