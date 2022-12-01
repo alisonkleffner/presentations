@@ -1,0 +1,1476 @@
+---
+title: "Redesigning Yield Map Plots for Comprehension and Usability"
+subtitle: "Creighton University"
+author: "Alison Kleffner"
+date: "Department of Statistics, University of Nebraska - Lincoln"
+output:
+  xaringan::moon_reader:
+    seal: false
+    includes:
+      after_body:
+        "js-addins.html"
+    #mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    css: ["default", "metropolis-fonts", "metropolis" ,"css/modal.css", "css/sizeformat.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightlines: true
+      countIncrementalSlides: true
+---
+class:title-slide-custom
+
+```{r, child = "style.Rmd"}
+```
+
+
+```{r setup, echo = FALSE, message = FALSE, warning = FALSE}
+# Packages
+library(emoji)
+library(purrr)
+library(tidyverse)
+library(gridExtra)
+library(nullabor)
+library(scales)
+library(knitr)
+library(kableExtra)
+library(RefManageR)
+library(iconr)
+library(fontawesome)
+library(shiny)
+library(RColorBrewer)
+library(ggpubr)
+# download_fontawesome()
+
+# References
+bib <- ReadBib("bib/thesis.bib", check = FALSE)
+ui <- "- "
+
+# R markdown options
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE, 
+                      cache = TRUE,
+                      dpi = 300)
+options(htmltools.dir.version = FALSE)
+options(knitr.kable.NA = '')
+```
+
+```{r, include = F, eval = T, cache = T}
+clean_file_name <- function(x) {
+  basename(x) %>% str_remove("\\..*?$") %>% str_remove_all("[^[A-z0-9_]]")
+}
+img_modal <- function(src, alt = "", id = clean_file_name(src), other = "") {
+  
+  other_arg <- paste0("'", as.character(other), "'") %>%
+    paste(names(other), ., sep = "=") %>%
+    paste(collapse = " ")
+  
+  js <- glue::glue("<script>
+        /* Get the modal*/
+          var modal{id} = document.getElementById('modal{id}');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var img{id} = document.getElementById('img{id}');
+          var modalImg{id} = document.getElementById('imgmodal{id}');
+          var captionText{id} = document.getElementById('caption{id}');
+          img{id}.onclick = function(){{
+            modal{id}.style.display = 'block';
+            modalImg{id}.src = this.src;
+            captionText{id}.innerHTML = this.alt;
+          }}
+          /* When the user clicks on the modalImg, close it*/
+          modalImg{id}.onclick = function() {{
+            modal{id}.style.display = 'none';
+          }}
+</script>")
+  
+  html <- glue::glue(
+     " <!-- Trigger the Modal -->
+<img id='img{id}' src='{src}' alt='{alt}' {other_arg}>
+<!-- The Modal -->
+<div id='modal{id}' class='modal'>
+  <!-- Modal Content (The Image) -->
+  <img class='modal-content' id='imgmodal{id}'>
+  <!-- Modal Caption (Image Text) -->
+  <div id='caption{id}' class='modal-caption'></div>
+</div>
+"
+  )
+  write(js, file = "js-addins.html", append = T)
+  return(html)
+}
+# Clean the file out at the start of the compilation
+write("", file = "js-addins.html")
+```
+
+<br><br><br>
+## Redesigning Yield Map Plots for Comprehension and Usability
+### Creighton University
+#### Alison Kleffner
+#### Department of Statistics, University of Nebraska - Lincoln
+##### `r fa("envelope", fill = "black")` [akleffner@huskers.unl.edu](akleffner@huskers.unl.edu)
+##### `r fa("home", fill = "black")` [https://alison-kleffner.netlify.app/](https://alison-kleffner.netlify.app/)
+##### `r fa("github", fill = "black")` [alisonkleffner](https://github.com/alisonkleffner)
+<br><br>
+.medium[*Slides: https://alisonkleffner.github.io/presentations/job/Creighton/index.html#1*]
+
+---
+class:primary
+# About Me
+
+**Education**
++ BS in Applied Mathematics and Economics from Rockhurst University in 2018
++ M.S from University of Nebraska - Lincoln in 2020
++ PhD Candidate at the University of Nebraska at Lincoln with expected graduation in August 2023
+
+**Research Areas**
++ Visualization
++ Spatio-Temporal Modeling
++ Environmental Applications
+
+
+**Publications**
+
+[[In Progress]](https://alisonkleffner.github.io/spatio-temporal-model-arctic-sea-ice/spatio-temporal-model-arctic-sea-ice.pdf) *A. Kleffner, S. VanderPlas and Y. Guan. A Spatio-Temporal Model for Arctic Sea Ice.* To be submitted to the Journal of Agricultural, Biological, and Environmental Statistics. 
+
+???
+To begin, I wanted to share a little bit about myself. I completed my undergraduate at Rockhurst University in Kansas City, MO with a double major in Applied Mathematics and Economics. From there I have been in Lincoln, NE for the last 5 years working on my PhD in Statistics. During graduate school, I have gained experience by teaching UNL's introductory statistics course sequence, which uses simulation-based statistics. I have also in these courses taught different regression and basics of experimental design methods, like blocking and ANOVA. For the past year I have been a research assistant on the Data Intensive Farm Management Grant where I have collaborated with other researchers throughout the country. My work on this project will be the focus of my talk today. My research interests in general involve data visualization, environmental applications of statistics, and spatio-temporal modeling. I am currently working on a paper developing a non-stationary spatio-temporal model for Arctic sea ice, which I hope to submit for review to the Journal of Agricultural, Biological, and Environmental Statistics by the end of the year. What I am presenting to you today is also in the early stages of writing to submit for publication in the near future.
+
+---
+class:primary
+# Outline
+
+.pull-left[
+
+`r fa_i("chart-bar")` What makes a Good Graph?
+
++ Why Visualization?
++ Graphical Perception
+
+
+`r fa_i("list")` Redesigning Yield Plots
+
++ Data Intensive Farm Management
++ Current yield plots and why they need improvement
++ Redesign Process
++ Conclusion 
+
+`r fa_i("spinner")` Future Work
+
+]
+
+.pull-right[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/qrcode-slides.png", alt = "Link to Slides",other=list(width="50%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+
+
+]
+
+???
+
+In my talk today I a going to start by motivating the importance of visualization. Then I will talk about how to make a good graph through the use of graphical perception.I will end with work for my dissertation on the redesigning of yield plots keeping in mind what we know about the creation of optimally perceptible graphs. I will then conclude with my future work. 
+
+---
+class:inverse
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+.center[
+# What makes a good graph?
+]
+
+---
+class:primary
+# Why visualize?
+
+**What are graphics useful for?** `r Citep(bib[[c("unwin2020data")]])`
++ Data cleaning
++ Exploring data structure
++ Communicating Information
+
+Visualization offers an alternative way of communicating numbers
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i2 <- img_modal(src = "images/Minard.png", alt = "Napoleon March #Map by Charles Joseph Minard",other=list(width="40%"))
+
+i1 <- img_modal(src = "images/sun-pic.png", alt = "Life Cycle of Star",other=list(width="40%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9],
+  str_split(i2, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+
+<!--
+[Napoleon March Map](https://en.wikipedia.org/wiki/Charles_Joseph_Minard) by Charles Joseph Minard
+-->
+
+]
+
+
+???
+
+To get started we are going first going to lay the foundation of graphics and why we want to use them. Data visualization has become a central tool in modern data science and statistics. Data visualization can be defined as the art of drawing graphical charts to display data. They are useful for data cleaning (outliers), exploring data structure, and communicating information. In the 18th and 19th century, governments began using graphics to understand population and economic interests. Today, we see graphics everywhere from scientific journals to mass media in the newspapers, TV, and internet. Despite the popularity of graphics, we are too accepting of them as default without asking critical questions about the graphics we create or view. We must begin asking ourselves "How effective is this graph at communicating useful information?". We now have an infinitely many number design choices: colors, symbols, scales, limits.  There is a need for an established set of concepts and terminology to build their graphics from so they can actively choose which of many possible graphics to draw in order to ensure their charts are effective at communicating the intended result. This picture is a famous chart in astronomy that shows the life cycle of a star, classifying it by its brightness and color. It wasn’t originally intended to show the life cycle of a star, but to show the relationship between the two - and at the time, it wasn’t known that the star’s life cycle governed the relationship. But, when you look at the chart, it’s very clear that there is a relationship, and stars can take several different paths through the “life cycle” depending on their type.
+
+Through the rest of this talk, we’ll explore some of the features that make the HR diagram (and other good charts) effective.
+ 
+
+---
+class:primary
+# Example: The Datasaurus
+
+-  13 data sets that have nearly identical statistical properties that appear very different when graphed
+
+- Demonstrates the importance of graphing data before analyzing it
+
+- 142 (x,y) points
+
+- the same mean, median, standard deviation, and correlation coefficient between x and y
+
+[About Datasaurus](https://cran.r-project.org/web/packages/datasauRus/vignettes/Datasaurus.html)
+
+
+???
+
+Another common way to display data is through numerical summary tables. So why would we need  to visualize it too? A popular example is the Datasaurus package in R which has 13 datasets that has nearly identical simple statistical properties that appear differently when graphed. This data can be used to demonstrate the importance of graphing data before it is analyzed. Each dataset has 142 xy pairs of data, where the mean, median, standard deviation, and correlation coefficient is almost identical for each data set.
+
+---
+class:primary
+# The Datasaurus: summary statistics
+
+<br>
+<br>
+
+```{r, quartet-summary}
+library(datasauRus)
+
+datasaurus_dozen_filter <- filter(datasaurus_dozen, dataset == "dino" | dataset == "star"| dataset == "v_lines"| dataset == "bullseye" | dataset == "dots" | dataset == "away")
+
+quartet_summary <-   datasaurus_dozen_filter %>% 
+    group_by(dataset) %>% 
+    summarize(
+      mean_x    = mean(x),
+      mean_y    = mean(y),
+      std_dev_x = sd(x),
+      std_dev_y = sd(y),
+      corr_x_y  = cor(x, y)
+    )
+
+quartet_summary %>%
+  knitr::kable(digits = 2)
+```
+???
+
+I only chose six for space purposes, but as we can see here, each data set has the same mean, standard deviation, and correlation coefficient between x and y. So someone looking at this data might think that this data is pretty similar. However, visualizing it tells a different story. 
+
+---
+class:primary
+# Datasaurus: plots
+
+```{r, , quartet-plots, fig.height = 4, fig.width = 6, fig.align = "center"}
+ggplot(datasaurus_dozen_filter, aes(x = x, y = y, colour = dataset))+
+    geom_point()+
+    #theme_void()+
+    theme(legend.position = "none")+
+    facet_wrap(~dataset, ncol = 3)
+```
+
+???
+
+Here is the plots of the data from the previous slides. We can see here, that while the summary statistics is almost identical, the data looks very different when plotted. Hence, it is always important to visualize the given data to view and explore the patterns within the data.
+
+
+---
+class:primary
+# Effective Visualization
+
+We are surrounded by visuals
+
+Cleveland (1984) found that 30% of graphs in *Science* have an error, where an error is defined as `r Citep(bib[[c("MIDWAY2020100141")]])`:
+  - Incorrectly displaying data
+  - Ineffective design elements
+  
+In a more recent sample, Gordan and Finch (2015) categorized 40% of the 97 graphs they sampled as having an error
+
+So need more education on how to make more effective visualizations.
+
+???
+
+As I mentioned previously, we are surrounded by visualization so it is important to accurately display the data. However, data is often displayed incorrectly or inaccurately. For example Cleveland (1984) found that 30% of the plots used in the journal Science, had some sort of error. Where error was defined as either incorrectly displaying the data or having ineffective design elements. This problem still persists to this day as in a more recent sample, Gordan and Finch (2015) categorized 40% of the 97 graphs they sampled as having an error (defined similarly as above). So more education needs to be made on how to make more effective visualizations.   
+
+---
+class:primary
+# What makes a Good Graph?
+
+Good Graphs take advantage of how the brain works:
+1. Preattentive Processing
+2. Perceptual Grouping
+3. Awareness of Visual Limitations
+
+Good Graphs exploit external cognition so users can think about the data instead of the chart.
+
+
+???
+
+Effective graphics take advantage of how people's brains work. This can be divided into three categories, where we will talk more in-depth about each of them: preattentive processing, perceptual grouping, awareness of visual limitations. So we want to exploit how we know the brain work so users can focus on the data instead of deciphering the chart.  
+
+
+---
+class:primary
+# Preattentive Processing
+
+Pre-Attentive Features are things that "jump out" in less than 500 ms `r Citep(bib[[c("vanderplas2020")]])`
+
+  - Color, shape, angle, movement, spatial localization
+
+There is a hierarchy of features
+
+ - Color is stronger than shape
+ 
+Reduces the amount of work users of your graph have to do when they view it
+
+???
+
+First, we want to take advantage of preattentive processing of the brain. Preattentive features are things that "jump out" immediately (notice right away - or in less than 500 ms). Some things that are preattentive include color, shape, angle, movement, and spatial location. Within these preattentive features, there is a hierarchy. For example color is stronger than shape (meaning it is more easily noticeable). Designing your graphic to utilize these features reduces the amount of work users have to do when they view your graph. Frees up their mind for other things. 
+
+---
+class:primary
+# Find the Target
+
+```{r, fig.align="center", out.height="60%", out.width="60%"}
+data <- data.frame(expand.grid(x = 1:6, y = 1:6), color = factor(sample(c(1, 2), 36, replace = TRUE)))
+data$x <- data$x + rnorm(36, 0, .25)
+data$y <- data$y + rnorm(36, 0, .25)
+data$shape <- factor(c(rep(2, 15), 1, rep(2,20)))
+
+ggplot(data, aes(x, y)) + geom_point(aes(shape = shape), size = 5, colour = "#1B9E77") + theme_void() + theme(legend.position = "none")
+```
+
+???
+Find the target?
+
+how quickly did you spot the circle?
+
+---
+class:primary
+# Find the Target
+
+```{r, fig.align="center", out.height="60%", out.width="60%"}
+data$shape <- factor(c(rep(2, 25), 1, rep(2, 10)))
+
+ggplot(data, aes(x, y)) + geom_point(aes(colour = shape), size = 5, shape = I(19)) + theme_void() + theme(legend.position = "none") + scale_colour_brewer(palette="Dark2")
+```
+
+???
+
+Once again, find the green circle? How long did it take you this time compared to last time?
+
+You probably noticed the target in this picture first. Example of why color is in the hierarchy before shape. 
+
+
+---
+class:primary
+# Perceptual Grouping: Gestalt Principles
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/gestalt.png", alt = "Gestalt Laws of Perception",other=list(width="70%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+
+What this looks like in visualization `r Citep(bib[[c("todorovic2008gestalt")]])`:
+
+]
+
+```{r gestalt-hierarchy}
+tibble("Gestalt Hierarchy" = c("Enclosure", "Continuity", "Proximitiy", "Similarity"),
+       "Graphs" = c("Facets", "Lines", "White Space", "Color/Shape")) %>% knitr::kable()
+```
+
+
+???
+
+How to take advantage of brain to make graphs part two
+
+We look for structure all the time. We are so good at it that we will find it in random data, given time. (This is one of the reasons that data visualization can hardly be a replacement for statistical modeling.) The strong inferences we make about relationships between visual elements from relatively sparse visual information are called “gestalt rules”. They are not pure perceptual effects. Rather, they describe our tendency to infer relationships between the objects we are looking at in a way that goes beyond what is strictly visible.
+
+Gestalt principles are the predictable ways by which we organize sensory information (how we interpret ambiguity in a visual scene). We will just touch on the main ones here that are highly used in visualization, but there are others. The first is proximity which says that things that are close together are likely part of the same unit. For example, the black boxes to connect the E are attached, so perceived as the letter. Next is the law of similarity that says that thing that are viewed as part of a group if they look similar (the two T's). And finally the law of continuation says that figure with edges that are smooth are more likely to be continuous than things with edges that are sharp angles (we are more likely to perceive continuous, smooth flowing lines rather than jagged, broken lines - elements that are arranged on a line or curve are perceived to be more related than elements not on the line or curve.). 
+
+**Implications for practice**
++ Know how we perceive groups
++ Know that we perceive some groups before others
++ Design to facilitate and emphasize the most important comparisons
+
+This table shows some of the ways the gestalt principles can be implemented on a graph. For example, with the enclosure principle this can be implemented through facets (bring up datasaurus example - faceting by dataset).  For continuity, if you want items to be perceived as continuous, use a line (like a time series). We'll have example of proximity and similarity on the next slide, but for proximity can make use of white space (ie. more white space, items are more spread out). Similarity uses the same color or shape to denotes similar objects. So we can use this principles in practice because they let us know how we perceive groups and maybe why some group are more noticeable at first than other (think back to preattentive features with shape/color). Understanding these helps us to emphasize the important comparisons we need to make. 
+
+---
+class:primary
+# Example of Gestalt in Data Visualization
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/gestalt-viz.png", alt = "Gestalt Laws of Proximity and Similarity",other=list(width="70%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
++ Proximity
++ Similarity
+
+
+???
+
+Here's an example that utilizes the Gestalt principles of proximity and similarity (same data where groups are shown differently - once again shape vs color). The shape and color denote the similarity principle which are denotes by the shape/color to denote groups. Additionally for proximity, the data seemed to all be clumped together in the middle, so would expect all the data to have something in common.
+
+Plot 1: proximity then similarity
+Plot 2: the other way around
+
+---
+class:primary
+# Visual Limitations
+
+Not all graphical representations are equally accurate
+ 
+Designing Plots for disabilities:
+- Low visual activity
+  + High contrast (bright/dark)
+  + large font size
+  + textures/patterns can be hard to make out
+- Color-blindness
+
+???
+
+How to take advantage of brain to make graphs part three
+
+Will talk about in the next slide, but not all graphical representations are equally accurate (like bar vs pie chart)
+
+Unfortunately, there is relatively little research on other disabilities + statistical graphics, so much more work needs to be done in this area. Good to use alt-text for graphics (verbal description of image with each graphic so can explain what you should see). Utilize contrasts (maybe can't make out color but can see difference between light and dark). Textures and patterns can be hard to make out (like different lengths of lines). Additionally, will also talk about color in a couple of slides, and how to take into account those who are color-blind when using color to represent this. 
+
+
+
+---
+class:primary
+# Accuracy of Graphical Judgements 
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/percep-tasks.png", alt = "Types of Graphical Judgements (Cleveland and McGill, 1984)",other=list(width="30%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+Rankings `r Citep(bib[[c("cleveland_mcgill_1984")]])`: 
+1. Position along a common scale (most accurate)
+2. Positions along nonaligned scales
+3. Length (bar chart)
+4. Angle, Slope (pie chart)
+5. Area (bubble chart)
+6. Volume, Density, Color saturation (heatmap)
+7. Color hue (least accurate)
+
+???
+
+Cleveland and McGill (1984) want to identify elementary perceptual tasks that are carried out when people extract quantitative information from graphs, where they are ordered based on how accurately people extract the quantitative information from the graph (experiment). Ordered based on numerical accuracy. 
+
+When you design a visualization, try to make the most important variables represented by dimensions that are more accurate.
+
+In some cases, we only care about relative accuracy - for those, things like color saturation are fine for encoding information.
+
+You may have heard people talk about how awful pie charts are - that’s because anything that can be put into a pie chart can also be put into a bar chart, which will be read more accurately. 
+
+The image above here is ordered in some of the accuracy of numerical judgement. For example, length is higher up then angle, so always prefer bar chart over pie chart.
+
+---
+class:primary
+#Example: Length vs Angle
+
+
+.pull-left[
+```{r diamonds1}
+diamonds_summary <- diamonds %>%
+  group_by(cut) %>%
+  summarise(Percent = n()/nrow(.) * 100)
+
+ggplot(diamonds, aes(x = "", fill = cut)) + 
+  geom_bar() +
+  coord_polar(theta = "y") + ggtitle("Pie Chart")
+
+
+
+```
+]
+.pull-right[
+```{r diamonds2}
+diamonds %>% ggplot() + geom_bar(aes(x=cut,fill = cut)) + ggtitle("Bar Chart")
+
+```
+]
+
+???
+
+Here's an example of the same data displayed in both a pie chart and bar chart. Talk about the two greenish pieces of the pie chart and how people might have a hard time judging which one is bigger, and this judgement is made quicker and more accurate in the bar chart.  
+
+---
+class:primary
+# Color
+
+Our eyes are optimized for perceiving the yellow/green region of the color spectrum.
+
+.center[
+<img src="images/color.svg" alt="" style="width:170px;"/>
+
+Sensitivity of the human eye to different wavelengths of visual light 
+
+(Image from Wikimedia commons)
+]
+
++ Color and hue are pre-attentive
+  - Bigger contrasts correspond to faster detection
++ Want mappings from data to color to be ***perceptually*** uniform
+  - Avoid rainbow color gradients
++ Be conscious of what color means
+  - Leverage common associations
+  - Color always means something  `r Citep(bib[[c("MIDWAY2020100141")]])`
+
+
+
+???
+Hue: shade of color (red, orange, yellow)
+
+
+Our eyes are optimized for perceiving the yellow/green region of the color spectrum. Why? Well, our sun produces yellow light, and plants tend to be green. It’s pretty important to be able to distinguish different shades of green (evolutionarily speaking) because it impacts your ability to feed yourself. There aren’t that many purple or blue predators, so there is less selection pressure to improve perception of that part of the visual spectrum.
+
++ Be conscious of what certain colors “mean”
+    + Leveraging common associations can make it easier to read a color scale and remember what it stands for (e.g. blue for cold, orange/red for hot is a natural scale, red = Republican and blue = Democrat in the US, white -> blue gradients for showing rainfall totals)
+    + Some colors can can provoke emotional responses that may not be desirable.
+    + It is also important to be conscious of the social baggage that certain color schemes may have - the pink/blue color scheme often used to denote gender can be unnecessarily polarizing.
+
+
+
+
+---
+class:primary
+#Gradients
+
+Qualitative schemes: no more than 7 colors
+
+```{r, echo=FALSE, fig.width=3, fig.height=1, out.height="35%", out.width="35%"}
+data <- data.frame(x = 1:7, 
+                   blues = brewer.pal(7, "Blues"), 
+                   set1 = brewer.pal(7, "Set1"), 
+                   diverge = brewer.pal(7,"RdBu"))
+
+qplot(xmin = x-.5, xmax = x+.5, ymin = 0, ymax = 1, data = data, geom = "rect", color = I("black"), fill = set1) + 
+    scale_fill_identity() + 
+    ylab("") + 
+    xlab("") + 
+    theme(axis.text = element_blank(), 
+          axis.ticks = element_blank(), 
+          rect = element_blank()) + 
+    coord_fixed(ratio = 1) + 
+    theme_void()
+```
+
+Quantitative schemes: use color gradient with only one hue for positive values
+
+```{r, echo=FALSE, fig.width=3, fig.height=1, out.height="35%",  out.width="35%"}
+qplot(xmin = x-.5, xmax = x+.5, ymin = 0, ymax = 1, data = data, geom = "rect", color = I("black"), fill = blues) + 
+    scale_fill_identity() + 
+    ylab("") + 
+    xlab("") + 
+    theme(axis.text = element_blank(), 
+          axis.ticks = element_blank(), 
+          rect = element_blank()) + 
+    coord_fixed(ratio = 1) + 
+    theme_void()
+```
+
+
+Quantitative schemes: use color gradient with two hues for positive and negative values. Gradient should go through a light, neutral color (white)
+
+```{r, echo=FALSE, fig.width=3, fig.height=1, out.height="35%", out.width="35%"}
+qplot(xmin = x-.5, xmax = x+.5, ymin = 0, ymax = 1, data = data, geom = "rect", color = I("black"), fill = diverge) + 
+    scale_fill_identity() + 
+    ylab("") + 
+    xlab("") + 
+    theme(axis.text = element_blank(), 
+          axis.ticks = element_blank(), 
+          rect = element_blank()) + 
+    coord_fixed(ratio = 1) + 
+    theme_void()
+```
+
+
+???
+
+There are packages such as `RColorBrewer` and `dichromat` that have color palettes which are aesthetically pleasing, and, in many cases, colorblind friendly (`dichromat` is better for that than `RColorBrewer`)
+
+Quantiative color schemes - where can make use of common associations. Like blue and water. 
+
+Lots of arguement on qualitative schemes (hard to make them color blind friendly, but have each color people equally spaced in the color space)
+ - Do not use rainbow color gradient schemes - because of the unequal perception of different wavelengths, these schemes are misleading - the color distance does not match the perceptual distance.
+
+---
+class:primary
+#Color Blindness
+
+Not everyone perceives color in the same way. Some individuals have [colorblindness or color deficiencies](https://en.wikipedia.org/wiki/Color_blindness).
+
+You can take a test designed to screen for colorblindness [here](https://www.eyeque.com/color-blind-test/test/).
+
+Suggestions:
++ Design for a black-and-white photocopier
++ Use a monochromatic color gradient scheme where possible.
++ Suggested 2-color gradient: blue/purple - white - orange (safe for most types of colorblindness)
++ Utilize double encoding: use color and another aesthetic (line type, shape)
+
+
+  .center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/dual-encode.png", alt = "Dual Encoding Example",other=list(width="25%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
+???
+
+Not everyone perceives color the same way. Some individuals have color blindness or color deficiencies (link to take a test if you want to see for yourself). Some suggestions on how to keep this in mind:
+
++ Double encoding - where you use color, use another aesthetic (line type, shape) as well to help your colorblind readers out
++ Avoid any scheme that uses green-yellow-red signaling if you have a target audience that may include colorblind people.
+    + If you can print your chart out in black and white and still read it, it will be safe for colorblind users. This is the only foolproof way to do it!
+    + If you are using a color gradient, use a monochromatic color scheme where possible. This is perceived as light -> dark by colorblind people, so it will be correctly perceived no matter what color you use.
+    + If you have a bidirectional scale (e.g. showing positive and negative values), the safest scheme to use is purple - white - orange. In any color scale that is multi-hue, it is important to transition through white, instead of from one color to another directly.
+    
+Plot is an example of double encoding
+
+
+
+
+---
+class:inverse
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+.center[
+# Yield Plots Redesign
+]
+
+???
+
+Next let's talk about some of my actual research
+
+---
+class:primary
+# Data Intensive Farm Management (DIFM)
+
+**Problem**: Address inefficient application of crop inputs to farm fields worldwide
+
+**Methods**: On-Farm Precision Experimentation
+- Conduct experiments using site-specific inputs 
+- GPS-reliant technology 
+
+**Goals**
+- Develop infrastructure to develop and analyze these experiments
+- Find economically optimal application rate to increase profit while reducing environmental impacts. 
+
+[Project Website](http://difm-cig.org/)
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/logo.png", alt = "Data Intensive Farma Management (DIFM) Project",other=list(width="30%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+
+]
+
+???
+
+A common issue with farming practices across the world is the inefficient application of crop inputs, like nitrogen, on farm fields. This inefficient application of crop input impacts profit and the environment. For example nitrogen fertilizer input that is not used by crops can pollute water bodies by causing the overstimulation of growth of aquatic plants and algae, impacting light. Thus, research needs to be conducted to study this issue so steps can be taken to address it. The purpose of the data intensive farm management project, a grant funded by the USDA-NRCS, is to generate the data necessary to understand this effect of crop input application on yield, so a more optimal level can be chosen. The data is generated through the use of On-Farm precision experimentation (OFPE). In an OFPE experiments are conducted on a field using field specific inputs where the experiment is implemented using a tractor that has GPS-reliant technology. DIFM wants to develop infrastructure (including the development of apps) to easily develop and analyze these experiments, with the end goal of finding economically optimal application rate to increase profits while reducing environmental impacts.  
+
+---
+class:primary
+# Trial Design
+
+**Step 1**: Develop infrastructure to develop experiments using site-specific inputs
+
+[Trial Design Tool](https://shiny.srvanderplas.com/TrialDesignTool/)
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/Trial_Design.png", alt = "Example of A Trial Design",other=list(width="60%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
+**Output**: shape files that can be put into a farmer's tractor that allows them to carry out the experiments
+
+
+???
+
+First step is to develop the infrastructure to develop the experiments using site specific inputs. This was a project that I worked on last spring, where I developed a R Shiny app that is used as a prototype. In this tool, farmers are able to create site-specific experiments, using their field boundaries, desired plot lengths, and desired treatment variations they wanted to test. After the trial is designed, they can download shape files that they can put into their tractor to implement the study. Note: I did not write the background code for the trial design, my work was more on the design and usability. I helped enough with the background code to get everything to work. 
+
+---
+class:primary
+# Data Collection
+
+**Step 2**: Conduct experiments and collect data
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/data_collection.png", alt = "How Data is collected",other=list(width="45%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
+Examples of Data Collected:
+- As-applied
+- yield
+- location of measurements
+
+???
+
+This picture is an example of how the data we are using is collected. The blue/white dots in the middle are the treatment and the location at which the treatment is applied to the field. They yellow dots are locations where a crop is harvested and a yield measurement is taken. This process utilizes GPS and other equipment on tractors to collect the information. Examples, of some of the data that is collected that we utilize is the location of measurements and treatment, yield measure, and as-applied (amount of treatment that is actually applied to the field. Goal is the trial design, but sometimes a lag between different trial plots)
+
+
+---
+class:primary
+# Explain the Results
+
+**Step 3**: Explain the optimal management decisions, accounting for various factors
+
+**How**: create a user interface, designed around explaining machine learning output to non-experts
+  - Build trust in models
+  - Learn how crop yield responds to different input application rates, field characteristics, and weather to hopefully increase profits. 
+  
+**One way to do this**: Visually explore the relationship between input application and yield through a graph
+  - Show the spatial correlations between the application/treatment and yield in a way that is understandable to farmers and consultants. 
+  - Develop perceptually optimal plots that communication this relationship. 
+  
+???
+
+The last general step in this process is to analyze the data and explain the optimal decision management decisions, accounting for various factors (like weather, environmental and economics conditions). So we want to develop an user interface that is designed around explaining the machine learning output to non-experts to help inform decision. We want to do this to build farmer's trust in the models (we are providing them with useful information). Additionally, as a whole this will help us learn how crop yield responds to different input application rates, field characteristics, and weather with the goal to help increase profits. Currently we are working on the pieces to help explain these results, before putting it all together in an R Shiny app. One of these pieces of information that needs to be explained is to explore the relationship between input application and yield. As seen in previous parts of this presentation, there is a great benefit of plotting data, so we wanted to explore this relationship visually. Hence, we want to show the spatial correlations between the treatment application and yield in a way that is understandable to farmers and consultants. Additionally, we need to develop these plots so they are perceptually optimal.  
+
+
+---
+class:primary
+#Yield Maps Currently Used by DIFM
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/old_map.png", alt = "Example 1", other=list(width="30%"))
+i2 <- img_modal(src = "images/juxtaposed-ex.jpeg", alt = "Example 2", other=list(width="50%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9],
+  str_split(i2, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
+???
+
+Currently, here is two examples of the plots that are currently given in DIFM reports to farmers. 
+
+Ask the audience what principles of good graphics these violate?
+
+---
+class:primary
+# Other Yield Plots in Literature
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/yield-plot1.png", alt = "Zhang, Li, Liu, and Wang (2008)", other=list(width="30%"))
+i2 <- img_modal(src = "images/yield-plot2.png", alt = "Searcy (1997)", other=list(width="30%"))
+i3 <- img_modal(src = "images/yield-plot3.png", alt = "www.aspexit.com", other=list(width="30%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i3, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9],
+  str_split(i2, "\\n", simplify = T)[3:9],
+  str_split(i3, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+
+Plenty of other iterations of yield maps used in the literature. Here's some examples
+
+]
+
+???
+
+Plenty of other yield maps that have been used in the literature, so while don't give trial plot information still provides yield information over space. These have some of the same problems as seen before. The first interpolates, so losing the site-specific information and continuous yield may not make sense. The second, has too many categories and coloring is not great (rainbow). The last plot uses suboptimal color scheme (bivariate color scheme in inappropriate, also doesn't go through white, members of the target audience (farmers) may be more likely to be colorblind, so avoid reds and greens)
+
+
+---
+class:primary
+#Juxtaposed vs Superimposed Graphs
+
++ Juxtaposed graphs - side by side `r Citep(bib[[c("gleicher2011")]])`
+  - Benefits: less issues with visual clutter and easier to create
+  - Drawbacks: comparative burden is placed on the user
++ Superimposed graphs - multiple objects in same coordinate system `r Citep(bib[[c("gleicher2011")]])`
+  - Benefits: Easier to compare as users can use perception rather than memory
+  - Drawbacks: clutter
+  - Useful when spatial location is a key component of the comparison `r Citep(bib[[c("Wang2018TowardsEC")]])`
+  
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/jux-vs-sup.png", alt = "Juxtaposed vs Superimposed Comparative Graphs (Gleicher, Albers, Walker, et al., 2011)",other=list(width="50%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
+
+---
+class:primary
+#Data Clutter with Superimposed Graphs
+
++ General principle of graphical design: Show data clearly `r Citep(bib[[c("cleveland_1984", "gordon_2015")]])`
++ Overlap - multiple dots on top of one another
+  - Obscures true number of dots, harder to find patterns
+  - Visual cues, like color, becomes partially obstructed, thereby reducing search efficiency `r Citep(bib[[c("BRAVO2004b", "BRAVO2004a")]])`
+  - Can overburden human perception, causing errors in performing tasks `r Citep(bib[[c("huang2009")]])`
+  
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/old_map.png", alt = "Example 1", other=list(width="25%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
+???
+
+One of the first things we need to decided is whether we want to juxtapose or superimpose the trial design and yield information. Juxtaposed graphs are side by side plots that tend to have less issues with visual clutter and they are easier to create. A drawback however, is that the comparative burden is placed on the user (have to match things up correctly). The other option is to superimpose the graphs where multiple objects are in the same coordinate system. The benefit is that it is easier to compare as users can use perception rather than memory. These are additionally useful when spatial location is a key component of the comparison. However, the major drawback, as we saw with the DIFM plot is that clutter is a major issue. We decided to use superimposed graphs since spatial location is a key component for us and may be hard to compare in two different plot (hard to match up)
+
+
+---
+class:primary
+#Number of Categories
+
+Number of categorical scales should be limited to **5-7 categories**
+  - Due to working memory limits `r Citep(bib[[c("macdonald_1999")]])`
+    + Harder for the user to distinguish between colors and remember the meaning of colors. 
+    + More difficult to associate a color with the correct yield category 
+  - The load on the user’s working memory leads to an increase in the time it takes for the user to comprehend the plot `r Citep(bib[[c("vanderplas2020")]])`
+  
+
+**Next:** Redesign Process
+
+???
+
+Additionally, the number of categories on our scale for yield should be limited to 5-7 categories (DIFM plot and other plot 2 violates this). The categories need to be limited due to working memory limits and it makes it harder for the user to distinguish between colors and remember the meaning of what group the color is representing (might associate a color with the incorrect category). This load on the user's working memory lead to an increase in time for them to comprehend the plot, which is not something we want especially for non-experts. 
+
+Next I am going to walk through our redesign process (still currently in progress).
+  
+
+---
+class:primary
+#Redesign: Iteration 1
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/Attempt1_2.png", alt = "First Iteration", other=list(width="35%"))
+i2 <- img_modal(src = "images/Attemp1_3.png", alt = "First Iteration without Trial Design Plot", other=list(width="35%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9],
+  str_split(i2, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
+**Focus**: Superimpose the treatment and yield plots, while reducing the clutter 
++ Use of transparency to show both at same time
++ Interactive plot with *leaflet* `r Citep(bib[[c("leaflet")]])`
+  - Can add and remove trial plot layer
+
+Work that still needs to be done:
++ Color needs some work
+  + Blending
+  + different color schemes
++ Not as good for paper plots
+
+???
+
+My first iteration of the plot I was working on superimposing both the treatment and yield plot, but reducing some of the clutter. The yield points were transformed into polygons using the distance between points, swath width, and heading (green space around plot). This was done so each polygon is on it's own unique space and not overlapping. Used transparency for the trial plot to try and blend the colors with the trial design plot. Here is used an interactive plot using the leaflet package in R, which creates interactive web maps with JavaScript. This can be beneficial as can add/remove the trial plot so can only see the yield results if desirable.
+
+So the plot now is not cluttered in the sense there's overlapping data points, but there's still work that needs to be done. For example, the coloring needs more work. Due to colorblind, red and green may not be good colors to use, they are just the default for those working on this project. Additionally, color blending still needs to be worked on to help differentiate high treatment/high yield, etc. Finally, the shading piece may not be as effective for paper plots, which some farmers may want to use. So eventually need to think how to do this with no color.  
+
+---
+class:primary
+#Redesign: Iteration 2
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/attempt2_new2.jpeg", alt = "Second Iteration", other=list(width="50%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
+**Focus**: Color/Scales
++ Working on blending using transparency
+  - [**ggblend**](https://mjskay.github.io/ggblend/)
++ Categorical Groups for both variables
+  - Trial Design treatment is a factor
+  - Reduce number of colors for yield
+  - Use quantiles to determine categories for yield `r Citep(bib[[c("brewer_2002")]])`
+
+
+???
+Played with the transparency a bit more. Eventually would like to use the ggblend package, which is developing for the blending of objects. However, it doesn't work for polygon on top of polygon. Submit a bug report. Additionally, we introduced categorical groups for both variables. Trial Design was categorical to begin width. And I decided to use a categorial scale for yield to cut down on what needed to be blended. The breaks for yield were created using quantiles for the breaks. This has been shown in some research to be the best pereptually for cateogorical breaks.  
+
+
+---
+class:primary
+#Redesign: Correlation
+
+.center[
+
+Correlations between As Applied treatments and Yield
+
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/corr-plot2.jpeg", alt = "Correlation", other=list(width="50%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
+**Focus**: Wanted to give a more direct statement of correlation while maintaining some spatial orientation 
++ Bivariate color scale to show difference between positive and negative correlation values
++ Maintain some spatial information. 
+  - Correlations may be impacted by field location
+  - Eventually add other information to the plot, like soil. 
+  
+???
+
+Finally we can directly state the correlation between As Applied and Yield (explain how as applied differs from treatment design), while also keeping some of the spatial relationship. Can see for the most part, as application amount increase, so does the yield. Some areas where the inverse is true (more investigation, maybe lower, dirt differs, etc). Used a bivariate color scheme go through white color for zero. Maintaining some spatial information is importanct as correlation is impacted by field location. Eventually this information can be added to the plot (interactivity)
+
+---
+class:primary
+# Conclusion
+
++ Designing graphics is a process
++ We can use the  knowledge about perception to improve visualizations of geospatial experiment results.
+  - Reduce clutter on superimposed graphics 
+  - Better colors
+  - less categories
+  
+
+---
+class:inverse
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+.center[
+# Future Work
+]
+
+---
+class:primary
+#DIFM Project
+
+**Next Step**: Develop a R Shiny app to explaining machine learning output to non-experts
+- Build trust in the model predictions without requiring farmers to learn the details of statistical modeling.
+- Will utilize these plots, among others
+  + For example, accuracy of as applied treatment compared to trial design
+- Possibility of linked graphics
+  - Show trial design plot, can then click on a trial plot to view the scatterplot between applied treatment and yield. 
+
+
+**In general**, want this work to lead into work on spatial visualizations, especially in the comparative framework
+  - Do testing on the graphics that I just made to see if farmers and consultants are interpreting the information correctly.
+  - Many other areas work with graphics (break down barriers to information)
+
+???
+
+Mention wanting to develop an R package to create these plots to automate some of these things for future use.
+
+---
+class:inverse
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+.center[
+# Modeling Arctic Sea Ice
+]
+
+---
+class:primary
+# Research Highlight: Modeling Arctic Sea Ice
+
+**Goal**: Developing a non-stationary spatio-temporal model for Arctic Sea Ice motion
+
+**Motivation**
+
++ Sea ice serves as a barrier between the atmosphere and the ocean
++ Cracks, or leads, may form in the sea ice due to dynamic processes
+  - Allows for heat from the ocean to be transferred to the atmosphere `r Citep(bib[[c("schreyer_elastic_2006")]])`. 
+  - Accounts for half of the heat flux between the ocean and atmosphere `r Citep(bib[[c("badgley_1961")]])`
+  - State of sea ice provides important information for weather prediction, climate models, and ocean models `r Citep(bib[[c("reiser_new_2020")]])`
+
+  
+.center[
+```{r ice-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/Ice Chunk.png", alt = " Artice Sea Ice with Crack", other=list(width="30%"))
+i2 <- img_modal(src = "images/rgps_grid.jpg", alt = "Example of Grid Resolution used to obtain data", other=list(width="30%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  #str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]#,
+  #str_split(i2, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+???
+
+Briefly I wanted to show you all some work that I have been doing involving spatio-temporal modeling for environmental application. If you want to talk about this topic more, I would be happy to after the talk. We wanted to develop a non-stationary spatio-temporal model for the movement of Arctic Sea Ice, meaning a model for movement over time and space where the model has a non-constant mean and covariance function. Modeling Sea ice movement is important as sea ice prevents the warm air from the ocean from releasing into the cooler atmosphere. However, due to dynamic process, like ocean currents, cracks, otherwise known as leads, may be formed (Show Picture). Leads only account for about 1-2% of the surface of sea ice, but they account for half of the heat flux between the ocean and the atmosphere. Thus, it is important to model the sea ice and determine lead location for weather prediction, climate models, and ocean models. 
+
+
+---
+class:primary
+# Research Highlight: Modeling Arctic Sea Ice
+
+**Outline of Methods: **
+  -  Cluster regions with similar movement. The boundaries between clusters informs locations where leads would form.
+  - Non-stationary movements are identified through the clusters
+  - Use the model to interpolate missing data, yielding a complete data set. 
+  - Within each cluster we use a spatio-temporal Gaussian Process to develop a model to help interpolate missing data
+  - Advantages of our method
+    + Accounts for different moving patterns in the sea ice
+    + Borrows information over space and time to fill in missing observations
+    + Data-driven method to identify leads.
+  
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/data_example.jpeg", alt = "Missing Data in Sea Ice", other=list(width="25%"))
+i2 <- img_modal(src = "images/traj_plot.png", alt = "Sea Ice Movement", other=list(width="25%"))
+i3 <- img_modal(src = "images/all_clust.jpeg", alt = "Clustering results to determine leads.",other=list(width="25%"))
+i4 <- img_modal(src = "images/leads-previous.png", alt = "Leads determined by previous detection methods",other=list(width="15%"))
+
+c(#str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i3, "\\n", simplify = T)[1:2],
+  str_split(i4, "\\n", simplify = T)[1:2],
+  #str_split(i1, "\\n", simplify = T)[3:9],
+  str_split(i2, "\\n", simplify = T)[3:9],
+  str_split(i3, "\\n", simplify = T)[3:9],
+  str_split(i4, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
+???
+
+We wanted to only use the movement of the sea ice to develop our methods. This is because remote sensing data tends to have coarse resolution, so it does not capture lead dynamics very well. Our method is motivated from looking at the movement of the sea ice (show picture, point things out). We first start by clustering the regions of similar movement, where the cluster boundaries would be locations were leads form as it is the boundaries between movements (show cluster picture). The clusters then form the different non-stationary movements where different means and covariance parameters. Within each cluster we developed a spatio-temporal Gaussian process model to interpolate the missing data. In cluster picture, can see that the data is missing in spatial chunks, so hope to use information about movement from other members in it's cluster to help interpolate. Interpolating to have a completely gridded dataset is beneficial because can use this information to do additional calculations. Seems to compare well to previous crack detection methods (show picture) 
+
+
+---
+class:primary
+#Other Project: Remote Sensing Data
+
+Developing a non-stationary spatio-temporal model for Arctic Sea Ice motion
+
+**In the future**
+  - Bivariate Model
+  - Find other applications
+  - Computational efficiency (reduce to one-step)
+  
+**In general**
+  - Work with remote sensing data
+    + Interesting problems with missing data and computational efficiency
+  - Environmental Applications
+
+.center[  
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/satellite.png", alt = "Visual of Satellite path over the Earth", other=list(width="30%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
+
+---
+class:primary
+# References
+<font size="2">
+```{r, print_refs1, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
+print(bib[[c("gleicher2011","BRAVO2004b", "BRAVO2004a", "leaflet", "gordon_2015", "chua_2017", "cleveland_1984", "cleveland_mcgill_1984", "brewer_2002", "map_2020", "gpgp_pkg", "badgley_1961")]], 
+      .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
+      )
+```
+</font>
+
+---
+class:primary
+# References
+<font size="2">
+```{r, print_refs2, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
+print(bib[[c("searcy1997precision", "vanderplas2020", "Wang2018TowardsEC", "zhang_2008", "MIDWAY2020100141", "todorovic2008gestalt", "spacetime_wilke_2019", "macdonald_1999", "sar_2020", "schreyer_elastic_2006", "huang2009", "unwin2020data")]], 
+      .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
+      )
+```
+</font>
+
+
+---
+class:inverse
+<br>
+<br>
+<br>
+.center[
+# Questions?
+<br>
+<br>
+`r fa("envelope", fill = "white")` **akleffner@huskers.unl.edu**
+`r fa("github", fill = "white")` **alisonkleffner**
+]
+
+---
+class:primary
+
+# Data
+
+.center[
+```{r grid-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/rgps_grid.jpg", alt = "Example of initial grid used to track movement (Peterson & Sulsky, 2011)", other=list(width="25%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
++ Sea Ice can be tracked by NASA's RADARSTAT Geophysical Processor System (RGPS), which uses synthetic aperture radar (SAR) images to track the trajectory of points on an ice sheet.
++ Each grid cell vertex is assigned an identifier (cell $j=1,...,n$) which is used for tracking
++ Set of all trajectories: 
+
+.center[
+$\mathcal{G} = \left\{g_1, ..., g_n\right\}$ $\\$
+where $g_{j} = \left\{s_{jt} : t \in \mathcal{T}_j\right\}$, $\mathcal{T}_j \subset \left\{t=1...T\right\}$ a collection of time points where $cell_j$ is observed $\\$
+and ${s_{jt}}$ = $(x_{jt}, y_{jt})$
+]
+
++ For our study region, $n$ = 8811, and $T$ = 22
+
+???
+
+An illustration of RGPS data is
+shown in Fig. 7.1, where satellite views of a 50 km by 50 km region of Arctic ice
+have a 5 km × 5 km RGPS grid superimposed. The time span between the first
+and second observation is 18.5 h and the satellite images were recorded in mid May
+2002. 
+
+---
+class:primary
+
+# Clustering Like Movements: Bounding Box
+
++ We create a bounding box around for each trajectory to represent it's movement
++ Bounding Box Features:
+  - Length travel in x/y between the minimum and maximum location 
+.center[
+( $x_{max} - x_{min}$ and $y_{max} - y_{min}$)]
+  - Length travel in x/y between latest and earliest observation 
+  .center[
+  ( $x_{1} - x_{0}$ and $y_{1} - y_{0}$)]
+  - Angle of movement (direction)
+  - Average x/y value
+  - If clustering a sub-trajectory, can also include previous features 
++ Bounding Box features were used as input into K-Means clustering, which partitions n observations into k clusters.
+
+.center[
+```{r bb-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/bounding-box.png", alt = "Points used to Develop Bounding Box", other=list(width="20%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+---
+class:primary
+
+#Modeling: Gaussian Process (GP) 
+
+**For Spatial Data**
+
+$\left\{X(s): s \in D \subset R^2\right\}$ is a Gaussian Process if all its finite-dimensional distributions are Gaussian
+
+.center[
+ie. $X(s) \sim GP(0,c(.|.))$
+]
+
+Meaning, for $\left\{s_1,...,s_n\right\}$, $x$ = $(x_1,...,x_n)^T \sim MVN(0, \Sigma_{\theta})$
+
+Can define $\Sigma_{\theta}$ as the Exponential Covariance Function `r Citep(bib[[c("gpgp_pkg")]])`
+
+.center[
+$\Sigma_{\theta} = \sigma^2\exp(-||x-y||/\phi)$ $\\$
+where $\sigma^2$ is the variance and $\phi$ is the range
+]
+
+Joint density of the observations can be written as a product of conditional densities 
+.center[
+$f(x_1,...,x_n) = f(x_1)\prod^n_{i=2} f(x_{i}|x_{1},...,x_{i-1})$ 
+
+]
+
+
+This can be a computationally complex process due to the inversion of $\Sigma_{\theta}$
+
+---
+class:primary
+
+#Gaussian Process (GP) 
+
+**Extension to ST Data**
+
+Now, the covariance function is an Exponential Space-Time, which is a separable covariance function (Wilke et al, 2019)
+
+.center[
+$\Sigma_{\theta}(s;t) = \Sigma_{\theta}^{(s)}*\Sigma_{\theta}^{(t)}$ $\\$ where 
+$\Sigma_{\theta}^{(s)} = \sigma^2\exp\left\{-||x-y||/\phi\right\}$  and $\Sigma_{\theta}^{(t)} = \sigma^2\exp\left\{-|t|/\tau\right\}$
+
+
+where $\sigma^2$ =  variance, $\phi$ = spatial range, $\tau$ = temporal range
+]
+
+**Results:** Our model tends to interpolate better than linear interpolation for low-sampled, curved data.
+
+---
+class:primary
+
+#Vecchia's Approximation for a GP
+
++ **Goal:** To speed up calculation of a GP
++ Writes the joint density as a product of conditional distributions, where only a subset of the data is used to create the conditional distributions `r Citep(bib[[c("guinness_permutation_2018")]])`
+
+.center[
+$f(x_1,...,x_n) = f(x_1)\prod^n_{i=2} f(x_i|x_{n(i)})$ $\\$
+where $n(i)$ are the neighbors of observation $i$
+]
+
++ Neighbors are obtained from the order of points `r Citep(bib[[c("vecchia1988estimation")]])`
+
++ Vecchia's Approximation is implemented in the GpGp package, where updates to the ordering method and a grouping method were introduced to speed up calculations `r Citep(bib[[c("gpgp_pkg")]])`
+
+
+
+---
+class:primary
+
+#Spatio-Temporal Interpolation
+
++ Individual model developed for both x and y using the GpGp package in R `r Citep(bib[[c("gpgp_pkg")]])`
+  - Within each intersection
+  - Due this to take into account the nonstationarity
++ Use Exponential Space-Time covariance function (as previously defined)
++ Output is the maximum likelihood estimates for the mean and covariance parameters
++ Use model to determine estimates of missing locations
+  - From the conditional expectation of the model
+  - Create a grid encompassing our ice sheet to give a starting value of the missing locations. 
+  - The model will then adjust this location using its known neighbors
+
+
+---
+class:primary
+#Simulation Study
+
++ Create Underlying Process Grid 
+  - Simulating movement of ocean that causes observations to move
+  - Initial grid was created and shifted seven times to represent seven days of movement in the underlying process.
+  - This data is then used to create the covariance matrix, $C_{d,c}(\theta)$
+  - Covariance parameters and defined mean trend ( $\mu_{d,c}$ ) is different for each cluster $\\$
+
+.center[
+$U_{d,c}(s,t) \sim GP(\mu_{d,c}, C_{d,c}(\theta))$ $\\$
+
+where $U_{d,c}(s,t)$ is the displacement at location $s$ & time $t$ $\\$ for $d$ = x or y, cluster $c$
+
+]
+
+**Note**: Only 2 clusters for simplicity
+
+---
+class:primary
+
+#Simulation Study
+
++ Create Observed Grid
+  - Movement of an observed point is determined by the value of the nearest point of the underlying process for that day ( $g$ )
+  - Obtained a week's worth of simulated data
+  
+.center[
+  $(x_{t,j}, y_{t,j}) = (U^{X}_{t-1,c,g}, U^{Y}_{t-1,c,g}) + (x_{t-1,j}, y_{t-1,j})$ $\\$
+  where t=1,...,7 (time), j = 1,...,121 (id), $\\$ U is the underlying process value at $t-1$ for cluster ( $c$ ) and grid id ( $g$ )
+]
+
+
+.center[
+```{r grid-combo-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/both_grid2.jpeg", alt = "Underlying and Observed Grid Plotted Together", other=list(width="40%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+---
+class:primary
+#Simulated Data
+
+Created 3 different scenarios, each with different parameter values.
+
+.center[
+```{r sim-traj-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/sim_traj.png", alt = "Simulated Trajectories for Each Simulation", other=list(width="90%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+---
+class:primary
+
+#Simulated Clustering Results
+
+
+<br>
+<br>
+<br>
+
+.center[
+```{r sim-clust,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/sim-clust.png", alt = "Clusters for each Simulation Data", other=list(width="60%"))
+
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9],
+  str_split(i2, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+
+]
+
+
+---
+class:primary
+
+#Simulated Interpolation Results
+
++ Simulated and clustered another week of data.
++ 10% of the data for the first week are randomly assigned to be missing.
++ Other methods for comparison:
+  - Linear Interpolation
+  - Instead of running model inside each intersection, a model was developed using all known points (essentially ignoring the nonstationarity aspect of our data)
+
+<br>
+  
+```{r sim-results-tab1}
+
+result_data <- data.frame(sim = c(1,2,3), X1 = c(1.496, 1.628, 1.342), Y1 = c(1.517, 1.58, 1.338), X2 = c(1.042, 1.455, 0.95), Y2 = c(1.226, 1.54, 0.92), X3 = c(1.438, 1.474, 1.458), Y3 = c(1.295, 1.488, 1.489))
+ 
+kableExtra::kable(result_data, booktabs = TRUE, caption = "RMSE for Interpolation Methods", col.names = c("Simulation", "X", "Y", "X", "Y", "X", "Y"), escape = FALSE,  table.attr = "style='width:80%;'", align = "c") %>% 
+  add_header_above(c("", "Intersection Model" = 2, "Linear" = 2, "No Intersection Model" = 2))
+
+
+```
+
+
+---
+class:primary
+
+#Simulated Interpolation Results
+
+
+```{r sim-results-tab2, message=FALSE, warning = FALSE}
+
+result_data2 <- data.frame(sim = c(1, "", 2, "", 3, ""), Cluster = c(1,2,1,2,1,2), X1 = c(1.383, 1.573, 1.7, 1.584, 1.318,1.353), Y1 = c(1.555, 1.488, 1.653, 1.534, 1.346, 1.334), X2 = c(0.815, 1.188, 1.316, 1.503, 1.156, 0.647), Y2 = c(1.163, 1.272, 1.329, 1.612, 1.096, 0.673), X3 = c(1.562, 1.337, 1.658, 1.407, 1.434, 1.484), Y3 = c(1.29, 1.298, 1.596, 1.451, 1.405, 1.581))
+
+kableExtra::kable(result_data2, booktabs = TRUE, caption = "RMSE for Interpolation Methods by cluster", col.names = c("Simulation", "Cluster", "X", "Y", "X", "Y", "X", "Y"), escape = FALSE, align = "c") %>% add_header_above(c(" " = 2, "Intersection" = 2, "Linear" = 2, "No Intersection" = 2)) %>% row_spec(4, color = 'black', background = 'yellow') 
+
+```
+
+
