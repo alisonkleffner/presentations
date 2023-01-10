@@ -1,6 +1,6 @@
 ---
 title: "Redesigning Yield Map Plots for Comprehension and Usability"
-subtitle: "TCU"
+subtitle: ""
 author: "Alison Kleffner"
 date: "Department of Statistics, University of Nebraska - Lincoln"
 output:
@@ -104,7 +104,6 @@ write("", file = "js-addins.html")
 
 <br><br><br>
 ## Redesigning Yield Map Plots for Comprehension and Usability
-### TCU
 #### Alison Kleffner
 #### Department of Statistics, University of Nebraska - Lincoln
 ##### `r fa("envelope", fill = "black")` [akleffner@huskers.unl.edu](akleffner@huskers.unl.edu)
