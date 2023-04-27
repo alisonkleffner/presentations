@@ -110,7 +110,7 @@ write("", file = "js-addins.html")
 ##### `r fa("home", fill = "black")` [https://alison-kleffner.netlify.app/](https://alison-kleffner.netlify.app/)
 ##### `r fa("github", fill = "black")` [alisonkleffner](https://github.com/alisonkleffner)
 <br><br>
-.medium[*Slides: https://alisonkleffner.github.io/SDSS_2023/index.html#1*]
+.medium[*Slides: https://alisonkleffner.github.io/presentations/SDSS_2023/index.html#1*]
 
 ---
 class:primary
