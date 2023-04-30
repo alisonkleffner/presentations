@@ -434,7 +434,7 @@ Ask the audience what principles of good graphics these violate?
 
 ---
 class:primary
-# Other Yield Plots in Literature
+# Other Maps in  the Literature
 
 .center[
 Plenty of other iterations of trial design/yield maps used in the literature. Here's some examples
@@ -698,11 +698,14 @@ Played with the transparency a bit more. Eventually would like to use the ggblen
 class:primary
 #Bivariate Color Plot
 
+.center[
+
 Alternative to color blending
 
-.center[
+.pull-left[
+
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgcolormap4' src='images/color-map4.png' alt='Bivariate Color Map' width='40%'&gt;
+&lt;img id='imgcolormap4' src='images/color-map4.png' alt='Bivariate Color Map' width='100%'&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modalcolormap4' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -710,7 +713,21 @@ Alternative to color blending
   &lt;!-- Modal Caption (Image Text) --&gt;
   &lt;div id='captioncolormap4' class='modal-caption'&gt;&lt;/div&gt;
 &lt;/div&gt;
+]].pull-right[
+
++ Helpful if the relationship between the variables is more important than the
+individual values (Elmer, 2013). 
++ Used a 3x3 scale as more categories hinder interpretation (Leonowicz, 2003). 
+  - + Quantiles to split the data (Biesecker, Zahnd, Brandt, Adams, &amp; M,
+2020). 
++ Focus is on the diagonal, so the diagonal values used a grayscale color scheme. 
+  - Colors in the upper left and lower right have a complementary color scheme (Strode et al.,
+2020).
++ Drawback: Lose more detailed information, due to quantile creation
+
+
 ]
+
 
 
 ---
@@ -744,7 +761,7 @@ Finally we can directly state the correlation between As Applied and Yield (expl
 
 ---
 class:primary
-# Correlation with ScatterPlot
+# Correlation with Scatterplot
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
@@ -767,6 +784,17 @@ class:primary
 &lt;/div&gt;
 ]
 
++ Unfortunately, while the relationship between the variables was directly encoded, it can be complicated to connect the displayed relationship back to the data (Gleicher et al., 2011).
+ - Lost context
++ A standard practice to overcome this weakness is utilizing a hybrid comparative layout
+(LYi et al., 2021). 
+  - A scatterplot was juxtaposed to the correlation plot
+(combining the layouts of juxtaposition and explicit encoding) to add some
+context back. 
++ Interactivity connects the juxtaposed plots, where hovering over a trial plot in the correlation map highlights the corresponding points in the scatterplot used in the correlation calculation.
+
+[Link](https://alisonkleffner.github.io/yield-map-redesign/interactive-example.html)
+
 ---
 class:inverse
 &lt;br&gt;
@@ -787,17 +815,18 @@ class:primary
 
 We can use the  knowledge about perception to improve visualizations of geospatial experiment results.
 
-**Next Step**: Develop a R Shiny app to explaining machine learning output to non-experts
+**Next Step**: Obtain Feedback from those using the plots (farmers, crop consultants)
+- Eventually do some testing between the layouts to see which farmers are reading more accurately.
+
+
+**Eventually**: Develop a R Shiny app to explaining machine learning output to non-experts
 - Build trust in the model predictions without requiring farmers to learn the details of statistical modeling.
 - Will utilize these plots, among others
   + For example, accuracy of as applied treatment compared to trial design
-- Possibility of linked graphics
-  - Show trial design plot, can then click on a trial plot to view the scatterplot between applied treatment and yield. 
 
 
-**In general**, want this work to lead into work on spatial visualizations, especially in the comparative framework
-  - Do testing on the graphics that I just made to see if farmers and consultants are interpreting the information correctly.
-  - Many other areas work with graphics (break down barriers to information)
+
+
 
 ???
 
@@ -7808,6 +7837,57 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgcorrwithscat3.onclick = function() {
             modalcorrwithscat3.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcolormap4 = document.getElementById('modalcolormap4');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcolormap4 = document.getElementById('imgcolormap4');
+          var modalImgcolormap4 = document.getElementById('imgmodalcolormap4');
+          var captionTextcolormap4 = document.getElementById('captioncolormap4');
+          imgcolormap4.onclick = function(){
+            modalcolormap4.style.display = 'block';
+            modalImgcolormap4.src = this.src;
+            captionTextcolormap4.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcolormap4.onclick = function() {
+            modalcolormap4.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcolormap4 = document.getElementById('modalcolormap4');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcolormap4 = document.getElementById('imgcolormap4');
+          var modalImgcolormap4 = document.getElementById('imgmodalcolormap4');
+          var captionTextcolormap4 = document.getElementById('captioncolormap4');
+          imgcolormap4.onclick = function(){
+            modalcolormap4.style.display = 'block';
+            modalImgcolormap4.src = this.src;
+            captionTextcolormap4.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcolormap4.onclick = function() {
+            modalcolormap4.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcolormap4 = document.getElementById('modalcolormap4');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcolormap4 = document.getElementById('imgcolormap4');
+          var modalImgcolormap4 = document.getElementById('imgmodalcolormap4');
+          var captionTextcolormap4 = document.getElementById('captioncolormap4');
+          imgcolormap4.onclick = function(){
+            modalcolormap4.style.display = 'block';
+            modalImgcolormap4.src = this.src;
+            captionTextcolormap4.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcolormap4.onclick = function() {
+            modalcolormap4.style.display = 'none';
           }
 </script>
 <script>
