@@ -119,12 +119,11 @@ class:primary
 .pull-left[
 
 
-`r fa_i("list")` Redesigning Yield Plots
+`r fa_i("envira")` Data Intensive Farm Management
 
-+ Data Intensive Farm Management
-+ Current yield plots and why they need improvement
-+ Redesign Process
-+ Conclusion 
+`r fa_i("map")` Perceptual Issues with Current Maps
+
+`r fa_i("bar-chart")` Redesign Process
 
 `r fa_i("spinner")` Future Work
 
@@ -146,12 +145,20 @@ class:inverse
 <br>
 <br>
 .center[
-# Yield Plots Redesign
+# Data Intensive Farm Management 
 ]
 
-???
+---
+class:primary
+#Background
 
-Next let's talk about some of my actual research
++ With a projected increase in future crop demand, researchers are conducting studies on crop input application to increase yield, focusing on sustainability (Tilman et al., 2011). 
++ Crop Input Example: Nitrogen Fertilizer
+  - Nitrogen is an essential component of food production as it is a component of amino acids, the building blocks of proteins, and allows plants to photosynthesize efficiently (Maheswari et al., 2017). 
+  - Unfortunately, nearly half of the nitrogen fertilizer supplied to the field is not used by the crops, resulting in excess nitrogen in the ecosystem (Billen et al., 2013). 
+  - This excess nitrogen can be harmful
++ Hence, research needs to be conducted on determining input rates that increase crop yield, and are also more sustainable.
+
 
 ---
 class:primary
@@ -190,17 +197,21 @@ class:primary
 
 **Step 1**: Develop infrastructure to develop experiments using site-specific inputs
 
-[Trial Design Tool](https://shiny.srvanderplas.com/TrialDesignTool/)
+[Trial Design Tool](http://trialdesign.difm-cig.org/)
 
 .center[
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/Trial_Design.png", alt = "Example of A Trial Design",other=list(width="60%"))
+i1 <- img_modal(src = "images/welcome-page.png", alt = "Homepage of Trial Design Tool", other=list(width="45%"))
+i2 <- img_modal(src = "images/Trial_Design.png", alt = "Example of A Trial Design", other=list(width="45%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9]
+  str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9],
+  str_split(i2, "\\n", simplify = T)[3:9]
   ) %>% paste(collapse = "\n") %>% cat()
 ```
 ]
+
 
 **Output**: shape files that can be put into a farmer's tractor that allows them to carry out the experiments
 
@@ -253,6 +264,19 @@ class:primary
 
 The last general step in this process is to analyze the data and explain the optimal decision management decisions, accounting for various factors (like weather, environmental and economics conditions). So we want to develop an user interface that is designed around explaining the machine learning output to non-experts to help inform decision. We want to do this to build farmer's trust in the models (we are providing them with useful information). Additionally, as a whole this will help us learn how crop yield responds to different input application rates, field characteristics, and weather with the goal to help increase profits. Currently we are working on the pieces to help explain these results, before putting it all together in an R Shiny app. One of these pieces of information that needs to be explained is to explore the relationship between input application and yield. As seen in previous parts of this presentation, there is a great benefit of plotting data, so we wanted to explore this relationship visually. Hence, we want to show the spatial correlations between the treatment application and yield in a way that is understandable to farmers and consultants. Additionally, we need to develop these plots so they are perceptually optimal.  
 
+---
+class:inverse
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+.center[
+# Current Maps 
+]
 
 ---
 class:primary
@@ -282,28 +306,61 @@ class:primary
 # Other Yield Plots in Literature
 
 .center[
+Plenty of other iterations of trial design/yield maps used in the literature. Here's some examples
+]
+
+.pull-left[
+.center[
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/yield-plot1.png", alt = "Zhang, Li, Liu, and Wang (2008)", other=list(width="30%"))
-i2 <- img_modal(src = "images/yield-plot2.png", alt = "Searcy (1997)", other=list(width="30%"))
-i3 <- img_modal(src = "images/yield-plot3.png", alt = "www.aspexit.com", other=list(width="30%"))
+i1 <- img_modal(src = "images/maxwell.png", alt = "Maxwell et al (2018)", other=list(width="70%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i2, "\\n", simplify = T)[1:2],
-  str_split(i3, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9],
-  str_split(i2, "\\n", simplify = T)[3:9],
-  str_split(i3, "\\n", simplify = T)[3:9]
+  str_split(i1, "\\n", simplify = T)[3:9]
   ) %>% paste(collapse = "\n") %>% cat()
 ```
 
-Plenty of other iterations of yield maps used in the literature. Here's some examples
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/peerlinck.png", alt = "Peerlinck et al (2018)", other=list(width="70%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+
+]
+
+].pull-right[
+
+.center[
+
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/yield-plot2.png", alt = "Searcy (1997)", other=list(width="70%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+
+
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/trevisan.png", alt = "Trevisan et al (2021)", other=list(width="60%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+
+
+
+]
 
 ]
 
 ???
 
 Plenty of other yield maps that have been used in the literature, so while don't give trial plot information still provides yield information over space. These have some of the same problems as seen before. The first interpolates, so losing the site-specific information and continuous yield may not make sense. The second, has too many categories and coloring is not great (rainbow). The last plot uses suboptimal color scheme (bivariate color scheme in inappropriate, also doesn't go through white, members of the target audience (farmers) may be more likely to be colorblind, so avoid reds and greens)
-
 
 ---
 class:primary
@@ -352,6 +409,44 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 One of the first things we need to decided is whether we want to juxtapose or superimpose the trial design and yield information. Juxtaposed graphs are side by side plots that tend to have less issues with visual clutter and they are easier to create. A drawback however, is that the comparative burden is placed on the user (have to match things up correctly). The other option is to superimpose the graphs where multiple objects are in the same coordinate system. The benefit is that it is easier to compare as users can use perception rather than memory. These are additionally useful when spatial location is a key component of the comparison. However, the major drawback, as we saw with the DIFM plot is that clutter is a major issue. We decided to use superimposed graphs since spatial location is a key component for us and may be hard to compare in two different plot (hard to match up)
 
+---
+class:primary
+#Comparative Burden with Superimposed Graphs
+
+**Drawback** Most of the comparative burden placed on users' memory
++ A mental image is relied on for comparison in these scenarios, as the user moves their
+eyes between images (shifting focus). 
+  - The plot contents may not be accurately formed in working memory, leading to potential errors when deriving patterns  `r Citep(bib[[c("vanderplas2020", "lyi2021")]])`
++ Lack of visual cues for locations
+
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/juxtaposed-ex.jpeg", alt = "Juxtaposed Example", other=list(width="30%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+
+]
+
+---
+class:primary
+#Color
+
++ Red-green color blindness is experienced by approximately 8% of men and 0.5% of women of
+Northern European ancestry. 
+  - Difficult to discriminate between these colors, including colors that contain a component
+of those colors (Wong, 2011)
++ Stop-Light Color Scheme
+  - Yellow has a highlighting effect
+  - Univariate Scale more appropriate
++ Same Color scheme for multiple variables
+  - May cause confusion
++ Rainbow Color Scheme 
+  - No inherent ordering of magnitude(Light & Bartlein, 2004)
+  - Extremes are visually close (red and violet), confusing users when differentiating values on both ends of the scale (Silva et al., 2011).
 
 ---
 class:primary
@@ -371,7 +466,21 @@ Number of categorical scales should be limited to **5-7 categories**
 Additionally, the number of categories on our scale for yield should be limited to 5-7 categories (DIFM plot and other plot 2 violates this). The categories need to be limited due to working memory limits and it makes it harder for the user to distinguish between colors and remember the meaning of what group the color is representing (might associate a color with the incorrect category). This load on the user's working memory lead to an increase in time for them to comprehend the plot, which is not something we want especially for non-experts. 
 
 Next I am going to walk through our redesign process (still currently in progress).
-  
+
+
+---
+class:inverse
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+.center[
+# Redesign
+]
 
 ---
 class:primary
@@ -423,7 +532,6 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 **Focus**: Color/Scales
 + Working on blending using transparency
-  - [**ggblend**](https://mjskay.github.io/ggblend/)
 + Categorical Groups for both variables
   - Trial Design treatment is a factor
   - Reduce number of colors for yield
@@ -431,7 +539,23 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 
 ???
-Played with the transparency a bit more. Eventually would like to use the ggblend package, which is developing for the blending of objects. However, it doesn't work for polygon on top of polygon. Submit a bug report. Additionally, we introduced categorical groups for both variables. Trial Design was categorical to begin width. And I decided to use a categorial scale for yield to cut down on what needed to be blended. The breaks for yield were created using quantiles for the breaks. This has been shown in some research to be the best pereptually for cateogorical breaks.  
+Played with the transparency a bit more. Eventually would like to use the ggblend package, which is developing for the blending of objects. However, it doesn't work for polygon on top of polygon. Submit a bug report. Additionally, we introduced categorical groups for both variables. Trial Design was categorical to begin width. And I decided to use a categorical scale for yield to cut down on what needed to be blended. The breaks for yield were created using quantiles for the breaks. This has been shown in some research to be the best perceptually for categorical breaks.  
+
+---
+class:primary
+#Bivariate Color Plot
+
+Alternative to color blending
+
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/color-map4.png", alt = "Bivariate Color Map", other=list(width="40%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
 
 
 ---
@@ -452,25 +576,31 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ]
 
 **Focus**: Wanted to give a more direct statement of correlation while maintaining some spatial orientation 
+  - Explicit Encoding comparative Layout `r Citep(bib[[c("gleicher2011")]])`
 + Bivariate color scale to show difference between positive and negative correlation values
 + Maintain some spatial information. 
   - Correlations may be impacted by field location
-  - Eventually add other information to the plot, like soil. 
-  
+
 ???
 
 Finally we can directly state the correlation between As Applied and Yield (explain how as applied differs from treatment design), while also keeping some of the spatial relationship. Can see for the most part, as application amount increase, so does the yield. Some areas where the inverse is true (more investigation, maybe lower, dirt differs, etc). Used a bivariate color scheme go through white color for zero. Maintaining some spatial information is importanct as correlation is impacted by field location. Eventually this information can be added to the plot (interactivity)
 
 ---
 class:primary
-# Conclusion
+# Correlation with ScatterPlot
 
-+ Designing graphics is a process
-+ We can use the  knowledge about perception to improve visualizations of geospatial experiment results.
-  - Reduce clutter on superimposed graphics 
-  - Better colors
-  - less categories
-  
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/corr-with-scat2.png", alt = "Hybrid Layout", other=list(width="40%"))
+i2 <- img_modal(src = "images/corr-with-scat3.png", alt = "Hybrid Layout with Hover", other=list(width="40%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i2, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9],
+  str_split(i2, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]
 
 ---
 class:inverse
@@ -488,7 +618,9 @@ class:inverse
 
 ---
 class:primary
-#DIFM Project
+#Conclusion/Future Work
+
+We can use the  knowledge about perception to improve visualizations of geospatial experiment results.
 
 **Next Step**: Develop a R Shiny app to explaining machine learning output to non-experts
 - Build trust in the model predictions without requiring farmers to learn the details of statistical modeling.
