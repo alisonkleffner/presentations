@@ -215,6 +215,7 @@ body {
 
 &lt;br&gt;&lt;br&gt;&lt;br&gt;
 ## Redesigning Yield Map Plots for Comprehension and Usability
+### 2023 SDSS
 #### Alison Kleffner
 #### Department of Statistics, University of Nebraska - Lincoln
 ##### <svg aria-hidden="true" role="img" viewBox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:black;overflow:visible;position:relative;"><path d="M0 128C0 92.65 28.65 64 64 64H448C483.3 64 512 92.65 512 128V384C512 419.3 483.3 448 448 448H64C28.65 448 0 419.3 0 384V128zM48 128V150.1L220.5 291.7C241.1 308.7 270.9 308.7 291.5 291.7L464 150.1V127.1C464 119.2 456.8 111.1 448 111.1H64C55.16 111.1 48 119.2 48 127.1L48 128zM48 212.2V384C48 392.8 55.16 400 64 400H448C456.8 400 464 392.8 464 384V212.2L322 328.8C283.6 360.3 228.4 360.3 189.1 328.8L48 212.2z"/></svg> [akleffner@huskers.unl.edu](akleffner@huskers.unl.edu)
@@ -241,10 +242,6 @@ class:primary
 ]
 
 
-???
-
-In my talk today I a going to start by motivating the importance of visualization. Then I will talk about how to make a good graph through the use of graphical perception.I will end with work for my dissertation on the redesigning of yield plots keeping in mind what we know about the creation of optimally perceptible graphs. I will then conclude with my future work. 
-
 ---
 class:inverse
 &lt;br&gt;
@@ -263,12 +260,25 @@ class:inverse
 class:primary
 #Background
 
-+ With a projected increase in future crop demand, researchers are conducting studies on crop input application to increase yield, focusing on sustainability (Tilman et al., 2011). 
++ With a projected increase in future crop demand, researchers are conducting studies on crop input application to increase yield, focusing on sustainability (Tilman, Balzer, Hill, and Befort, 2011) 
 + Crop Input Example: Nitrogen Fertilizer
-  - Nitrogen is an essential component of food production as it is a component of amino acids, the building blocks of proteins, and allows plants to photosynthesize efficiently (Maheswari et al., 2017). 
-  - Unfortunately, nearly half of the nitrogen fertilizer supplied to the field is not used by the crops, resulting in excess nitrogen in the ecosystem (Billen et al., 2013). 
+  - Nitrogen is an essential component of food production as it is a component of amino acids, the building blocks of proteins, and allows plants to photosynthesize efficiently (Maheswari, Murthy, and Shanker, 2017)  
+  - Unfortunately, nearly half of the nitrogen fertilizer supplied to the field is not used by the crops, resulting in excess nitrogen in the ecosystem (Billen, Garnier, and Lassaletta, 2013) 
   - This excess nitrogen can be harmful
 + Hence, research needs to be conducted on determining input rates that increase crop yield, and are also more sustainable.
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgtractor' src='images/tractor.png' alt='Tractor' width='30%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modaltractor' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodaltractor'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captiontractor' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+]
 
 
 ---
@@ -361,8 +371,8 @@ class:primary
 
 Examples of Data Collected:
 - As-applied
-- yield
-- location of measurements
+- Yield
+- Location of measurements
 
 ???
 
@@ -375,9 +385,13 @@ class:primary
 
 **Step 3**: Explain the optimal management decisions, accounting for various factors
 
+--
+
 **How**: create a user interface, designed around explaining machine learning output to non-experts
   - Build trust in models
   - Learn how crop yield responds to different input application rates, field characteristics, and weather to hopefully increase profits. 
+  
+--
   
 **One way to do this**: Visually explore the relationship between input application and yield through a graph
   - Show the spatial correlations between the application/treatment and yield in a way that is understandable to farmers and consultants. 
@@ -424,7 +438,13 @@ class:primary
   &lt;!-- Modal Caption (Image Text) --&gt;
   &lt;div id='captionjuxtaposedex' class='modal-caption'&gt;&lt;/div&gt;
 &lt;/div&gt;
+
+
+An Example of two versions of this plot currently given to farmers/crop consultants in DIFM reports
+
 ]
+
+
 
 ???
 
@@ -440,6 +460,8 @@ class:primary
 Plenty of other iterations of trial design/yield maps used in the literature. Here's some examples
 ]
 
+--
+
 .pull-left[
 .center[
 &lt;!-- Trigger the Modal --&gt;
@@ -452,6 +474,7 @@ Plenty of other iterations of trial design/yield maps used in the literature. He
   &lt;div id='captionmaxwell' class='modal-caption'&gt;&lt;/div&gt;
 &lt;/div&gt;
 
+
 &lt;!-- Trigger the Modal --&gt;
 &lt;img id='imgpeerlinck' src='images/peerlinck.png' alt='Peerlinck et al (2018)' width='70%'&gt;
 &lt;!-- The Modal --&gt;
@@ -463,6 +486,7 @@ Plenty of other iterations of trial design/yield maps used in the literature. He
 &lt;/div&gt;
 
 ]
+
 
 ].pull-right[
 
@@ -503,14 +527,6 @@ Plenty of other yield maps that have been used in the literature, so while don't
 class:primary
 #Juxtaposed vs Superimposed Graphs
 
-+ Juxtaposed graphs - side by side (Gleicher, Albers, Walker, Jusufi, Hansen, and Roberts, 2011)
-  - Benefits: less issues with visual clutter and easier to create
-  - Drawbacks: comparative burden is placed on the user
-+ Superimposed graphs - multiple objects in same coordinate system (Gleicher, Albers, Walker, et al., 2011)
-  - Benefits: Easier to compare as users can use perception rather than memory
-  - Drawbacks: clutter
-  - Useful when spatial location is a key component of the comparison (Wang, Haleem, Shi, Wu, Zhao, Fu, and Qu, 2018)
-  
 .center[
 &lt;!-- Trigger the Modal --&gt;
 &lt;img id='imgjuxvssup' src='images/jux-vs-sup.png' alt='Juxtaposed vs Superimposed Comparative Graphs (Gleicher, Albers, Walker, et al., 2011)' width='50%'&gt;
@@ -523,12 +539,25 @@ class:primary
 &lt;/div&gt;
 ]
 
++ **Juxtaposed graphs**: side by side (Gleicher, Albers, Walker, Jusufi, Hansen, and Roberts, 2011)
+  - Benefits: less issues with visual clutter and easier to create
+  - Drawbacks: comparative burden is placed on the user
+  
+--
+
++ **Superimposed graphs**: multiple objects in same coordinate system (Gleicher, Albers, Walker, et al., 2011)
+  - Benefits: Easier to compare as users can use perception rather than memory
+  - Drawbacks: clutter
+  - Useful when spatial location is a key component of the comparison (Wang, Haleem, Shi, Wu, Zhao, Fu, and Qu, 2018)
+  
+
 
 ---
 class:primary
 #Data Clutter with Superimposed Graphs
 
-+ General principle of graphical design: Show data clearly (Cleveland, 1984; Gordon and Finch, 2015)
+**Drawback**: clutter
++ General principle of graphical design: show data clearly (Cleveland, 1984; Gordon and Finch, 2015)
 + Overlap - multiple dots on top of one another
   - Obscures true number of dots, harder to find patterns
   - Visual cues, like color, becomes partially obstructed, thereby reducing search efficiency (Bravo and Farid, 2004a; Bravo and Farid, 2004b)
@@ -536,7 +565,7 @@ class:primary
   
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgold_map' src='images/old_map.png' alt='Example 1' width='25%'&gt;
+&lt;img id='imgold_map' src='images/old_map.png' alt='Example 1' width='20%'&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modalold_map' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -554,7 +583,7 @@ One of the first things we need to decided is whether we want to juxtapose or su
 class:primary
 #Comparative Burden with Superimposed Graphs
 
-**Drawback** Most of the comparative burden placed on users' memory
+**Drawback**: Most of the comparative burden placed on users' memory
 + A mental image is relied on for comparison in these scenarios, as the user moves their
 eyes between images (shifting focus). 
   - The plot contents may not be accurately formed in working memory, leading to potential errors when deriving patterns  (Vanderplas, Cook, and Hofmann, 2020; LYi, Jo, and Seo, 2021)
@@ -563,7 +592,7 @@ eyes between images (shifting focus).
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgjuxtaposedex' src='images/juxtaposed-ex.jpeg' alt='Juxtaposed Example' width='30%'&gt;
+&lt;img id='imgjuxtaposedex' src='images/juxtaposed-ex.jpeg' alt='Juxtaposed Example' width='35%'&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modaljuxtaposedex' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -580,27 +609,50 @@ class:primary
 
 + Red-green color blindness is experienced by approximately 8% of men and 0.5% of women of
 Northern European ancestry. 
-  - Difficult to discriminate between these colors, including colors that contain a component
-of those colors (Wong, 2011)
+  - Difficult to discriminate between these colors (Wong, 2011) 
+  
+--
+
 + Stop-Light Color Scheme
   - Yellow has a highlighting effect
-  - Univariate Scale more appropriate
+  - Univariate Scale more appropriate (magnitude only)
+  
+--
+
 + Same Color scheme for multiple variables
   - May cause confusion
+  
+--
+
 + Rainbow Color Scheme 
-  - No inherent ordering of magnitude(Light &amp; Bartlein, 2004)
-  - Extremes are visually close (red and violet), confusing users when differentiating values on both ends of the scale (Silva et al., 2011).
+  - No inherent ordering of magnitude (Light and Bartlein, 2004) 
+  - Extremes are visually close (red and violet) (Silva, Sousa Santos, and Madeira, 2011) 
 
 ---
 class:primary
 #Number of Categories
 
-Number of categorical scales should be limited to **5-7 categories**
-  - Due to working memory limits (Macdonald, 1999)
-    + Harder for the user to distinguish between colors and remember the meaning of colors. 
-    + More difficult to associate a color with the correct yield category 
-  - The load on the user’s working memory leads to an increase in the time it takes for the user to comprehend the plot (Vanderplas, Cook, and Hofmann, 2020)
+Number of categorical scales should be limited to **5-7 categories** (Miller, 1956)
+.pull-left[
+- Due to working memory limits (Macdonald, 1999)
+  + Harder for the user to distinguish between colors and remember the meaning of colors. 
+  + More difficult to associate a color with the correct yield category 
+- The load on the user’s working memory leads to an increase in the time it takes for the user to comprehend the plot (Huang, Eades, and Hong, 2009)
+].pull-right[  
   
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgcategories' src='images/categories.png' alt='Example 1' width='50%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalcategories' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalcategories'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captioncategories' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]  
+
+]
 
 **Next:** Redesign Process
 
@@ -627,7 +679,7 @@ class:inverse
 
 ---
 class:primary
-#Redesign: Iteration 1
+#Redesign: Color Blending Part 1
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
@@ -655,11 +707,12 @@ class:primary
 + Interactive plot with *leaflet* (Cheng, Karambelkar, and Xie, 2022)
   - Can add and remove trial plot layer
 
+--
+
 Work that still needs to be done:
 + Color needs some work
-  + Blending
   + different color schemes
-+ Not as good for paper plots
+
 
 ???
 
@@ -669,11 +722,14 @@ So the plot now is not cluttered in the sense there's overlapping data points, b
 
 ---
 class:primary
-#Redesign: Iteration 2
+#Redesign: Color Blending Part 2
 
+**Focus**: Color/Scales
+
+.pull-left[
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgattempt2_new2' src='images/attempt2_new2.jpeg' alt='Second Iteration' width='50%'&gt;
+&lt;img id='imgattempt2_new2' src='images/attempt2_new2.jpeg' alt='Second Iteration' width='120%'&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modalattempt2_new2' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -682,25 +738,25 @@ class:primary
   &lt;div id='captionattempt2_new2' class='modal-caption'&gt;&lt;/div&gt;
 &lt;/div&gt;
 ]
+].pull-right[
 
-**Focus**: Color/Scales
 + Working on blending using transparency
 + Categorical Groups for both variables
   - Trial Design treatment is a factor
   - Reduce number of colors for yield
   - Use quantiles to determine categories for yield (Brewer and Pickle, 2002)
-
+]
 
 ???
 Played with the transparency a bit more. Eventually would like to use the ggblend package, which is developing for the blending of objects. However, it doesn't work for polygon on top of polygon. Submit a bug report. Additionally, we introduced categorical groups for both variables. Trial Design was categorical to begin width. And I decided to use a categorical scale for yield to cut down on what needed to be blended. The breaks for yield were created using quantiles for the breaks. This has been shown in some research to be the best perceptually for categorical breaks.  
 
 ---
 class:primary
-#Bivariate Color Plot
+#Redesign: Bivariate Color Plot
+
+**Alternative to color blending**
 
 .center[
-
-Alternative to color blending
 
 .pull-left[
 
@@ -715,15 +771,13 @@ Alternative to color blending
 &lt;/div&gt;
 ]].pull-right[
 
-+ Helpful if the relationship between the variables is more important than the
-individual values (Elmer, 2013). 
-+ Used a 3x3 scale as more categories hinder interpretation (Leonowicz, 2003). 
-  - + Quantiles to split the data (Biesecker, Zahnd, Brandt, Adams, &amp; M,
-2020). 
-+ Focus is on the diagonal, so the diagonal values used a grayscale color scheme. 
-  - Colors in the upper left and lower right have a complementary color scheme (Strode et al.,
-2020).
-+ Drawback: Lose more detailed information, due to quantile creation
++ **Benefit**: relationship between the variables is most important (Elmer, 2013) 
++ 3x3 scale as more categories hinder interpretation (Leonowicz, 2003)  
+  - + Quantiles to split the data (Biesecker, Zahnd, Brandt, Adams, and J.M, 2020)   
++ **Focus**: diagonal
+  - Diagonal: grayscale color scheme. 
+  - Upper left and lower right: complementary color scheme (Strode, Morgan, Thornton, Mesev, Rau, Shortes, and Johnson, 2020)
++ **Drawback**: Lose more detailed information, due to quantile creation
 
 
 ]
@@ -736,10 +790,23 @@ class:primary
 
 .center[
 
-Correlations between As Applied treatments and Yield
+Directly encode correlations between As Applied treatments and Yield
+
+]
+
+.pull-left[
+**Benefit**: Direct statement of correlation while maintaining some spatial orientation 
+  - Explicit Encoding comparative Layout (Gleicher, Albers, Walker, et al., 2011)
++ Bivariate color scale to show difference between positive and negative correlation values
++ Maintain some spatial information. 
+  - Correlations may be impacted by field location
+**Drawback**: complicated to connect the displayed relationship back to the data (Gleicher, Albers, Walker, et al., 2011)
+ - Lose context
+
+].pull-right[
 
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgcorrplot2' src='images/corr-plot2.jpeg' alt='Correlation' width='50%'&gt;
+&lt;img id='imgcorrplot2' src='images/corr-plot2.png' alt='Correlation' width='150%'&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modalcorrplot2' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -749,11 +816,6 @@ Correlations between As Applied treatments and Yield
 &lt;/div&gt;
 ]
 
-**Focus**: Wanted to give a more direct statement of correlation while maintaining some spatial orientation 
-  - Explicit Encoding comparative Layout (Gleicher, Albers, Walker, et al., 2011)
-+ Bivariate color scale to show difference between positive and negative correlation values
-+ Maintain some spatial information. 
-  - Correlations may be impacted by field location
 
 ???
 
@@ -761,7 +823,9 @@ Finally we can directly state the correlation between As Applied and Yield (expl
 
 ---
 class:primary
-# Correlation with Scatterplot
+# Redesign: Correlation with Scatterplot
+
+**Add some context back**
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
@@ -784,13 +848,10 @@ class:primary
 &lt;/div&gt;
 ]
 
-+ Unfortunately, while the relationship between the variables was directly encoded, it can be complicated to connect the displayed relationship back to the data (Gleicher et al., 2011).
- - Lost context
-+ A standard practice to overcome this weakness is utilizing a hybrid comparative layout
++ A standard practice to overcome weakness of decontextualization is utilizing a hybrid comparative layout
 (LYi et al., 2021). 
-  - A scatterplot was juxtaposed to the correlation plot
-(combining the layouts of juxtaposition and explicit encoding) to add some
-context back. 
+  - Juxtaposed scatterplot to the correlation plot
+(combining the layouts of juxtaposition and explicit encoding). 
 + Interactivity connects the juxtaposed plots, where hovering over a trial plot in the correlation map highlights the corresponding points in the scatterplot used in the correlation calculation.
 
 [Link](https://alisonkleffner.github.io/yield-map-redesign/interactive-example.html)
@@ -835,12 +896,18 @@ Mention wanting to develop an R package to create these plots to automate some o
 ---
 class:primary
 # References
-&lt;font size="2"&gt;
-&lt;p&gt;&lt;cite&gt;Yield maps in Precision Agriculture
+&lt;font size="1"&gt;
+&lt;p&gt;&lt;cite&gt;&lt;a id='bib-biesecker-2020'&gt;&lt;/a&gt;&lt;a href="#cite-biesecker-2020"&gt;Biesecker, C., W. Zahnd, H. M. Brandt, et al.&lt;/a&gt;
 (2020).
-&lt;em&gt;Yield maps in Precision Agriculture&lt;/em&gt;.
-En-gb.
-URL: &lt;a href="https://www.aspexit.com/yield-maps-in-precision-agriculture/"&gt;https://www.aspexit.com/yield-maps-in-precision-agriculture/&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
+&amp;ldquo;A Bivariate Mapping Tutorial for Cancer Control Resource Allocation Decisions and Interventions&amp;rdquo;.
+In: &lt;em&gt;Preventing chronic disease&lt;/em&gt; 17 (E01).
+DOI: &lt;a href="https://doi.org/10.5888/pcd17.190254"&gt;10.5888/pcd17.190254&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;cite&gt;&lt;a id='bib-billen_nitrogen_2013'&gt;&lt;/a&gt;&lt;a href="#cite-billen_nitrogen_2013"&gt;Billen, G., J. Garnier, and L. Lassaletta&lt;/a&gt;
+(2013).
+&amp;ldquo;The nitrogen cascade from agricultural soils to the sea: modelling nitrogen transfers at regional watershed and global scales&amp;rdquo;.
+In: &lt;em&gt;Philosophical Transactions of the Royal Society B: Biological Sciences&lt;/em&gt; 368.1621, p. 20130123.
+DOI: &lt;a href="https://doi.org/10.1098/rstb.2013.0123"&gt;10.1098/rstb.2013.0123&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;cite&gt;&lt;a id='bib-BRAVO2004b'&gt;&lt;/a&gt;&lt;a href="#cite-BRAVO2004b"&gt;Bravo, M. and H. Farid&lt;/a&gt;
 (2004a).
@@ -864,20 +931,16 @@ Library&lt;/em&gt;.
 R package version 2.1.1.
 URL: &lt;a href="https://CRAN.R-project.org/package=leaflet"&gt;https://CRAN.R-project.org/package=leaflet&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;cite&gt;Chua, A. and A. V. Moere
-(2017).
-&amp;ldquo;BinSq: visualizing geographic dot density patterns with gridded maps&amp;rdquo;.
-In: &lt;em&gt;Cartography and Geographic Information Science&lt;/em&gt; 44.5, pp. 390&amp;ndash;409.&lt;/cite&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;cite&gt;&lt;a id='bib-cleveland_1984'&gt;&lt;/a&gt;&lt;a href="#cite-cleveland_1984"&gt;Cleveland, W. S.&lt;/a&gt;
-(1984).
-&amp;ldquo;Graphs in Scientific Publications&amp;rdquo;.
-In: &lt;em&gt;The American Statistician&lt;/em&gt; 38.4, pp. 261&amp;ndash;269.&lt;/cite&gt;&lt;/p&gt;
-
 &lt;p&gt;&lt;cite&gt;Cleveland, W. S. and R. McGill
 (1984).
 &amp;ldquo;Graphical Perception: Theory, Experimentation, and Application to the Development of Graphical Methods&amp;rdquo;.
 In: &lt;em&gt;Journal of the American Statistical Association&lt;/em&gt; 79.387, pp. 531&amp;ndash;554.&lt;/cite&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;cite&gt;&lt;a id='bib-elmer2013symbol'&gt;&lt;/a&gt;&lt;a href="#cite-elmer2013symbol"&gt;Elmer, M. E.&lt;/a&gt;
+(2013).
+&amp;ldquo;Symbol considerations for bivariate thematic maps&amp;rdquo;.
+In: 
+&lt;em&gt;Proceedings of 26th International Cartographic Conference&lt;/em&gt;.&lt;/cite&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;cite&gt;&lt;a id='bib-gleicher2011'&gt;&lt;/a&gt;&lt;a href="#cite-gleicher2011"&gt;Gleicher, M., D. Albers, R. Walker, et al.&lt;/a&gt;
 (2011).
@@ -889,16 +952,29 @@ In: &lt;em&gt;Information Visualization&lt;/em&gt; 10.4, pp. 289-–309.&lt;/cit
 &amp;ldquo;Statistician Heal Thyself: Have We Lost the Plot?&amp;rdquo;
 In: &lt;em&gt;Journal of Computational and Graphical Statistics&lt;/em&gt; 24.4, pp. 1210&amp;ndash;1229.
 DOI: &lt;a href="https://doi.org/10.1080/10618600.2014.989324"&gt;10.1080/10618600.2014.989324&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
-&lt;/font&gt;
 
----
-class:primary
-# References
-&lt;font size="2"&gt;
 &lt;p&gt;&lt;cite&gt;&lt;a id='bib-huang2009'&gt;&lt;/a&gt;&lt;a href="#cite-huang2009"&gt;Huang, W., P. Eades, and S. Hong&lt;/a&gt;
 (2009).
 &amp;ldquo;Measuring Effectiveness of Graph Visualizations: A Cognitive Load Perspective&amp;rdquo;.
 In: &lt;em&gt;Information Visualization&lt;/em&gt; 8.3, pp. 139&amp;ndash;152.&lt;/cite&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;cite&gt;&lt;a id='bib-Leonowicz2003RESEARCHOT'&gt;&lt;/a&gt;&lt;a href="#cite-Leonowicz2003RESEARCHOT"&gt;Leonowicz, A.&lt;/a&gt;
+(2003).
+&amp;ldquo;RESEARCH ON TWO-VARIABLE CHOROPLETH MAPS AS A METHOD FOR PORTRAYING GEOGRAPHICAL RELATIONSHIPS&amp;rdquo;.
+In: 
+&lt;em&gt;Proceedings of the 21st International Cartographic Conference&lt;/em&gt;.
+The International Cartographic Association.&lt;/cite&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;cite&gt;&lt;a id='bib-light-rainbow-2004'&gt;&lt;/a&gt;&lt;a href="#cite-light-rainbow-2004"&gt;Light, A. and P. Bartlein&lt;/a&gt;
+(2004).
+&amp;ldquo;The End of the Rainbow? Color Schemes for Improved Data Graphics&amp;rdquo;.
+In: &lt;em&gt;Eos, Transactions American Geophysical Union&lt;/em&gt; 85.40, pp. 385&amp;ndash;391.
+DOI: &lt;a href="https://doi.org/10.1029/2004EO400002"&gt;10.1029/2004EO400002&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;cite&gt;&lt;a id='bib-lyi2021'&gt;&lt;/a&gt;&lt;a href="#cite-lyi2021"&gt;LYi, S., J. Jo, and J. Seo&lt;/a&gt;
+(2021).
+&amp;ldquo;Comparative Layouts Revisited: Design Space, Guidelines, and Future Directions&amp;rdquo;.
+In: &lt;em&gt;IEEE Transactions on Visualization and Computer Graphics&lt;/em&gt; 27.2, pp. 1525&amp;ndash;1535.&lt;/cite&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;cite&gt;&lt;a id='bib-macdonald_1999'&gt;&lt;/a&gt;&lt;a href="#cite-macdonald_1999"&gt;Macdonald, L.&lt;/a&gt;
 (1999).
@@ -906,26 +982,65 @@ In: &lt;em&gt;Information Visualization&lt;/em&gt; 8.3, pp. 139&amp;ndash;152.&l
 In: &lt;em&gt;Computer Graphics and Applications, IEEE&lt;/em&gt; 19, pp. 20&amp;ndash;35.
 DOI: &lt;a href="https://doi.org/10.1109/38.773961"&gt;10.1109/38.773961&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;cite&gt;Midway, S. R.
-(2020).
-&amp;ldquo;Principles of Effective Data Visualization&amp;rdquo;.
-In: &lt;em&gt;Patterns&lt;/em&gt; 1.9, p. 100141.
-DOI: &lt;a href="https://doi.org/https://doi.org/10.1016/j.patter.2020.100141"&gt;https://doi.org/10.1016/j.patter.2020.100141&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
+&lt;p&gt;&lt;cite&gt;&lt;a id='bib-MAHESWARI2017175'&gt;&lt;/a&gt;&lt;a href="#cite-MAHESWARI2017175"&gt;Maheswari, M., A. Murthy, and A. Shanker&lt;/a&gt;
+(2017).
+&amp;ldquo;12 - Nitrogen Nutrition in Crops and Its Importance in Crop Quality&amp;rdquo;.
+In: 
+&lt;em&gt;The Indian Nitrogen Assessment&lt;/em&gt;.
+Ed. by Y. P. Abrol, T. K. Adhya, V. P. Aneja, N. Raghuram, H. Pathak, U. Kulshrestha, C. Sharma and B. Singh.
+Elsevier, pp. 175&amp;ndash;186.
+DOI: &lt;a href="https://doi.org/https://doi.org/10.1016/B978-0-12-811836-8.00012-4"&gt;https://doi.org/10.1016/B978-0-12-811836-8.00012-4&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;cite&gt;Maxwell, B., P. Hegedus, P. Davis, et al.
+(2018).
+&amp;ldquo;Can Optimization Associated with On-Farm Experimentation Using Site-Specific Technologies Improve Producer Management Decisions?&amp;rdquo;
+In: 
+&lt;em&gt;14th International Conference on Precision Agriculture&lt;/em&gt;.&lt;/cite&gt;&lt;/p&gt;
+&lt;/font&gt;
+
+---
+class:primary
+# References
+&lt;font size="2"&gt;
+&lt;p&gt;&lt;cite&gt;&lt;a id='bib-Miller1956TheMN'&gt;&lt;/a&gt;&lt;a href="#cite-Miller1956TheMN"&gt;Miller, G. A.&lt;/a&gt;
+(1956).
+&amp;ldquo;The magical number seven plus or minus two: some limits on our capacity for processing information.&amp;rdquo;
+In: &lt;em&gt;Psychological review&lt;/em&gt; 63 (2), pp. 81&amp;ndash;97.&lt;/cite&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;cite&gt;Peerlinck, A., J. W. Sheppard, and B. D. Maxwell
+(2018).
+&amp;ldquo;Using Deep Learning in Yield and Protein Prediction of Winter Wheat Based on Fertilization Prescriptions in Precision Agriculture&amp;rdquo;.
+In: 
+&lt;em&gt;14th International Conference on Precision Agriculture&lt;/em&gt;.&lt;/cite&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;cite&gt;Searcy, S. W.
 (1997).
 &amp;ldquo;Precision Farming: A New Approach to Crop Management, Texas Agricultural Extension Service&amp;rdquo;.
 In: &lt;em&gt;The Texas A&amp;amp;M University System, College Station, TX, USA&lt;/em&gt;.&lt;/cite&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;cite&gt;Todorovic, D.
-(2008).
-&amp;ldquo;Gestalt principles&amp;rdquo;.
-In: &lt;em&gt;Scholarpedia&lt;/em&gt; 3.12, p. 5345.&lt;/cite&gt;&lt;/p&gt;
+&lt;p&gt;&lt;cite&gt;&lt;a id='bib-SILVA2011320'&gt;&lt;/a&gt;&lt;a href="#cite-SILVA2011320"&gt;Silva, S., B. Sousa Santos, and J. Madeira&lt;/a&gt;
+(2011).
+&amp;ldquo;Using color in visualization: A survey&amp;rdquo;.
+In: &lt;em&gt;Computers &amp;amp; Graphics&lt;/em&gt; 35.2, pp. 320&amp;ndash;333.
+DOI: &lt;a href="https://doi.org/https://doi.org/10.1016/j.cag.2010.11.015"&gt;https://doi.org/10.1016/j.cag.2010.11.015&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;cite&gt;Unwin, A.
+&lt;p&gt;&lt;cite&gt;&lt;a id='bib-strode-2020'&gt;&lt;/a&gt;&lt;a href="#cite-strode-2020"&gt;Strode, G., J. Morgan, B. Thornton, et al.&lt;/a&gt;
 (2020).
-&amp;ldquo;Why is data visualization important? what is important in data visualization?&amp;rdquo;
-In: &lt;em&gt;Harvard Data Science Review&lt;/em&gt; 2.1.&lt;/cite&gt;&lt;/p&gt;
+&amp;ldquo;Operationalizing Trumbo’s Principles of Bivariate Choropleth Map Design&amp;rdquo;.
+In: &lt;em&gt;Cartographic Perspectives&lt;/em&gt; 94, pp. 5&amp;ndash;24.
+DOI: &lt;a href="https://doi.org/10.14714/CP94.1538"&gt;10.14714/CP94.1538&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;cite&gt;&lt;a id='bib-tilman_sustainalbe_2011'&gt;&lt;/a&gt;&lt;a href="#cite-tilman_sustainalbe_2011"&gt;Tilman, D., C. Balzer, J. Hill, et al.&lt;/a&gt;
+(2011).
+&amp;ldquo;Global food demand and the sustainable intensification of agriculture&amp;rdquo;.
+In: &lt;em&gt;Proceedings of the National Academy of Sciences&lt;/em&gt; 108.50, pp. 20260&amp;ndash;20264.
+DOI: &lt;a href="https://doi.org/10.1073/pnas.1116437108"&gt;10.1073/pnas.1116437108&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;cite&gt;Trevisan, R., D. Bullock, and N. Martin
+(2021).
+&amp;ldquo;Spatial Variability of Crop Responses to Agronomic Inputs in On-Farm Precision Experimentation&amp;rdquo;.
+In: &lt;em&gt;Precision Agriculture&lt;/em&gt; 22.2, pp. 342&amp;ndash;363.
+DOI: &lt;a href="https://doi.org/10.1007/s11119-020-09720-8"&gt;10.1007/s11119-020-09720-8&lt;/a&gt;.&lt;/cite&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;cite&gt;&lt;a id='bib-vanderplas2020'&gt;&lt;/a&gt;&lt;a href="#cite-vanderplas2020"&gt;Vanderplas, S., D. Cook, and H. Hofmann&lt;/a&gt;
 (2020).
@@ -937,20 +1052,10 @@ In: &lt;em&gt;Annual Review of Statistics and Its Application&lt;/em&gt; 7.1, pp
 &amp;ldquo;Towards Easy Comparison of Local Businesses Using Online Reviews&amp;rdquo;.
 In: &lt;em&gt;Computer Graphics Forum&lt;/em&gt; 37.&lt;/cite&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;cite&gt;Wilke, C., A. Zammit-Mangion, and N. Cressie
-(2019).
-&lt;em&gt;Spatio Temporal Statistics with R&lt;/em&gt;.
-1st ed.
-Chapman &amp;amp; Hall.
-ISBN: 978-1-138-71113-6.&lt;/cite&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;cite&gt;Zhang, M., M. Z. Li, G. Liu, et al.
-(2008).
-&amp;ldquo;Yield Mapping in Precision Farming&amp;rdquo;.
-In: 
-&lt;em&gt;Computer And Computing Technologies In Agriculture, Volume II&lt;/em&gt;.
-Ed. by D. Li.
-Boston, MA: Springer US, pp. 1407&amp;ndash;1410.&lt;/cite&gt;&lt;/p&gt;
+&lt;p&gt;&lt;cite&gt;&lt;a id='bib-wong2011color'&gt;&lt;/a&gt;&lt;a href="#cite-wong2011color"&gt;Wong, B.&lt;/a&gt;
+(2011).
+&amp;ldquo;Color blindness&amp;rdquo;.
+In: &lt;em&gt;nature methods&lt;/em&gt; 8.6, p. 441.&lt;/cite&gt;&lt;/p&gt;
 &lt;/font&gt;
 
 
@@ -7922,6 +8027,771 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgcolormap4.onclick = function() {
             modalcolormap4.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaltractor = document.getElementById('modaltractor');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgtractor = document.getElementById('imgtractor');
+          var modalImgtractor = document.getElementById('imgmodaltractor');
+          var captionTexttractor = document.getElementById('captiontractor');
+          imgtractor.onclick = function(){
+            modaltractor.style.display = 'block';
+            modalImgtractor.src = this.src;
+            captionTexttractor.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgtractor.onclick = function() {
+            modaltractor.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modallogo = document.getElementById('modallogo');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imglogo = document.getElementById('imglogo');
+          var modalImglogo = document.getElementById('imgmodallogo');
+          var captionTextlogo = document.getElementById('captionlogo');
+          imglogo.onclick = function(){
+            modallogo.style.display = 'block';
+            modalImglogo.src = this.src;
+            captionTextlogo.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImglogo.onclick = function() {
+            modallogo.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalwelcomepage = document.getElementById('modalwelcomepage');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgwelcomepage = document.getElementById('imgwelcomepage');
+          var modalImgwelcomepage = document.getElementById('imgmodalwelcomepage');
+          var captionTextwelcomepage = document.getElementById('captionwelcomepage');
+          imgwelcomepage.onclick = function(){
+            modalwelcomepage.style.display = 'block';
+            modalImgwelcomepage.src = this.src;
+            captionTextwelcomepage.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgwelcomepage.onclick = function() {
+            modalwelcomepage.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalTrial_Design = document.getElementById('modalTrial_Design');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgTrial_Design = document.getElementById('imgTrial_Design');
+          var modalImgTrial_Design = document.getElementById('imgmodalTrial_Design');
+          var captionTextTrial_Design = document.getElementById('captionTrial_Design');
+          imgTrial_Design.onclick = function(){
+            modalTrial_Design.style.display = 'block';
+            modalImgTrial_Design.src = this.src;
+            captionTextTrial_Design.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgTrial_Design.onclick = function() {
+            modalTrial_Design.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaldata_collection = document.getElementById('modaldata_collection');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgdata_collection = document.getElementById('imgdata_collection');
+          var modalImgdata_collection = document.getElementById('imgmodaldata_collection');
+          var captionTextdata_collection = document.getElementById('captiondata_collection');
+          imgdata_collection.onclick = function(){
+            modaldata_collection.style.display = 'block';
+            modalImgdata_collection.src = this.src;
+            captionTextdata_collection.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgdata_collection.onclick = function() {
+            modaldata_collection.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalold_map = document.getElementById('modalold_map');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgold_map = document.getElementById('imgold_map');
+          var modalImgold_map = document.getElementById('imgmodalold_map');
+          var captionTextold_map = document.getElementById('captionold_map');
+          imgold_map.onclick = function(){
+            modalold_map.style.display = 'block';
+            modalImgold_map.src = this.src;
+            captionTextold_map.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgold_map.onclick = function() {
+            modalold_map.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaljuxtaposedex = document.getElementById('modaljuxtaposedex');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgjuxtaposedex = document.getElementById('imgjuxtaposedex');
+          var modalImgjuxtaposedex = document.getElementById('imgmodaljuxtaposedex');
+          var captionTextjuxtaposedex = document.getElementById('captionjuxtaposedex');
+          imgjuxtaposedex.onclick = function(){
+            modaljuxtaposedex.style.display = 'block';
+            modalImgjuxtaposedex.src = this.src;
+            captionTextjuxtaposedex.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgjuxtaposedex.onclick = function() {
+            modaljuxtaposedex.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalmaxwell = document.getElementById('modalmaxwell');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgmaxwell = document.getElementById('imgmaxwell');
+          var modalImgmaxwell = document.getElementById('imgmodalmaxwell');
+          var captionTextmaxwell = document.getElementById('captionmaxwell');
+          imgmaxwell.onclick = function(){
+            modalmaxwell.style.display = 'block';
+            modalImgmaxwell.src = this.src;
+            captionTextmaxwell.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgmaxwell.onclick = function() {
+            modalmaxwell.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalpeerlinck = document.getElementById('modalpeerlinck');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgpeerlinck = document.getElementById('imgpeerlinck');
+          var modalImgpeerlinck = document.getElementById('imgmodalpeerlinck');
+          var captionTextpeerlinck = document.getElementById('captionpeerlinck');
+          imgpeerlinck.onclick = function(){
+            modalpeerlinck.style.display = 'block';
+            modalImgpeerlinck.src = this.src;
+            captionTextpeerlinck.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgpeerlinck.onclick = function() {
+            modalpeerlinck.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalyieldplot2 = document.getElementById('modalyieldplot2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgyieldplot2 = document.getElementById('imgyieldplot2');
+          var modalImgyieldplot2 = document.getElementById('imgmodalyieldplot2');
+          var captionTextyieldplot2 = document.getElementById('captionyieldplot2');
+          imgyieldplot2.onclick = function(){
+            modalyieldplot2.style.display = 'block';
+            modalImgyieldplot2.src = this.src;
+            captionTextyieldplot2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgyieldplot2.onclick = function() {
+            modalyieldplot2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaltrevisan = document.getElementById('modaltrevisan');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgtrevisan = document.getElementById('imgtrevisan');
+          var modalImgtrevisan = document.getElementById('imgmodaltrevisan');
+          var captionTexttrevisan = document.getElementById('captiontrevisan');
+          imgtrevisan.onclick = function(){
+            modaltrevisan.style.display = 'block';
+            modalImgtrevisan.src = this.src;
+            captionTexttrevisan.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgtrevisan.onclick = function() {
+            modaltrevisan.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaljuxvssup = document.getElementById('modaljuxvssup');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgjuxvssup = document.getElementById('imgjuxvssup');
+          var modalImgjuxvssup = document.getElementById('imgmodaljuxvssup');
+          var captionTextjuxvssup = document.getElementById('captionjuxvssup');
+          imgjuxvssup.onclick = function(){
+            modaljuxvssup.style.display = 'block';
+            modalImgjuxvssup.src = this.src;
+            captionTextjuxvssup.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgjuxvssup.onclick = function() {
+            modaljuxvssup.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalold_map = document.getElementById('modalold_map');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgold_map = document.getElementById('imgold_map');
+          var modalImgold_map = document.getElementById('imgmodalold_map');
+          var captionTextold_map = document.getElementById('captionold_map');
+          imgold_map.onclick = function(){
+            modalold_map.style.display = 'block';
+            modalImgold_map.src = this.src;
+            captionTextold_map.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgold_map.onclick = function() {
+            modalold_map.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaljuxtaposedex = document.getElementById('modaljuxtaposedex');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgjuxtaposedex = document.getElementById('imgjuxtaposedex');
+          var modalImgjuxtaposedex = document.getElementById('imgmodaljuxtaposedex');
+          var captionTextjuxtaposedex = document.getElementById('captionjuxtaposedex');
+          imgjuxtaposedex.onclick = function(){
+            modaljuxtaposedex.style.display = 'block';
+            modalImgjuxtaposedex.src = this.src;
+            captionTextjuxtaposedex.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgjuxtaposedex.onclick = function() {
+            modaljuxtaposedex.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttempt1_2 = document.getElementById('modalAttempt1_2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt1_2 = document.getElementById('imgAttempt1_2');
+          var modalImgAttempt1_2 = document.getElementById('imgmodalAttempt1_2');
+          var captionTextAttempt1_2 = document.getElementById('captionAttempt1_2');
+          imgAttempt1_2.onclick = function(){
+            modalAttempt1_2.style.display = 'block';
+            modalImgAttempt1_2.src = this.src;
+            captionTextAttempt1_2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt1_2.onclick = function() {
+            modalAttempt1_2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttemp1_3 = document.getElementById('modalAttemp1_3');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttemp1_3 = document.getElementById('imgAttemp1_3');
+          var modalImgAttemp1_3 = document.getElementById('imgmodalAttemp1_3');
+          var captionTextAttemp1_3 = document.getElementById('captionAttemp1_3');
+          imgAttemp1_3.onclick = function(){
+            modalAttemp1_3.style.display = 'block';
+            modalImgAttemp1_3.src = this.src;
+            captionTextAttemp1_3.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttemp1_3.onclick = function() {
+            modalAttemp1_3.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalattempt2_new2 = document.getElementById('modalattempt2_new2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgattempt2_new2 = document.getElementById('imgattempt2_new2');
+          var modalImgattempt2_new2 = document.getElementById('imgmodalattempt2_new2');
+          var captionTextattempt2_new2 = document.getElementById('captionattempt2_new2');
+          imgattempt2_new2.onclick = function(){
+            modalattempt2_new2.style.display = 'block';
+            modalImgattempt2_new2.src = this.src;
+            captionTextattempt2_new2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgattempt2_new2.onclick = function() {
+            modalattempt2_new2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcolormap4 = document.getElementById('modalcolormap4');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcolormap4 = document.getElementById('imgcolormap4');
+          var modalImgcolormap4 = document.getElementById('imgmodalcolormap4');
+          var captionTextcolormap4 = document.getElementById('captioncolormap4');
+          imgcolormap4.onclick = function(){
+            modalcolormap4.style.display = 'block';
+            modalImgcolormap4.src = this.src;
+            captionTextcolormap4.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcolormap4.onclick = function() {
+            modalcolormap4.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrplot2 = document.getElementById('modalcorrplot2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrplot2 = document.getElementById('imgcorrplot2');
+          var modalImgcorrplot2 = document.getElementById('imgmodalcorrplot2');
+          var captionTextcorrplot2 = document.getElementById('captioncorrplot2');
+          imgcorrplot2.onclick = function(){
+            modalcorrplot2.style.display = 'block';
+            modalImgcorrplot2.src = this.src;
+            captionTextcorrplot2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrplot2.onclick = function() {
+            modalcorrplot2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrwithscat2 = document.getElementById('modalcorrwithscat2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrwithscat2 = document.getElementById('imgcorrwithscat2');
+          var modalImgcorrwithscat2 = document.getElementById('imgmodalcorrwithscat2');
+          var captionTextcorrwithscat2 = document.getElementById('captioncorrwithscat2');
+          imgcorrwithscat2.onclick = function(){
+            modalcorrwithscat2.style.display = 'block';
+            modalImgcorrwithscat2.src = this.src;
+            captionTextcorrwithscat2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrwithscat2.onclick = function() {
+            modalcorrwithscat2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrwithscat3 = document.getElementById('modalcorrwithscat3');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrwithscat3 = document.getElementById('imgcorrwithscat3');
+          var modalImgcorrwithscat3 = document.getElementById('imgmodalcorrwithscat3');
+          var captionTextcorrwithscat3 = document.getElementById('captioncorrwithscat3');
+          imgcorrwithscat3.onclick = function(){
+            modalcorrwithscat3.style.display = 'block';
+            modalImgcorrwithscat3.src = this.src;
+            captionTextcorrwithscat3.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrwithscat3.onclick = function() {
+            modalcorrwithscat3.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalold_map = document.getElementById('modalold_map');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgold_map = document.getElementById('imgold_map');
+          var modalImgold_map = document.getElementById('imgmodalold_map');
+          var captionTextold_map = document.getElementById('captionold_map');
+          imgold_map.onclick = function(){
+            modalold_map.style.display = 'block';
+            modalImgold_map.src = this.src;
+            captionTextold_map.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgold_map.onclick = function() {
+            modalold_map.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaljuxtaposedex = document.getElementById('modaljuxtaposedex');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgjuxtaposedex = document.getElementById('imgjuxtaposedex');
+          var modalImgjuxtaposedex = document.getElementById('imgmodaljuxtaposedex');
+          var captionTextjuxtaposedex = document.getElementById('captionjuxtaposedex');
+          imgjuxtaposedex.onclick = function(){
+            modaljuxtaposedex.style.display = 'block';
+            modalImgjuxtaposedex.src = this.src;
+            captionTextjuxtaposedex.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgjuxtaposedex.onclick = function() {
+            modaljuxtaposedex.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcategories = document.getElementById('modalcategories');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcategories = document.getElementById('imgcategories');
+          var modalImgcategories = document.getElementById('imgmodalcategories');
+          var captionTextcategories = document.getElementById('captioncategories');
+          imgcategories.onclick = function(){
+            modalcategories.style.display = 'block';
+            modalImgcategories.src = this.src;
+            captionTextcategories.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcategories.onclick = function() {
+            modalcategories.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttempt1_2 = document.getElementById('modalAttempt1_2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt1_2 = document.getElementById('imgAttempt1_2');
+          var modalImgAttempt1_2 = document.getElementById('imgmodalAttempt1_2');
+          var captionTextAttempt1_2 = document.getElementById('captionAttempt1_2');
+          imgAttempt1_2.onclick = function(){
+            modalAttempt1_2.style.display = 'block';
+            modalImgAttempt1_2.src = this.src;
+            captionTextAttempt1_2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt1_2.onclick = function() {
+            modalAttempt1_2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttemp1_3 = document.getElementById('modalAttemp1_3');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttemp1_3 = document.getElementById('imgAttemp1_3');
+          var modalImgAttemp1_3 = document.getElementById('imgmodalAttemp1_3');
+          var captionTextAttemp1_3 = document.getElementById('captionAttemp1_3');
+          imgAttemp1_3.onclick = function(){
+            modalAttemp1_3.style.display = 'block';
+            modalImgAttemp1_3.src = this.src;
+            captionTextAttemp1_3.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttemp1_3.onclick = function() {
+            modalAttemp1_3.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalattempt2_new2 = document.getElementById('modalattempt2_new2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgattempt2_new2 = document.getElementById('imgattempt2_new2');
+          var modalImgattempt2_new2 = document.getElementById('imgmodalattempt2_new2');
+          var captionTextattempt2_new2 = document.getElementById('captionattempt2_new2');
+          imgattempt2_new2.onclick = function(){
+            modalattempt2_new2.style.display = 'block';
+            modalImgattempt2_new2.src = this.src;
+            captionTextattempt2_new2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgattempt2_new2.onclick = function() {
+            modalattempt2_new2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcolormap4 = document.getElementById('modalcolormap4');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcolormap4 = document.getElementById('imgcolormap4');
+          var modalImgcolormap4 = document.getElementById('imgmodalcolormap4');
+          var captionTextcolormap4 = document.getElementById('captioncolormap4');
+          imgcolormap4.onclick = function(){
+            modalcolormap4.style.display = 'block';
+            modalImgcolormap4.src = this.src;
+            captionTextcolormap4.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcolormap4.onclick = function() {
+            modalcolormap4.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrplot2 = document.getElementById('modalcorrplot2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrplot2 = document.getElementById('imgcorrplot2');
+          var modalImgcorrplot2 = document.getElementById('imgmodalcorrplot2');
+          var captionTextcorrplot2 = document.getElementById('captioncorrplot2');
+          imgcorrplot2.onclick = function(){
+            modalcorrplot2.style.display = 'block';
+            modalImgcorrplot2.src = this.src;
+            captionTextcorrplot2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrplot2.onclick = function() {
+            modalcorrplot2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrwithscat2 = document.getElementById('modalcorrwithscat2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrwithscat2 = document.getElementById('imgcorrwithscat2');
+          var modalImgcorrwithscat2 = document.getElementById('imgmodalcorrwithscat2');
+          var captionTextcorrwithscat2 = document.getElementById('captioncorrwithscat2');
+          imgcorrwithscat2.onclick = function(){
+            modalcorrwithscat2.style.display = 'block';
+            modalImgcorrwithscat2.src = this.src;
+            captionTextcorrwithscat2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrwithscat2.onclick = function() {
+            modalcorrwithscat2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrwithscat3 = document.getElementById('modalcorrwithscat3');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrwithscat3 = document.getElementById('imgcorrwithscat3');
+          var modalImgcorrwithscat3 = document.getElementById('imgmodalcorrwithscat3');
+          var captionTextcorrwithscat3 = document.getElementById('captioncorrwithscat3');
+          imgcorrwithscat3.onclick = function(){
+            modalcorrwithscat3.style.display = 'block';
+            modalImgcorrwithscat3.src = this.src;
+            captionTextcorrwithscat3.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrwithscat3.onclick = function() {
+            modalcorrwithscat3.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcategories = document.getElementById('modalcategories');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcategories = document.getElementById('imgcategories');
+          var modalImgcategories = document.getElementById('imgmodalcategories');
+          var captionTextcategories = document.getElementById('captioncategories');
+          imgcategories.onclick = function(){
+            modalcategories.style.display = 'block';
+            modalImgcategories.src = this.src;
+            captionTextcategories.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcategories.onclick = function() {
+            modalcategories.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcategories = document.getElementById('modalcategories');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcategories = document.getElementById('imgcategories');
+          var modalImgcategories = document.getElementById('imgmodalcategories');
+          var captionTextcategories = document.getElementById('captioncategories');
+          imgcategories.onclick = function(){
+            modalcategories.style.display = 'block';
+            modalImgcategories.src = this.src;
+            captionTextcategories.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcategories.onclick = function() {
+            modalcategories.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalattempt2_new2 = document.getElementById('modalattempt2_new2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgattempt2_new2 = document.getElementById('imgattempt2_new2');
+          var modalImgattempt2_new2 = document.getElementById('imgmodalattempt2_new2');
+          var captionTextattempt2_new2 = document.getElementById('captionattempt2_new2');
+          imgattempt2_new2.onclick = function(){
+            modalattempt2_new2.style.display = 'block';
+            modalImgattempt2_new2.src = this.src;
+            captionTextattempt2_new2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgattempt2_new2.onclick = function() {
+            modalattempt2_new2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalattempt2_new2 = document.getElementById('modalattempt2_new2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgattempt2_new2 = document.getElementById('imgattempt2_new2');
+          var modalImgattempt2_new2 = document.getElementById('imgmodalattempt2_new2');
+          var captionTextattempt2_new2 = document.getElementById('captionattempt2_new2');
+          imgattempt2_new2.onclick = function(){
+            modalattempt2_new2.style.display = 'block';
+            modalImgattempt2_new2.src = this.src;
+            captionTextattempt2_new2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgattempt2_new2.onclick = function() {
+            modalattempt2_new2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalattempt2_new2 = document.getElementById('modalattempt2_new2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgattempt2_new2 = document.getElementById('imgattempt2_new2');
+          var modalImgattempt2_new2 = document.getElementById('imgmodalattempt2_new2');
+          var captionTextattempt2_new2 = document.getElementById('captionattempt2_new2');
+          imgattempt2_new2.onclick = function(){
+            modalattempt2_new2.style.display = 'block';
+            modalImgattempt2_new2.src = this.src;
+            captionTextattempt2_new2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgattempt2_new2.onclick = function() {
+            modalattempt2_new2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalattempt2_new2 = document.getElementById('modalattempt2_new2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgattempt2_new2 = document.getElementById('imgattempt2_new2');
+          var modalImgattempt2_new2 = document.getElementById('imgmodalattempt2_new2');
+          var captionTextattempt2_new2 = document.getElementById('captionattempt2_new2');
+          imgattempt2_new2.onclick = function(){
+            modalattempt2_new2.style.display = 'block';
+            modalImgattempt2_new2.src = this.src;
+            captionTextattempt2_new2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgattempt2_new2.onclick = function() {
+            modalattempt2_new2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrplot2 = document.getElementById('modalcorrplot2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrplot2 = document.getElementById('imgcorrplot2');
+          var modalImgcorrplot2 = document.getElementById('imgmodalcorrplot2');
+          var captionTextcorrplot2 = document.getElementById('captioncorrplot2');
+          imgcorrplot2.onclick = function(){
+            modalcorrplot2.style.display = 'block';
+            modalImgcorrplot2.src = this.src;
+            captionTextcorrplot2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrplot2.onclick = function() {
+            modalcorrplot2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrplot2 = document.getElementById('modalcorrplot2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrplot2 = document.getElementById('imgcorrplot2');
+          var modalImgcorrplot2 = document.getElementById('imgmodalcorrplot2');
+          var captionTextcorrplot2 = document.getElementById('captioncorrplot2');
+          imgcorrplot2.onclick = function(){
+            modalcorrplot2.style.display = 'block';
+            modalImgcorrplot2.src = this.src;
+            captionTextcorrplot2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrplot2.onclick = function() {
+            modalcorrplot2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrplot2 = document.getElementById('modalcorrplot2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrplot2 = document.getElementById('imgcorrplot2');
+          var modalImgcorrplot2 = document.getElementById('imgmodalcorrplot2');
+          var captionTextcorrplot2 = document.getElementById('captioncorrplot2');
+          imgcorrplot2.onclick = function(){
+            modalcorrplot2.style.display = 'block';
+            modalImgcorrplot2.src = this.src;
+            captionTextcorrplot2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrplot2.onclick = function() {
+            modalcorrplot2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrplot2 = document.getElementById('modalcorrplot2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrplot2 = document.getElementById('imgcorrplot2');
+          var modalImgcorrplot2 = document.getElementById('imgmodalcorrplot2');
+          var captionTextcorrplot2 = document.getElementById('captioncorrplot2');
+          imgcorrplot2.onclick = function(){
+            modalcorrplot2.style.display = 'block';
+            modalImgcorrplot2.src = this.src;
+            captionTextcorrplot2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrplot2.onclick = function() {
+            modalcorrplot2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrwithscat2 = document.getElementById('modalcorrwithscat2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrwithscat2 = document.getElementById('imgcorrwithscat2');
+          var modalImgcorrwithscat2 = document.getElementById('imgmodalcorrwithscat2');
+          var captionTextcorrwithscat2 = document.getElementById('captioncorrwithscat2');
+          imgcorrwithscat2.onclick = function(){
+            modalcorrwithscat2.style.display = 'block';
+            modalImgcorrwithscat2.src = this.src;
+            captionTextcorrwithscat2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrwithscat2.onclick = function() {
+            modalcorrwithscat2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrwithscat3 = document.getElementById('modalcorrwithscat3');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrwithscat3 = document.getElementById('imgcorrwithscat3');
+          var modalImgcorrwithscat3 = document.getElementById('imgmodalcorrwithscat3');
+          var captionTextcorrwithscat3 = document.getElementById('captioncorrwithscat3');
+          imgcorrwithscat3.onclick = function(){
+            modalcorrwithscat3.style.display = 'block';
+            modalImgcorrwithscat3.src = this.src;
+            captionTextcorrwithscat3.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrwithscat3.onclick = function() {
+            modalcorrwithscat3.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrwithscat2 = document.getElementById('modalcorrwithscat2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrwithscat2 = document.getElementById('imgcorrwithscat2');
+          var modalImgcorrwithscat2 = document.getElementById('imgmodalcorrwithscat2');
+          var captionTextcorrwithscat2 = document.getElementById('captioncorrwithscat2');
+          imgcorrwithscat2.onclick = function(){
+            modalcorrwithscat2.style.display = 'block';
+            modalImgcorrwithscat2.src = this.src;
+            captionTextcorrwithscat2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrwithscat2.onclick = function() {
+            modalcorrwithscat2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrwithscat3 = document.getElementById('modalcorrwithscat3');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrwithscat3 = document.getElementById('imgcorrwithscat3');
+          var modalImgcorrwithscat3 = document.getElementById('imgmodalcorrwithscat3');
+          var captionTextcorrwithscat3 = document.getElementById('captioncorrwithscat3');
+          imgcorrwithscat3.onclick = function(){
+            modalcorrwithscat3.style.display = 'block';
+            modalImgcorrwithscat3.src = this.src;
+            captionTextcorrwithscat3.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrwithscat3.onclick = function() {
+            modalcorrwithscat3.style.display = 'none';
           }
 </script>
 
