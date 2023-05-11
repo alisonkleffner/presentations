@@ -1,0 +1,160 @@
+---
+title: "Visualization and Modeling of Multivariate Data in Environmental Applications"
+subtitle: "PhD Final Examination"
+author: "Alison Kleffner"
+date: "Department of Statistics, University of Nebraska - Lincoln"
+output:
+  xaringan::moon_reader:
+    seal: true
+    includes:
+      after_body:
+        "js-addins.html"
+    #mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+    css: ["default", "metropolis-fonts", "metropolis" ,"css/modal.css", "css/sizeformat.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightlines: true
+      countIncrementalSlides: true
+---
+class:primary
+
+```{r, child = "style.Rmd"}
+```
+
+
+```{r setup, echo = FALSE, message = FALSE, warning = FALSE}
+# Packages
+library(emoji)
+library(purrr)
+library(tidyverse)
+library(gridExtra)
+library(nullabor)
+library(scales)
+library(knitr)
+library(kableExtra)
+library(RefManageR)
+library(iconr)
+library(fontawesome)
+library(shiny)
+
+# download_fontawesome()
+
+# References
+bib <- ReadBib("bib/thesis.bib")
+ui <- "- "
+
+# R markdown options
+knitr::opts_chunk$set(echo = FALSE, 
+                      message = FALSE, 
+                      warning = FALSE, 
+                      cache = TRUE,
+                      dpi = 300)
+options(htmltools.dir.version = FALSE)
+options(knitr.kable.NA = '')
+```
+
+```{r, include = F, eval = T, cache = T}
+clean_file_name <- function(x) {
+  basename(x) %>% str_remove("\\..*?$") %>% str_remove_all("[^[A-z0-9_]]")
+}
+img_modal <- function(src, alt = "", id = clean_file_name(src), other = "") {
+  
+  other_arg <- paste0("'", as.character(other), "'") %>%
+    paste(names(other), ., sep = "=") %>%
+    paste(collapse = " ")
+  
+  js <- glue::glue("<script>
+        /* Get the modal*/
+          var modal{id} = document.getElementById('modal{id}');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var img{id} = document.getElementById('img{id}');
+          var modalImg{id} = document.getElementById('imgmodal{id}');
+          var captionText{id} = document.getElementById('caption{id}');
+          img{id}.onclick = function(){{
+            modal{id}.style.display = 'block';
+            modalImg{id}.src = this.src;
+            captionText{id}.innerHTML = this.alt;
+          }}
+          /* When the user clicks on the modalImg, close it*/
+          modalImg{id}.onclick = function() {{
+            modal{id}.style.display = 'none';
+          }}
+</script>")
+  
+  html <- glue::glue(
+     " <!-- Trigger the Modal -->
+<img id='img{id}' src='{src}' alt='{alt}' {other_arg}>
+<!-- The Modal -->
+<div id='modal{id}' class='modal'>
+  <!-- Modal Content (The Image) -->
+  <img class='modal-content' id='imgmodal{id}'>
+  <!-- Modal Caption (Image Text) -->
+  <div id='caption{id}' class='modal-caption'></div>
+</div>
+"
+  )
+  write(js, file = "js-addins.html", append = T)
+  return(html)
+}
+# Clean the file out at the start of the compilation
+write("", file = "js-addins.html")
+```
+
+# Outline
+
+
+`r fa_i("arrows")` 
+
+`r fa_i("list")`
+
+`r fa_i("info")` 
+
+`r fa_i("info")` 
+
+`r fa_i("ruler")` 
+
+`r fa_i("ruler")`
+
+`r fa_i("check-double")`
+
+`r fa_i("spinner")`
+
+---
+class:primary
+# References
+
+<font size="2">
+```{r, print_refs1, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
+print(bib[[c("schreyer_elastic_2006", "badgley_1961", "key_detectability_1993", "guo_improved_2021", "gpgp_pkg", "peterson_evaluating_2011", "bouillon_producing_2015", "rohrs_algorithm_2012", "kim_analyzing_2005", "kodinariya_2013", "ansari_spatiotemporal_2020")]], 
+      .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
+      )
+```
+</font>
+
+---
+class:primary
+# References
+<font size="2">
+```{r, print_refs2, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
+print(bib[[c("vecchia1988estimation", "willmes_pan-arctic_2015", "steinley_kmeans_2006", "spacetime_wilke_2019")]], 
+      .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
+      )
+```
+
+Wikle, C.K., Zammit-Mangion, A., and Cressie, N. (2019). Spatio-Temporal Statistics with R. Chapman & Hall/CRC, Boca Raton, FL.
+
+</font>
+
+
+---
+class:inverse
+<br>
+<br>
+<br>
+.center[
+# Questions?
+<br>
+<br>
+
+]
