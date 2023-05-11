@@ -262,14 +262,14 @@ class:primary
 
 + With a projected increase in future crop demand, researchers are conducting studies on crop input application to increase yield, focusing on sustainability (Tilman, Balzer, Hill, and Befort, 2011) 
 + Crop Input Example: Nitrogen Fertilizer
-  - Nitrogen is an essential component of food production as it is a component of amino acids, the building blocks of proteins, and allows plants to photosynthesize efficiently (Maheswari, Murthy, and Shanker, 2017)  
-  - Unfortunately, nearly half of the nitrogen fertilizer supplied to the field is not used by the crops, resulting in excess nitrogen in the ecosystem (Billen, Garnier, and Lassaletta, 2013) 
+  - Nitrogen is an essential component of food production as allows plants to photosynthesize efficiently (Maheswari, Murthy, and Shanker, 2017)  
+  - Nearly half of the nitrogen fertilizer supplied to the field is not used by the crops (Billen, Garnier, and Lassaletta, 2013) 
   - This excess nitrogen can be harmful
 + Hence, research needs to be conducted on determining input rates that increase crop yield, and are also more sustainable.
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgtractor' src='images/tractor.png' alt='Tractor' width='30%'&gt;
+&lt;img id='imgtractor' src='images/tractor.png' alt='Tractor' width='40%'&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modaltractor' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -385,13 +385,11 @@ class:primary
 
 **Step 3**: Explain the optimal management decisions, accounting for various factors
 
---
 
 **How**: create a user interface, designed around explaining machine learning output to non-experts
   - Build trust in models
   - Learn how crop yield responds to different input application rates, field characteristics, and weather to hopefully increase profits. 
   
---
   
 **One way to do this**: Visually explore the relationship between input application and yield through a graph
   - Show the spatial correlations between the application/treatment and yield in a way that is understandable to farmers and consultants. 
@@ -440,7 +438,7 @@ class:primary
 &lt;/div&gt;
 
 
-An Example of two versions of this plot currently given to farmers/crop consultants in DIFM reports
+Examples of two versions of this plot currently given to farmers/crop consultants in DIFM reports
 
 ]
 
@@ -460,7 +458,6 @@ class:primary
 Plenty of other iterations of trial design/yield maps used in the literature. Here's some examples
 ]
 
---
 
 .pull-left[
 .center[
@@ -543,7 +540,6 @@ class:primary
   - Benefits: less issues with visual clutter and easier to create
   - Drawbacks: comparative burden is placed on the user
   
---
 
 + **Superimposed graphs**: multiple objects in same coordinate system (Gleicher, Albers, Walker, et al., 2011)
   - Benefits: Easier to compare as users can use perception rather than memory
@@ -611,18 +607,15 @@ class:primary
 Northern European ancestry. 
   - Difficult to discriminate between these colors (Wong, 2011) 
   
---
 
 + Stop-Light Color Scheme
   - Yellow has a highlighting effect
   - Univariate Scale more appropriate (magnitude only)
   
---
 
 + Same Color scheme for multiple variables
   - May cause confusion
   
---
 
 + Rainbow Color Scheme 
   - No inherent ordering of magnitude (Light and Bartlein, 2004) 
@@ -636,7 +629,6 @@ Number of categorical scales should be limited to **5-7 categories** (Miller, 19
 .pull-left[
 - Due to working memory limits (Macdonald, 1999)
   + Harder for the user to distinguish between colors and remember the meaning of colors. 
-  + More difficult to associate a color with the correct yield category 
 - The load on the user’s working memory leads to an increase in the time it takes for the user to comprehend the plot (Huang, Eades, and Hong, 2009)
 ].pull-right[  
   
@@ -707,7 +699,6 @@ class:primary
 + Interactive plot with *leaflet* (Cheng, Karambelkar, and Xie, 2022)
   - Can add and remove trial plot layer
 
---
 
 Work that still needs to be done:
 + Color needs some work
@@ -729,13 +720,13 @@ class:primary
 .pull-left[
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgattempt2_new2' src='images/attempt2_new2.jpeg' alt='Second Iteration' width='120%'&gt;
+&lt;img id='imgattempt2' src='images/attempt2.png' alt='Second Iteration' =''&gt;
 &lt;!-- The Modal --&gt;
-&lt;div id='modalattempt2_new2' class='modal'&gt;
+&lt;div id='modalattempt2' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
-  &lt;img class='modal-content' id='imgmodalattempt2_new2'&gt;
+  &lt;img class='modal-content' id='imgmodalattempt2'&gt;
   &lt;!-- Modal Caption (Image Text) --&gt;
-  &lt;div id='captionattempt2_new2' class='modal-caption'&gt;&lt;/div&gt;
+  &lt;div id='captionattempt2' class='modal-caption'&gt;&lt;/div&gt;
 &lt;/div&gt;
 ]
 ].pull-right[
@@ -772,12 +763,12 @@ class:primary
 ]].pull-right[
 
 + **Benefit**: relationship between the variables is most important (Elmer, 2013) 
-+ 3x3 scale as more categories hinder interpretation (Leonowicz, 2003)  
-  - + Quantiles to split the data (Biesecker, Zahnd, Brandt, Adams, and J.M, 2020)   
++ Recommendation: 3x3 scale (Leonowicz, 2003)  
+  - + Quantiles (Biesecker, Zahnd, Brandt, Adams, and J.M, 2020)   
 + **Focus**: diagonal
   - Diagonal: grayscale color scheme. 
   - Upper left and lower right: complementary color scheme (Strode, Morgan, Thornton, Mesev, Rau, Shortes, and Johnson, 2020)
-+ **Drawback**: Lose more detailed information, due to quantile creation
++ **Drawback**: Lose more detailed information
 
 
 ]
@@ -790,29 +781,29 @@ class:primary
 
 .center[
 
-Directly encode correlations between As Applied treatments and Yield
+**Directly encode correlations between As Applied treatments and Yield**
 
 ]
 
 .pull-left[
 **Benefit**: Direct statement of correlation while maintaining some spatial orientation 
-  - Explicit Encoding comparative Layout (Gleicher, Albers, Walker, et al., 2011)
-+ Bivariate color scale to show difference between positive and negative correlation values
+  - Explicit Encoding Layout (Gleicher, Albers, Walker, et al., 2011)
++ Bivariate color scale
 + Maintain some spatial information. 
   - Correlations may be impacted by field location
+  
 **Drawback**: complicated to connect the displayed relationship back to the data (Gleicher, Albers, Walker, et al., 2011)
- - Lose context
 
 ].pull-right[
 
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgcorrplot2' src='images/corr-plot2.png' alt='Correlation' width='150%'&gt;
+&lt;img id='imgcorrplot' src='images/corr-plot.png' alt='Correlation' =''&gt;
 &lt;!-- The Modal --&gt;
-&lt;div id='modalcorrplot2' class='modal'&gt;
+&lt;div id='modalcorrplot' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
-  &lt;img class='modal-content' id='imgmodalcorrplot2'&gt;
+  &lt;img class='modal-content' id='imgmodalcorrplot'&gt;
   &lt;!-- Modal Caption (Image Text) --&gt;
-  &lt;div id='captioncorrplot2' class='modal-caption'&gt;&lt;/div&gt;
+  &lt;div id='captioncorrplot' class='modal-caption'&gt;&lt;/div&gt;
 &lt;/div&gt;
 ]
 
@@ -873,8 +864,6 @@ class:inverse
 ---
 class:primary
 #Conclusion/Future Work
-
-We can use the  knowledge about perception to improve visualizations of geospatial experiment results.
 
 **Next Step**: Obtain Feedback from those using the plots (farmers, crop consultants)
 - Eventually do some testing between the layouts to see which farmers are reading more accurately.
@@ -8792,6 +8781,91 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgcorrwithscat3.onclick = function() {
             modalcorrwithscat3.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaltractor = document.getElementById('modaltractor');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgtractor = document.getElementById('imgtractor');
+          var modalImgtractor = document.getElementById('imgmodaltractor');
+          var captionTexttractor = document.getElementById('captiontractor');
+          imgtractor.onclick = function(){
+            modaltractor.style.display = 'block';
+            modalImgtractor.src = this.src;
+            captionTexttractor.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgtractor.onclick = function() {
+            modaltractor.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalattempt2_new2 = document.getElementById('modalattempt2_new2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgattempt2_new2 = document.getElementById('imgattempt2_new2');
+          var modalImgattempt2_new2 = document.getElementById('imgmodalattempt2_new2');
+          var captionTextattempt2_new2 = document.getElementById('captionattempt2_new2');
+          imgattempt2_new2.onclick = function(){
+            modalattempt2_new2.style.display = 'block';
+            modalImgattempt2_new2.src = this.src;
+            captionTextattempt2_new2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgattempt2_new2.onclick = function() {
+            modalattempt2_new2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrplot2 = document.getElementById('modalcorrplot2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrplot2 = document.getElementById('imgcorrplot2');
+          var modalImgcorrplot2 = document.getElementById('imgmodalcorrplot2');
+          var captionTextcorrplot2 = document.getElementById('captioncorrplot2');
+          imgcorrplot2.onclick = function(){
+            modalcorrplot2.style.display = 'block';
+            modalImgcorrplot2.src = this.src;
+            captionTextcorrplot2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrplot2.onclick = function() {
+            modalcorrplot2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalattempt2 = document.getElementById('modalattempt2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgattempt2 = document.getElementById('imgattempt2');
+          var modalImgattempt2 = document.getElementById('imgmodalattempt2');
+          var captionTextattempt2 = document.getElementById('captionattempt2');
+          imgattempt2.onclick = function(){
+            modalattempt2.style.display = 'block';
+            modalImgattempt2.src = this.src;
+            captionTextattempt2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgattempt2.onclick = function() {
+            modalattempt2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrplot = document.getElementById('modalcorrplot');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrplot = document.getElementById('imgcorrplot');
+          var modalImgcorrplot = document.getElementById('imgmodalcorrplot');
+          var captionTextcorrplot = document.getElementById('captioncorrplot');
+          imgcorrplot.onclick = function(){
+            modalcorrplot.style.display = 'block';
+            modalImgcorrplot.src = this.src;
+            captionTextcorrplot.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrplot.onclick = function() {
+            modalcorrplot.style.display = 'none';
           }
 </script>
 
