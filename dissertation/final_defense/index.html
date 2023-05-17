@@ -10,6 +10,8 @@
     <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
     <link href="libs/font-awesome/css/all.min.css" rel="stylesheet" />
     <link href="libs/font-awesome/css/v4-shims.min.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/modal.css" type="text/css" />
     <link rel="stylesheet" href="css/sizeformat.css" type="text/css" />
   </head>
@@ -232,9 +234,9 @@ body {
 # Outline
 
 
-<i class="fas fa-arrows-up-down-left-right" role="presentation" aria-label="arrows-up-down-left-right icon"></i> 
+<i class="fas fa-arrows-up-down-left-right" role="presentation" aria-label="arrows-up-down-left-right icon"></i> Motivation and Background
 
-<i class="fas fa-list" role="presentation" aria-label="list icon"></i>
+<i class="fas fa-list" role="presentation" aria-label="list icon"></i> Research Objectives
 
 <i class="fas fa-info" role="presentation" aria-label="info icon"></i> 
 
@@ -244,9 +246,1386 @@ body {
 
 <i class="fas fa-ruler" role="presentation" aria-label="ruler icon"></i>
 
-<i class="fas fa-check-double" role="presentation" aria-label="check-double icon"></i>
+<i class="fas fa-check-double" role="presentation" aria-label="check-double icon"></i> References
 
-<i class="fas fa-spinner" role="presentation" aria-label="spinner icon"></i>
+<i class="fas fa-spinner" role="presentation" aria-label="spinner icon"></i> Conclusion and Future Work
+
+---
+class:primary
+# Motivation
+
+The rapid development of certain technology, like global position systems
+(GPS) and geographic information systems (GIS), has led to a dramatic
+increase in the amount of spatial and spatio-temporal data collected (Ansari,
+Ahmad, Khan, Bhushan, et al., 2020; D. Li, Wang, Yuan, &amp; Li, 2016). This
+growth has necessitated the development of new techniques to work with this
+data due to accounting for relationships in space and over time. Further, due
+to the amount of data, efficient techniques and visualizations are also
+necessary (D. Li et al., 2016; Yuan, Sun, Zhao, Li, &amp; Wang, 2017). These
+approaches can then be used in many domains, like environmental, as spatial
+and spatio-temporal data are a key component.
+
+---
+class:primary
+# Spatial Data
+
+Spatial data relates to a geographical area or location. An example of
+spatial data is the amount of rainfall at different locations in a city. Patterns
+in spatial data follow Tobler’s first law of geography, meaning everything is
+related but near things are more related than distant things (Klippel, Hardisty, &amp; Li, 2011). Often, more than one attribute is measured at a
+location. So in our example, rainfall and temperature may be recorded,
+creating a multivariate data set. However, due to the variables occupying the
+same space, multivariate spatial data is complex, making it especially
+difficult to visualize due to issues like clutter (He, Tao, Wang, &amp; Lin, 2019).
+
+---
+class:primary
+#Background
+
++ With a projected increase in future crop demand, researchers are conducting studies on crop input application to increase yield, focusing on sustainability  
++ Crop Input Example: Nitrogen Fertilizer
+  - Nitrogen is an essential component of food production as allows plants to photosynthesize efficiently   
+  - Nearly half of the nitrogen fertilizer supplied to the field is not used by the crops  
+  - This excess nitrogen can be harmful
++ Hence, research needs to be conducted on determining input rates that increase crop yield, and are also more sustainable.
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgtractor' src='images/tractor.png' alt='Tractor' width='40%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modaltractor' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodaltractor'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captiontractor' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+]
+
+
+---
+class:primary
+# Data Intensive Farm Management (DIFM)
+
+**Problem**: Address inefficient application of crop inputs to farm fields worldwide
+
+**Methods**: On-Farm Precision Experimentation
+- Conduct experiments using site-specific inputs 
+- GPS-reliant technology 
+
+**Goals**
+- Develop infrastructure to develop and analyze these experiments
+- Find economically optimal application rate to increase profit while reducing environmental impacts. 
+
+[Project Website](http://difm-cig.org/)
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imglogo' src='images/logo.png' alt='Data Intensive Farma Management (DIFM) Project' width='30%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modallogo' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodallogo'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionlogo' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+]
+
+???
+
+A common issue with farming practices across the world is the inefficient application of crop inputs, like nitrogen, on farm fields. This inefficient application of crop input impacts profit and the environment. For example nitrogen fertilizer input that is not used by crops can pollute water bodies by causing the overstimulation of growth of aquatic plants and algae, impacting light. Thus, research needs to be conducted to study this issue so steps can be taken to address it. The purpose of the data intensive farm management project, a grant funded by the USDA-NRCS, is to generate the data necessary to understand this effect of crop input application on yield, so a more optimal level can be chosen. The data is generated through the use of On-Farm precision experimentation (OFPE). In an OFPE experiments are conducted on a field using field specific inputs where the experiment is implemented using a tractor that has GPS-reliant technology. DIFM wants to develop infrastructure (including the development of apps) to easily develop and analyze these experiments, with the end goal of finding economically optimal application rate to increase profits while reducing environmental impacts.  
+
+---
+class:primary
+# Trial Design
+
+**Step 1**: Develop infrastructure to develop experiments using site-specific inputs
+
+[Trial Design Tool](http://trialdesign.difm-cig.org/)
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgwelcomepage' src='images/welcome-page.png' alt='Homepage of Trial Design Tool' width='45%'&gt;
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgTrial_Design' src='images/Trial_Design.png' alt='Example of A Trial Design' width='45%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalwelcomepage' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalwelcomepage'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionwelcomepage' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalTrial_Design' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalTrial_Design'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionTrial_Design' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+
+**Output**: shape files that can be put into a farmer's tractor that allows them to carry out the experiments
+
+
+???
+
+First step is to develop the infrastructure to develop the experiments using site specific inputs. This was a project that I worked on last spring, where I developed a R Shiny app that is used as a prototype. In this tool, farmers are able to create site-specific experiments, using their field boundaries, desired plot lengths, and desired treatment variations they wanted to test. After the trial is designed, they can download shape files that they can put into their tractor to implement the study. Note: I did not write the background code for the trial design, my work was more on the design and usability. I helped enough with the background code to get everything to work. 
+
+---
+class:primary
+# Data Collection
+
+**Step 2**: Conduct experiments and collect data
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgdata_collection' src='images/data_collection.png' alt='How Data is collected' width='45%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modaldata_collection' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodaldata_collection'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captiondata_collection' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+Examples of Data Collected:
+- As-applied
+- Yield
+- Location of measurements
+
+???
+
+This picture is an example of how the data we are using is collected. The blue/white dots in the middle are the treatment and the location at which the treatment is applied to the field. They yellow dots are locations where a crop is harvested and a yield measurement is taken. This process utilizes GPS and other equipment on tractors to collect the information. Examples, of some of the data that is collected that we utilize is the location of measurements and treatment, yield measure, and as-applied (amount of treatment that is actually applied to the field. Goal is the trial design, but sometimes a lag between different trial plots)
+
+
+---
+class:primary
+# Explain the Results
+
+**Step 3**: Explain the optimal management decisions, accounting for various factors
+
+
+**How**: create a user interface, designed around explaining machine learning output to non-experts
+  - Build trust in models
+  - Learn how crop yield responds to different input application rates, field characteristics, and weather to hopefully increase profits. 
+  
+  
+**One way to do this**: Visually explore the relationship between input application and yield through a graph
+  - Show the spatial correlations between the application/treatment and yield in a way that is understandable to farmers and consultants. 
+  - Develop perceptually optimal plots that communication this relationship. 
+  
+???
+
+The last general step in this process is to analyze the data and explain the optimal decision management decisions, accounting for various factors (like weather, environmental and economics conditions). So we want to develop an user interface that is designed around explaining the machine learning output to non-experts to help inform decision. We want to do this to build farmer's trust in the models (we are providing them with useful information). Additionally, as a whole this will help us learn how crop yield responds to different input application rates, field characteristics, and weather with the goal to help increase profits. Currently we are working on the pieces to help explain these results, before putting it all together in an R Shiny app. One of these pieces of information that needs to be explained is to explore the relationship between input application and yield. As seen in previous parts of this presentation, there is a great benefit of plotting data, so we wanted to explore this relationship visually. Hence, we want to show the spatial correlations between the treatment application and yield in a way that is understandable to farmers and consultants. Additionally, we need to develop these plots so they are perceptually optimal.  
+
+---
+class:inverse
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+# Current Maps 
+]
+
+---
+class:primary
+#Yield Maps Currently Used by DIFM
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgold_map' src='images/old_map.png' alt='Example 1' width='30%'&gt;
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgjuxtaposedex' src='images/juxtaposed-ex.jpeg' alt='Example 2' width='50%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalold_map' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalold_map'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionold_map' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modaljuxtaposedex' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodaljuxtaposedex'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionjuxtaposedex' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+
+Examples of two versions of this plot currently given to farmers/crop consultants in DIFM reports
+
+]
+
+???
+
+Currently, here is two examples of the plots that are currently given in DIFM reports to farmers. 
+
+Ask the audience what principles of good graphics these violate?
+
+---
+class:primary
+# Other Maps in  the Literature
+
+.center[
+Plenty of other iterations of trial design/yield maps used in the literature. Here's some examples
+]
+
+
+.pull-left[
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgmaxwell' src='images/maxwell.png' alt='Maxwell et al (2018)' width='70%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalmaxwell' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalmaxwell'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionmaxwell' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgpeerlinck' src='images/peerlinck.png' alt='Peerlinck et al (2018)' width='70%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalpeerlinck' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalpeerlinck'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionpeerlinck' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+]
+
+
+].pull-right[
+
+.center[
+
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgyieldplot2' src='images/yield-plot2.png' alt='Searcy (1997)' width='70%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalyieldplot2' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalyieldplot2'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionyieldplot2' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgtrevisan' src='images/trevisan.png' alt='Trevisan et al (2021)' width='60%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modaltrevisan' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodaltrevisan'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captiontrevisan' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+]
+
+]
+
+???
+
+Plenty of other yield maps that have been used in the literature, so while don't give trial plot information still provides yield information over space. These have some of the same problems as seen before. The first interpolates, so losing the site-specific information and continuous yield may not make sense. The second, has too many categories and coloring is not great (rainbow). The last plot uses suboptimal color scheme (bivariate color scheme in inappropriate, also doesn't go through white, members of the target audience (farmers) may be more likely to be colorblind, so avoid reds and greens)
+
+---
+class:primary
+#Juxtaposed vs Superimposed Graphs
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgjuxvssup' src='images/jux-vs-sup.png' alt='Juxtaposed vs Superimposed Comparative Graphs (Gleicher, Albers, Walker, et al., 2011)' width='50%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modaljuxvssup' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodaljuxvssup'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionjuxvssup' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
++ **Juxtaposed graphs**: side by side 
+  - Benefits: less issues with visual clutter and easier to create
+  - Drawbacks: comparative burden is placed on the user
+  
+
++ **Superimposed graphs**: multiple objects in same coordinate system 
+  - Benefits: Easier to compare as users can use perception rather than memory
+  - Drawbacks: clutter
+  - Useful when spatial location is a key component of the comparison 
+  
+
+
+---
+class:primary
+#Data Clutter with Superimposed Graphs
+
+**Drawback**: clutter
++ General principle of graphical design: show data clearly 
++ Overlap - multiple dots on top of one another
+  - Obscures true number of dots, harder to find patterns
+  - Visual cues, like color, becomes partially obstructed, thereby reducing search efficiency 
+  - Can overburden human perception, causing errors in performing tasks 
+  
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgold_map' src='images/old_map.png' alt='Example 1' width='20%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalold_map' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalold_map'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionold_map' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+???
+
+One of the first things we need to decided is whether we want to juxtapose or superimpose the trial design and yield information. Juxtaposed graphs are side by side plots that tend to have less issues with visual clutter and they are easier to create. A drawback however, is that the comparative burden is placed on the user (have to match things up correctly). The other option is to superimpose the graphs where multiple objects are in the same coordinate system. The benefit is that it is easier to compare as users can use perception rather than memory. These are additionally useful when spatial location is a key component of the comparison. However, the major drawback, as we saw with the DIFM plot is that clutter is a major issue. We decided to use superimposed graphs since spatial location is a key component for us and may be hard to compare in two different plot (hard to match up)
+
+---
+class:primary
+#Comparative Burden with Superimposed Graphs
+
+**Drawback**: Most of the comparative burden placed on users' memory
++ A mental image is relied on for comparison in these scenarios, as the user moves their
+eyes between images (shifting focus). 
+  - The plot contents may not be accurately formed in working memory, leading to potential errors when deriving patterns  
++ Lack of visual cues for locations
+
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgjuxtaposedex' src='images/juxtaposed-ex.jpeg' alt='Juxtaposed Example' width='35%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modaljuxtaposedex' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodaljuxtaposedex'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionjuxtaposedex' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+]
+
+---
+class:primary
+#Color
+
++ Red-green color blindness is experienced by approximately 8% of men and 0.5% of women of
+Northern European ancestry. 
+  - Difficult to discriminate between these colors  
+  
+
++ Stop-Light Color Scheme
+  - Yellow has a highlighting effect
+  - Univariate Scale more appropriate (magnitude only)
+  
+
++ Same Color scheme for multiple variables
+  - May cause confusion
+  
+
++ Rainbow Color Scheme 
+  - No inherent ordering of magnitude  
+  - Extremes are visually close (red and violet)  
+
+---
+class:primary
+#Number of Categories
+
+Number of categorical scales should be limited to **5-7 categories** 
+.pull-left[
+- Due to working memory limits 
+  + Harder for the user to distinguish between colors and remember the meaning of colors. 
+- The load on the user’s working memory leads to an increase in the time it takes for the user to comprehend the plot 
+].pull-right[  
+  
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgcategories' src='images/categories.png' alt='Example 1' width='50%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalcategories' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalcategories'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captioncategories' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]  
+
+]
+
+**Next:** Redesign Process
+
+???
+
+Additionally, the number of categories on our scale for yield should be limited to 5-7 categories (DIFM plot and other plot 2 violates this). The categories need to be limited due to working memory limits and it makes it harder for the user to distinguish between colors and remember the meaning of what group the color is representing (might associate a color with the incorrect category). This load on the user's working memory lead to an increase in time for them to comprehend the plot, which is not something we want especially for non-experts. 
+
+Next I am going to walk through our redesign process (still currently in progress).
+
+
+---
+class:inverse
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+# Redesign
+]
+
+---
+class:primary
+#Redesign: Color Blending
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgAttempt1_2' src='images/Attempt1_2.png' alt='First Iteration' width='35%'&gt;
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgattempt2' src='images/attempt2.png' alt='Second Iteration' width='25%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalAttempt1_2' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalAttempt1_2'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionAttempt1_2' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalattempt2' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalattempt2'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionattempt2' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+**Focus**: Superimpose the treatment and yield plots, while reducing the clutter 
++ Use of transparency to show both at same time
++ Interactive plot with *leaflet* 
+  - Can add and remove trial plot layer
+
+
++ Working on blending using transparency
++ Categorical Groups for both variables
+  - Trial Design treatment is a factor
+  - Reduce number of colors for yield
+  - Use quantiles to determine categories for yield 
+
+
+???
+
+My first iteration of the plot I was working on superimposing both the treatment and yield plot, but reducing some of the clutter. The yield points were transformed into polygons using the distance between points, swath width, and heading (green space around plot). This was done so each polygon is on it's own unique space and not overlapping. Used transparency for the trial plot to try and blend the colors with the trial design plot. Here is used an interactive plot using the leaflet package in R, which creates interactive web maps with JavaScript. This can be beneficial as can add/remove the trial plot so can only see the yield results if desirable.
+
+So the plot now is not cluttered in the sense there's overlapping data points, but there's still work that needs to be done. For example, the coloring needs more work. Due to colorblind, red and green may not be good colors to use, they are just the default for those working on this project. Additionally, color blending still needs to be worked on to help differentiate high treatment/high yield, etc. Finally, the shading piece may not be as effective for paper plots, which some farmers may want to use. So eventually need to think how to do this with no color.  
+
+---
+class:primary
+#Redesign: Bivariate Color Plot
+
+**Alternative to color blending**
+
+.center[
+
+.pull-left[
+
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgcolormap4' src='images/color-map4.png' alt='Bivariate Color Map' width='100%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalcolormap4' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalcolormap4'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captioncolormap4' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]].pull-right[
+
++ **Benefit**: relationship between the variables is most important  
++ Recommendation: 3x3 scale   
+  - + Quantiles    
++ **Focus**: diagonal
+  - Diagonal: grayscale color scheme. 
+  - Upper left and lower right: complementary color scheme 
++ **Drawback**: Lose more detailed information
+
+
+]
+
+
+
+---
+class:primary
+#Redesign: Correlation
+
+.center[
+
+**Directly encode correlations between As Applied treatments and Yield**
+
+]
+
+.pull-left[
+**Benefit**: Direct statement of correlation while maintaining some spatial orientation 
+  - Explicit Encoding Layout 
++ Bivariate color scale
++ Maintain some spatial information. 
+  - Correlations may be impacted by field location
+  
+**Drawback**: complicated to connect the displayed relationship back to the data 
+
+].pull-right[
+
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgcorrplot' src='images/corr-plot.png' alt='Correlation' =''&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalcorrplot' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalcorrplot'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captioncorrplot' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+
+???
+
+Finally we can directly state the correlation between As Applied and Yield (explain how as applied differs from treatment design), while also keeping some of the spatial relationship. Can see for the most part, as application amount increase, so does the yield. Some areas where the inverse is true (more investigation, maybe lower, dirt differs, etc). Used a bivariate color scheme go through white color for zero. Maintaining some spatial information is importanct as correlation is impacted by field location. Eventually this information can be added to the plot (interactivity)
+
+---
+class:primary
+# Redesign: Correlation with Scatterplot
+
+**Add some context back**
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgcorrwithscat2' src='images/corr-with-scat2.png' alt='Hybrid Layout' width='40%'&gt;
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgcorrwithscat3' src='images/corr-with-scat3.png' alt='Hybrid Layout with Hover' width='40%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalcorrwithscat2' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalcorrwithscat2'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captioncorrwithscat2' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalcorrwithscat3' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalcorrwithscat3'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captioncorrwithscat3' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
++ A standard practice to overcome weakness of decontextualization is utilizing a hybrid comparative layout
+(LYi et al., 2021). 
+  - Juxtaposed scatterplot to the correlation plot
+(combining the layouts of juxtaposition and explicit encoding). 
++ Interactivity connects the juxtaposed plots, where hovering over a trial plot in the correlation map highlights the corresponding points in the scatterplot used in the correlation calculation.
+
+[Link](https://alisonkleffner.github.io/yield-map-redesign/interactive-example.html)
+
+---
+class:inverse
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+# Future Work
+]
+
+---
+class:primary
+#Conclusion/Future Work
+
+**Next Step**: Obtain Feedback from those using the plots (farmers, crop consultants)
+- Eventually do some testing between the layouts to see which farmers are reading more accurately.
+
+
+**Eventually**: Develop a R Shiny app to explaining machine learning output to non-experts
+- Build trust in the model predictions without requiring farmers to learn the details of statistical modeling.
+- Will utilize these plots, among others
+  + For example, accuracy of as applied treatment compared to trial design
+
+
+---
+class:inverse
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+# Spatio-Temporal Data: Trajectories
+]
+
+---
+class:primary
+# What are Trajectories?
+
+
+---
+class:inverse
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+# Trajectory Visual Diagnostics
+]
+
+---
+class:primary
+# Background
+
+Due to technological developments, like GPS and remote sensing,
+trajectory data has become easier to collect, making it increasingly common.
+However, working with trajectories is complicated due to dimensions in space
+and time, while also have a diverse set of properties, like speed (Slava
+Kisilevich et al., 2009). Of common interest when studying trajectories is to
+discover patterns within the movements to help understand the trajectories
+behavior with the proper kind of visualization (G. Andrienko et al., 2007;
+Ansari et al., 2020). Through visualization during exploratory data analysis
+(EDA), the researcher can effectively gain insight into the data in a short
+amount of time (Harold, Lorenzoni, Shipley, &amp; Coventry, 2016). 
+However, due to the dimensionality of trajectories, they are difficult to
+visualize, so the visualizations used to explore this data may not necessarily
+meet the guidelines for effective graphics. Nevertheless, they can still provide
+some insight into the underlying dynamics driving movement.
+To begin, we use commonly suggested plots for trajectories to explore
+their movements during EDA. These plots can sometimes be messy, but we
+can still gain insight into the movement from them. Trajectories are a
+complicated to work with, so it may be beneficial to extract features from
+the raw data that can summarize a trajectory’s movement (Slava Kisilevich
+et al., 2009). These features can then be used more easily in methods, like
+clustering algorithms, since certain requirements no longer need to be met,
+like equal length trajectories. Using visualization to motivate feature
+creation has become increasingly common. For example, Wu, Zimányi, Sakr,
+&amp; Torp (2022) developed a process called TPoSTE, which created features
+based on the visualization of events to separate a boat’s trajectory into
+periods of fishing or sailing. Hence, we can create features that provide a
+quantitative summary of the movement a user sees in the plots. Feature
+selection was then investigated to see if all the derived numerical features
+were relevant. We first discuss different exploratory graphics for trajectory
+data and their relation with graphical perception. Then we explore our
+approach using a case study: Arctic sea ice trajectories.
+
+---
+class:primary
+# Data
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgrgps_grid' src='images/rgps_grid.jpg' alt='Example of initial grid used to track movement (Peterson &amp; Sulsky, 2011)' width='25%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalrgps_grid' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalrgps_grid'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionrgps_grid' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
++ Sea Ice can be tracked by NASA's RADARSTAT Geophysical Processor System (RGPS), which uses synthetic aperture radar (SAR) images to track the trajectory of points on an ice sheet.
++ Each grid cell vertex is assigned an identifier (cell `\(j=1,...,n\)`) which is used for tracking
++ Set of all trajectories: 
+
+.center[
+`\(\mathcal{G} = \left\{g_1, ..., g_n\right\}\)` `\(\\\)`
+where `\(g_{j} = \left\{s_{jt} : t \in \mathcal{T}_j\right\}\)`, `\(\mathcal{T}_j \subset \left\{t=1...T\right\}\)` a collection of time points where `\(cell_j\)` is observed `\(\\\)`
+and `\({s_{jt}}\)` = `\((x_{jt}, y_{jt})\)`
+]
+
++ For our study region, `\(n\)` = 8811, and `\(T\)` = 22
+
+???
+
+An illustration of RGPS data is
+shown in Fig. 7.1, where satellite views of a 50 km by 50 km region of Arctic ice
+have a 5 km × 5 km RGPS grid superimposed. The time span between the first
+and second observation is 18.5 h and the satellite images were recorded in mid May
+2002. 
+
+---
+class:primary
+# Gestalt Principles of Visual Perception
+
+Graphics of trajectories for exploration purposes typically do not meet
+guidelines for good graphics, like clutter reduction and choice of color
+schemes. Nevertheless, we can still use them to perceive patterns in the data
+(N. Andrienko et al., 2003). The perceived patterns are then linked to prior knowledge to find meaning in the new information (G. Andrienko et al.,
+2007). To help identify these patterns, we can use the gestalt principles of
+visual perception to process large amounts of data efficiently. The gestalt
+principles of visual perception help explain how humans naturally perceive
+objects and organize them in groups (Wagemans, Elder, et al., 2012;
+Wagemans, Feldman, et al., 2012). For example, in static representations of
+movement, the law of similarity says that people group items that look
+similar. Hence trajectories with similar shapes and orientations might be
+perceived as a group (Chalbi et al., 2020). In other words, trajectories
+moving in the same direction with a similar form are perceived to be alike.
+Therefore, an underlying process may be affecting those trajectories the
+same.
+We also use the gestalt principles when examining animated graphics.
+While the principle of similarity still applies, the gestalt principle specifically
+for animations is the principle of common fate. The principle of common fate
+says that people tend to group objects that share a dynamic behavior, as
+they might be affected by the same underlying processes (Alais, 1998; Chalbi
+et al., 2020). A more specific interpretation says that trajectories moving
+with the same velocity (speed/direction) are perceived as a group since they
+have a similar “fate” (Chalbi et al., 2020; Koffka, 1922). For example, people
+tend to perceive birds flying together as part of the same flock. So, while we
+might not consider exploratory graphics as well-designed, they are still
+helpful during EDA due to items like the gestalt principles of visual
+perception allow a researcher to still gain new insight into the data.
+
+
+
+---
+class:primary
+
+# Static Trajectory Plot
+
+
++ Directed line segments, with the direction of each trajectory denoted by an arrow at the end (N. Andrienko et al., 2000). 
+  - Shows the displacement and direction of each trajectory over time.
++ This plot violates several guidelines for effective visualization, making it
+unsuitable for presentation.
+  - However, using the principle of similarity helps a viewer easily group trajectories that look to move with a similar form in the same direction over time
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgtraj_plot' src='images/traj_plot.png' alt='Plot of id trajectories to show movement and directiction of movement' width='60%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modaltraj_plot' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodaltraj_plot'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captiontraj_plot' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+---
+class:primary
+# Animated Trajectory Plot
+
+[Link](https://alisonkleffner.github.io/yield-map-redesign/traj.html)
+
++ (Griffin, MacEachren, Hardisty, Steiner, and Li, 2006) found that animated plots allowed a user to identify moving clusters easier than multiple windows of static plots. 
++ Our animation shows the incremental progress of each trajectory over time by plotting the new
+location at each time step and connecting the new observation with the previous through a line segment. 
++ New information:
+  - see a trajectory speeding up or slowing down through the length of the added line segments. 
+  - Associate a movement with a particular day
++ Using Gestalt principle of common fate we can see that trajectories moving with a similar velocity occurs in contiguous patches.
+
+---
+class:primary
+
+# Deriving Numerical Features: Bounding Box
+
++ We create a bounding box around for each trajectory to represent it's movement
++ Bounding Box Features:
+  - Length travel in x/y between the minimum and maximum location 
+.center[
+( `\(x_{max} - x_{min}\)` and `\(y_{max} - y_{min}\)`)]
+  - Length travel in x/y between latest and earliest observation 
+  .center[
+  ( `\(x_{1} - x_{0}\)` and `\(y_{1} - y_{0}\)`)]
+  - Angle of movement (direction)
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgboundingbox' src='images/bounding-box.png' alt='Points used to Develop Bounding Box' width='25%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalboundingbox' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalboundingbox'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionboundingbox' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+---
+class:primary
+# Deriving Numerical Features: Wiggle
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgwiggle' src='images/wiggle.png' alt='Wiggle Calculation' width='50%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalwiggle' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalwiggle'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionwiggle' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
++ Each trajectory consists of multiple known points connected with line segments. 
++ To determine the amount of “wiggle”, we decided to estimate the total length of the line segment (arc length).
+  - The longer trajectories have moved farther over the time frame. 
++ We can estimate the total length by first finding the distance between each set of two connected
+points (yellow lines).
+  - We then added all the calculated distances to estimate the total length of the trajectory.
+
+
+
+---
+class:primary
+# Feature Selection
+
++ Not all characteristics of a trajectory are simultaneously relevant when
+analyzing trajectories (Rinzivillo, Pedreschi, Nanni, and Giannotti, 2008)
++ Assess redundancy and relevancy
+  - Clustering algorithm to assign trajectories to groups of similar
+movements seen in the exploratory graphics. 
+  - No label information to help evaluate feature importance (Li, Cheng, Wang, Morstatter, Trevino, Tang, and Liu, 2017).
+  - Used visualization to make judgements
+    + Redundant:  adding it to the clustering algorithm, while
+holding the other variables constant, does not change the assigned clusters.
+    + Relevance: help with cluster continuity
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgfeaturecomparison4' src='images/feature-comparison4.png' alt='Subsets of Clusters to Determine Relevant Features' width='35%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalfeaturecomparison4' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalfeaturecomparison4'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionfeaturecomparison4' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+
+---
+class:inverse
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+.center[
+# Non-Stationary Model for Arctic Sea Ice
+]
+
+---
+class:primary
+
+# Importance of Arctic Sea Ice Crack Detection
+
++ Sea ice serves as a barrier between the atmosphere and the ocean
++ Cracks, or leads, may form in the ice pack due to dynamic processes
+  - Allows for heat from the ocean to be transferred to the atmosphere (Schreyer, Sulsky, Munday, Coon, and Kwok, 2006). 
+  - Accounts for half of the heat flux between the ocean and atmosphere (Badgley, 1961)
++ Previous ice crack detection methods can generally be split into two categories: thermal and deformation. 
+  
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgIceChunk' src='images/Ice Chunk.png' alt=' Artice Sea Ice with Crack' width='40%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalIceChunk' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalIceChunk'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionIceChunk' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+---
+class:primary
+
+# Thermal Ice Crack Detection Methods
+
++ Surface temperature differs between a crack and the surrounding sea ice.
++ Use thermal channels of the Advanced Very High Resolution Radiometer (AVHRR) (Key, Stone, Maslanik, and Ellefsen, 1993) 
+  - Heavily dependent on clear skies and has issues with thin ice
++ Methods have been proposed to reduce the impact of clouds 
+  - Moderate Resolution Imagery Spectroradiometer (MODIS)  (Willmes and Heinemann, 2015)
+  - Fuzzy Cloud Artifact (FCAF) (Willmes and Heinemann, 2015)
+  - Passive Microwave Data  (Rohrs, Kaleschke, Brohan, and Siligam, 2012)
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgthermal_example' src='images/thermal_example.png' alt=' Output from a Thermal Algorithm (Rohrs et al, 2012)' width='30%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalthermal_example' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalthermal_example'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionthermal_example' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+
+---
+class:primary
+
+# Deformation Ice Crack Detection Methods
+
++ Deformation of a cell is determined by the motion of points (Peterson and Sulsky, 2011)
+    - Finds the determinant of deformation gradient to measure accumulated area changes to show persistent diverged regions. 
+    - Can find the size and orientation of the crack
++ Drawbacks
+  - Need complete set of space-time observations to calculate deformation
+  - The error in the deformation product may be strongly underestimated (Bouillon and Rampal, 2015)
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imggrid_example' src='images/grid_example.png' alt='Example of how find deformation (Peterson &amp; Sulsky, 2011)' width='40%'&gt;
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgkinematic_crack_algorithm' src='images/kinematic_crack_algorithm.png' alt='Example of detected leads using a kinematic crack algorithm which uses the determinant of the deformation gradient to detect leads (Peterson &amp; Sulsky, 2011)' width='30%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalgrid_example' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalgrid_example'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captiongrid_example' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalkinematic_crack_algorithm' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalkinematic_crack_algorithm'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionkinematic_crack_algorithm' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+]
+
+---
+class:primary
+
+# Research Objectives
+
+1. Develop a ice crack detection method
+  - Using only the movement of the ice sheet
+  - Cluster trajectories based on movement
+  - The boundaries would be possible locations of ice cracks
+2. Develop a spatio-temporal (ST) interpolation method to predict missing points along a trajectory 
+  - Using the information gained from the clustering
+  - Take into account nonstationarity of the data (estimate parameters separately for each cluster)
+
+
+---
+class:primary
+
+#Clustering with K-Means
+
++ Bounding Box features were used as input into K-Means clustering, which partitions n observations into k clusters.
++ **Drawback**: Number of Clusters must be specified prior to clustering
+  - Number of Clusters determined using the Silhouette statistic
++ Silhouette Statistic (Kodinariya and Makwana, 2013)
+  - Compares within cluster distances to between cluster distances
+  
+.center[
+`\(s(i) = \frac{b(i) - a(i)}{max(a(i), b(i))}\)` `\(\\\)`
+where `\(a(i)\)` is the average distance between i and observations in same cluster and `\(b(i)\)` is the minimum average distance between i and observations in other clusters
+]
+
+  - Number of clusters determined by largest average silhoutte width
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgsilhouette_stat' src='images/silhouette_stat.jpeg' alt='Silhouette Statistic for Clustering using all of our Data' width='40%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalsilhouette_stat' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalsilhouette_stat'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionsilhouette_stat' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+
+---
+class:primary
+
+#Missing Data
+
++ In general, data collection methods may fail, leaving positions in a trajectory unknown or may want to overcome sampling sparseness
++ In our case, missing data is due to the path of the satellite used to collect the data. 
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgdata_example' src='images/data_example.jpeg' alt='Missing Data within the Ice Sheet' width='80%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modaldata_example' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodaldata_example'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captiondata_example' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+
+
+---
+class:primary
+
+#Linear Interpolation for Ice Trajectory
+
+
++ Popular due to ease in implementation
++ Performs best for linearly moving objects, or can potentially work well with non-linear data if sample in high enough frequency (Guo, Mou, Chen, and Chen, 2021)
+  
+&lt;br&gt;
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imglinpic2' src='images/lin-pic2.png' alt='How Linear Interpolation Calculates a Missing Point' width='60%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modallinpic2' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodallinpic2'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionlinpic2' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+
+---
+class:primary
+
+#Finding Spatio-Temporal Neighbors
+
++ Using information gained from clusters to identify spatio-temporal neighbors
+  - Know how other points in the cluster move at a time point
+  - Would expect a missing point  at that time to move similarly to known points
++ Cluster by Weekly trajectories to find neighbors
+  - Cluster by weeks because as smallest interval could detect movement and also see some continuity between weeks
+  - Intersection of one week's clusters with the week before and week after would create groups
+  - Each member of a group is then a spatio-temporal neighbor of the other members as they are in a similar geographic region over time. 
+  
+---
+class:primary
+
+#INLA
+
+---
+class:primary
+
+#Spatio-Temporal Interpolation
+
++ Individual model developed for both x and y using the GpGp package in R (Guinness and Katzfuss, 2021)
+  - Within each intersection
+  - Due this to take into account the nonstationarity
++ Use Exponential Space-Time covariance function (as previously defined)
++ Output is the maximum likelihood estimates for the mean and covariance parameters
++ Use model to determine estimates of missing locations
+  - From the conditional expectation of the model
+  - Create a grid encompassing our ice sheet to give a starting value of the missing locations. 
+  - The model will then adjust this location using its known neighbors
+
+
+---
+class:primary
+
+#Ice Data Results: Clustering Using All Data
+
+
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgall_clust' src='images/all_clust.jpeg' alt='Clustering of Ice Trajectories using All Data in Bounding Box' width='90%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalall_clust' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalall_clust'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionall_clust' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+---
+class:primary
+
+#Clustering Using All Data - Comparison
+
++  Can compare our results with deformation data found using a kinematic crack algorithm calculated using the RGPS data (Peterson and Sulsky, 2011)
+  - Note that this image does not represent the true ice cracks, just the cracks determined by this method.
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgallweekscomp' src='images/all-weeks-comp.png' alt='Comparison of Our Results to a Kinematic Crack Algorithm' width='80%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalallweekscomp' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalallweekscomp'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionallweekscomp' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+
+
+---
+class:primary
+
+#Ice Data Results: Clustering by Week
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgclust_by_week' src='images/clust_by_week.png' alt='Results of Clustering by Week' width='90%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalclust_by_week' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalclust_by_week'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionclust_by_week' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+]
+
+---
+class:primary
+
+#Overall Interpolation Results along Border
+
++ Took a random hold-out of points along the border, as the border may be locations of irregular movement
+  
+&lt;table style="width:80%;"&gt;
+&lt;caption&gt;RMSE for Interpolation Methods along Border&lt;/caption&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="empty-cells: hide;border-bottom:hidden;" colspan="1"&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Intersection&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Linear&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Week &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Y &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Y &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;color: black !important;background-color: yellow !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;color: black !important;background-color: yellow !important;"&gt; 3.215 &lt;/td&gt;
+   &lt;td style="text-align:right;color: black !important;background-color: yellow !important;"&gt; 3.408 &lt;/td&gt;
+   &lt;td style="text-align:right;color: black !important;background-color: yellow !important;"&gt; 1.606 &lt;/td&gt;
+   &lt;td style="text-align:right;color: black !important;background-color: yellow !important;"&gt; 4.494 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.539 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.256 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.034 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.832 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.031 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.958 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.991 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.240 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+class:primary
+
+#Interpolation Results along Border for Week 2
+
+&lt;table style="width:80%;"&gt;
+&lt;caption&gt;RMSE for Interpolation Methods by cluster for Week 2&lt;/caption&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="empty-cells: hide;border-bottom:hidden;" colspan="1"&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Intersection&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Linear&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Cluster &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 2.81 &lt;/td&gt;
+   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 3.04 &lt;/td&gt;
+   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 3.82 &lt;/td&gt;
+   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 5.19 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2.94 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2.96 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2.39 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.99 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2.94 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3.07 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1.46 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1.97 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3.26 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3.20 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1.32 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.54 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 4.14 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3.88 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.43 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.34 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+class:primary
+
+#Interpolation Results along Border by Week
+
++ Cluster 1: Data is More Spread out and not linear
++ Cluster 5: Data does not move much
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgw1_c1_traj' src='images/w1_c1_traj.jpeg' alt='Cluster Trajectories where our method performs the best' width='40%'&gt;
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgw2_c5_traj' src='images/w2_c5_traj.jpeg' alt='CCluster Trajectories where Linear Interpolation performs the best' width='40%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalw1_c1_traj' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalw1_c1_traj'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionw1_c1_traj' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalw2_c5_traj' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalw2_c5_traj'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionw2_c5_traj' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+]
+
+---
+class:primary
+
+#Coverage Proportion by Cluster
+
+&lt;br&gt;
+
+&lt;table style="width:75%;"&gt;
+&lt;caption&gt;&lt;b&gt;Coverage for Week 2&lt;/b&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Cluster &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 0.467 &lt;/td&gt;
+   &lt;td style="text-align:center;color: black !important;background-color: yellow !important;"&gt; 0.413 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.280 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.278 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.337 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.351 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.260 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.251 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.149 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.163 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+class:primary
+
+# Discussion of Methods
+
+**Clustering with Bounding Box:**
+
++ Advantages
+  - Provides information about how the data is moving
+  - Shown through simulations and the ice data to provide a reasonable estimation of the locations of cracks
++ Drawbacks
+  - Relies on a pre-defined number of clusters, which generally is not known
+  - Have a set number of cluster, so a limit on how many cluster boundaries, thus cracks.
+  
+**ST Interpolation with Intersection Models:**
+
++ Advantages
+  - Takes into account the nonstationarity of the data
+  - Showed some improvement, in terms of RMSE, over linear interpolation for curved data that is not highly sampled
+  - Able to estimate data on first and last day of a dataset, which linear interpolation is not able to do. 
+  - Able to calculate uncertainty
+  
+---
+class:primary
+
+#Comments on Model Development
+
++ Log-likelihood does not converge 
+  - Temporal range value is exceptionally large especially in comparison to the spatial range
++ Impractical Covariance Parameter estimates - large temporal range
+  - This may be due to only working with small amount of data that is not moving much over time
+  - With the simulated data, as more days were added to the dataset, the temporal range does slowly decrease
++ Potentially not a lot of data in the intersection
+  - Some intersections are small
+  - Need variation in time
+  
 
 ---
 class:primary
@@ -1210,6 +2589,618 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgboundingbox.onclick = function() {
             modalboundingbox.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaltractor = document.getElementById('modaltractor');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgtractor = document.getElementById('imgtractor');
+          var modalImgtractor = document.getElementById('imgmodaltractor');
+          var captionTexttractor = document.getElementById('captiontractor');
+          imgtractor.onclick = function(){
+            modaltractor.style.display = 'block';
+            modalImgtractor.src = this.src;
+            captionTexttractor.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgtractor.onclick = function() {
+            modaltractor.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modallogo = document.getElementById('modallogo');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imglogo = document.getElementById('imglogo');
+          var modalImglogo = document.getElementById('imgmodallogo');
+          var captionTextlogo = document.getElementById('captionlogo');
+          imglogo.onclick = function(){
+            modallogo.style.display = 'block';
+            modalImglogo.src = this.src;
+            captionTextlogo.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImglogo.onclick = function() {
+            modallogo.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalwelcomepage = document.getElementById('modalwelcomepage');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgwelcomepage = document.getElementById('imgwelcomepage');
+          var modalImgwelcomepage = document.getElementById('imgmodalwelcomepage');
+          var captionTextwelcomepage = document.getElementById('captionwelcomepage');
+          imgwelcomepage.onclick = function(){
+            modalwelcomepage.style.display = 'block';
+            modalImgwelcomepage.src = this.src;
+            captionTextwelcomepage.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgwelcomepage.onclick = function() {
+            modalwelcomepage.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalTrial_Design = document.getElementById('modalTrial_Design');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgTrial_Design = document.getElementById('imgTrial_Design');
+          var modalImgTrial_Design = document.getElementById('imgmodalTrial_Design');
+          var captionTextTrial_Design = document.getElementById('captionTrial_Design');
+          imgTrial_Design.onclick = function(){
+            modalTrial_Design.style.display = 'block';
+            modalImgTrial_Design.src = this.src;
+            captionTextTrial_Design.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgTrial_Design.onclick = function() {
+            modalTrial_Design.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaldata_collection = document.getElementById('modaldata_collection');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgdata_collection = document.getElementById('imgdata_collection');
+          var modalImgdata_collection = document.getElementById('imgmodaldata_collection');
+          var captionTextdata_collection = document.getElementById('captiondata_collection');
+          imgdata_collection.onclick = function(){
+            modaldata_collection.style.display = 'block';
+            modalImgdata_collection.src = this.src;
+            captionTextdata_collection.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgdata_collection.onclick = function() {
+            modaldata_collection.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalold_map = document.getElementById('modalold_map');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgold_map = document.getElementById('imgold_map');
+          var modalImgold_map = document.getElementById('imgmodalold_map');
+          var captionTextold_map = document.getElementById('captionold_map');
+          imgold_map.onclick = function(){
+            modalold_map.style.display = 'block';
+            modalImgold_map.src = this.src;
+            captionTextold_map.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgold_map.onclick = function() {
+            modalold_map.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaljuxtaposedex = document.getElementById('modaljuxtaposedex');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgjuxtaposedex = document.getElementById('imgjuxtaposedex');
+          var modalImgjuxtaposedex = document.getElementById('imgmodaljuxtaposedex');
+          var captionTextjuxtaposedex = document.getElementById('captionjuxtaposedex');
+          imgjuxtaposedex.onclick = function(){
+            modaljuxtaposedex.style.display = 'block';
+            modalImgjuxtaposedex.src = this.src;
+            captionTextjuxtaposedex.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgjuxtaposedex.onclick = function() {
+            modaljuxtaposedex.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalmaxwell = document.getElementById('modalmaxwell');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgmaxwell = document.getElementById('imgmaxwell');
+          var modalImgmaxwell = document.getElementById('imgmodalmaxwell');
+          var captionTextmaxwell = document.getElementById('captionmaxwell');
+          imgmaxwell.onclick = function(){
+            modalmaxwell.style.display = 'block';
+            modalImgmaxwell.src = this.src;
+            captionTextmaxwell.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgmaxwell.onclick = function() {
+            modalmaxwell.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalpeerlinck = document.getElementById('modalpeerlinck');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgpeerlinck = document.getElementById('imgpeerlinck');
+          var modalImgpeerlinck = document.getElementById('imgmodalpeerlinck');
+          var captionTextpeerlinck = document.getElementById('captionpeerlinck');
+          imgpeerlinck.onclick = function(){
+            modalpeerlinck.style.display = 'block';
+            modalImgpeerlinck.src = this.src;
+            captionTextpeerlinck.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgpeerlinck.onclick = function() {
+            modalpeerlinck.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalyieldplot2 = document.getElementById('modalyieldplot2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgyieldplot2 = document.getElementById('imgyieldplot2');
+          var modalImgyieldplot2 = document.getElementById('imgmodalyieldplot2');
+          var captionTextyieldplot2 = document.getElementById('captionyieldplot2');
+          imgyieldplot2.onclick = function(){
+            modalyieldplot2.style.display = 'block';
+            modalImgyieldplot2.src = this.src;
+            captionTextyieldplot2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgyieldplot2.onclick = function() {
+            modalyieldplot2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaltrevisan = document.getElementById('modaltrevisan');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgtrevisan = document.getElementById('imgtrevisan');
+          var modalImgtrevisan = document.getElementById('imgmodaltrevisan');
+          var captionTexttrevisan = document.getElementById('captiontrevisan');
+          imgtrevisan.onclick = function(){
+            modaltrevisan.style.display = 'block';
+            modalImgtrevisan.src = this.src;
+            captionTexttrevisan.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgtrevisan.onclick = function() {
+            modaltrevisan.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaljuxvssup = document.getElementById('modaljuxvssup');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgjuxvssup = document.getElementById('imgjuxvssup');
+          var modalImgjuxvssup = document.getElementById('imgmodaljuxvssup');
+          var captionTextjuxvssup = document.getElementById('captionjuxvssup');
+          imgjuxvssup.onclick = function(){
+            modaljuxvssup.style.display = 'block';
+            modalImgjuxvssup.src = this.src;
+            captionTextjuxvssup.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgjuxvssup.onclick = function() {
+            modaljuxvssup.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalold_map = document.getElementById('modalold_map');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgold_map = document.getElementById('imgold_map');
+          var modalImgold_map = document.getElementById('imgmodalold_map');
+          var captionTextold_map = document.getElementById('captionold_map');
+          imgold_map.onclick = function(){
+            modalold_map.style.display = 'block';
+            modalImgold_map.src = this.src;
+            captionTextold_map.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgold_map.onclick = function() {
+            modalold_map.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaljuxtaposedex = document.getElementById('modaljuxtaposedex');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgjuxtaposedex = document.getElementById('imgjuxtaposedex');
+          var modalImgjuxtaposedex = document.getElementById('imgmodaljuxtaposedex');
+          var captionTextjuxtaposedex = document.getElementById('captionjuxtaposedex');
+          imgjuxtaposedex.onclick = function(){
+            modaljuxtaposedex.style.display = 'block';
+            modalImgjuxtaposedex.src = this.src;
+            captionTextjuxtaposedex.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgjuxtaposedex.onclick = function() {
+            modaljuxtaposedex.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcategories = document.getElementById('modalcategories');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcategories = document.getElementById('imgcategories');
+          var modalImgcategories = document.getElementById('imgmodalcategories');
+          var captionTextcategories = document.getElementById('captioncategories');
+          imgcategories.onclick = function(){
+            modalcategories.style.display = 'block';
+            modalImgcategories.src = this.src;
+            captionTextcategories.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcategories.onclick = function() {
+            modalcategories.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttempt1_2 = document.getElementById('modalAttempt1_2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt1_2 = document.getElementById('imgAttempt1_2');
+          var modalImgAttempt1_2 = document.getElementById('imgmodalAttempt1_2');
+          var captionTextAttempt1_2 = document.getElementById('captionAttempt1_2');
+          imgAttempt1_2.onclick = function(){
+            modalAttempt1_2.style.display = 'block';
+            modalImgAttempt1_2.src = this.src;
+            captionTextAttempt1_2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt1_2.onclick = function() {
+            modalAttempt1_2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttemp1_3 = document.getElementById('modalAttemp1_3');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttemp1_3 = document.getElementById('imgAttemp1_3');
+          var modalImgAttemp1_3 = document.getElementById('imgmodalAttemp1_3');
+          var captionTextAttemp1_3 = document.getElementById('captionAttemp1_3');
+          imgAttemp1_3.onclick = function(){
+            modalAttemp1_3.style.display = 'block';
+            modalImgAttemp1_3.src = this.src;
+            captionTextAttemp1_3.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttemp1_3.onclick = function() {
+            modalAttemp1_3.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalattempt2 = document.getElementById('modalattempt2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgattempt2 = document.getElementById('imgattempt2');
+          var modalImgattempt2 = document.getElementById('imgmodalattempt2');
+          var captionTextattempt2 = document.getElementById('captionattempt2');
+          imgattempt2.onclick = function(){
+            modalattempt2.style.display = 'block';
+            modalImgattempt2.src = this.src;
+            captionTextattempt2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgattempt2.onclick = function() {
+            modalattempt2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcolormap4 = document.getElementById('modalcolormap4');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcolormap4 = document.getElementById('imgcolormap4');
+          var modalImgcolormap4 = document.getElementById('imgmodalcolormap4');
+          var captionTextcolormap4 = document.getElementById('captioncolormap4');
+          imgcolormap4.onclick = function(){
+            modalcolormap4.style.display = 'block';
+            modalImgcolormap4.src = this.src;
+            captionTextcolormap4.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcolormap4.onclick = function() {
+            modalcolormap4.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrplot = document.getElementById('modalcorrplot');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrplot = document.getElementById('imgcorrplot');
+          var modalImgcorrplot = document.getElementById('imgmodalcorrplot');
+          var captionTextcorrplot = document.getElementById('captioncorrplot');
+          imgcorrplot.onclick = function(){
+            modalcorrplot.style.display = 'block';
+            modalImgcorrplot.src = this.src;
+            captionTextcorrplot.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrplot.onclick = function() {
+            modalcorrplot.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrwithscat2 = document.getElementById('modalcorrwithscat2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrwithscat2 = document.getElementById('imgcorrwithscat2');
+          var modalImgcorrwithscat2 = document.getElementById('imgmodalcorrwithscat2');
+          var captionTextcorrwithscat2 = document.getElementById('captioncorrwithscat2');
+          imgcorrwithscat2.onclick = function(){
+            modalcorrwithscat2.style.display = 'block';
+            modalImgcorrwithscat2.src = this.src;
+            captionTextcorrwithscat2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrwithscat2.onclick = function() {
+            modalcorrwithscat2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrwithscat3 = document.getElementById('modalcorrwithscat3');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrwithscat3 = document.getElementById('imgcorrwithscat3');
+          var modalImgcorrwithscat3 = document.getElementById('imgmodalcorrwithscat3');
+          var captionTextcorrwithscat3 = document.getElementById('captioncorrwithscat3');
+          imgcorrwithscat3.onclick = function(){
+            modalcorrwithscat3.style.display = 'block';
+            modalImgcorrwithscat3.src = this.src;
+            captionTextcorrwithscat3.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrwithscat3.onclick = function() {
+            modalcorrwithscat3.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttempt1_2 = document.getElementById('modalAttempt1_2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt1_2 = document.getElementById('imgAttempt1_2');
+          var modalImgAttempt1_2 = document.getElementById('imgmodalAttempt1_2');
+          var captionTextAttempt1_2 = document.getElementById('captionAttempt1_2');
+          imgAttempt1_2.onclick = function(){
+            modalAttempt1_2.style.display = 'block';
+            modalImgAttempt1_2.src = this.src;
+            captionTextAttempt1_2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt1_2.onclick = function() {
+            modalAttempt1_2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalattempt2 = document.getElementById('modalattempt2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgattempt2 = document.getElementById('imgattempt2');
+          var modalImgattempt2 = document.getElementById('imgmodalattempt2');
+          var captionTextattempt2 = document.getElementById('captionattempt2');
+          imgattempt2.onclick = function(){
+            modalattempt2.style.display = 'block';
+            modalImgattempt2.src = this.src;
+            captionTextattempt2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgattempt2.onclick = function() {
+            modalattempt2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcolormap4 = document.getElementById('modalcolormap4');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcolormap4 = document.getElementById('imgcolormap4');
+          var modalImgcolormap4 = document.getElementById('imgmodalcolormap4');
+          var captionTextcolormap4 = document.getElementById('captioncolormap4');
+          imgcolormap4.onclick = function(){
+            modalcolormap4.style.display = 'block';
+            modalImgcolormap4.src = this.src;
+            captionTextcolormap4.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcolormap4.onclick = function() {
+            modalcolormap4.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrplot = document.getElementById('modalcorrplot');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrplot = document.getElementById('imgcorrplot');
+          var modalImgcorrplot = document.getElementById('imgmodalcorrplot');
+          var captionTextcorrplot = document.getElementById('captioncorrplot');
+          imgcorrplot.onclick = function(){
+            modalcorrplot.style.display = 'block';
+            modalImgcorrplot.src = this.src;
+            captionTextcorrplot.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrplot.onclick = function() {
+            modalcorrplot.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrwithscat2 = document.getElementById('modalcorrwithscat2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrwithscat2 = document.getElementById('imgcorrwithscat2');
+          var modalImgcorrwithscat2 = document.getElementById('imgmodalcorrwithscat2');
+          var captionTextcorrwithscat2 = document.getElementById('captioncorrwithscat2');
+          imgcorrwithscat2.onclick = function(){
+            modalcorrwithscat2.style.display = 'block';
+            modalImgcorrwithscat2.src = this.src;
+            captionTextcorrwithscat2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrwithscat2.onclick = function() {
+            modalcorrwithscat2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalcorrwithscat3 = document.getElementById('modalcorrwithscat3');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgcorrwithscat3 = document.getElementById('imgcorrwithscat3');
+          var modalImgcorrwithscat3 = document.getElementById('imgmodalcorrwithscat3');
+          var captionTextcorrwithscat3 = document.getElementById('captioncorrwithscat3');
+          imgcorrwithscat3.onclick = function(){
+            modalcorrwithscat3.style.display = 'block';
+            modalImgcorrwithscat3.src = this.src;
+            captionTextcorrwithscat3.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgcorrwithscat3.onclick = function() {
+            modalcorrwithscat3.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttempt1_2 = document.getElementById('modalAttempt1_2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt1_2 = document.getElementById('imgAttempt1_2');
+          var modalImgAttempt1_2 = document.getElementById('imgmodalAttempt1_2');
+          var captionTextAttempt1_2 = document.getElementById('captionAttempt1_2');
+          imgAttempt1_2.onclick = function(){
+            modalAttempt1_2.style.display = 'block';
+            modalImgAttempt1_2.src = this.src;
+            captionTextAttempt1_2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt1_2.onclick = function() {
+            modalAttempt1_2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalattempt2 = document.getElementById('modalattempt2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgattempt2 = document.getElementById('imgattempt2');
+          var modalImgattempt2 = document.getElementById('imgmodalattempt2');
+          var captionTextattempt2 = document.getElementById('captionattempt2');
+          imgattempt2.onclick = function(){
+            modalattempt2.style.display = 'block';
+            modalImgattempt2.src = this.src;
+            captionTextattempt2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgattempt2.onclick = function() {
+            modalattempt2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalwiggle = document.getElementById('modalwiggle');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgwiggle = document.getElementById('imgwiggle');
+          var modalImgwiggle = document.getElementById('imgmodalwiggle');
+          var captionTextwiggle = document.getElementById('captionwiggle');
+          imgwiggle.onclick = function(){
+            modalwiggle.style.display = 'block';
+            modalImgwiggle.src = this.src;
+            captionTextwiggle.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgwiggle.onclick = function() {
+            modalwiggle.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalfeaturecomparison4 = document.getElementById('modalfeaturecomparison4');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgfeaturecomparison4 = document.getElementById('imgfeaturecomparison4');
+          var modalImgfeaturecomparison4 = document.getElementById('imgmodalfeaturecomparison4');
+          var captionTextfeaturecomparison4 = document.getElementById('captionfeaturecomparison4');
+          imgfeaturecomparison4.onclick = function(){
+            modalfeaturecomparison4.style.display = 'block';
+            modalImgfeaturecomparison4.src = this.src;
+            captionTextfeaturecomparison4.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgfeaturecomparison4.onclick = function() {
+            modalfeaturecomparison4.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalwiggle = document.getElementById('modalwiggle');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgwiggle = document.getElementById('imgwiggle');
+          var modalImgwiggle = document.getElementById('imgmodalwiggle');
+          var captionTextwiggle = document.getElementById('captionwiggle');
+          imgwiggle.onclick = function(){
+            modalwiggle.style.display = 'block';
+            modalImgwiggle.src = this.src;
+            captionTextwiggle.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgwiggle.onclick = function() {
+            modalwiggle.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalfeaturecomparison4 = document.getElementById('modalfeaturecomparison4');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgfeaturecomparison4 = document.getElementById('imgfeaturecomparison4');
+          var modalImgfeaturecomparison4 = document.getElementById('imgmodalfeaturecomparison4');
+          var captionTextfeaturecomparison4 = document.getElementById('captionfeaturecomparison4');
+          imgfeaturecomparison4.onclick = function(){
+            modalfeaturecomparison4.style.display = 'block';
+            modalImgfeaturecomparison4.src = this.src;
+            captionTextfeaturecomparison4.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgfeaturecomparison4.onclick = function() {
+            modalfeaturecomparison4.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalwiggle = document.getElementById('modalwiggle');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgwiggle = document.getElementById('imgwiggle');
+          var modalImgwiggle = document.getElementById('imgmodalwiggle');
+          var captionTextwiggle = document.getElementById('captionwiggle');
+          imgwiggle.onclick = function(){
+            modalwiggle.style.display = 'block';
+            modalImgwiggle.src = this.src;
+            captionTextwiggle.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgwiggle.onclick = function() {
+            modalwiggle.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaltraj_plot = document.getElementById('modaltraj_plot');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgtraj_plot = document.getElementById('imgtraj_plot');
+          var modalImgtraj_plot = document.getElementById('imgmodaltraj_plot');
+          var captionTexttraj_plot = document.getElementById('captiontraj_plot');
+          imgtraj_plot.onclick = function(){
+            modaltraj_plot.style.display = 'block';
+            modalImgtraj_plot.src = this.src;
+            captionTexttraj_plot.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgtraj_plot.onclick = function() {
+            modaltraj_plot.style.display = 'none';
           }
 </script>
 
