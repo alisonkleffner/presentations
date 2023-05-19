@@ -1376,3 +1376,37 @@
             modaltraj_plot.style.display = 'none';
           }
 </script>
+<script>
+        /* Get the modal*/
+          var modaltrajectory = document.getElementById('modaltrajectory');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgtrajectory = document.getElementById('imgtrajectory');
+          var modalImgtrajectory = document.getElementById('imgmodaltrajectory');
+          var captionTexttrajectory = document.getElementById('captiontrajectory');
+          imgtrajectory.onclick = function(){
+            modaltrajectory.style.display = 'block';
+            modalImgtrajectory.src = this.src;
+            captionTexttrajectory.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgtrajectory.onclick = function() {
+            modaltrajectory.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaldata_example = document.getElementById('modaldata_example');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgdata_example = document.getElementById('imgdata_example');
+          var modalImgdata_example = document.getElementById('imgmodaldata_example');
+          var captionTextdata_example = document.getElementById('captiondata_example');
+          imgdata_example.onclick = function(){
+            modaldata_example.style.display = 'block';
+            modalImgdata_example.src = this.src;
+            captionTextdata_example.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgdata_example.onclick = function() {
+            modaldata_example.style.display = 'none';
+          }
+</script>

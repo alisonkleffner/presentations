@@ -897,6 +897,26 @@ class:primary
 # What are Trajectories?
 
 
++ Trajectories are considered the most complex form of data based on
+points, but is also becoming more easily available (Rinzivillo, Pedreschi, Nanni, and Giannotti, 2008)
+  - Difficult to visualize effectively
+  - Diverse set of properties
+  - Different Length
+  
+  .center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgtrajectory' src='images/trajectory.png' alt='Example of a Trajectory from Ansari et
+al. (2020)' width='50%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modaltrajectory' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodaltrajectory'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captiontrajectory' class='modal-caption'&gt;&lt;/div&gt;
+]
+
+
+
 ---
 class:inverse
 
@@ -1113,7 +1133,7 @@ class:primary
 # Feature Selection
 
 + Not all characteristics of a trajectory are simultaneously relevant when
-analyzing trajectories (Rinzivillo, Pedreschi, Nanni, and Giannotti, 2008)
+analyzing trajectories (Rinzivillo, Pedreschi, Nanni, et al., 2008)
 + Assess redundancy and relevancy
   - Clustering algorithm to assign trajectories to groups of similar
 movements seen in the exploratory graphics. 
@@ -1251,32 +1271,21 @@ class:primary
 ---
 class:primary
 
-#Clustering with K-Means
+# Review of Methods from Comprehensive Exam
 
 + Bounding Box features were used as input into K-Means clustering, which partitions n observations into k clusters.
 + **Drawback**: Number of Clusters must be specified prior to clustering
   - Number of Clusters determined using the Silhouette statistic
 + Silhouette Statistic (Kodinariya and Makwana, 2013)
   - Compares within cluster distances to between cluster distances
++ Using information gained from clusters to identify spatio-temporal neighbors
+  - Know how other points in the cluster move at a time point
+  - Would expect a missing point  at that time to move similarly to known points
++ Cluster by Weekly trajectories to find neighbors
+  - Cluster by weeks because as smallest interval could detect movement and also see some continuity between weeks
+  - Intersection of one week's clusters with the week before and week after would create groups
+  - Each member of a group is then a spatio-temporal neighbor of the other members as they are in a similar geographic region over time. 
   
-.center[
-`\(s(i) = \frac{b(i) - a(i)}{max(a(i), b(i))}\)` `\(\\\)`
-where `\(a(i)\)` is the average distance between i and observations in same cluster and `\(b(i)\)` is the minimum average distance between i and observations in other clusters
-]
-
-  - Number of clusters determined by largest average silhoutte width
-
-.center[
-&lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgsilhouette_stat' src='images/silhouette_stat.jpeg' alt='Silhouette Statistic for Clustering using all of our Data' width='40%'&gt;
-&lt;!-- The Modal --&gt;
-&lt;div id='modalsilhouette_stat' class='modal'&gt;
-  &lt;!-- Modal Content (The Image) --&gt;
-  &lt;img class='modal-content' id='imgmodalsilhouette_stat'&gt;
-  &lt;!-- Modal Caption (Image Text) --&gt;
-  &lt;div id='captionsilhouette_stat' class='modal-caption'&gt;&lt;/div&gt;
-&lt;/div&gt;
-]
 
 
 ---
@@ -1289,7 +1298,7 @@ class:primary
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgdata_example' src='images/data_example.jpeg' alt='Missing Data within the Ice Sheet' width='80%'&gt;
+&lt;img id='imgdata_example' src='images/data_example.jpeg' alt='Missing Data within the Ice Sheet' width='50%'&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modaldata_example' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -1325,19 +1334,6 @@ class:primary
 ]
 
 
----
-class:primary
-
-#Finding Spatio-Temporal Neighbors
-
-+ Using information gained from clusters to identify spatio-temporal neighbors
-  - Know how other points in the cluster move at a time point
-  - Would expect a missing point  at that time to move similarly to known points
-+ Cluster by Weekly trajectories to find neighbors
-  - Cluster by weeks because as smallest interval could detect movement and also see some continuity between weeks
-  - Intersection of one week's clusters with the week before and week after would create groups
-  - Each member of a group is then a spatio-temporal neighbor of the other members as they are in a similar geographic region over time. 
-  
 ---
 class:primary
 
@@ -3213,6 +3209,40 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgtraj_plot.onclick = function() {
             modaltraj_plot.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaltrajectory = document.getElementById('modaltrajectory');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgtrajectory = document.getElementById('imgtrajectory');
+          var modalImgtrajectory = document.getElementById('imgmodaltrajectory');
+          var captionTexttrajectory = document.getElementById('captiontrajectory');
+          imgtrajectory.onclick = function(){
+            modaltrajectory.style.display = 'block';
+            modalImgtrajectory.src = this.src;
+            captionTexttrajectory.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgtrajectory.onclick = function() {
+            modaltrajectory.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modaldata_example = document.getElementById('modaldata_example');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgdata_example = document.getElementById('imgdata_example');
+          var modalImgdata_example = document.getElementById('imgmodaldata_example');
+          var captionTextdata_example = document.getElementById('captiondata_example');
+          imgdata_example.onclick = function(){
+            modaldata_example.style.display = 'block';
+            modalImgdata_example.src = this.src;
+            captionTextdata_example.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgdata_example.onclick = function() {
+            modaldata_example.style.display = 'none';
           }
 </script>
 
