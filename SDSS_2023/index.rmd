@@ -433,7 +433,7 @@ One of the first things we need to decided is whether we want to juxtapose or su
 
 ---
 class:primary
-#Comparative Burden with Superimposed Graphs
+#Comparative Burden with Juxtaposed Graphs
 
 **Drawback**: Most of the comparative burden placed on users' memory
 + A mental image is relied on for comparison in these scenarios, as the user moves their
