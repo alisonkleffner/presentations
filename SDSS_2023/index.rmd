@@ -1,7 +1,7 @@
 ---
 title: "Redesigning Yield Map Plots for Comprehension and Usability"
 subtitle: "SDSS, 2023"
-author: "Alison Kleffner"
+author: "Alison Kleffner, Susan Vanderplas"
 date: "Department of Statistics, University of Nebraska - Lincoln"
 output:
   xaringan::moon_reader:
@@ -104,7 +104,7 @@ write("", file = "js-addins.html")
 <br><br><br>
 ## Redesigning Yield Map Plots for Comprehension and Usability
 ### 2023 SDSS
-#### Alison Kleffner
+#### Alison Kleffner, Susan Vanderplas
 #### Department of Statistics, University of Nebraska - Lincoln
 ##### `r fa("envelope", fill = "black")` [akleffner@huskers.unl.edu](akleffner@huskers.unl.edu)
 ##### `r fa("home", fill = "black")` [https://alison-kleffner.netlify.app/](https://alison-kleffner.netlify.app/)
