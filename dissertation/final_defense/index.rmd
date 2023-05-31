@@ -804,7 +804,7 @@ class:primary
 # Static Trajectory Plot
 
 
-+ Directed line segments, with the direction of each trajectory denoted by an arrow at the end (N. Andrienko et al., 2000). 
++ Directed line segments, with the direction of each trajectory denoted by an arrow at the end `r Citep(bib[[c("andrienko_supporting_2000")]])` 
   - Shows the displacement and direction of each trajectory over time.
 + This plot violates several guidelines for effective visualization, making it
 unsuitable for presentation.
@@ -1276,7 +1276,17 @@ class:primary
 
 <font size="2">
 ```{r, print_refs1, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
-print(bib[[c("schreyer_elastic_2006", "badgley_1961", "key_detectability_1993", "guo_improved_2021", "gpgp_pkg", "peterson_evaluating_2011", "bouillon_producing_2015", "rohrs_algorithm_2012", "kim_analyzing_2005", "kodinariya_2013", "ansari_spatiotemporal_2020")]], 
+print(bib[[c("alais-gestalt-1998", "andrienko_supporting_2000",
+"andrienko_visual_2007",
+"ansari_spatiotemporal_2020",
+"badgley_1961",
+"biesecker-2020",
+"billen_nitrogen_2013",
+"BLANGIARDO201333",
+"BRAVO2004b",
+"BRAVO2004a",
+"brewer_2002"
+)]], 
       .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
       )
 ```
@@ -1287,13 +1297,87 @@ class:primary
 # References
 <font size="2">
 ```{r, print_refs2, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
-print(bib[[c("vecchia1988estimation", "willmes_pan-arctic_2015", "steinley_kmeans_2006", "spacetime_wilke_2019")]], 
+print(bib[[c("chalbi_gestalt",
+"leaflet",
+"cleveland_graphical_1984",
+"gleicher2011",
+"gordon_2015",
+"griffin-maps-2006",
+"climate-viz",
+"he-mult-2019",
+"huang2009"
+)]], 
       .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
       )
 ```
 
-Wikle, C.K., Zammit-Mangion, A., and Cressie, N. (2019). Spatio-Temporal Statistics with R. Chapman & Hall/CRC, Boca Raton, FL.
 
+</font>
+
+---
+class:primary
+# References
+
+<font size="2">
+```{r, print_refs3, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
+print(bib[[c("key_detectability_1993",
+"kisilevich_spatio-temporal_nodate",
+"klippel-tobler-2011",
+"kodinariya_2013",
+"spde-book",
+"Leonowicz2003RESEARCHOT",
+"li-features",
+"light-rainbow-2004",
+"lyi2021",
+"macdonald_1999"
+)]], 
+      .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
+      )
+```
+</font>
+
+---
+class:primary
+# References
+
+<font size="2">
+```{r, print_refs4, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
+print(bib[[c("MAHESWARI2017175",
+"maxwell-farm-2018",
+"Miller1956TheMN",
+"ossama_extended_2011",
+"peterson_evaluating_2011",
+"reiser_new_2020",
+"rinzivillo_visuallydriven_2008",
+"schreyer_elastic_2006",
+"SILVA2011320",
+"strode-2020"
+)]], 
+      .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
+      )
+```
+</font>
+
+---
+class:primary
+# References
+
+<font size="2">
+```{r, print_refs5, results='asis', echo=FALSE, warning=FALSE, message=FALSE}
+print(bib[[c("tilman_sustainalbe_2011",
+"trevisan-spatial-2021",
+"vanderplas2020",
+"wagemans-2012-a",
+"wagemans-2012-b",
+"wang_comp18",
+"wong2011color",
+"wu-fish-2022",
+"yuan_review_2017"
+
+)]], 
+      .opts = list(check.entries = FALSE, style = "html", bib.style = "authoryear")
+      )
+```
 </font>
 
 ---
