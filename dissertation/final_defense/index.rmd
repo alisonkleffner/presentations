@@ -124,11 +124,10 @@ write("", file = "js-addins.html")
 class:primary
 # Motivation
 
-.center[
-The rapid development of certain technology, like global position systems (GPS) and geographic information systems (GIS), has led to a dramatic increase in the amount of spatial and spatio-temporal data collected (Ansari, Ahmad, Khan, Bhushan, et al., 2020; D. Li, Wang, Yuan, & Li, 2016). 
-]
 
-+ This growth has necessitated the development of new techniques to work with this data due to accounting for relationships in space and over time. Further, due to the amount of data, efficient techniques and visualizations are also necessary (D. Li et al., 2016; Yuan, Sun, Zhao, Li, & Wang, 2017). 
+The rapid development of technology, like global position systems (GPS) and geographic information systems (GIS), has led to a dramatic increase in the amount of spatial and spatio-temporal data collected `r Citep(bib[[c("ansari_spatiotemporal_2020")]])` 
+
++ This growth has necessitated the development of new techniques to work with this data `r Citep(bib[[c("yuan_review_2017")]])`
 + We focus on environmental applications with multivariate spatial data and trajectory data.
 
 ---
@@ -152,13 +151,12 @@ class:primary
 
 Spatial data relates to a geographical area or location.
 + Patterns in spatial data follow Tobler’s first law of geography, meaning everything is
-related but near things are more related than distant things (Klippel, Hardisty, & Li, 2011). 
-+ Often, more than one attribute is measured at a
-location. 
+related but near things are more related than distant things `r Citep(bib[[c("klippel-tobler-2011")]])` 
++ Often, more than one attribute is measured at a location. 
 
-**Focus** However, due to the variables occupying the same space, multivariate spatial data is complex, making it especially difficult to visualize due to issues like clutter (He, Tao, Wang, & Lin, 2019).
+**Focus:** However, due to the variables occupying the same space, multivariate spatial data is complex, making it especially difficult to visualize due to issues like clutter `r Citep(bib[[c("he-mult-2019")]])`
 
-**Example** Visualization of crop input application versus crop yield
+**Example:** Visualization of crop input application versus crop yield
 
 ---
 class:primary
@@ -414,7 +412,7 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 + **Superimposed graphs**: multiple objects in same coordinate system `r Citep(bib[[c("gleicher2011")]])`
   - Benefits: Easier to compare as users can use perception rather than memory
   - Drawbacks: clutter
-  - Useful when spatial location is a key component of the comparison `r Citep(bib[[c("Wang2018TowardsEC")]])`
+  - Useful when spatial location is a key component of the comparison `r Citep(bib[[c("wang_comp18")]])`
   
 
 
@@ -423,7 +421,7 @@ class:primary
 #Data Clutter with Superimposed Graphs
 
 **Drawback**: clutter
-+ General principle of graphical design: show data clearly `r Citep(bib[[c("cleveland_1984", "gordon_2015")]])`
++ General principle of graphical design: show data clearly `r Citep(bib[[c("cleveland_graphical_1984", "gordon_2015")]])`
 + Overlap - multiple dots on top of one another
   - Obscures true number of dots, harder to find patterns
   - Visual cues, like color, becomes partially obstructed, thereby reducing search efficiency `r Citep(bib[[c("BRAVO2004b", "BRAVO2004a")]])`
@@ -445,7 +443,7 @@ One of the first things we need to decided is whether we want to juxtapose or su
 
 ---
 class:primary
-#Comparative Burden with Superimposed Graphs
+#Comparative Burden with Juxtaposed Graphs
 
 **Drawback**: Most of the comparative burden placed on users' memory
 + A mental image is relied on for comparison in these scenarios, as the user moves their
@@ -655,8 +653,7 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 
-+ A standard practice to overcome weakness of decontextualization is utilizing a hybrid comparative layout
-(LYi et al., 2021). 
++ A standard practice to overcome weakness of decontextualization is utilizing a hybrid comparative layout `r Citep(bib[[c("lyi2021")]])`
   - Juxtaposed scatterplot to the correlation plot
 (combining the layouts of juxtaposition and explicit encoding). 
 + Interactivity connects the juxtaposed plots, where hovering over a trial plot in the correlation map highlights the corresponding points in the scatterplot used in the correlation calculation.
@@ -715,7 +712,7 @@ class:primary
 points, but is also becoming more easily available `r Citep(bib[[c("kisilevich_spatio-temporal_nodate", "rinzivillo_visuallydriven_2008")]])`
   - Difficult to visualize effectively
   - Diverse set of properties
-  - Different Length
+  - Different lengths
   
   .center[
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
@@ -749,37 +746,19 @@ class:inverse
 class:primary
 # Background
 
-Due to technological developments, like GPS and remote sensing,
-trajectory data has become easier to collect, making it increasingly common.
-However, working with trajectories is complicated due to dimensions in space
-and time, while also have a diverse set of properties, like speed (Slava
-Kisilevich et al., 2009). Of common interest when studying trajectories is to
-discover patterns within the movements to help understand the trajectories
-behavior with the proper kind of visualization (G. Andrienko et al., 2007;
-Ansari et al., 2020). Through visualization during exploratory data analysis
-(EDA), the researcher can effectively gain insight into the data in a short
-amount of time (Harold, Lorenzoni, Shipley, & Coventry, 2016). 
-However, due to the dimensionality of trajectories, they are difficult to
-visualize, so the visualizations used to explore this data may not necessarily
-meet the guidelines for effective graphics. Nevertheless, they can still provide
-some insight into the underlying dynamics driving movement.
-To begin, we use commonly suggested plots for trajectories to explore
-their movements during EDA. These plots can sometimes be messy, but we
-can still gain insight into the movement from them. Trajectories are a
-complicated to work with, so it may be beneficial to extract features from
-the raw data that can summarize a trajectory’s movement (Slava Kisilevich
-et al., 2009). These features can then be used more easily in methods, like
-clustering algorithms, since certain requirements no longer need to be met,
-like equal length trajectories. Using visualization to motivate feature
-creation has become increasingly common. For example, Wu, Zimányi, Sakr,
-& Torp (2022) developed a process called TPoSTE, which created features
-based on the visualization of events to separate a boat’s trajectory into
-periods of fishing or sailing. Hence, we can create features that provide a
-quantitative summary of the movement a user sees in the plots. Feature
-selection was then investigated to see if all the derived numerical features
-were relevant. We first discuss different exploratory graphics for trajectory
-data and their relation with graphical perception. Then we explore our
-approach using a case study: Arctic sea ice trajectories.
+Of common interest when studying trajectories is to discover patterns within the movements to help understand the trajectories behavior`r  Citep(bib[[c("andrienko_visual_2007")]])` 
+
+**Visualization during Exploratory Data Analysis**: the researcher can effectively gain insight into the data in a short amount of time `r Citep(bib[[c("climate-viz")]])` 
+  + Trajectories are difficult to visualize (messy)
+  + But, they can still provide some insight into the underlying dynamics driving movement.
+
+**Extract Features**: Trajectories are complicated to work with, so it may be beneficial to extract features from the raw data that can summarize its movement `r Citep(bib[[c("climate-viz")]])` 
+  + Can use visualization to motivate feature creation
+  + Example: `r Citep(bib[[c("wu-fish-2022")]])` developed a process called TPoSTE, which created features based on the visualization of events to separate a boat’s trajectory into periods of fishing or sailing. 
+  + Want to create features that provide a quantitative summary of the movement seen in plots.
+
+**Case Study**: Arctic Sea Ice trajectories
+
 
 ---
 class:primary
@@ -819,36 +798,55 @@ and second observation is 18.5 h and the satellite images were recorded in mid M
 
 ---
 class:primary
+# Data Difficulty
+
+.center[
+```{r traj-ex,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/traj-example.png", alt = "Example of a single trajectory in our data set", other=list(width="90%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+---
+class:primary
 # Gestalt Principles of Visual Perception
 
-Graphics of trajectories for exploration purposes typically do not meet
-guidelines for good graphics, like clutter reduction and choice of color
-schemes. Nevertheless, we can still use them to perceive patterns in the data
-(N. Andrienko et al., 2003). The perceived patterns are then linked to prior knowledge to find meaning in the new information (G. Andrienko et al.,
-2007). To help identify these patterns, we can use the gestalt principles of
-visual perception to process large amounts of data efficiently. The gestalt
-principles of visual perception help explain how humans naturally perceive
-objects and organize them in groups (Wagemans, Elder, et al., 2012;
-Wagemans, Feldman, et al., 2012). For example, in static representations of
-movement, the law of similarity says that people group items that look
-similar. Hence trajectories with similar shapes and orientations might be
-perceived as a group (Chalbi et al., 2020). In other words, trajectories
-moving in the same direction with a similar form are perceived to be alike.
-Therefore, an underlying process may be affecting those trajectories the
-same.
-We also use the gestalt principles when examining animated graphics.
-While the principle of similarity still applies, the gestalt principle specifically
-for animations is the principle of common fate. The principle of common fate
-says that people tend to group objects that share a dynamic behavior, as
-they might be affected by the same underlying processes (Alais, 1998; Chalbi
-et al., 2020). A more specific interpretation says that trajectories moving
-with the same velocity (speed/direction) are perceived as a group since they
-have a similar “fate” (Chalbi et al., 2020; Koffka, 1922). For example, people
-tend to perceive birds flying together as part of the same flock. So, while we
-might not consider exploratory graphics as well-designed, they are still
-helpful during EDA due to items like the gestalt principles of visual
-perception allow a researcher to still gain new insight into the data.
+To help identify patterns, even in messy graphics, we can use the gestalt principles of visual perception to process large amounts of data efficiently. 
++ Help explain how humans naturally perceive objects and organize them in groups `r Citep(bib[[c("wagemans-2012-a", "wagemans-2012-b")]])`
 
+.pull-left[
+Principle of Similarity: people group items that look similar .
+  + Trajectories with similar shapes and orientations `r Citep(bib[[c("chalbi_gestalt")]])`
+.center[  
+```{r law-sim,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/law-sim.png", alt = "Example of gestalt law of similarity", other=list(width="40%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+].pull-right[
+Principle of Common Fate: people tend to group objects that share a dynamic behavior, as
+they might be affected by the same underlying processes `r Citep(bib[[c("chalbi_gestalt", "alais-gestalt-1998")]])` 
+.center[
+```{r law-fate,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/common-fate.png", alt = "Example of gestalt law of common fate", other=list(width="50%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]]
 
 
 ---
@@ -867,7 +865,7 @@ unsuitable for presentation.
 ```{r traj-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
 
 
-i1 <- img_modal(src = "images/traj_plot.png", alt = "Plot of id trajectories to show movement and directiction of movement", other=list(width="60%"))
+i1 <- img_modal(src = "images/traj_plot.png", alt = "Plot of id trajectories to show movement and directiction of movement", other=list(width="55%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i1, "\\n", simplify = T)[3:9]
@@ -882,7 +880,7 @@ class:primary
 
 [Link](https://alisonkleffner.github.io/yield-map-redesign/traj.html)
 
-+ `r Citep(bib[[c("griffin-maps-2006")]])` found that animated plots allowed a user to identify moving clusters easier than multiple windows of static plots. 
++ Griffin, MacEachren, Hardisty, Steiner, and Li (2006) found that animated plots allowed a user to identify moving clusters easier than multiple windows of static plots. 
 + Our animation shows the incremental progress of each trajectory over time by plotting the new
 location at each time step and connecting the new observation with the previous through a line segment. 
 + New information:
@@ -906,17 +904,32 @@ class:primary
   - Angle of movement (direction)
 
 .center[
-```{r bb-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+.pull-left[
+```{r bb-pic1,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
 
 
-i1 <- img_modal(src = "images/bounding-box.png", alt = "Points used to Develop Bounding Box", other=list(width="25%"))
+i1 <- img_modal(src = "images/bb_1.png", alt = "Points used to Develop Bounding Box 1", other=list(width="75%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i1, "\\n", simplify = T)[3:9]
   ) %>% paste(collapse = "\n") %>% cat()
 
 ```
+].pull-right[
+
+```{r bb-pic2,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/bb_2.png", alt = "Points used to Develop Bounding Box 2", other=list(width="60%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+
 ]
+]
+
 
 ---
 class:primary
@@ -950,14 +963,12 @@ class:primary
 
 + Not all characteristics of a trajectory are simultaneously relevant when
 analyzing trajectories `r Citep(bib[[c("rinzivillo_visuallydriven_2008")]])`
-+ Assess redundancy and relevancy
-  - Clustering algorithm to assign trajectories to groups of similar
-movements seen in the exploratory graphics. 
-  - No label information to help evaluate feature importance `r Citep(bib[[c("li-features")]])`.
-  - Used visualization to make judgements
-    + Redundant:  adding it to the clustering algorithm, while
++ Clustering algorithm to assign trajectories to groups of similar
+movements 
++ No label information to help evaluate feature importance, used visualization to make judgements `r Citep(bib[[c("li-features")]])`.
+  - Redundant:  adding it to the clustering algorithm, while
 holding the other variables constant, does not change the assigned clusters.
-    + Relevance: help with cluster continuity
+  - Relevance: help with cluster continuity
 
 .center[
 ```{r feat-comp,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
@@ -972,6 +983,13 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 
+---
+class:primary
+# Conclusion/Future Work
+
++ We can use messy plots to motivate the creation of numerical features to summarize trajectory movements.
++ The relevant features can be used to find groups of similar trajectories, and in future analyses as well.
++ In the future, we plan to extend our bounding box features to three dimensions through a case study of seabird flight trajectories.
 
 ---
 class:inverse
@@ -991,12 +1009,13 @@ class:inverse
 ---
 class:primary
 
-# Importance of Arctic Sea Ice Crack Detection
+# Importance of Lead Detection
 
-+ Sea ice serves as a barrier between the atmosphere and the ocean
++ Sea ice acts as an insulator between the warm ocean and colder atmosphere `r Citep(bib[[c("peterson_evaluating_2011")]])`
 + Cracks, or leads, may form in the ice pack due to dynamic processes
   - Allows for heat from the ocean to be transferred to the atmosphere `r Citep(bib[[c("schreyer_elastic_2006")]])`. 
   - Accounts for half of the heat flux between the ocean and atmosphere `r Citep(bib[[c("badgley_1961")]])`
++ The state of sea ice, including lead characteristics, and understanding the dynamics driving these changes provides valuable information for weather prediction, climate models, and ocean models `r Citep(bib[[c("reiser_new_2020")]])` 
 + Previous ice crack detection methods can generally be split into two categories: thermal and deformation. 
   
 
@@ -1004,7 +1023,7 @@ class:primary
 ```{r ice-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
 
 
-i1 <- img_modal(src = "images/Ice Chunk.png", alt = " Artice Sea Ice with Crack", other=list(width="40%"))
+i1 <- img_modal(src = "images/Ice Chunk.png", alt = " Artice Sea Ice with Crack", other=list(width="35%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i1, "\\n", simplify = T)[3:9]
@@ -1016,9 +1035,9 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ---
 class:primary
 
-# Thermal Ice Crack Detection Methods
+# Thermal Lead Detection Methods
 
-+ Surface temperature differs between a crack and the surrounding sea ice.
++ Surface temperature differs between a lead and the surrounding sea ice.
 + Use thermal channels of the Advanced Very High Resolution Radiometer (AVHRR) `r Citep(bib[[c("key_detectability_1993")]])` 
   - Heavily dependent on clear skies and has issues with thin ice
 + Methods have been proposed to reduce the impact of clouds 
@@ -1042,11 +1061,11 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ---
 class:primary
 
-# Deformation Ice Crack Detection Methods
+# Deformation Lead Detection Methods
 
 + Deformation of a cell is determined by the motion of points `r Citep(bib[[c("peterson_evaluating_2011")]])`
     - Finds the determinant of deformation gradient to measure accumulated area changes to show persistent diverged regions. 
-    - Can find the size and orientation of the crack
+    - Can find the size and orientation of the lead
 + Drawbacks
   - Need complete set of space-time observations to calculate deformation
   - The error in the deformation product may be strongly underestimated `r Citep(bib[[c("bouillon_producing_2015")]])`
@@ -1072,35 +1091,30 @@ class:primary
 
 # Research Objectives
 
-1. Develop a ice crack detection method
-  - Using only the movement of the ice sheet
-  - Cluster trajectories based on movement
-  - The boundaries would be possible locations of ice cracks
-2. Develop a spatio-temporal (ST) interpolation method to predict missing points along a trajectory 
-  - Using the information gained from the clustering
+1. Develop a Lead detection method
+  - Address some drawbacks of the other methods by using only the movement of the sea ice
+  - Cluster trajectories based on movement  
+  - The boundaries would be possible locations of leads, as the underlying process causes the sea ice to move differently depending on the location
+2. By applying information gained from clustering, we developed a spatio-temporal model to reconstruct the underlying process, which can be used to estimate missing points along a trajectory.
   - Take into account nonstationarity of the data (estimate parameters separately for each cluster)
 
 
 ---
 class:primary
+# Review of Methods
 
-# Review of Methods from Comprehensive Exam
+**Lead Detection**: used bounding box features in K-Means clustering, which partitions $n$ observations into $k$ clusters
++ Drawback: Number of Clusters must be specified prior to clustering
+  - Number of Clusters determined by Silhouette statistic `r Citep(bib[[c("kodinariya_2013")]])`
++ Found through simulations and the sea ice trajectories that our method provides a reasonable estimation of lead locations  
 
-+ Bounding Box features were used as input into K-Means clustering, which partitions n observations into k clusters.
-+ **Drawback**: Number of Clusters must be specified prior to clustering
-  - Number of Clusters determined using the Silhouette statistic
-+ Silhouette Statistic `r Citep(bib[[c("kodinariya_2013")]])`
-  - Compares within cluster distances to between cluster distances
-+ Using information gained from clusters to identify spatio-temporal neighbors
-  - Know how other points in the cluster move at a time point
-  - Would expect a missing point  at that time to move similarly to known points
-+ Cluster by Weekly trajectories to find neighbors
-  - Cluster by weeks because as smallest interval could detect movement and also see some continuity between weeks
+**Model Development**: Using information gained from clusters to identify spatio-temporal neighbors
++ Would expect a missing point at that time to move similarly to known points in same cluster
++ Cluster trajectories by week to find neighbors
+  - Cluster by weeks because it is the smallest interval could detect movement and also see some continuity between weeks
   - Intersection of one week's clusters with the week before and week after would create groups
   - Each member of a group is then a spatio-temporal neighbor of the other members as they are in a similar geographic region over time. 
   
-
-
 ---
 class:primary
 
@@ -1127,6 +1141,82 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ---
 class:primary
 
+#INLA
+
+We developed a model to reconstruct the underlying process (assumed Gaussian), where we simultaneously obtain the movement in $x$ (called $u$) and the movement in $y$ (called $v$) at time $t$.
++ The movements are added to the previous location to estimate the missing location
+$$(\hat{u}_t, \hat{v}_t) + (x_{t-1}, y_{t-1}) = (x_t, y_t)$$
+
+
+We elected to use the Integrated Nested Laplace Approximation (INLA) approach
+  + Computational benefits over other methods, as it focuses on models that can be expressed as latent Gaussian Markov Random Fields (GMRF)
+  + Easily accounts for the spatio-temporal structure of the data during the inferential process `r Citep(bib[[c("spde-book")]])`
+
+
+---
+class:primary
+
+#INLA: Continuously Indexed GF
+
+Bivariate Data can be defined by the joint process: $$\left\{H(s,t), (s,t) \in \mathcal{D} \in \mathcal{R}\right\}$$ where there are $N$ spatial locations at $t$ time points.
+
+The process is assumed Gaussian, where the model can be rewritten as 
+$$H_{k_{i,t}} \sim BivN(\eta_{i,t}, \sigma^2_e)$$ 
+with $\sigma^2_e$ representing the nugget effect and the linear predictor is defined as 
+
+$$\eta_{i,t} = \alpha + w_{i,t}$$ 
+with $\alpha$ denoting the intercept and the realization of the latent ST Gaussian Field (GF) is represented by $w \sim GF(0,\Sigma)$. The covariance function $(\Sigma)$ is the separable Matern ST covariance function `r Citep(bib[[c("BLANGIARDO201333")]])`. 
+
+---
+class:primary
+
+#INLA: SPDE
+
+When working with point data (like our trajectories), assuming a continuously indexed GF for $w_{i,t}$ is not a computationally efficient approach.
+
+Instead used stochastic partial differential equations (SPDE)- represent a GF with Matern Covariance Function through a discretely indexed process called a GMRF `r Citep(bib[[c("spde-book")]])`
+.pull-left[
+- Discrete Index is created with a constrained delaunay triangulation
+.center[
+```{r spde,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/mesh-ex.png", alt = "Example of the triangulation of a field used in our simulation study", other=list(width="90%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]].pull-right[
+  
+The linear predictor can then be rewritten as 
+$$\eta_{i,t} = \alpha + \sum^{G}_{g=1}\tilde{A}\tilde{w}$$ 
+where $\tilde{A}$ is a sparse precision matrix mapping the GMRF, $\tilde{w}$, from $N$ locations to the $G$ nodes in the triangulation
+]
+
+---
+class:primary
+#Final Model
+
+Specifically for our model to jointly measure the underlying process, the linear predictor is written as
+$$\eta_{it} = \alpha_u + \alpha_{v} + z_{u}(s,t) + z_{v}(s,t) + z_{uv}(s,t)$$
+
+where $\alpha_u$ + $\alpha_{v}$ are the intercepts for each response and the $z$ functions represent the SPDE model for the $u$ and $v$ spatio-temporal effects, along with their interaction.
+
+We developed a model within each intersection to account for the non-stationary aspect of our data using only the data at time t, only data from t − 1, t, and t + 1. 
+
+To use a model within an intersection, a spatial grid encompassing the sea ice is created. The centroid of the grid cells helped us obtain a starting estimation of the missing $g_j$. The underlying process should be smooth within an intersection, so the grid centroid provides a location near the true location which would have a similar value of the underlying process. 
+
+Once we create the grid for initial location estimates of the missing data, we used the developed bivariate model to find the predicted locations.
+
+---
+class:primary
+#Overview of Results from Simulation Study
+
+---
+class:primary
+
 #Linear Interpolation for Ice Trajectory
 
 
@@ -1147,104 +1237,19 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 ```
 ]
-
-
 ---
 class:primary
 
-#INLA
-
----
-class:primary
-
-#Spatio-Temporal Interpolation
-
-+ Individual model developed for both x and y using the GpGp package in R `r Citep(bib[[c("gpgp_pkg")]])`
-  - Within each intersection
-  - Due this to take into account the nonstationarity
-+ Use Exponential Space-Time covariance function (as previously defined)
-+ Output is the maximum likelihood estimates for the mean and covariance parameters
-+ Use model to determine estimates of missing locations
-  - From the conditional expectation of the model
-  - Create a grid encompassing our ice sheet to give a starting value of the missing locations. 
-  - The model will then adjust this location using its known neighbors
-
-
----
-class:primary
-
-#Ice Data Results: Clustering Using All Data
-
-
-
-.center[
-```{r clust-all,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
-
-
-i1 <- img_modal(src = "images/all_clust.jpeg", alt = "Clustering of Ice Trajectories using All Data in Bounding Box", other=list(width="90%"))
-
-c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-
-```
-]
-
----
-class:primary
-
-#Clustering Using All Data - Comparison
-
-+  Can compare our results with deformation data found using a kinematic crack algorithm calculated using the RGPS data `r Citep(bib[[c("peterson_evaluating_2011")]])`
-  - Note that this image does not represent the true ice cracks, just the cracks determined by this method.
-
-.center[
-```{r all-comp-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
-
-
-i1 <- img_modal(src = "images/all-weeks-comp.png", alt = "Comparison of Our Results to a Kinematic Crack Algorithm", other=list(width="80%"))
-
-c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-
-```
-]
-
-
-
----
-class:primary
-
-#Ice Data Results: Clustering by Week
-
-.center[
-```{r clust-week,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
-
-i1 <- img_modal(src = "images/clust_by_week.png", alt = "Results of Clustering by Week", other=list(width="90%"))
-
-c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-
-
-```
-
-]
-
----
-class:primary
-
-#Overall Interpolation Results along Border
+#Overall Interpolation Results
 
 + Took a random hold-out of points along the border, as the border may be locations of irregular movement
   
 ```{r ice-results-tab1}
 
-result_data4 <- data.frame(Week = c(1,2,3), X1 = c(3.215, 3.539, 3.031), Y1 = c(3.408, 3.256, 2.958), X2 = c(1.606, 2.034, 0.991), Y2 = c(4.494, 1.832, 1.24))
+result_data4 <- data.frame(Week = c(1,2,3), X1 = c(1.100, 1.340, 0.366), Y1 = c(2.610, 1.767, 0.396), X2 = c(2.154, 3.146, 1.693), Y2 = c(5.530, 2.061, 1.031))
  
 kableExtra::kable(result_data4, booktabs = TRUE, caption = "RMSE for Interpolation Methods along Border", col.names = c("Week", "X", "Y", "X", "Y"), escape = FALSE, table.attr = "style='width:80%;'") %>% 
-  add_header_above(c("", "Intersection" = 2, "Linear" = 2)) %>% row_spec(1, color = 'black', background = 'yellow') 
+  add_header_above(c("", "Joint Spatial" = 2, "Linear" = 2))
 
 
 ```
@@ -1252,13 +1257,13 @@ kableExtra::kable(result_data4, booktabs = TRUE, caption = "RMSE for Interpolati
 ---
 class:primary
 
-#Interpolation Results along Border for Week 2
+#Interpolation Results for Week 1
 
 ```{r ice-results-tab2, message=FALSE, warning = FALSE}
 
-result_data5 <- data.frame(Cluster = c(1,2,3,4,5), X1 = c(2.81, 2.94, 2.94, 3.26, 4.14), Y1 = c(3.04, 2.96, 3.07, 3.2, 3.88), X2 = c(3.82, 2.39, 1.46, 1.32, 0.43), Y2 = c(5.19, 0.99,1.97, 0.54, 0.34))
+result_data5 <- data.frame(Cluster = c(1,2,3,4,5,6), X1 = c(4.410,0.443,1.120,1.140,0.549, 1.320), Y1 = c(15.500, 0.870, 1.480, 1.980, 1.980, 2.970), X2 = c(1.330, 0.303, 1.770, 2.920, 0.969,2.330), Y2 = c(21.800, 0.527, 4.740, 3.420, 5.507, 7.450))
 
-kableExtra::kable(result_data5, booktabs = TRUE, caption = "RMSE for Interpolation Methods by cluster for Week 2", col.names = c( "Cluster", "X", "Y", "X", "Y"), escape = FALSE, align = "c", table.attr = "style='width:80%;'") %>% add_header_above(c(" ", "Intersection" = 2, "Linear" = 2)) %>% row_spec(1, color = 'black', background = 'yellow') 
+kableExtra::kable(result_data5, booktabs = TRUE, caption = "RMSE for Interpolation Methods by cluster for Week 1", col.names = c( "Cluster", "X", "Y", "X", "Y"), escape = FALSE, align = "c", table.attr = "style='width:80%;'") %>% add_header_above(c(" ", "Joint Spatial" = 2, "Linear" = 2)) %>% row_spec(c(1,3,4,5,6),color = 'black', background = 'yellow') 
 
 ```
 
