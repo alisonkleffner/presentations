@@ -285,138 +285,33 @@ class:primary
 The last step in this process is to analyze the data and explain the optimal decision management decisions. Eventually we want to develop an user interface that is designed around explaining the machine learning output to non-experts to help inform decision. We want to do this to build farmer's trust in the models. Additionally, as a whole this will help us learn how crop yield responds to different input application rates, field characteristics, and weather with the goal to help increase profits. One way to help build trust in model output is to allows the farmers to visually explore the relationship between crop input application and yield. There is a great benefit of plotting data, so we wanted to explore this relationship visually. Hence, we want to show the spatial correlations between the treatment application and yield in a way that is understandable to farmers and consultants. Additionally, we need to develop these plots so they are perceptually optimal.  
 
 ---
-class:inverse
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-.center[
-# Current Maps 
-]
-
----
 class:primary
-#Yield Maps Currently Used by DIFM
+#Layout: Superimposed Graphs
 
-.center[
-```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/old_map.png", alt = "Example 1", other=list(width="30%"))
-i2 <- img_modal(src = "images/juxtaposed-ex.jpeg", alt = "Example 2", other=list(width="50%"))
+**Benefits**: Easier to compare as users can use perception rather than memory
+- Useful when spatial location is a key component of the comparison `r Citep(bib[[c("wang_comp18")]])`
 
-c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i2, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9],
-  str_split(i2, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-```
-
-
-Examples of two versions of this plot currently given to farmers/crop consultants in DIFM reports
-
-]
-
-???
-
-Currently, here is two examples of the plots that are currently given in DIFM reports to farmers. 
-
-These plots include many design choices that hinder a users ability to accurately explore the relationship between the two variables. I will go more into detail with some of these decisions in the next couple of slides. This first map overlays the yield measurements with the trial design. One of the big issues with this plot is the overlapping of the yield measurements. It may be difficult to see in this presentation, but the yield measurements are stacked on top of each other, obscuring the color. This second plot separates out the trial design and yield plots, where instead of yield measurements, we show the processed (cleaned) data with yield polygons. In this plot it is difficult to assess the relationship due to the lack of spatial cues between the plots, so may not be comparing the same location on each plot. 
-
----
-class:primary
-# Other Maps in  the Literature
-
-.center[
-Plenty of other iterations of trial design/yield maps used in the literature. Here's some examples
-]
-
+**Drawback**: clutter
 
 .pull-left[
 .center[
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/maxwell.png", alt = "Maxwell et al (2018)", other=list(width="80%"))
+i1 <- img_modal(src = "images/old_map.png", alt = "Example 1", other=list(width="70%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i1, "\\n", simplify = T)[3:9]
   ) %>% paste(collapse = "\n") %>% cat()
 ```
-
 ]
-
 
 ].pull-right[
-
-.center[
-
-```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-
-i1 <- img_modal(src = "images/trevisan.png", alt = "Trevisan et al (2021)", other=list(width="80%"))
-
-c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-```
-
-]
-
-]
-
-???
-
-Plenty of other examples are found throughout the literature related to the studying of this relationship. For example in this first plot we have the applied nitrogen rates and yield measurements side-by-side. The nitrogen rates use a rainbow color scheme which is problematic for multiple reasons. One, the ends of the scale are visually close (red and violet), so its hard to differentiate between the ends of the scale. Second, this color scheme has no inherent ordering, when the magnitude of yield does. The second plot contains trial designs (two input trial - top two rows) and yield measurments for four fields. Not only are we asking a user to do a lot of work in comparing, the same color scheme was used for everything adding to the confusion. 
-
----
-class:primary
-#Juxtaposed vs Superimposed Graphs
-
-.center[
-```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/jux-vs-sup.png", alt = "Juxtaposed vs Superimposed Comparative Graphs (Gleicher, Albers, Walker, et al., 2011)",other=list(width="50%"))
-
-c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-```
-]
-
-+ **Juxtaposed graphs**: side by side `r Citep(bib[[c("gleicher2011")]])`
-  - Benefits: less issues with visual clutter and easier to create
-  - Drawbacks: comparative burden is placed on the user
-  
-
-+ **Superimposed graphs**: multiple objects in same coordinate system `r Citep(bib[[c("gleicher2011")]])`
-  - Benefits: Easier to compare as users can use perception rather than memory
-  - Drawbacks: clutter
-  - Useful when spatial location is a key component of the comparison `r Citep(bib[[c("wang_comp18")]])`
-
-???
-
-Now, going to take a deep dive into these critiques. First we look at different layouts for comparative graphs (comparing variables to derive a relationship). The pros and cons of each are reversed. The juxtaposed layout involves side-by-side graphs. A benefit is that these are easy to create and they tend to not have issues with visual clutter as the variables are separated out. However, a major drawback is that the comparative burden is placed on the user. Deriving relationships becomes even more difficult in the spatial setting, as the user has to accurately find the same location in each graph. So many areas where an error can be made. Superimposed graphs include multiple objects in the same coordinate system, where the major drawback is clutter (overlapping points obscuring information). However, they are useful when spatial location is a key component of the comparison as users can use perception rather than memory. 
-
-
----
-class:primary
-#Data Clutter with Superimposed Graphs
-
-**Drawback**: clutter
-+ General principle of graphical design: show data clearly `r Citep(bib[[c("cleveland_graphical_1984", "gordon_2015")]])`
-+ Overlap - multiple dots on top of one another
++ Multiple dots on top of one another
   - Obscures true number of dots, harder to find patterns
   - Visual cues, like color, becomes partially obstructed, thereby reducing search efficiency `r Citep(bib[[c("BRAVO2004b", "BRAVO2004a")]])`
   - Can overburden human perception, causing errors in performing tasks `r Citep(bib[[c("huang2009")]])`
-  
-.center[
-```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/old_map.png", alt = "Example 1", other=list(width="20%"))
+]  
 
-c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-```
-]
+
 
 ???
 
@@ -424,7 +319,9 @@ So in more detail, the superimposed graphs violate a general principle, which is
 
 ---
 class:primary
-#Comparative Burden with Juxtaposed Graphs
+#Layout: Juxtaposed Graphs
+
+**Benefits**: less issues with visual clutter and easier to create `r Citep(bib[[c("gleicher2011")]])`
 
 **Drawback**: Most of the comparative burden placed on users' memory
 + A mental image is relied on for comparison in these scenarios, as the user moves their
@@ -450,16 +347,16 @@ With Juxtaposed graphs, once again, most of the comparative burden is place on t
 
 ---
 class:primary
-#Color
+#Color Schemes
 
-+ Red-green color blindness is experienced by approximately 8% of men and 0.5% of women of
-Northern European ancestry. 
+.pull-left[
++ Red-green color blindness
   - Difficult to discriminate between these colors `r Citep(bib[[c("wong2011color")]])` 
   
 
 + Stop-Light Color Scheme
   - Yellow has a highlighting effect
-  - Univariate Scale more appropriate (magnitude only)
+  - Univariate Scale more appropriate
   
 
 + Same Color scheme for multiple variables
@@ -468,57 +365,38 @@ Northern European ancestry.
 
 + Rainbow Color Scheme 
   - No inherent ordering of magnitude `r Citep(bib[[c("light-rainbow-2004")]])` 
-  - Extremes are visually close (red and violet) `r Citep(bib[[c("SILVA2011320")]])` 
-
-???
-
-Another common issue among these graphs is choosing a good color palette. First, red-green color blindness makes it difficult to discriminate between these colors, so we should not use them in conjunction, which many of the plots did. Next, the stop-light color scheme should be avoided, as first yellow can have a highlighting effect. Also, a univariate scale would be more appropriate since we are only working with magnitude of our variables. Third, using the same color scheme for multiple variables should be avoided as this may cause confusion. Finally, rainbow color schemes should not be used as they have no inherent ordering of magnitdue and as we saw previously, the extremes of red and violet are visually close.
-
----
-class:primary
-#Number of Categories
-
-Number of categorical scales should be limited to **5-7 categories** `r Citep(bib[[c("Miller1956TheMN")]])`
-.pull-left[
-- Due to working memory limits `r Citep(bib[[c("macdonald_1999")]])`
-  + Harder for the user to distinguish between colors and remember the meaning of colors. 
-- The load on the user’s working memory leads to an increase in the time it takes for the user to comprehend the plot `r Citep(bib[[c("huang2009")]])`
-].pull-right[  
+  - Extremes are visually close`r Citep(bib[[c("SILVA2011320")]])` 
   
+].pull-right[
 .center[
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/categories.png", alt = "Example 1", other=list(width="50%"))
+i1 <- img_modal(src = "images/maxwell.png", alt = "Maxwell et al (2018)", other=list(width="40%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i1, "\\n", simplify = T)[3:9]
   ) %>% paste(collapse = "\n") %>% cat()
 ```
-]  
 
+
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/trevisan.png", alt = "Trevisan et al (2021)", other=list(width="40%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+
+]
 ]
 
 **Next:** Redesign Process
 
 ???
 
-Additionally, the number of categories on our scale for yield should be limited to 5-7 categories (DIFM plot violates this). The categories need to be limited due to working memory limits and it makes it harder for the user to distinguish between colors and remember the meaning of what group the color is representing (might associate a color with the incorrect category). This load on the user's working memory lead to an increase in time for them to comprehend the plot, which is not something we want especially for non-experts. 
+Red-green color blindness is experienced by approximately 8% of men and 0.5% of northern european ancestory
+Another common issue among these graphs is choosing a good color palette. First, red-green color blindness makes it difficult to discriminate between these colors, so we should not use them in conjunction, which many of the plots did. Next, the stop-light color scheme should be avoided, as first yellow can have a highlighting effect. Also, a univariate scale would be more appropriate since we are only working with magnitude of our variables. Third, using the same color scheme for multiple variables should be avoided as this may cause confusion. Finally, rainbow color schemes should not be used as they have no inherent ordering of magnitdue and as we saw previously, the extremes of red and violet are visually close.
 
-Next I am going to walk through our redesign process.
-
-
----
-class:inverse
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-.center[
-# Redesign
-]
 
 ---
 class:primary
@@ -1471,6 +1349,39 @@ class:inverse
 <br>
 
 ]
+
+---
+class:primary
+#Number of Categories
+
+Number of categorical scales should be limited to **5-7 categories** `r Citep(bib[[c("Miller1956TheMN")]])`
+.pull-left[
+- Due to working memory limits `r Citep(bib[[c("macdonald_1999")]])`
+  + Harder for the user to distinguish between colors and remember the meaning of colors. 
+- The load on the user’s working memory leads to an increase in the time it takes for the user to comprehend the plot `r Citep(bib[[c("huang2009")]])`
+].pull-right[  
+  
+.center[
+```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
+i1 <- img_modal(src = "images/categories.png", alt = "Example 1", other=list(width="50%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+```
+]  
+
+]
+
+**Next:** Redesign Process
+
+???
+
+Additionally, the number of categories on our scale for yield should be limited to 5-7 categories (DIFM plot violates this). The categories need to be limited due to working memory limits and it makes it harder for the user to distinguish between colors and remember the meaning of what group the color is representing (might associate a color with the incorrect category). This load on the user's working memory lead to an increase in time for them to comprehend the plot, which is not something we want especially for non-experts. 
+
+Next I am going to walk through our redesign process.
+
+
 
 ---
 class:primary
