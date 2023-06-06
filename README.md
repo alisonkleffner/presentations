@@ -10,6 +10,7 @@ This repository contains any presentations that I have given while pursing my Ph
 
 + UNL Dissertation:
   - Comprehesive Exam Slides: https://alisonkleffner.github.io/presentations/dissertation/comprehensive_exam/index.html#1
+  - https://alisonkleffner.github.io/presentations/dissertation/final_defense/index.html#1
 
 + Job Talks:
   - Redesigning Yield Plot (Research Talk): https://alisonkleffner.github.io/presentations/job/research/index.html#1
