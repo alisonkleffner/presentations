@@ -124,6 +124,10 @@ The rapid development of technology, like global position systems (GPS) and geog
 + This growth has necessitated the development of new techniques to work with this data `r Citep(bib[[c("yuan_review_2017")]])`
 + We focus on environmental applications with multivariate spatial data and trajectory data.
 
+
+???
+The development of technology like global positioning systems and geographic information systems has dramatically increased the amount of spatial and spatio-temporal data that are able to be easily collected. Hence, new techniques have been needed to work with this data that accurately account for relationships over space and through time, while. Further, the new techniques need to be able to work with large amounts of data. This data can be broken into different sub-categories, so for this work we focus on multivariate spatial data and trajectories used in different applications related to the environment. 
+
 ---
 class:inverse
 <br>
@@ -152,6 +156,10 @@ related but near things are more related than distant things `r Citep(bib[[c("kl
 
 **Example:** Visualization of crop input application versus crop yield
 
+???
+
+This first project focuses on spatial data, specifically multivariate spatial data. Spatial data relates to a geographical area or location. Following Tobler's law of geography says that all spatial data is related, but near objects are more related than distant objects. Often more than one temperature is measured at a location, like rainfall and temperature across the state of Nebraska. Not only can accurately account for the relationship though space be difficult, but the variables in a multivariate spatial data set occupying the same space adds to the complexity. This makes visualization especially difficult to issues like clutter. In this project I explore spatial visualizations for deriving a relationship between two variables, specifically crop input application and crop yield.
+
 ---
 class:primary
 #Background
@@ -174,6 +182,9 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 ]
 
+???
+
+I'm going to begin by motivating why we want to understand this relationship. There is a projected increase in future crop demand, so studies are be conducted on crop input application to increase yield, with a focus on sustainable practices. As an example, a common crop input in nitrogen fertilizer as nitrogen is an essential component of food production, as it allows plants to photosynthesize efficiently. However, nearly half of the fertilizer supplied to the field is not used by the crops. This excess nitrogen can be harmful, as an example, the excess nitrogen may get washed in the rain into nearby streams, polluting drinking water. So a better understanding of this relationship is needed to not use more crop input than necessary. 
 
 ---
 class:primary
@@ -204,7 +215,7 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 ???
 
-A common issue with farming practices across the world is the inefficient application of crop inputs, like nitrogen, on farm fields. This inefficient application of crop input impacts profit and the environment. For example nitrogen fertilizer input that is not used by crops can pollute water bodies by causing the overstimulation of growth of aquatic plants and algae, impacting light. Thus, research needs to be conducted to study this issue so steps can be taken to address it. The purpose of the data intensive farm management project, a grant funded by the USDA-NRCS, is to generate the data necessary to understand this effect of crop input application on yield, so a more optimal level can be chosen. The data is generated through the use of On-Farm precision experimentation (OFPE). In an OFPE experiments are conducted on a field using field specific inputs where the experiment is implemented using a tractor that has GPS-reliant technology. DIFM wants to develop infrastructure (including the development of apps) to easily develop and analyze these experiments, with the end goal of finding economically optimal application rate to increase profits while reducing environmental impacts.  
+The purpose of the data intensive farm management project, a grant funded by the USDA-NRCS, is to generate the data necessary to understand this effect of crop input application on yield, so a more optimal level can be chosen. The data is generated through the use of On-Farm precision experimentation (OFPE). In an OFPE experiments are conducted on a field using field specific inputs where the experiment is implemented using a tractor that has GPS-reliant technology. DIFM wants to develop infrastructure to easily develop and analyze these experiments, with the end goal of finding economically optimal application rate to increase profits while reducing environmental impacts. 
 
 ---
 class:primary
@@ -249,11 +260,15 @@ Examples of Data Collected:
 
 ]
 
+???
+
+Next, I am going to talk about the data we used and how it was collected. So, the first step was to develop infrastructure that allows for the development of experiments using site-specific inputs. After the user is satisfied with the trial design, they can download shape files that can be put into a farmer's tractor that allows them to carry out the experiments. The data we used in our plots includes the original trial design. Additionally the as-applied data was collected, or the amount of crop input that was actually applied to the field. The clear circles on this image are locations where the tractor used the crop input. So we are able to obtain the actual amount applied and the location of the measurement. Finally, after harvest we are able to obtain the yield measurements and their locations (yellow dots).  
+
 ---
 class:primary
 # Explain the Results
 
-**Step 3**: Explain the optimal management decisions, accounting for various factors
+**Step 3**: Explain the optimal management decisions
 
 
 **How**: create a user interface, designed around explaining machine learning output to non-experts
@@ -267,7 +282,7 @@ class:primary
   
 ???
 
-The last general step in this process is to analyze the data and explain the optimal decision management decisions, accounting for various factors (like weather, environmental and economics conditions). So we want to develop an user interface that is designed around explaining the machine learning output to non-experts to help inform decision. We want to do this to build farmer's trust in the models (we are providing them with useful information). Additionally, as a whole this will help us learn how crop yield responds to different input application rates, field characteristics, and weather with the goal to help increase profits. Currently we are working on the pieces to help explain these results, before putting it all together in an R Shiny app. One of these pieces of information that needs to be explained is to explore the relationship between input application and yield. As seen in previous parts of this presentation, there is a great benefit of plotting data, so we wanted to explore this relationship visually. Hence, we want to show the spatial correlations between the treatment application and yield in a way that is understandable to farmers and consultants. Additionally, we need to develop these plots so they are perceptually optimal.  
+The last step in this process is to analyze the data and explain the optimal decision management decisions. Eventually we want to develop an user interface that is designed around explaining the machine learning output to non-experts to help inform decision. We want to do this to build farmer's trust in the models. Additionally, as a whole this will help us learn how crop yield responds to different input application rates, field characteristics, and weather with the goal to help increase profits. One way to help build trust in model output is to allows the farmers to visually explore the relationship between crop input application and yield. There is a great benefit of plotting data, so we wanted to explore this relationship visually. Hence, we want to show the spatial correlations between the treatment application and yield in a way that is understandable to farmers and consultants. Additionally, we need to develop these plots so they are perceptually optimal.  
 
 ---
 class:inverse
@@ -308,7 +323,7 @@ Examples of two versions of this plot currently given to farmers/crop consultant
 
 Currently, here is two examples of the plots that are currently given in DIFM reports to farmers. 
 
-Ask the audience what principles of good graphics these violate?
+These plots include many design choices that hinder a users ability to accurately explore the relationship between the two variables. I will go more into detail with some of these decisions in the next couple of slides. This first map overlays the yield measurements with the trial design. One of the big issues with this plot is the overlapping of the yield measurements. It may be difficult to see in this presentation, but the yield measurements are stacked on top of each other, obscuring the color. This second plot separates out the trial design and yield plots, where instead of yield measurements, we show the processed (cleaned) data with yield polygons. In this plot it is difficult to assess the relationship due to the lack of spatial cues between the plots, so may not be comparing the same location on each plot. 
 
 ---
 class:primary
@@ -351,7 +366,7 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 ???
 
-Plenty of other yield maps that have been used in the literature, so while don't give trial plot information still provides yield information over space. These have some of the same problems as seen before. The first interpolates, so losing the site-specific information and continuous yield may not make sense. The second, has too many categories and coloring is not great (rainbow). The last plot uses suboptimal color scheme (bivariate color scheme in inappropriate, also doesn't go through white, members of the target audience (farmers) may be more likely to be colorblind, so avoid reds and greens)
+Plenty of other examples are found throughout the literature related to the studying of this relationship. For example in this first plot we have the applied nitrogen rates and yield measurements side-by-side. The nitrogen rates use a rainbow color scheme which is problematic for multiple reasons. One, the ends of the scale are visually close (red and violet), so its hard to differentiate between the ends of the scale. Second, this color scheme has no inherent ordering, when the magnitude of yield does. The second plot contains trial designs (two input trial - top two rows) and yield measurments for four fields. Not only are we asking a user to do a lot of work in comparing, the same color scheme was used for everything adding to the confusion. 
 
 ---
 class:primary
@@ -376,7 +391,10 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
   - Benefits: Easier to compare as users can use perception rather than memory
   - Drawbacks: clutter
   - Useful when spatial location is a key component of the comparison `r Citep(bib[[c("wang_comp18")]])`
-  
+
+???
+
+Now, going to take a deep dive into these critiques. First we look at different layouts for comparative graphs (comparing variables to derive a relationship). The pros and cons of each are reversed. The juxtaposed layout involves side-by-side graphs. A benefit is that these are easy to create and they tend to not have issues with visual clutter as the variables are separated out. However, a major drawback is that the comparative burden is placed on the user. Deriving relationships becomes even more difficult in the spatial setting, as the user has to accurately find the same location in each graph. So many areas where an error can be made. Superimposed graphs include multiple objects in the same coordinate system, where the major drawback is clutter (overlapping points obscuring information). However, they are useful when spatial location is a key component of the comparison as users can use perception rather than memory. 
 
 
 ---
@@ -402,7 +420,7 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 ???
 
-One of the first things we need to decided is whether we want to juxtapose or superimpose the trial design and yield information. Juxtaposed graphs are side by side plots that tend to have less issues with visual clutter and they are easier to create. A drawback however, is that the comparative burden is placed on the user (have to match things up correctly). The other option is to superimpose the graphs where multiple objects are in the same coordinate system. The benefit is that it is easier to compare as users can use perception rather than memory. These are additionally useful when spatial location is a key component of the comparison. However, the major drawback, as we saw with the DIFM plot is that clutter is a major issue. We decided to use superimposed graphs since spatial location is a key component for us and may be hard to compare in two different plot (hard to match up)
+So in more detail, the superimposed graphs violate a general principle, which is to show the data clearly. As we can seen in this plot, multiple of the yield measurements are found on top of one another, which obscures the true number of points and make it more difficult to find a pattern. Obscuring the visual cue of color reduces search efficiency. Further, the clutter can overburden the human perceptual system, causing errors in deriving a relationship between the variables.
 
 ---
 class:primary
@@ -426,6 +444,10 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 ]
 
+???
+
+With Juxtaposed graphs, once again, most of the comparative burden is place on the user's memory. A mental image is relied upon as the user shifts their focus between the plots. So if the plot contents are not accurately formed in working memory, the user may incorrectly derive patterns. Also, in spatial visualizations, the lack of visual cues adds to this complexity.
+
 ---
 class:primary
 #Color
@@ -447,6 +469,10 @@ Northern European ancestry.
 + Rainbow Color Scheme 
   - No inherent ordering of magnitude `r Citep(bib[[c("light-rainbow-2004")]])` 
   - Extremes are visually close (red and violet) `r Citep(bib[[c("SILVA2011320")]])` 
+
+???
+
+Another common issue among these graphs is choosing a good color palette. First, red-green color blindness makes it difficult to discriminate between these colors, so we should not use them in conjunction, which many of the plots did. Next, the stop-light color scheme should be avoided, as first yellow can have a highlighting effect. Also, a univariate scale would be more appropriate since we are only working with magnitude of our variables. Third, using the same color scheme for multiple variables should be avoided as this may cause confusion. Finally, rainbow color schemes should not be used as they have no inherent ordering of magnitdue and as we saw previously, the extremes of red and violet are visually close.
 
 ---
 class:primary
@@ -475,9 +501,9 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 ???
 
-Additionally, the number of categories on our scale for yield should be limited to 5-7 categories (DIFM plot and other plot 2 violates this). The categories need to be limited due to working memory limits and it makes it harder for the user to distinguish between colors and remember the meaning of what group the color is representing (might associate a color with the incorrect category). This load on the user's working memory lead to an increase in time for them to comprehend the plot, which is not something we want especially for non-experts. 
+Additionally, the number of categories on our scale for yield should be limited to 5-7 categories (DIFM plot violates this). The categories need to be limited due to working memory limits and it makes it harder for the user to distinguish between colors and remember the meaning of what group the color is representing (might associate a color with the incorrect category). This load on the user's working memory lead to an increase in time for them to comprehend the plot, which is not something we want especially for non-experts. 
 
-Next I am going to walk through our redesign process (still currently in progress).
+Next I am going to walk through our redesign process.
 
 
 ---
@@ -500,8 +526,8 @@ class:primary
 
 .center[
 ```{r results='asis', echo = F, include = T, cache = T, eval = TRUE}
-i1 <- img_modal(src = "images/Attempt1_2.png", alt = "First Iteration", other=list(width="35%"))
-i2 <- img_modal(src = "images/attempt2.png", alt = "Second Iteration", other=list(width="25%"))
+i1 <- img_modal(src = "images/Attempt1.png", alt = "First Iteration", other=list(width="35%"))
+i2 <- img_modal(src = "images/Attempt2.png", alt = "Second Iteration", other=list(width="25%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i2, "\\n", simplify = T)[1:2],
@@ -513,22 +539,14 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 **Focus**: Superimpose the treatment and yield plots, while reducing the clutter 
 + Use of transparency to show both at same time
-+ Interactive plot with *leaflet* `r Citep(bib[[c("leaflet")]])`
-  - Can add and remove trial plot layer
-
-
 + Working on blending using transparency
-+ Categorical Groups for both variables
-  - Trial Design treatment is a factor
-  - Reduce number of colors for yield
-  - Use quantiles to determine categories for yield `r Citep(bib[[c("brewer_2002")]])`
+
 
 
 ???
 
-My first iteration of the plot I was working on superimposing both the treatment and yield plot, but reducing some of the clutter. The yield points were transformed into polygons using the distance between points, swath width, and heading (green space around plot). This was done so each polygon is on it's own unique space and not overlapping. Used transparency for the trial plot to try and blend the colors with the trial design plot. Here is used an interactive plot using the leaflet package in R, which creates interactive web maps with JavaScript. This can be beneficial as can add/remove the trial plot so can only see the yield results if desirable.
-
-So the plot now is not cluttered in the sense there's overlapping data points, but there's still work that needs to be done. For example, the coloring needs more work. Due to colorblind, red and green may not be good colors to use, they are just the default for those working on this project. Additionally, color blending still needs to be worked on to help differentiate high treatment/high yield, etc. Finally, the shading piece may not be as effective for paper plots, which some farmers may want to use. So eventually need to think how to do this with no color.  
+I chose to use superimpose plots as spatial location is a key component of our comparison, and we are already asking our user to do a complicated task. So the focus turns to reducing the visual clutter.
+My first iteration used the yield points that were transformed into polygons using the distance between points, swath width, and heading (green space around plot). These are the same polygons used in the juxtaposed DIFM plots, so now we have non-overlapping polygons of the yield. Through the literature a common suggestion for these plots is to use transparency to try and blend the colors. So I introduced transparency to the trial design layer to help blend the colors. I started with using similar colors schemes as the original DIFM plots to help obtain buy in (first plot). However, due to potentially having users who are red-green. A suggestion by Wong (2011) is to change green to blue, so that was what was done here. So at least one of the colors are the default. However, in my personal opinion, the blending needs more work and deriving relationships is difficult.
 
 ---
 class:primary
@@ -560,7 +578,9 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 ]
 
+???
 
+A suggestion for an alternative to color blending is a bivariate color plot. A benefit of this plot is that it is helpful if showing the relationship between variables is more important. Leonowicz (2003) suggests a 3x3 scale, where the data was split using quantiles as suggested by Bieskecker (2020), as they found quantiles lead to more perceptual visual groupings. In this plots, the focus is on the diagonal, so a grayscale color scheme was used here, and the lower/upper corners have complementary color schemes. Typically focused on the diagonal and two corners, so we are still in the 5-7 range even though there are 9 categories technically. However, drawbacks include losing detailed information since a large range of numbers is only split into three categories.
 
 ---
 class:primary
@@ -595,7 +615,7 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 ???
 
-Finally we can directly state the correlation between As Applied and Yield (explain how as applied differs from treatment design), while also keeping some of the spatial relationship. Can see for the most part, as application amount increase, so does the yield. Some areas where the inverse is true (more investigation, maybe lower, dirt differs, etc). Used a bivariate color scheme go through white color for zero. Maintaining some spatial information is importanct as correlation is impacted by field location. Eventually this information can be added to the plot (interactivity)
+Finally, we thought it would be important to directly state the relationship between the variables to the user, so they don't have to derive it themselves. Another comparative layout, explicit encoding, directly gives the relationship to the users. So we calculated the correlation within each trial plot between the as-applied data and yield. The trial plot is to help maintain some spatial orientation. I chose a blue-white-red color scheme due to the association of blue with coolness/negative and red with warmth/positive (like a temperature map). This is a diverging color scale, with white in the middle as the neutral value. Can see for the most part, as application amount increase, so does the yield. Some areas where the inverse is true (more investigation, maybe lower, dirt differs, etc). Used a bivariate color scheme go through white color for zero. Maintaining some spatial information is important as correlation is impacted by field location. However, a major drawback is that it doesn't state the data, so we know what the correlation is, but not the values used to find it.
 
 ---
 class:primary
@@ -623,6 +643,10 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 [Link](https://alisonkleffner.github.io/yield-map-redesign/interactive-example.html)
 
+???
+
+A  standard practice to overcome the decontextualization of the explicit encoded layout is using a hybrid layout. Here we juxtaposed a scatterplot of the data used to calculate the correlation to the correlation plot. Interactivity connects the two plots, where hovering over a trial plot in the correlation map highlights the corresponding points in the scatterplot.
+
 ---
 class:primary
 #Conclusion/Future Work
@@ -634,8 +658,10 @@ class:primary
 **Eventually**: Develop a R Shiny app to explaining machine learning output to non-experts
 - Build trust in the model predictions without requiring farmers to learn the details of statistical modeling.
 - Will utilize these plots, among others
-  + For example, accuracy of as applied treatment compared to trial design
 
+???
+
+The next step is to obtain feedback from those that would be actually using the plots to make any edits. And eventually I would like to do some testing between the color blending, color map, and juxtaposed correlation and scatterplot to see which are read more accurately. As I saw some mixed reviews between color blending and the color map. Eventually the plot with be utilized in an R shiny app that explains machine learning output to non-experts to help build trust in the results.
 
 ---
 class:inverse
@@ -674,6 +700,10 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 
+???
+
+Now we are going to shift gears and focus on a type of spatio-temporal data, trajectories. Trajectories are complex to work with due to multiple factors, for example, having a diverse set of properties (speed) and different length. Additionally, due to have dimensions in space and time, they are difficult to visualize effectively. However, trajectories are becoming more easily available due to tracking devices, so better ways to work with them are necessary. 
+
 
 
 ---
@@ -695,20 +725,22 @@ class:inverse
 class:primary
 # Background
 
-Of common interest when studying trajectories is to discover patterns within the movements to help understand the trajectories behavior`r  Citep(bib[[c("andrienko_visual_2007")]])` 
+**Interest**: discover patterns within the movements to help understand the trajectories behavior`r  Citep(bib[[c("andrienko_visual_2007")]])` 
 
-**Visualization during Exploratory Data Analysis**: the researcher can effectively gain insight into the data in a short amount of time `r Citep(bib[[c("climate-viz")]])` 
+**A Method**: Visualization during Exploratory Data Analysis:  
   + Trajectories are difficult to visualize (messy)
-  + But, they can still provide some insight into the underlying dynamics driving movement.
+  + Provide insight into the underlying dynamics driving movement.
 
-**Extract Features**: Trajectories are complicated to work with, so it may be beneficial to extract features from the raw data that can summarize its movement `r Citep(bib[[c("climate-viz")]])` 
+**Extract Features**: Trajectories are complicated to work with, so we can extract features from the raw data that can summarize its movement `r Citep(bib[[c("climate-viz")]])` 
   + Can use visualization to motivate feature creation
-  + Example: `r Citep(bib[[c("wu-fish-2022")]])` developed a process called TPoSTE, which created features based on the visualization of events to separate a boat’s trajectory into periods of fishing or sailing. 
-  + Want to create features that provide a quantitative summary of the movement seen in plots.
+  + Example: TPoSTE, which created features based on the visualization of events to separate a boat’s trajectory into periods of fishing or sailing `r Citep(bib[[c("wu-fish-2022")]])`. 
+  + Want to create features that provide a quantitative summary of the movement seen in plots 
 
 **Case Study**: Arctic Sea Ice trajectories
 
+???
 
+Of common interest with trajectories is to discover patterns within their movements to help understand the trajectories behavior. One method to help discover these patterns is to visualize the trajectories during exploratory data analysis. These plots tend to messy due to the complexity of trajectories, but they can still provide some insight into the underlying dynamics driving movement. Since trajectories are complex, extracting features form them may make them easier to work within different methods. The features should summarize it's movement. Visualization can be used to motivate the creation of features. For example, Wu et al (2022) developed a method called TPoSTE which created features based on events to separate a boat's trajectory into period of fishing or sailing. For our process, we focus on a case study involving arctic sea ice trajectories.
 ---
 class:primary
 # Data
@@ -731,7 +763,7 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 .center[
 $\mathcal{G} = \left\{g_1, ..., g_n\right\}$ $\\$
-where $g_{j} = \left\{s_{jt} : t \in \mathcal{T}_j\right\}$, $\mathcal{T}_j \subset \left\{t=1...T\right\}$ a collection of time points where $cell_j$ is observed $\\$
+where $g_{j} = \left\{s_{jt} : t \in \mathcal{T}_j\right\}$, $\mathcal{T}_j \subset \left\{t=1...T\right\}$ a collection of time points where $g_j$ is observed $\\$
 and ${s_{jt}}$ = $(x_{jt}, y_{jt})$
 ]
 
@@ -739,11 +771,7 @@ and ${s_{jt}}$ = $(x_{jt}, y_{jt})$
 
 ???
 
-An illustration of RGPS data is
-shown in Fig. 7.1, where satellite views of a 50 km by 50 km region of Arctic ice
-have a 5 km × 5 km RGPS grid superimposed. The time span between the first
-and second observation is 18.5 h and the satellite images were recorded in mid May
-2002. 
+The sea ice trajectories were tracked by NASA's RADARSTATE geophysical processor system (RGPS), which uses sequential synthetic aperture radar images to track the trajectory of point on an ice sheet. On the first day of the study period, a grid is put on the image, where each grid cell vertex is assigned an identifier (j) that is tracked over the study period using feature based and area based tracking. At the end of the study period we have a data set of n trajectories, where each trajectory is a collection of spatial locations at different times. Due to collecting this data with a satellite, not all the trajectories are observed on the same day, so we have a collection of possible times. We focused on the Beaufort region, so we have a total of 8811 trajectories on 22 possible days.
 
 ---
 class:primary
@@ -761,15 +789,19 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 
+???
+
+This data set in particular can be complicated to work with. To show this we look at one trajectory. For example, we have missing data, where there is no pattern within the missingness, due to data collection by satellite. So gaps between observations vary between 1-3 days. Secondly, at day 5, we have two observations, so not only are we missing data, sometimes we have multiple observations on the same day, which can be difficult to account for. The plot to the left shows the path of the trajectory, where are observed locations are connected with a line segment. This shows us a depiction of what we see in the data set. It shows how visualizing the trajectories helps the user understand the movements better, so it's important to visualize the trajectories, even though they may be messy.
+
 ---
 class:primary
 # Gestalt Principles of Visual Perception
 
-To help identify patterns, even in messy graphics, we can use the gestalt principles of visual perception to process large amounts of data efficiently. 
-+ Help explain how humans naturally perceive objects and organize them in groups `r Citep(bib[[c("wagemans-2012-a", "wagemans-2012-b")]])`
+**Identifing Patterns**: Can use the gestalt principles of visual perception to process large amounts of data efficiently. 
++ Explains how humans naturally perceive objects and organize them in groups
 
 .pull-left[
-Principle of Similarity: people group items that look similar .
+Principle of Similarity: group items that look similar .
   + Trajectories with similar shapes and orientations `r Citep(bib[[c("chalbi_gestalt")]])`
 .center[  
 ```{r law-sim,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
@@ -783,12 +815,12 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 ].pull-right[
-Principle of Common Fate: people tend to group objects that share a dynamic behavior, as
-they might be affected by the same underlying processes `r Citep(bib[[c("chalbi_gestalt", "alais-gestalt-1998")]])` 
+Principle of Common Fate: group objects that share a dynamic behavior
+  + Affected by the same underlying processes `r Citep(bib[[c("chalbi_gestalt", "alais-gestalt-1998")]])` 
 .center[
 ```{r law-fate,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
 
-i1 <- img_modal(src = "images/common-fate.png", alt = "Example of gestalt law of common fate", other=list(width="50%"))
+i1 <- img_modal(src = "images/common-fate.png", alt = "Example of gestalt law of common fate", other=list(width="60%"))
 
 c(str_split(i1, "\\n", simplify = T)[1:2],
   str_split(i1, "\\n", simplify = T)[3:9]
@@ -797,6 +829,9 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]]
 
+???
+
+Before we look at visualizations of the trajectories used during EDA, I first wanted to talk about an important tool to help extract patterns. The gestalt principles of visual perception helps users process large amounts of data efficiently by explaining how humans naturally perceive objects and organize them into groups. There are multiple, but we are going to focus on three here. The principle of similarity says that people tend to group items that look similar. So we organize trajectories with similar shapes and orientations into groups. Second is the principle of common fate used with animated graphics. This principle says that people group objects that share a dynamic behavior, like a flock of birds, as this means those objects are potentially affected by the same underlying processes. 
 
 ---
 class:primary
@@ -823,6 +858,10 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 
+???
+
+First, we created a static plot of all of our trajectories, which connected each observed location of a trajectory with a line segment, and an arrow was added to the end to show the ending direction of movement. So this plot shows the displacement and direction of each trajectory over time.This plot is messy and violates several principles of effective graphics. For example, it's cluttered (trajectories on top of each other), and the color has no meaning (was just used to help visually differentiate the different trajectories better). The coloring is potentially problematic due to the principle of similarity, a user may group all similarly colored trajectories and try to derive a relationship which would be inaccurate. However, using the principle of similarity is also helpful as we can see group of trajectories that look to move with a similar form in the same direction. These groups tend to occur in contiguous patches and stick out even though the plot is kind of a mess. So we can make an assumption, that the underlying process causing the sea ice to move changes based on the location. 
+
 ---
 class:primary
 # Animated Trajectory Plot
@@ -836,6 +875,10 @@ location at each time step and connecting the new observation with the previous 
   - see a trajectory speeding up or slowing down through the length of the added line segments. 
   - Associate a movement with a particular day
 + Using Gestalt principle of common fate we can see that trajectories moving with a similar velocity occurs in contiguous patches.
+
+???
+
+Another drawback of the static trajectory plot is the inability to associated different movements with a specific time. So don't learn things related to specific times, just total time. So we can create an animation of our movement. We chose to use animation as Griffin et al (2006) found that animated plots allows users to identify moving clusters easier than multiple juxtaposed static plots. In our animated plot, we showed the incremental process of each trajectory on each day by adding the movement for a day, represented by a line segment, to the previous days movement. Now we can see the trajectory speeding up and slowing down based on the length of added line segments. Further, we can associate a movement with a particular day, like what day a trajectory changes direction. Here we can use the principle of common fate to group trajectories moving with a similar velocity (direction/speed), which once again seems to occur in contiguous patches.
 
 ---
 class:primary
@@ -879,6 +922,10 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ]
 ]
 
+???
+
+After visually exploring the data during exploratory data analysis, we wanted to derive numerical features based on the visualizations. This was done by creating essentially a bounding box around each trajectory, which represents its movement over time. We can then calculate different features from this bounding box. First, we can find the distance between the maximum and minimum coordinates (total displacement). Second, this value may not always represent the first and last day of the time frame, so we also found the different between the latest and earliest observation (displacement in time). Finally, using the displacement in time, we found the angle that the trajectory moved over the time frame.
+
 
 ---
 class:primary
@@ -899,11 +946,14 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 + Each trajectory consists of multiple known points connected with line segments. 
 + To determine the amount of “wiggle”, we decided to estimate the total length of the line segment (arc length).
-  - The longer trajectories have moved farther over the time frame. 
 + We can estimate the total length by first finding the distance between each set of two connected
 points (yellow lines).
   - We then added all the calculated distances to estimate the total length of the trajectory.
++ Trajectories with a higher total length are "wigglier"
 
+???
+
+Next, besides the bounding box, we wanted to derive a numerical assessment of "wiggle", as this is something that can be seen but may be hard to quantify. How I began to think through this was by imaging we pulled a trajectory so that it was straight. Trajectories with more wiggle would be longer that those with less wiggle. Since each trajectory consists of observed points connected by line segments, I found the length of each line segment and atted them all together (estimate of act length). So the trajectories with a higher total length are wigglier.
 
 
 ---
@@ -932,6 +982,10 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 
+???
+
+Finally, not all characteristics of a trajectory are simultaneously relevant when analyzing trajectories, so we wanted to employ feature selection to assess relevancy. Since we could see the movement occurring in contiguous patches, we applied a clustering algorithm to find this groups of similar movements. So we have no label information (don't know true trajectories), we used  visualization to make judgements. So assigned each cluster a color, and output a single point of each trajectory with the assigned color onto a map. We classified redundant features as adding a feature to the clustering does not change the assigned cluster. Further, we wanted our features to help create continguous clusters. Did not text all possible subsets of features, just some I thought was relevant.  (Explain process). Plot 4 is the features selected.
+
 ---
 class:primary
 # Conclusion/Future Work
@@ -939,6 +993,10 @@ class:primary
 + We can use messy plots to motivate the creation of numerical features to summarize trajectory movements.
 + The relevant features can be used to find groups of similar trajectories, and in future analyses as well.
 + In the future, we plan to extend our bounding box features to three dimensions through a case study of seabird flight trajectories.
+
+???
+
+In conclusion, we can use messy plots of trajectories to help motivate the creation of features that summarize a trajectories movements. We can also assess relevancy of the created features through visualization by visualizing the clustering of groups of similar movements. These future can then be used in future methods. In the future, we plan on extending our bounding box features into a three-dimensional bounding box through a case study of the of the trajectories of sea bird flights.
 
 ---
 class:inverse
@@ -965,8 +1023,7 @@ class:primary
   - Allows for heat from the ocean to be transferred to the atmosphere `r Citep(bib[[c("schreyer_elastic_2006")]])`. 
   - Accounts for half of the heat flux between the ocean and atmosphere `r Citep(bib[[c("badgley_1961")]])`
 + The state of sea ice, including lead characteristics, and understanding the dynamics driving these changes provides valuable information for weather prediction, climate models, and ocean models `r Citep(bib[[c("reiser_new_2020")]])` 
-+ Previous ice crack detection methods can generally be split into two categories: thermal and deformation. 
-  
+
 
 .center[
 ```{r ice-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
@@ -981,51 +1038,9 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 
----
-class:primary
+???
 
-# Other Lead Detection Methods
-
-.pull-left[
-**Thermal**
-+ Surface temperature differs between a lead and the surrounding sea ice.
-+ Use thermal channels of the Advanced Very High Resolution Radiometer (AVHRR) `r Citep(bib[[c("key_detectability_1993")]])` 
-  - Heavily dependent on clear skies and has issues with thin ice
-+ Methods have been proposed to reduce the impact of clouds 
-.center[
-```{r thermal-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
-
-
-i1 <- img_modal(src = "images/thermal_example.png", alt = " Output from a Thermal Algorithm (Rohrs et al, 2012)", other=list(width="40%"))
-
-c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-
-```
-]
-].pull-right[
-**Deformation**
-+ Cell deformation is determined by point motion `r Citep(bib[[c("peterson_evaluating_2011")]])`
-    - The determinant of the deformation gradient measures accumulated area changes
-    - Can find the size and orientation
-+ Drawbacks
-  - Need complete set of space-time observations to calculate deformation
-  - Underestimation of error in deformation product
-
-.center[
-```{r deformation-pics,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
-
-i1 <- img_modal(src = "images/kinematic_crack_algorithm.png", alt = "Example of detected leads using a kinematic crack algorithm which uses the determinant of the deformation gradient to detect leads (Peterson & Sulsky, 2011)", other=list(width="30%"))
-
-c(str_split(i1, "\\n", simplify = T)[1:2],
-  str_split(i1, "\\n", simplify = T)[3:9]
-  ) %>% paste(collapse = "\n") %>% cat()
-
-```
-
-]
-]
+Sea ice is act as an insulator between the warm ocean and the colder atmosphere. Crack, or leads, form in the ice due to dynamic processes, like wind and ocean currents. When these leads for, heat from the ocean is transferred into the atmosphere, warming it (so potentially having an impact on climate change). Leads account for half of the heat flux between the ocean and the atmosphere even though they only occupy a smaller percentage of sea ice. The state of the sea ice, which includes characteristics about the lead like width, and understanding the dynamics driving movements provides valuable information for weather prediction, climate models, and ocean models. So locating these leads is important and  
 
 ---
 class:primary
@@ -1037,8 +1052,11 @@ class:primary
   - Cluster trajectories based on movement  
   - The boundaries would be possible locations of leads, as the underlying process causes the sea ice to move differently depending on the location
 2. By applying information gained from clustering, we developed a spatio-temporal model to reconstruct the underlying process, which can be used to estimate missing points along a trajectory.
-  - Take into account nonstationarity of the data (estimate parameters separately for each cluster)
+  - Take into account non-stationarity of the data
 
+???
+
+In this project we first want to develop a lead detection method, which addresses drawbacks of the other methods which include issues with incorrectly identifying clouds as leads and inaccurate calculations of sea ice deformation. In our method, we plan to use only the movement of the sea ice. Based on visualization of the sea ice trajectories (from the previous section), we plan to cluster the trajectories based on similar movements. The boundaries between clusters would then be the locations of leads, as the underlying process shifts at this location, causing a potential split in the sea ice. Next, by applying the information gained from clustering, we developed a spatio-temporal model to reconstruct the underlying process. We then can use this to estimate missing points along a trajectory to obtain a complete set of space-time observations, which then can maybe used to calculate more accurate sea ice deformation estimates. Our will take into account the non-stationarity of our data, meaning the assumption of a global mean and covariance function would be inaccurate. Global mean and covariance is assumed in many dynamic interpolation approaches. So our model will estimate parameteres separately depending on the location.
 
 ---
 class:primary
@@ -1052,10 +1070,15 @@ class:primary
 **Model Development**: Using information gained from clusters to identify spatio-temporal neighbors
 + Would expect a missing point at that time to move similarly to known points in same cluster
 + Cluster trajectories by week to find neighbors
-  - Cluster by weeks because it is the smallest interval could detect movement and also see some continuity between weeks
   - Intersection of one week's clusters with the week before and week after would create groups
   - Each member of a group is then a spatio-temporal neighbor of the other members as they are in a similar geographic region over time. 
   
+???
+
+For the sake of time, I'm just going to review the pieces that has not changes since my comprehensive exam. So using the features from the static visualization and feature selection in the previous section, we clustered the trajectories using k-means clustering. A drawback is that for k-means, the number of clusters must be specified prior to clusters, which we determined using the silhouette statistic. The trajectories are assigned a color based on the cluster assignment, and a point location was plotted on a plot, showing groups of contiguous clusters (like feature selection slide). We hypothesized that the boundary between clusters would be the estimated location of a lead, and we found through applying our process through simulations and the sea ice trajectories that our method provides a reasonable estimation of lead locations. 
+
+Next, to develop our model to reconstruct the underlying process, we used the information gained from clusters to identify spatio-temporal neighbors, as we would expect a missing point to move similarly to known points in the same cluster. To find the spatio-temporal neighbors, we cluster the trajectories by week (sub-trajectories). We used by week clusters as it was the smallest interval could detect movement and also see some continuity between weeks. After clustering, we find the spatial intersection between the desired weeks clusters (week wanting to interpolate) with the week before and the week after. The groups created by these spatial intersection are considered to be spatio-temporal neighbors as they are in a similar geographic region over time.
+
 ---
 class:primary
 
@@ -1077,6 +1100,10 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 ]
 
+???
+
+When collecting data by satellite, the path of the satellite doesn't observe the whole ice sheet every day, leaving positions in a trajectory unknown. Missingness tends to occur in spatial chunks, which is a reason why many simple interpolation methods are not useful either. For example, this figure shows the location of each trajectory on the first day of the data set. The uncolored boxes represent missing locations, which we can see occurs in a large spatial chunk.
+
 
 
 ---
@@ -1086,13 +1113,17 @@ class:primary
 
 We developed a model to reconstruct the underlying process (assumed Gaussian), where we simultaneously obtain the movement in $x$ (called $u$) and the movement in $y$ (called $v$) at time $t$.
 + The movements are added to the previous location to estimate the missing location
-$$(\hat{u}_t, \hat{v}_t) + (x_{t-1}, y_{t-1}) = (x_t, y_t)$$
+$$(\hat{u}_{t-1}, \hat{v}_{t-1}) + (x_{t-1}, y_{t-1}) = (x_t, y_t)$$
 
 
 We elected to use the Integrated Nested Laplace Approximation (INLA) approach
   + Computational benefits over other methods, as it focuses on models that can be expressed as latent Gaussian Markov Random Fields (GMRF)
   + Easily accounts for the spatio-temporal structure of the data during the inferential process `r Citep(bib[[c("spde-book")]])`
 
+
+???
+
+We wanted to develop a model that reconstructs the assumed Gaussian underlying process, where we can jointly obtain the movement in x (called u) and the movement in y (called v) at time t. We can then add these movements to the previous location to estimate the missing location (explain the equation). We elected to use the integrated nested laplace approximation or INLA to create our models due to their compuational benefits over other methods since it focuses on models that can be expressed as latent gaussian markov random fields (see where later). Additionally, they provide flexibility to easily account for the spatio-temporal data during the underlying process. 
 
 ---
 class:primary
@@ -1102,11 +1133,15 @@ class:primary
 Bivariate Data can be defined by the joint process: $$\left\{H(s,t), (s,t) \in \mathcal{D} \in \mathcal{R}\right\}$$ where there are $N$ spatial locations at $t$ time points.
 
 The process is assumed Gaussian, where the model can be rewritten as 
-$$H_{k_{i,t}} \sim BivN(\eta_{i,t}, \sigma^2_e)$$ 
+$$H_{{i,t}} \sim BivN(\eta_{i,t}, \sigma^2_e)$$ 
 with $\sigma^2_e$ representing the nugget effect and the linear predictor is defined as 
 
 $$\eta_{i,t} = \alpha + w_{i,t}$$ 
 with $\alpha$ denoting the intercept and the realization of the latent ST Gaussian Field (GF) is represented by $w \sim GF(0,\Sigma)$. The covariance function $(\Sigma)$ is the separable Matern ST covariance function `r Citep(bib[[c("BLANGIARDO201333")]])`. 
+
+???
+
+To begin setting up our model, we can define out bivariate data by the joint process H, where we have n spatial locations at t time points. We assume the process is Gaussian so we can rewrite the model as $H_{{i,t}} \sim BivN(\eta_{i,t}, \sigma^2_e)$, where the sigma squared e represents the nugget effect (or measurement error) and our linear predictor eta is expressed as alpha, the intercept plus the realization of the latent spatio-temporal Gaussian field, w. The realization has a separable matern spatio temporal covariance function. 
 
 ---
 class:primary
@@ -1136,6 +1171,12 @@ $$\eta_{i,t} = \alpha + \sum^{G}_{g=1}\tilde{A}\tilde{w}$$
 where $\tilde{A}$ is a sparse precision matrix mapping the GMRF, $\tilde{w}$, from $N$ locations to the $G$ nodes in the triangulation
 ]
 
+???
+
+When working with point data like our trajectories, assuming a continuously indexed gaussian field for w is not a computationally efficient approach. So instead we used stochastic partial differential equations. These represent a gaussian field with a matern covariance function through a discretely indexed process called a gaussian markov random field. To create the discrete index, a constrained delaunay triangulation. This triangluation prevents highly obtuse triangles, and we create triangles outside the boundary to prevent the variance being significantly higher at the boundary points (boundary effect). In this figure, an example of simulated data is given. On the right hand side is the data, which a blue line around the points to show the boundary. The left hand side shows the triangulation of this space, with the same blue line, where we see more triangles on the inside than outside. The density of the triangles also affects computation time.
+
+Since we are using the stochastic partial differential equations, the linear predictors is rewritten, where we still have our intercept, but the A tilde is a sparse precision matrix that maps the GMRF, w, from the N locations in the data set to the G nodes in the triangulation. 
+
 ---
 class:primary
 #Final Model
@@ -1143,14 +1184,19 @@ class:primary
 Specifically for our model to jointly measure the underlying process, the linear predictor is written as
 $$\eta_{it} = \alpha_u + \alpha_{v} + z_{u}(s,t) + z_{v}(s,t) + z_{uv}(s,t)$$
 
-where $\alpha_u$ + $\alpha_{v}$ are the intercepts for each response and the $z$ functions represent the SPDE model for the $u$ and $v$ spatio-temporal effects, along with their interaction.
+where $\alpha_u$ and $\alpha_{v}$ are the intercepts for each response and the $z$ functions represent the SPDE model for the $u$ and $v$ spatio-temporal effects, along with their interaction.
 
 We developed a model within each intersection to account for the non-stationary aspect of our data using only the data at time t, only data from t − 1, t, and t + 1. 
 
 **Using Model**: Create a spatial grid encompassing the sea ice. 
   + The centroid of the grid cells become a starting estimation of the missing $g_j$. 
   + The underlying process should be smooth within an intersection, so the centroid should have a similar value of the underlying process. 
-  + Once we create the grid for initial location estimates of the missing data, we used the developed bivariate model to find the predicted locations.
+  
+???
+
+So for our final model to jointly measure u and v of the underlying process, we write the linear predictor as $\eta_{it} = \alpha_u + \alpha_{v} + z_{u}(s,t) + z_{v}(s,t) + z_{uv}(s,t)$, where we have our intercepts for each variable and the z functions represent the SPDE model for u and v spatio-temporal effects, along with their interaction. We developed a model within each intersection to account for the non-stationarity aspect of our data, using only data at time t, t-1, t+1. Only used three days as already computationally inefficient, and don't expect days further out to have much of an impact. 
+
+Once we develop the model, we created a spatial grid that encompassed the sea ice to obtain values to use in our model (centroid of the grid cell). The underlying process should be smooth within an intersection, so the centroid should be close enough that it has a similar value of the underlying process. Once we create the grid for initial location estimates of the missing data, we used the developed bivariate model to find the predicted locations using the posterior mean of the linear predictor. The estimates are added to the previous day's known location to obtain the esimate of the missing location.
 
 ---
 class:primary
@@ -1164,42 +1210,56 @@ Compared four different methods:
   
 Results:
   + Joint Stationary Spatio-Temporal Model generally performs the worst
-  + The spatial model with fixed time (for y) and the spatio-temporal model (for x) perform better than linear interpolation for less smooth underlying processes
+  + The spatial model with fixed time (for $y$) and the spatio-temporal model (for $x$) perform better than linear interpolation for less smooth underlying processes
+
+???
+
+To test our methods, we conducted a simulation study, but for times sake I'm just going to show the interesting results. First we compared four different methods for finding missing points of the trajectories. First, we used linear interpolation, which is the simplest method to interpolate trajectory data. It estimates a missing point on a straight-line path between two observed locations. Second is our described model. Third, is we used the same process, but them model is a spatial model with a fixed time effect due to only have three days in the model. Finally, we created a stationary spatio-temporal model to check if our non-stationarity approach is valid, so our inla with spde model was created using the whole data set, not in each intersection.
+
+Performance was assessed using the root mean square error. The stationary model generally performs the worst, validating our non-stationarity modeling approach. The spatial model with fixed time (for $y$) and the spatio-temporal model (for $x$) perform better than linear interpolation for less smooth underlying processes. I found it interesting that our models tended to perform worse for x than y, meaning it doesn't perform as well for the second variable.
+
 
 ---
 class:primary
+#Sea Ice Trajectory Interpolation
 
-#Overall Interpolation Results
++ Due to observing most of the ice sheet every three days, our response in the model was the movement over three days, meaning 
+$$(\hat{u}_{t-3}, \hat{v}_{t-3}) + (x_{t-3}, y_{t-3}) = (x_t, y_t)$$
++ Of the observed data in an intersection with a known location after three days, we randomly removed 10%
++ We fit the spatial model with a time fixed effect 
+  - Computationally more efficient than the spatio-temporal model. 
+  - Only using three days to developour model, so there is probably not a significant amount of temporal
+dependence.
+  - Finally, it performs better for $y$, the already worse performing coordinate in the simulation study
 
-+ Took a random hold-out of points along the border, as the border may be locations of irregular movement
-  
-```{r ice-results-tab1}
+???
 
-result_data4 <- data.frame(Week = c(1,2,3), X1 = c(1.100, 1.340, 0.366), Y1 = c(2.610, 1.767, 0.396), X2 = c(2.154, 3.146, 1.693), Y2 = c(5.530, 2.061, 1.031))
- 
-kableExtra::kable(result_data4, booktabs = TRUE, caption = "RMSE for Interpolation Methods along Border", col.names = c("Week", "X", "Y", "X", "Y"), escape = FALSE, table.attr = "style='width:80%;'") %>% 
-  add_header_above(c("", "Joint Spatial" = 2, "Linear" = 2))
+Now I'm going to walk through some of the results for our model using the sea ice trajectories. For testing, we created a model for each intersection and time combination. So if we had p intersections, which vary by week, and t time points, then t x p models are developed. Due to observing most of the ice sheet every three days, our response in the model was the movement over three days. Of the observed data in an intersection with a known location after three days, we randomly removed 10%. Then using the observed data, we fit the spatial model with a time fixed effect as it is computationally more efficient than the spatio-temporal model. Also, since we are only using three days to develop our model, there is probably not a significant amount of temporal dependence, as shown in the simulation study, where the spatial model sometimes performs better than the spatio-temporal model (for y). This model was used to estimate the underlying process that drives movement over three days.
 
 
-```
 
 ---
 class:primary
-
-#Interpolation Results for Week 1
+#Example Results - Week 1
 
 ```{r ice-results-tab2, message=FALSE, warning = FALSE}
 
 result_data5 <- data.frame(Cluster = c(1,2,3,4,5,6), X1 = c(4.410,0.443,1.120,1.140,0.549, 1.320), Y1 = c(15.500, 0.870, 1.480, 1.980, 1.980, 2.970), X2 = c(1.330, 0.303, 1.770, 2.920, 0.969,2.330), Y2 = c(21.800, 0.527, 4.740, 3.420, 5.507, 7.450))
 
-kableExtra::kable(result_data5, booktabs = TRUE, caption = "RMSE for Interpolation Methods by cluster for Week 1", col.names = c( "Cluster", "X", "Y", "X", "Y"), escape = FALSE, align = "c", table.attr = "style='width:80%;'") %>% add_header_above(c(" ", "Joint Spatial" = 2, "Linear" = 2)) %>% row_spec(c(1,3,4,5,6),color = 'black', background = 'yellow') 
+kableExtra::kable(result_data5, booktabs = TRUE, caption = "RMSE for Interpolation Methods by cluster for Week 1", col.names = c( "Cluster", "X", "Y", "X", "Y"), escape = FALSE, align = "c", table.attr = "style='width:80%;'") %>% add_header_above(c(" ", "Joint Spatial" = 2, "Linear" = 2)) 
 
 ```
+
+
+???
+
+For time, I am just showing the RMSE results for Week 1. Once again, we are comparing it with linear interpolation. Overall our model seems to be performing better than linter interpolation. However, since each cluster is made of different movements we also Look at the RMSEs for each cluster, for x, in week 1, our model performs better than linear interpolation for cluster 3 through 6. The results for the y coordinate are similar, except in week 1, our model also performs better in cluster 1
+
 
 ---
 class:primary
 
-#Interpolation Results along Border by Week
+#Visual of Clusters to Describe Results
 
 + Black Polygon (Cluster 4): Data is More Spread out and not linear
 + Red Polygon (Cluster 2): Data does not move much
@@ -1216,6 +1276,10 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 ```
 
 ]
+
+???
+
+This plot is just to obtain a visual idea of what kinds of movement lead to a better peformance of our model. So as example, the black polygon represents cluster 4, where our model performs best. Here the data is more spread out and not linear, so would not expect linear interpolation to work well here. Second, the red polygons refer to cluster 2, here the data does not move much over the week, allows for linear interpolation to have an easier time interpolating between two close points. So our model shows promise for curved data that is not highly sampled.
 
 ---
 class:primary
@@ -1236,6 +1300,10 @@ kableExtra::kable(result_data6, booktabs = TRUE, caption = "<b>Coverage</b>", co
 ```
 
 
+???
+
+A benefit of using a model-based approach is that we can determine the uncertainty of our estimate. Using the posterior marginals, we can find the standard deviation of the estimate, which can then be used to create an interval of our estimates. The intervals can then be used to find the proportion of intervals containing the true amount of movement during testing of our models, otherwise known as coverage. Our coverage is pretty low, which is some cause for concern. So there is maybe better priors to use in our inla model, or a better creation of the triangulation, etc. 
+
 ---
 class:primary
 
@@ -1252,8 +1320,13 @@ class:primary
 **Areas for Improvement**:
 
 + Computational efficiency
-+ Coverage shows that there is room for improvement with the parameter estimations
-+ Intersections
++ Coverage shows that there is room for improvement with the prior specification
+
+???
+
+Our model is beneficial as it takes into account the non-stationarity of the data, which is an important component of this specific underlying process. And it Showed some improvement, in terms of RMSE, over linear interpolation for curved data that is not highly sampled. Also, it is able to estimate days on the edges, which linear interpolation is not able to do since it requires two observed locations to estimate in between. Finally we can calculate an uncertainty estimate of our predictions. 
+
+Areas of improvement for our approach include computational efficiency. Due to develop t x p (number of intersections) models, it takes a long time to run (~20-45 minutes). Next, coverage showed there is room for improved with prior specification. Currently assuming the same prior for each model (more efficient), but probably not accurate.
 
   
 ---
@@ -1268,7 +1341,9 @@ class:primary
   - Eventually, we would like to turn this into a one-step process, potentially using Voronoi tessellations and a piecewise Gaussian Process. 
   - Combining everything into one step may also increase computational efficiency.
 
-  
+???
+
+In the future, for lead detection, I would like to use a better method for determining the number of clusters. For example Ossama et al (2011) has a process for determining the number of unique directions, which may be a better estimate of $k$. Second, methods to improve computational efficiency should be considered, like maybe parallel computing. Finally, probably the most important is that currently, our interpolation method is a two-step process: find clusters and create model in each cluster. Eventually, we would like to turn this into a one-step process, potentially using Voronoi tessellations and a piecewise Gaussian Process. Combining everything into one step may also increase computational efficiency.
 
 ---
 class:primary
@@ -1396,3 +1471,50 @@ class:inverse
 <br>
 
 ]
+
+---
+class:primary
+
+# Other Lead Detection Methods
+
+.pull-left[
+**Thermal**
++ Surface temperature differs between a lead and the surrounding sea ice.
++ Use thermal channels of the Advanced Very High Resolution Radiometer (AVHRR) `r Citep(bib[[c("key_detectability_1993")]])` 
+  - Heavily dependent on clear skies and has issues with thin ice
++ Methods have been proposed to reduce the impact of clouds 
+.center[
+```{r thermal-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/thermal_example.png", alt = " Output from a Thermal Algorithm (Rohrs et al, 2012)", other=list(width="40%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+].pull-right[
+**Deformation**
++ Cell deformation is determined by point motion `r Citep(bib[[c("peterson_evaluating_2011")]])`
+    - The determinant of the deformation gradient measures accumulated area changes
+    - Can find the size and orientation
++ Drawbacks
+  - Need complete set of space-time observations to calculate deformation
+  - Underestimation of error in deformation product
+
+.center[
+```{r deformation-pics,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/kinematic_crack_algorithm.png", alt = "Example of detected leads using a kinematic crack algorithm which uses the determinant of the deformation gradient to detect leads (Peterson & Sulsky, 2011)", other=list(width="30%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+
+]
+]
+
