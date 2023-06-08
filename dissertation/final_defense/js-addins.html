@@ -3144,3 +3144,37 @@
             modalattempt2.style.display = 'none';
           }
 </script>
+<script>
+        /* Get the modal*/
+          var modalAttempt1 = document.getElementById('modalAttempt1');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt1 = document.getElementById('imgAttempt1');
+          var modalImgAttempt1 = document.getElementById('imgmodalAttempt1');
+          var captionTextAttempt1 = document.getElementById('captionAttempt1');
+          imgAttempt1.onclick = function(){
+            modalAttempt1.style.display = 'block';
+            modalImgAttempt1.src = this.src;
+            captionTextAttempt1.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt1.onclick = function() {
+            modalAttempt1.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttempt2new = document.getElementById('modalAttempt2new');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt2new = document.getElementById('imgAttempt2new');
+          var modalImgAttempt2new = document.getElementById('imgmodalAttempt2new');
+          var captionTextAttempt2new = document.getElementById('captionAttempt2new');
+          imgAttempt2new.onclick = function(){
+            modalAttempt2new.style.display = 'block';
+            modalImgAttempt2new.src = this.src;
+            captionTextAttempt2new.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt2new.onclick = function() {
+            modalAttempt2new.style.display = 'none';
+          }
+</script>
