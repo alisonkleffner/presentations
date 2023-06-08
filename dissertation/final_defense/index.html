@@ -465,11 +465,6 @@ class:primary
   - Difficult to discriminate between these colors (Wong, 2011) 
   
 
-+ Stop-Light Color Scheme
-  - Yellow has a highlighting effect
-  - Univariate Scale more appropriate
-  
-
 + Same Color scheme for multiple variables
   - May cause confusion
   
@@ -779,26 +774,6 @@ and `\({s_{jt}}\)` = `\((x_{jt}, y_{jt})\)`
 ???
 
 The sea ice trajectories were tracked by NASA's RADARSTATE geophysical processor system (RGPS), which uses sequential synthetic aperture radar images to track the trajectory of point on an ice sheet. On the first day of the study period, a grid is put on the image, where each grid cell vertex is assigned an identifier (j) that is tracked over the study period using feature based and area based tracking. At the end of the study period we have a data set of n trajectories, where each trajectory is a collection of spatial locations at different times. Due to collecting this data with a satellite, not all the trajectories are observed on the same day, so we have a collection of possible times. We focused on the Beaufort region, so we have a total of 8811 trajectories on 22 possible days.
-
----
-class:primary
-# Data Difficulty
-
-.center[
-&lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgtrajexample' src='images/traj-example.png' alt='Example of a single trajectory in our data set' width='90%'&gt;
-&lt;!-- The Modal --&gt;
-&lt;div id='modaltrajexample' class='modal'&gt;
-  &lt;!-- Modal Content (The Image) --&gt;
-  &lt;img class='modal-content' id='imgmodaltrajexample'&gt;
-  &lt;!-- Modal Caption (Image Text) --&gt;
-  &lt;div id='captiontrajexample' class='modal-caption'&gt;&lt;/div&gt;
-&lt;/div&gt;
-]
-
-???
-
-This data set in particular can be complicated to work with. To show this we look at one trajectory. For example, we have missing data, where there is no pattern within the missingness, due to data collection by satellite. So gaps between observations vary between 1-3 days. Secondly, at day 5, we have two observations, so not only are we missing data, sometimes we have multiple observations on the same day, which can be difficult to account for. The plot to the left shows the path of the trajectory, where are observed locations are connected with a line segment. This shows us a depiction of what we see in the data set. It shows how visualizing the trajectories helps the user understand the movements better, so it's important to visualize the trajectories, even though they may be messy.
 
 ---
 class:primary
@@ -1308,6 +1283,52 @@ This plot is just to obtain a visual idea of what kinds of movement lead to a be
 ---
 class:primary
 
+#Coverage 
+
+A benefit of using a model-based approach is that we can determine the uncertainty of our estimate.
+  - Standard deviation of estimate computed using the posterior marginals, which are then used to create an interval of our estimates
+  - The intervals can then be used to find the proportion of intervals containing the true amount of movement during testing of our models, otherwise known as coverage
+
+&lt;br&gt;
+
+&lt;table style='width:75%;'&gt;
+&lt;caption&gt;&lt;b&gt;Coverage&lt;/b&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Week &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.389 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.370 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.451 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.476 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.443 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.373 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+
+A benefit of using a model-based approach is that we can determine the uncertainty of our estimate. Using the posterior marginals, we can find the standard deviation of the estimate, which can then be used to create an interval of our estimates. The intervals can then be used to find the proportion of intervals containing the true amount of movement during testing of our models, otherwise known as coverage. Our coverage is pretty low, which is some cause for concern. So there is maybe better priors to use in our inla model, or a better creation of the triangulation, etc. 
+
+
+
+---
+class:primary
+
 # Discussion of Model
 
 
@@ -1696,6 +1717,19 @@ DOI: &lt;a href="https://doi.org/10.1007/s10462-016-9477-7"&gt;10.1007/s10462-01
 class:primary
 #Acknowledgements
 
+**Advisers**
++ Dr. Yawen Guan
++ Dr. Susan VanderPlas
+ 
+**Committee Members**
++ Dr. Erin Blankenship
++ Dr. Taro Mieno
+
+**Other**
++ Family
++ Graduate school friends and peers
+
+
 
 ---
 class:inverse
@@ -1741,6 +1775,27 @@ Number of categorical scales should be limited to **5-7 categories** (Miller, 19
 Additionally, the number of categories on our scale for yield should be limited to 5-7 categories (DIFM plot violates this). The categories need to be limited due to working memory limits and it makes it harder for the user to distinguish between colors and remember the meaning of what group the color is representing (might associate a color with the incorrect category). This load on the user's working memory lead to an increase in time for them to comprehend the plot, which is not something we want especially for non-experts. 
 
 Next I am going to walk through our redesign process.
+
+---
+class:primary
+# Data Difficulty
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgtrajexample' src='images/traj-example.png' alt='Example of a single trajectory in our data set' width='90%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modaltrajexample' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodaltrajexample'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captiontrajexample' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+???
+
+This data set in particular can be complicated to work with. To show this we look at one trajectory. For example, we have missing data, where there is no pattern within the missingness, due to data collection by satellite. So gaps between observations vary between 1-3 days. Secondly, at day 5, we have two observations, so not only are we missing data, sometimes we have multiple observations on the same day, which can be difficult to account for. The plot to the left shows the path of the trajectory, where are observed locations are connected with a line segment. This shows us a depiction of what we see in the data set. It shows how visualizing the trajectories helps the user understand the movements better, so it's important to visualize the trajectories, even though they may be messy.
+
 
 ---
 class:primary
@@ -1827,49 +1882,7 @@ class:primary
 
 When collecting data by satellite, the path of the satellite doesn't observe the whole ice sheet every day, leaving positions in a trajectory unknown. Missingness tends to occur in spatial chunks, which is a reason why many simple interpolation methods are not useful either. For example, this figure shows the location of each trajectory on the first day of the data set. The uncolored boxes represent missing locations, which we can see occurs in a large spatial chunk.
 
----
-class:primary
 
-#Coverage 
-
-A benefit of using a model-based approach is that we can determine the uncertainty of our estimate.
-  - Standard deviation of estimate computed using the posterior marginals, which are then used to create an interval of our estimates
-  - The intervals can then be used to find the proportion of intervals containing the true amount of movement during testing of our models, otherwise known as coverage
-
-&lt;br&gt;
-
-&lt;table style='width:75%;'&gt;
-&lt;caption&gt;&lt;b&gt;Coverage&lt;/b&gt;&lt;/caption&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:center;"&gt; Week &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
-   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0.389 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0.370 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0.451 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0.476 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0.443 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 0.373 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-
-???
-
-A benefit of using a model-based approach is that we can determine the uncertainty of our estimate. Using the posterior marginals, we can find the standard deviation of the estimate, which can then be used to create an interval of our estimates. The intervals can then be used to find the proportion of intervals containing the true amount of movement during testing of our models, otherwise known as coverage. Our coverage is pretty low, which is some cause for concern. So there is maybe better priors to use in our inla model, or a better creation of the triangulation, etc. 
 
 
     </textarea>
