@@ -550,9 +550,9 @@ class:primary
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgAttempt1' src='images/Attempt1.png' alt='First Iteration' width='35%'&gt;
+&lt;img id='imgAttempt1' src='images/Attempt1.png' alt='First Iteration' width='40%'&gt;
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgAttempt2' src='images/Attempt2.png' alt='Second Iteration' width='35%'&gt;
+&lt;img id='imgAttempt2' src='images/Attempt2.png' alt='Second Iteration' width='40%'&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modalAttempt1' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -913,12 +913,12 @@ class:primary
 [Link](https://alisonkleffner.github.io/yield-map-redesign/traj.html)
 
 + Griffin, MacEachren, Hardisty, Steiner, and Li (2006) found that animated plots allowed a user to identify moving clusters easier than multiple windows of static plots. 
-+ Our animation shows the incremental progress of each trajectory over time by plotting the new
++ Shows the incremental progress of each trajectory over time by plotting the new
 location at each time step and connecting the new observation with the previous through a line segment. 
 + New information:
   - see a trajectory speeding up or slowing down through the length of the added line segments. 
   - Associate a movement with a particular day
-+ Using Gestalt principle of common fate we can see that trajectories moving with a similar velocity occurs in contiguous patches.
++ Using gestalt principle of common fate we can see that trajectories moving with a similar velocity occurs in contiguous patches.
 
 ???
 
@@ -5020,6 +5020,40 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgtrevisan.onclick = function() {
             modaltrevisan.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttempt1 = document.getElementById('modalAttempt1');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt1 = document.getElementById('imgAttempt1');
+          var modalImgAttempt1 = document.getElementById('imgmodalAttempt1');
+          var captionTextAttempt1 = document.getElementById('captionAttempt1');
+          imgAttempt1.onclick = function(){
+            modalAttempt1.style.display = 'block';
+            modalImgAttempt1.src = this.src;
+            captionTextAttempt1.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt1.onclick = function() {
+            modalAttempt1.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttempt2 = document.getElementById('modalAttempt2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt2 = document.getElementById('imgAttempt2');
+          var modalImgAttempt2 = document.getElementById('imgmodalAttempt2');
+          var captionTextAttempt2 = document.getElementById('captionAttempt2');
+          imgAttempt2.onclick = function(){
+            modalAttempt2.style.display = 'block';
+            modalImgAttempt2.src = this.src;
+            captionTextAttempt2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt2.onclick = function() {
+            modalAttempt2.style.display = 'none';
           }
 </script>
 <script>
