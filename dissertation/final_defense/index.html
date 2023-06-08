@@ -552,7 +552,7 @@ class:primary
 &lt;!-- Trigger the Modal --&gt;
 &lt;img id='imgAttempt1' src='images/Attempt1.png' alt='First Iteration' width='40%'&gt;
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgAttempt2' src='images/Attempt2.png' alt='Second Iteration' width='40%'&gt;
+&lt;img id='imgattempt2' src='images/attempt2.png' alt='Second Iteration' width='40%'&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modalAttempt1' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -561,11 +561,11 @@ class:primary
   &lt;div id='captionAttempt1' class='modal-caption'&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;!-- The Modal --&gt;
-&lt;div id='modalAttempt2' class='modal'&gt;
+&lt;div id='modalattempt2' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
-  &lt;img class='modal-content' id='imgmodalAttempt2'&gt;
+  &lt;img class='modal-content' id='imgmodalattempt2'&gt;
   &lt;!-- Modal Caption (Image Text) --&gt;
-  &lt;div id='captionAttempt2' class='modal-caption'&gt;&lt;/div&gt;
+  &lt;div id='captionattempt2' class='modal-caption'&gt;&lt;/div&gt;
 &lt;/div&gt;
 ]
 
@@ -5088,6 +5088,40 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgAttempt2.onclick = function() {
             modalAttempt2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttempt1 = document.getElementById('modalAttempt1');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt1 = document.getElementById('imgAttempt1');
+          var modalImgAttempt1 = document.getElementById('imgmodalAttempt1');
+          var captionTextAttempt1 = document.getElementById('captionAttempt1');
+          imgAttempt1.onclick = function(){
+            modalAttempt1.style.display = 'block';
+            modalImgAttempt1.src = this.src;
+            captionTextAttempt1.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt1.onclick = function() {
+            modalAttempt1.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalattempt2 = document.getElementById('modalattempt2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgattempt2 = document.getElementById('imgattempt2');
+          var modalImgattempt2 = document.getElementById('imgmodalattempt2');
+          var captionTextattempt2 = document.getElementById('captionattempt2');
+          imgattempt2.onclick = function(){
+            modalattempt2.style.display = 'block';
+            modalImgattempt2.src = this.src;
+            captionTextattempt2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgattempt2.onclick = function() {
+            modalattempt2.style.display = 'none';
           }
 </script>
 
