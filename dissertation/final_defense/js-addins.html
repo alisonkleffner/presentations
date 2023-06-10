@@ -3535,3 +3535,37 @@
             modalmaxwell.style.display = 'none';
           }
 </script>
+<script>
+        /* Get the modal*/
+          var modalAttempt2new = document.getElementById('modalAttempt2new');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt2new = document.getElementById('imgAttempt2new');
+          var modalImgAttempt2new = document.getElementById('imgmodalAttempt2new');
+          var captionTextAttempt2new = document.getElementById('captionAttempt2new');
+          imgAttempt2new.onclick = function(){
+            modalAttempt2new.style.display = 'block';
+            modalImgAttempt2new.src = this.src;
+            captionTextAttempt2new.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt2new.onclick = function() {
+            modalAttempt2new.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalIceChunk = document.getElementById('modalIceChunk');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgIceChunk = document.getElementById('imgIceChunk');
+          var modalImgIceChunk = document.getElementById('imgmodalIceChunk');
+          var captionTextIceChunk = document.getElementById('captionIceChunk');
+          imgIceChunk.onclick = function(){
+            modalIceChunk.style.display = 'block';
+            modalImgIceChunk.src = this.src;
+            captionTextIceChunk.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgIceChunk.onclick = function() {
+            modalIceChunk.style.display = 'none';
+          }
+</script>

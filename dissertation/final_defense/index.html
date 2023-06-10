@@ -236,7 +236,7 @@ body {
 
 <i class="far fa-image" role="presentation" aria-label="image icon"></i> Overall Motivation
 
-<i class="fas fa-chart-line" role="presentation" aria-label="chart-line icon"></i> Redesinging Yield Map Plots for Comprehension and Usability
+<i class="fas fa-chart-line" role="presentation" aria-label="chart-line icon"></i> Redesigning Yield Map Plots for Comprehension and Usability
 
 <i class="fas fa-up-down-left-right" role="presentation" aria-label="up-down-left-right icon"></i> Visual Diagnostics for Trajectory Data
 
@@ -284,7 +284,8 @@ Spatial data relates to a geographical area or location.
 related but near things are more related than distant things (Klippel, Hardisty, and Li, 2011) 
 + Often, more than one attribute is measured at a location. 
 
-**Focus:** However, due to the variables occupying the same space, multivariate spatial data is complex, making it especially difficult to visualize due to issues like clutter (He, Tao, Wang, and Lin, 2019)
+**Focus:** However, due to the variables occupying the same space, multivariate spatial data is complex
++ Difficulties in visualization due to issues like clutter (He, Tao, Wang, and Lin, 2019)
 
 **Example:** Visualization of crop input application versus crop yield
 
@@ -297,8 +298,8 @@ class:primary
 #Background
 
 + With a projected increase in future crop demand, researchers are conducting studies on crop input application to increase yield, focusing on sustainability (Tilman, Balzer, Hill, and Befort, 2011) 
-+ Crop Input Example: Nitrogen Fertilizer
-  - Nitrogen is an essential component of food production as allows plants to photosynthesize efficiently (Maheswari, Murthy, and Shanker, 2017)  
++ Example: Nitrogen Fertilizer
+  - Nitrogen is an essential component of food production as is allows plants to photosynthesize efficiently (Maheswari, Murthy, and Shanker, 2017)  
   - Nearly half of the nitrogen fertilizer supplied to the field is not used by the crops (Billen, Garnier, and Lassaletta, 2013) 
   - This excess nitrogen can be harmful
 
@@ -327,7 +328,7 @@ class:primary
 # Trial Design and Data Collection
 
 .pull-left[
-**Step 1**: Develop infrastructure to develop experiments using site-specific inputs
+**Step 1**: Design experiment using site-specific inputs
 
 [Trial Design Tool](http://trialdesign.difm-cig.org/)
 
@@ -343,7 +344,7 @@ class:primary
 &lt;/div&gt;
 ]
 
-**Output**: shape files that can be put into a farmer's tractor that allows them to carry out the experiments
+**Output**: Shape files that can be put into a farmer's tractor that allows them to carry out the experiments
 
 ].pull-right[
 
@@ -361,7 +362,7 @@ class:primary
 &lt;/div&gt;
 ]
 
-Examples of Data Collected:
+**Collected Data**:
 - As-applied
 - Yield
 - Location of measurements
@@ -378,10 +379,10 @@ class:primary
 
 **Step 3**: Explain the optimal management decisions
 
-**How**: machine learning models to learn how crop yield responds to different input application rates, field characteristics, and weather
+**How**: Machine learning models to learn how crop yield responds to different input application rates, field characteristics, and weather
   - Build trust in models
 
-**One way to do this**: Visually explore the relationship between input application and yield through a graph
+**One way to do this**: Visually explore the relationship between input application and yield
   - Show the spatial correlations between the application/treatment and yield in a way that is understandable to farmers and consultants. 
   - Develop perceptually optimal plots that communicate this relationship. 
   
@@ -398,7 +399,7 @@ class:primary
 **Benefits**: Easier to compare as users can use perception rather than memory
 - Useful when spatial location is a key component of the comparison (Wang, Haleem, Shi, Wu, Zhao, Fu, and Qu, 2018)
 
-**Drawback**: clutter
+**Drawback**: Clutter
 
 .pull-left[
 .center[
@@ -416,8 +417,8 @@ class:primary
 ].pull-right[
 + Multiple dots on top of one another
   - Obscures true number of dots, harder to find patterns
-  - Visual cues, like color, becomes partially obstructed, thereby reducing search efficiency (Bravo and Farid, 2004a; Bravo and Farid, 2004b)
-  - Can overburden human perception, causing errors in performing tasks (Huang, Eades, and Hong, 2009)
+  - Visual cues, like color, becomes partially obstructed, reducing search efficiency (Bravo and Farid, 2004a; Bravo and Farid, 2004b)
+  - Overburdens human perception, causing errors in performing tasks (Huang, Eades, and Hong, 2009)
 ]  
 
 
@@ -430,11 +431,10 @@ So in more detail, the superimposed graphs violate a general principle, which is
 class:primary
 #Layout: Juxtaposed Graphs
 
-**Benefits**: less issues with visual clutter and easier to create (Gleicher, Albers, Walker, Jusufi, Hansen, and Roberts, 2011)
+**Benefits**: Less issues with visual clutter and easier to create (Gleicher, Albers, Walker, Jusufi, Hansen, and Roberts, 2011)
 
 **Drawback**: Most of the comparative burden placed on users' memory
-+ A mental image is relied on for comparison in these scenarios, as the user moves their
-eyes between images (shifting focus). 
++ A mental image is relied on for comparison, as the user moves their eyes between images (shifting focus). 
   - The plot contents may not be accurately formed in working memory, leading to potential errors when deriving patterns  (Vanderplas, Cook, and Hofmann, 2020; LYi, Jo, and Seo, 2021)
 + Lack of visual cues for locations
 
@@ -462,6 +462,7 @@ class:primary
 
 .pull-left[
 + Red-green color blindness
+  - Experienced by approximately 8% of men and 0.5% of Northern European Ancestory (Wong, 2011)
   - Difficult to discriminate between these colors (Wong, 2011) 
   
 
@@ -513,16 +514,7 @@ class:primary
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgAttempt1' src='images/Attempt1.png' alt='First Iteration' width='40%'&gt;
-&lt;!-- Trigger the Modal --&gt;
 &lt;img id='imgAttempt2new' src='images/Attempt2-new.png' alt='Second Iteration' width='40%'&gt;
-&lt;!-- The Modal --&gt;
-&lt;div id='modalAttempt1' class='modal'&gt;
-  &lt;!-- Modal Content (The Image) --&gt;
-  &lt;img class='modal-content' id='imgmodalAttempt1'&gt;
-  &lt;!-- Modal Caption (Image Text) --&gt;
-  &lt;div id='captionAttempt1' class='modal-caption'&gt;&lt;/div&gt;
-&lt;/div&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modalAttempt2new' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -533,8 +525,9 @@ class:primary
 ]
 
 **Focus**: Superimpose the treatment and yield plots, while reducing the clutter 
-+ Use of transparency to show both at same time
-
++ Yield Polygons
++ Transparency to show both at same time
++ Change Colors
 
 
 ???
@@ -563,10 +556,10 @@ class:primary
 &lt;/div&gt;
 ]].pull-right[
 
-+ **Benefit**: relationship between the variables is most important (Elmer, 2013) 
++ **Benefit**: Relationship between the variables is most important (Elmer, 2013) 
 + Recommendation: 3x3 scale (Leonowicz, 2003)  
   - + Quantiles (Biesecker, Zahnd, Brandt, Adams, and J.M, 2020)   
-+ **Focus**: diagonal
++ **Focus**: Diagonal
   - Diagonal: grayscale color scheme. 
   - Upper left and lower right: complementary color scheme (Strode, Morgan, Thornton, Mesev, Rau, Shortes, and Johnson, 2020)
 + **Drawback**: Lose more detailed information
@@ -587,12 +580,11 @@ class:primary
 
 .pull-left[
 **Benefit**: Direct statement of correlation while maintaining some spatial orientation 
-  - Explicit Encoding Layout (Gleicher, Albers, Walker, et al., 2011)
-+ Bivariate color scale
-+ Maintain some spatial information. 
-  - Correlations may be impacted by field location
+- Explicit Encoding Layout (Gleicher, Albers, Walker, et al., 2011)
+  + Maintain some spatial information. 
+  + Correlations may be impacted by field location
   
-**Drawback**: complicated to connect the displayed relationship back to the data (Gleicher, Albers, Walker, et al., 2011)
+**Drawback**: Complicated to connect the displayed relationship back to the data (Gleicher, Albers, Walker, et al., 2011)
 
 ].pull-right[
 
@@ -641,7 +633,8 @@ class:primary
 
 + A standard practice to overcome weakness of decontextualization is utilizing a hybrid comparative layout (LYi, Jo, and Seo, 2021)
   - Juxtaposed scatterplot to the correlation plot
-+ Interactivity connects the juxtaposed plots, where hovering over a trial plot in the correlation map highlights the corresponding points in the scatterplot used in the correlation calculation.
++ Interactivity to connect the plots 
+  - Hovering over a trial plot highlights the corresponding points in the scatterplot used in the correlation calculation.
 
 [Link](https://alisonkleffner.github.io/yield-map-redesign/interactive-example.html)
 
@@ -685,8 +678,9 @@ class:primary
 # What are Trajectories?
 
 
-+ Trajectories are considered the most complex form of data based on
-points, but is also becoming more easily available (Kisilevich, Mansmann, Nanni, and Rinzivillo, 2009; Rinzivillo, Pedreschi, Nanni, and Giannotti, 2008)
+Trajectories are considered the most complex form of data based on points, but are becoming more easily available (Kisilevich, Mansmann, Nanni, and Rinzivillo, 2009; Rinzivillo, Pedreschi, Nanni, and Giannotti, 2008)
+
++ Complexities:
   - Difficult to visualize effectively
   - Diverse set of properties
   - Different lengths
@@ -728,13 +722,13 @@ class:inverse
 class:primary
 # Background
 
-**Interest**: discover patterns within the movements to help understand the trajectories behavior (Andrienko, Andrienko, and Wrobel, 2007) 
+**Interest**: Discover patterns within the trajectories to help understand their behavior (Andrienko, Andrienko, and Wrobel, 2007) 
 
-**A Method**: Visualization during Exploratory Data Analysis:  
+**A Method**: Visualization during Exploratory Data Analysis (EDA):  
   + Trajectories are difficult to visualize (messy)
   + Provide insight into the underlying dynamics driving movement.
 
-**Extract Features**: Trajectories are complicated to work with, so we can extract features from the raw data that can summarize its movement (Harold, Lorenzoni, Shipley, and Coventry, 2016) 
+**Extract Features**: Since trajectories are complex, so we can extract features from the raw data (Harold, Lorenzoni, Shipley, and Coventry, 2016) 
   + Can use visualization to motivate feature creation
   + Want to create features that provide a quantitative summary of the movement seen in plots 
 
@@ -759,8 +753,8 @@ class:primary
 &lt;/div&gt;
 ]
 
-+ Sea Ice can be tracked by NASA's RADARSTAT Geophysical Processor System (RGPS), which uses synthetic aperture radar (SAR) images to track the trajectory of points on an ice sheet.
-+ Each grid cell vertex is assigned an identifier (cell `\(j=1,...,n\)`) which is used for tracking
++ Arctic Sea Ice is tracked by NASA's RADARSTAT Geophysical Processor System (RGPS), which uses synthetic aperture radar (SAR) images
++ Each grid cell vertex is assigned an identifier ($j=1,...,n$) which is used for tracking
 + Set of all trajectories: 
 
 .center[
@@ -822,11 +816,11 @@ class:primary
 # Static Trajectory Plot
 
 
-+ Directed line segments, with the direction of each trajectory denoted by an arrow at the end (Andrienko, Andrienko, and Gatalsky, 2000) 
-  - Shows the displacement and direction of each trajectory over time.
++ Line segments, with the direction of each trajectory denoted by an arrow at the end (Andrienko, Andrienko, and Gatalsky, 2000) 
+  - Shows the displacement and direction over time.
 + This plot violates several guidelines for effective visualization, making it
 unsuitable for presentation.
-  - However, using the principle of similarity helps a viewer easily group trajectories that look to move with a similar form in the same direction over time
+  - However, the principle of similarity helps a viewer easily group trajectories that look to move with a similar form in the same direction over time
 
 .center[
 &lt;!-- Trigger the Modal --&gt;
@@ -850,13 +844,13 @@ class:primary
 
 [Link](https://alisonkleffner.github.io/yield-map-redesign/traj.html)
 
-+ Griffin, MacEachren, Hardisty, Steiner, and Li (2006) found that animated plots allowed a user to identify moving clusters easier than multiple windows of static plots. 
-+ Shows the incremental progress of each trajectory over time by plotting the new
-location at each time step and connecting the new observation with the previous through a line segment. 
++ Shows the incremental progress of each trajectory over time
+  - Plot the new location at each time step and connect the new observation with the previous through a line segment. 
 + New information:
   - See a trajectory speeding up or slowing down through the length of the added line segments. 
   - Associate a movement with a particular day
-+ Using gestalt principle of common fate we can see that trajectories moving with a similar velocity occurs in contiguous patches.
++ Using gestalt principle of common fate
+  - Trajectories moving with a similar velocity in contiguous patches.
 
 ???
 
@@ -924,12 +918,11 @@ class:primary
 &lt;/div&gt;
 ]
 
-+ Each trajectory consists of multiple known points connected with line segments. 
-+ To determine the amount of “wiggle”, we decided to estimate the total length of the line segment (arc length).
-+ We can estimate the total length by first finding the distance between each set of two connected
++ To determine the amount of “wiggle”, we estimated the total length of the trajectory (arc length).
+  - Find the distance between each set of two connected
 points (yellow lines).
-  - We then added all the calculated distances to estimate the total length of the trajectory.
-+ Trajectories with a higher total length are "wigglier"
+  - Add all the calculated distances to estimate the total length of the trajectory.
+  - Trajectories with a higher total length are "wigglier"
 
 ???
 
@@ -940,8 +933,7 @@ Next, besides the bounding box, we wanted to derive a numerical assessment of "w
 class:primary
 # Feature Selection
 
-+ Not all characteristics of a trajectory are simultaneously relevant when
-analyzing trajectories (Rinzivillo, Pedreschi, Nanni, et al., 2008)
++ Not all characteristics of a trajectory are simultaneously relevant (Rinzivillo, Pedreschi, Nanni, et al., 2008)
 + Clustering algorithm to assign trajectories to groups of similar
 movements 
 + No label information to help evaluate feature importance, used visualization to make judgements (Li, Cheng, Wang, Morstatter, Trevino, Tang, and Liu, 2017).
@@ -970,7 +962,7 @@ class:primary
 # Conclusion/Future Work
 
 + We can use messy plots to motivate the creation of numerical features to summarize trajectory movements.
-+ The relevant features can be used to find groups of similar trajectories, and in future analyses as well.
++ Relevant features can also be determined using visualization and make the trajectories easier to work with in future analyses.
 + In the future, we plan to extend our bounding box features to three dimensions through a case study of seabird flight trajectories.
 
 ???
@@ -1003,10 +995,12 @@ class:primary
   - Accounts for half of the heat flux between the ocean and atmosphere (Badgley, 1961)
 + The state of sea ice and understanding the dynamics driving changes provides information for weather prediction, climate and ocean models (Reiser, Willmes, and Heinemann, 2020) 
 
-**Research Objectives**: Develop a lead detection method by clustering similar trajectories. Then applying the information gained from clustering to develop a model reconstructing the underlying process to estimate missing points along a trajectory.
+**Goals**: 
+  - Develop a lead detection method by clustering similar trajectories 
+  - Develop a model reconstructing the underlying process for interpolation
 .center[
 &lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgIceChunk' src='images/Ice Chunk.png' alt=' Artic Sea Ice with Crack' width='35%'&gt;
+&lt;img id='imgIceChunk' src='images/Ice Chunk.png' alt=' Artic Sea Ice with Crack' width='30%'&gt;
 &lt;!-- The Modal --&gt;
 &lt;div id='modalIceChunk' class='modal'&gt;
   &lt;!-- Modal Content (The Image) --&gt;
@@ -1036,15 +1030,15 @@ class:primary
 &lt;/div&gt;
 ]
 
-**Lead Detection**: used bounding box features in K-Means clustering
+**Lead Detection**: Use bounding box features in K-Means clustering
 + Boundaries between clusters are the estimated locations of leads
 + Found through simulations and the sea ice trajectories that our method provides a reasonable estimation of lead locations  
 
-**Finding Neighbors**: Using information gained from clusters to identify spatio-temporal neighbors
+**Finding Neighbors**: Use information gained from clusters to identify spatio-temporal neighbors
 + Would expect a missing point at that time to move similarly to known points in same cluster
 + Cluster trajectories by week to find neighbors
   - Intersection of one week's clusters with the week before and week after would create groups
-  - Each member of a group is then a spatio-temporal neighbor of the other members as they are in a similar geographic region over time. 
+  - Each member of an intersection are spatio-temporal neighbors as they are in a similar geographic region over time. 
   
 ???
 
@@ -1077,7 +1071,7 @@ class:primary
 
 #INLA: Continuously Indexed GF
 
-Bivariate Data can be defined by the joint process: `$$\left\{H(s,t), (s,t) \in \mathcal{D} \in \mathcal{R}\right\}$$` where there are `\(N\)` spatial locations at `\(t\)` time points.
+Bivariate Data can be defined by the joint process: `$$\left\{H(s,t), (s,t) \in \mathcal{D} \in \mathcal{R}\right\}$$` where there are `\(n\)` spatial locations at `\(t\)` time points.
 
 The process is assumed Gaussian, where the model can be rewritten as 
 `$$H_{{i,t}} \sim BivN(\eta_{i,t}, \sigma^2_e)$$` 
@@ -1172,10 +1166,9 @@ class:primary
 `$$(\hat{u}_{t-3}, \hat{v}_{t-3}) + (x_{t-3}, y_{t-3}) = (\hat{x}_t, \hat{y}_t)$$`
 + Of the observed data in an intersection with a known location after three days, we randomly removed 10%
 + We fit the spatial model with a time fixed effect 
-  - Computationally more efficient than the spatio-temporal model. 
   - Only using three days to develop our model, so there is probably not a significant amount of temporal
 dependence.
-  - Finally, it performs better for `\(y\)`, the already worse performing coordinate in the simulation study
+  - Performs better for `\(y\)`, the already worse performing coordinate in the simulation study
 
 ???
 
@@ -1287,7 +1280,7 @@ class:primary
 
 A benefit of using a model-based approach is that we can determine the uncertainty of our estimate.
   - Standard deviation of estimate computed using the posterior marginals, which are then used to create an interval of our estimates
-  - The intervals can then be used to find the proportion of intervals containing the true amount of movement during testing of our models, otherwise known as coverage
+  - The intervals can then be used to find the proportion of intervals containing the true amount of movement during testing of our models
 
 &lt;br&gt;
 
@@ -1336,7 +1329,6 @@ class:primary
 
 + Takes into account the nonstationarity of the data
 + Showed some improvement, in terms of RMSE, over linear interpolation for curved data that is not highly sampled
-+ Able to estimate data on first and last day of a dataset, which linear interpolation is not able to do. 
 + Able to calculate uncertainty
   
 **Areas for Improvement**:
@@ -1745,39 +1737,6 @@ class:inverse
 
 ---
 class:primary
-#Number of Categories
-
-Number of categorical scales should be limited to **5-7 categories** (Miller, 1956)
-.pull-left[
-- Due to working memory limits (Macdonald, 1999)
-  + Harder for the user to distinguish between colors and remember the meaning of colors. 
-- The load on the user’s working memory leads to an increase in the time it takes for the user to comprehend the plot (Huang, Eades, and Hong, 2009)
-].pull-right[  
-  
-.center[
-&lt;!-- Trigger the Modal --&gt;
-&lt;img id='imgcategories' src='images/categories.png' alt='Example 1' width='50%'&gt;
-&lt;!-- The Modal --&gt;
-&lt;div id='modalcategories' class='modal'&gt;
-  &lt;!-- Modal Content (The Image) --&gt;
-  &lt;img class='modal-content' id='imgmodalcategories'&gt;
-  &lt;!-- Modal Caption (Image Text) --&gt;
-  &lt;div id='captioncategories' class='modal-caption'&gt;&lt;/div&gt;
-&lt;/div&gt;
-]  
-
-]
-
-**Next:** Redesign Process
-
-???
-
-Additionally, the number of categories on our scale for yield should be limited to 5-7 categories (DIFM plot violates this). The categories need to be limited due to working memory limits and it makes it harder for the user to distinguish between colors and remember the meaning of what group the color is representing (might associate a color with the incorrect category). This load on the user's working memory lead to an increase in time for them to comprehend the plot, which is not something we want especially for non-experts. 
-
-Next I am going to walk through our redesign process.
-
----
-class:primary
 # Data Difficulty
 
 .center[
@@ -1796,22 +1755,6 @@ class:primary
 
 This data set in particular can be complicated to work with. To show this we look at one trajectory. For example, we have missing data, where there is no pattern within the missingness, due to data collection by satellite. So gaps between observations vary between 1-3 days. Secondly, at day 5, we have two observations, so not only are we missing data, sometimes we have multiple observations on the same day, which can be difficult to account for. The plot to the left shows the path of the trajectory, where are observed locations are connected with a line segment. This shows us a depiction of what we see in the data set. It shows how visualizing the trajectories helps the user understand the movements better, so it's important to visualize the trajectories, even though they may be messy.
 
-
----
-class:primary
-
-# Research Objectives
-
-1. Develop a Lead detection method
-  - Address some drawbacks of the other methods by using only the movement of the sea ice
-  - Cluster trajectories based on movement  
-  - The boundaries would be possible locations of leads, as the underlying process causes the sea ice to move differently depending on the location
-2. By applying information gained from clustering, we developed a spatio-temporal model to reconstruct the underlying process, which can be used to estimate missing points along a trajectory.
-  - Take into account non-stationarity of the data
-
-???
-
-In this project we first want to develop a lead detection method, which addresses drawbacks of the other methods which include issues with incorrectly identifying clouds as leads and inaccurate calculations of sea ice deformation. In our method, we plan to use only the movement of the sea ice. Based on visualization of the sea ice trajectories (from the previous section), we plan to cluster the trajectories based on similar movements. The boundaries between clusters would then be the locations of leads, as the underlying process shifts at this location, causing a potential split in the sea ice. Next, by applying the information gained from clustering, we developed a spatio-temporal model to reconstruct the underlying process. We then can use this to estimate missing points along a trajectory to obtain a complete set of space-time observations, which then can maybe used to calculate more accurate sea ice deformation estimates. Our will take into account the non-stationarity of our data, meaning the assumption of a global mean and covariance function would be inaccurate. Global mean and covariance is assumed in many dynamic interpolation approaches. So our model will estimate parameteres separately depending on the location.
 
 ---
 class:primary
@@ -5506,6 +5449,40 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgmaxwell.onclick = function() {
             modalmaxwell.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalAttempt2new = document.getElementById('modalAttempt2new');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgAttempt2new = document.getElementById('imgAttempt2new');
+          var modalImgAttempt2new = document.getElementById('imgmodalAttempt2new');
+          var captionTextAttempt2new = document.getElementById('captionAttempt2new');
+          imgAttempt2new.onclick = function(){
+            modalAttempt2new.style.display = 'block';
+            modalImgAttempt2new.src = this.src;
+            captionTextAttempt2new.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgAttempt2new.onclick = function() {
+            modalAttempt2new.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalIceChunk = document.getElementById('modalIceChunk');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgIceChunk = document.getElementById('imgIceChunk');
+          var modalImgIceChunk = document.getElementById('imgmodalIceChunk');
+          var captionTextIceChunk = document.getElementById('captionIceChunk');
+          imgIceChunk.onclick = function(){
+            modalIceChunk.style.display = 'block';
+            modalImgIceChunk.src = this.src;
+            captionTextIceChunk.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgIceChunk.onclick = function() {
+            modalIceChunk.style.display = 'none';
           }
 </script>
 
