@@ -1377,6 +1377,282 @@ c(str_split(i1, "\\n", simplify = T)[1:2],
 
 When collecting data by satellite, the path of the satellite doesn't observe the whole ice sheet every day, leaving positions in a trajectory unknown. Missingness tends to occur in spatial chunks, which is a reason why many simple interpolation methods are not useful either. For example, this figure shows the location of each trajectory on the first day of the data set. The uncolored boxes represent missing locations, which we can see occurs in a large spatial chunk.
 
+---
+class:primary
+
+#Gaussian Process (GP) 
+
+**For Spatial Data**
+
+$\left\{X(s): s \in D \subset R^2\right\}$ is a Gaussian Process if all its finite-dimensional distributions are Gaussian
+
+.center[
+ie. $X(s) \sim GP(0,c(.|.))$
+]
+
+Meaning, for $\left\{s_1,...,s_n\right\}$, $x$ = $(x_1,...,x_n)^T \sim MVN(0, \sigma^2_c\Sigma_{\theta_{i,q}})$
+
+Can define $\Sigma_{\theta_{i,q}}$ as the Matern Covariance Function `r Citep(bib[[c("gpgp_pkg")]])`
+
+
+$$\Sigma_{\theta_{i,q}} = \frac{1}{\Gamma(\lambda)2^{\lambda-1}}(\kappa||s_{i}-s_{q}||)^{\lambda} K_{\lambda}(\kappa||s_{i}-s_{q}||)$$ $\\$
+where $\lambda$ is the smoothness parameter, $\kappa$ the scaling parameter, and $K_{\lambda}()$ the Bessel function 
+
+
+Joint density of the observations can be written as a product of conditional densities `r Citep(bib[[c("guinness_permutation_2018")]])`
+$$f(x_1,...,x_n) = f(x_1)\prod^n_{i=2} f(x_{i}|x_{1},...,x_{i-1})$$ 
+  
+
+
+This can be a computationally complex process due to the inversion of $\Sigma_{\theta}$
+
+---
+class:primary
+#Gaussian Process (GP) 
+
+**Extension to ST Data**
+
+Now, the covariance function is a Matern Space-Time, which is a separable covariance function (Wikle et al, 2019)
+
+.center[
+$\Sigma = \sigma^2_{c}C_{1}(\Delta_{iq})C_{2}(\Lambda_{tp})$ $\\$ where 
+$C_{1}(\Delta_{iq}) = \frac{1}{\Gamma(\lambda)2^{\lambda-1}}(\kappa||s_{i}-s_{q}||)^{\lambda} K_{\lambda}(\kappa||s_{i}-s_{q}||)$  and $C_{2}(\Lambda_{tp})$ is an autoregressive order 1 (AR(1)) model with a temporal lag of $||t-p||$ 
+
+
+where $\sigma^2_{c}$ is the variance component, $\lambda$ is the smoothness parameter, $\kappa$ the scaling parameter related to the range, and $K_{\lambda}()$ the Bessel function of the second kind.
+]
+
+
+Separability can speed up computations if no missing data, but we do...
+
+---
+class:primary
+#Simulation Study
+
++ Create Underlying Process Grid 
+  - Simulating movement of ocean that causes observations to move
+  - First generate a fine grid (40x40)
+  - To simulated a covariance matrix, the initial grid over seven days was used in the Matern Space-Time covariance Function.
+  - This data is then used to create the covariance matrix, $C_{d,c}(\theta)$
+  - Covariance parameters and defined mean trend ( $\mu_{d,c}$ ) is different for each cluster $\\$
+
+.center[
+$H_{c}(s,t) \sim GP(\mu_{c}, C_{c}(\theta))$ $\\$
+
+where $H_{c}(s,t)$ is the joint displacement at location $s$ & time $t$ $\\$ for cluster $c$
+
+]
+
+**Note**: Only 2 clusters for simplicity
+
+---
+class:primary
+
+#Simulation Study
+
++ Create Observed Grid
+  - Movement of an observed point is determined by the value of the nearest point of the underlying process for that day ($r$)
+  - Obtained a week's worth of simulated data
+  
+.center[
+  $(x_{t,j}, y_{t,j}) = (H_{t-1,c,r}, H_{t-1,c,r}) + (x_{t-1,j}, y_{t-1,j})$ $\\$
+  where t=1,...,7 (time), j = 1,...,121 (id), $\\$ H is the underlying process value at $t-1$ for cluster ( $c$ ) and grid id ( $r$ )
+]
+
+
+.center[
+```{r grid-combo-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/grid-combo.png", alt = "Underlying and Observed Grid Plotted Together", other=list(width="40%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+
+---
+class:primary
+#Simulated Data
+
+Created 3 different scenarios, each with different parameter values.
+
+.center[
+```{r sim-traj-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/sim-traj.png", alt = "Simulated Trajectories for Each Simulation", other=list(width="90%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+---
+class:primary
+
+#Simulated Clustering Results
+
++ Results are shown at two different time points
+  - On initial grid ( $t=0$ )
+  - On last day of the week ( $t=7$ )
+
+.center[
+```{r sim-clust,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/sim-clust-results.png", alt = "Clusters for each Simulation at t=0 and t=7", other=list(width="80%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+---
+class:primary
+
+#Simulated Interpolation Results
+
++ Simulated and clustered another week of data.
++ 10% of the data for the first week are randomly assigned to be missing.
+
+<br>
+  
+```{r sim-results-tab1}
+
+result_data <- data.frame(sim = c(1,2,3), X1 = c(0.160, 0.173, 0.375), Y1 = c(0.263, 0.281, 0.558), X2 = c(0.192, 0.172, 0.399), Y2 = c(0.307, 0.229, 0.598), X3 = c(0.167, 0.172, 0.303), Y3 = c(0.418, 0.480, 0.659), X4 = c(0.197, 0.201, 0.402), Y4 = c(0.599, 0.670, 1.050))
+ 
+kableExtra::kable(result_data, booktabs = TRUE, caption = "RMSE for Interpolation Methods", col.names = c("Simulation", "X", "Y", "X", "Y", "X", "Y", "X", "Y"), escape = FALSE,  table.attr = "style='width:80%;'", align = "c") %>% 
+  add_header_above(c("", "Linear" = 2, "Spatial Model" = 2, "ST Model" = 2, "Stationary Model" = 2))
+
+
+```
+
+
+---
+class:primary
+
+#Simulated Interpolation Results
+
+
+```{r sim-results-tab2, message=FALSE, warning = FALSE}
+
+result_data2 <- data.frame(sim = c(1, "", 2, "", 3, ""), Cluster = c(1,2,1,2,1,2), X1 = c(0.154, 0.163, 0.148, 0.185, 0.408, 0.304), Y1 = c(0.252, 0.269, 0.256, 0.293, 0.448, 0.721), X2 = c(0.159, 0.208, 0.137, 0.186, 0.315, 0.443), Y2 = c(0.305, 0.308, 0.195, 0.244, 0.737, 0.493), X3 = c(0.077, 0.201, 0.119, 0.192, 0.193, 0.354), Y3 = c(0.272, 0.481, 0.381, 0.522, 0.785, 0.569), X4 = c(0.182, 0.206, 0.164, 0.219, 0.33, 0.439), Y4 = c(0.667, 0.555, 0.774, 0.6, 1.290, 0.872))
+
+kableExtra::kable(result_data2, booktabs = TRUE, caption = "RMSE for Interpolation Methods by cluster", col.names = c("Simulation", "Cluster", "X", "Y", "X", "Y", "X", "Y", "X", "Y"), escape = FALSE, align = "c") %>% add_header_above(c(" " = 2, "Linear" = 2, "Spatial Model" = 2, "ST Model" = 2, "Stationary" = 2))  
+
+```
+
+
+---
+class:primary
+
+#Simulated Interpolation Results
+
++ A benefit of using a model-based approach is that are able to determine the uncertainty of the estimate. 
+
+```{r sim-results-tab3, message=FALSE, warning = FALSE}
+
+result_data3 <- data.frame(sim = c(1, 2, 3), x1 = c(0.61, 0.829, 0.579), y1 = c(0.597, 0.658, 0.697), x2 = c(0.716, 0.829, 0.817), y2 = c(0.313, 0.357, 0.507), x3 = c(0.615, 0.769, 0.654), y3 = c(0.205, 0.32, 0.256))
+
+kableExtra::kable(result_data3, booktabs = TRUE, caption = "Coverage", col.names = c("Simulation", "X", "Y", "X", "Y", "X", "Y"), escape = FALSE, align = "c", table.attr = "style='width:80%;'")  %>% add_header_above(c(" " = 1, "Spatial Model" = 2, "ST Model" = 2, "Stationary" = 2))  
+
+```
+
+---
+class:primary
+#Finding Spatio-Temporal Neighbors
+
+.center[
+```{r int-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/int-examp.png", alt = "Comparison of Our Results to a Kinematic Crack Algorithm", other=list(width="80%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+---
+class:primary
+
+#Clustering Using All Data - Comparison
+
++  Can compare our results with deformation data found using a kinematic crack algorithm calculated using the RGPS data `r Citep(bib[[c("peterson_evaluating_2011")]])`
+  - Note that this image does not represent the true ice cracks, just the cracks determined by this method.
+
+.center[
+```{r all-comp-pic,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+
+i1 <- img_modal(src = "images/all-weeks-comp.png", alt = "Comparison of Our Results to a Kinematic Crack Algorithm", other=list(width="80%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+```
+]
+
+---
+class:primary
+
+#Ice Data Results: Clustering by Week
+
+.center[
+```{r clust-week,  results='asis', echo = F, include = T, cache = T, eval = TRUE}
+
+i1 <- img_modal(src = "images/clust_by_week.png", alt = "Results of Clustering by Week", other=list(width="90%"))
+
+c(str_split(i1, "\\n", simplify = T)[1:2],
+  str_split(i1, "\\n", simplify = T)[3:9]
+  ) %>% paste(collapse = "\n") %>% cat()
+
+
+```
+
+]
+
+---
+class:primary
+# Existing Trajectory Clustering
+
++ Combination of geographic location with time introduces new challenges in clustering, where a cluster is now determined based on spatial and temporal similarity $\\$ $\\$
++ Similarity Measures
+  - One of the components of a clustering algorithm is to determine how to measure similarity
+  - Similarity measures have been developed for spatio-temporal data, but many rely on having trajectories of the same length or are sensitive to noise
++ Density-Based Clustering
+  - Objects that are densely packed in a region should be grouped together in a cluster
+  - Can cluster objects into any shape and number of clusters do not need to be pre-defined
+  - However, since our data is based on a grid, point density will be consistent across the domain
++ Model-Based Clustering
+  - Can assume a model for each cluster, where the best fitting data for the model is found in order to determine cluster membership
+  - Can be difficulty in finding the assume model
+
+
+(Info from `r Citep(bib["ansari_spatiotemporal_2020"])`)
 
 
 
+---
+class:primary
+# Exisiting Spatio-Temporal Interpolation
+
++ Trajectory Interpolation
+  - Linear
+  - Kinematic
+  - Curved
+  - Constrained Random Walk
++ Dynamic Spatio-Temporal Interpolation
+  - Reconstruct spatio-temporal dynamics during interpolation
+  - Mostly assume stationarity which is often inappropriate
+  - Example: Optimal Interpolation models the covariance function of the spatio-temporal field dynamics. Then a linear combination of the observations results in an interpolated field, assuming stationarity `r Citep(bib["fablet_data-driven_2017", "ouala_neural_2018"])`

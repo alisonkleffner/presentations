@@ -1825,9 +1825,462 @@ class:primary
 
 When collecting data by satellite, the path of the satellite doesn't observe the whole ice sheet every day, leaving positions in a trajectory unknown. Missingness tends to occur in spatial chunks, which is a reason why many simple interpolation methods are not useful either. For example, this figure shows the location of each trajectory on the first day of the data set. The uncolored boxes represent missing locations, which we can see occurs in a large spatial chunk.
 
+---
+class:primary
+
+#Gaussian Process (GP) 
+
+**For Spatial Data**
+
+`\(\left\{X(s): s \in D \subset R^2\right\}\)` is a Gaussian Process if all its finite-dimensional distributions are Gaussian
+
+.center[
+ie. `\(X(s) \sim GP(0,c(.|.))\)`
+]
+
+Meaning, for `\(\left\{s_1,...,s_n\right\}\)`, `\(x\)` = `\((x_1,...,x_n)^T \sim MVN(0, \sigma^2_c\Sigma_{\theta_{i,q}})\)`
+
+Can define `\(\Sigma_{\theta_{i,q}}\)` as the Matern Covariance Function (Guinness and Katzfuss, 2021)
+
+
+`$$\Sigma_{\theta_{i,q}} = \frac{1}{\Gamma(\lambda)2^{\lambda-1}}(\kappa||s_{i}-s_{q}||)^{\lambda} K_{\lambda}(\kappa||s_{i}-s_{q}||)$$` `\(\\\)`
+where `\(\lambda\)` is the smoothness parameter, `\(\kappa\)` the scaling parameter, and `\(K_{\lambda}()\)` the Bessel function 
+
+
+Joint density of the observations can be written as a product of conditional densities (Guinness, 2018)
+`$$f(x_1,...,x_n) = f(x_1)\prod^n_{i=2} f(x_{i}|x_{1},...,x_{i-1})$$` 
+  
+
+
+This can be a computationally complex process due to the inversion of `\(\Sigma_{\theta}\)`
+
+---
+class:primary
+#Gaussian Process (GP) 
+
+**Extension to ST Data**
+
+Now, the covariance function is a Matern Space-Time, which is a separable covariance function (Wikle et al, 2019)
+
+.center[
+`\(\Sigma = \sigma^2_{c}C_{1}(\Delta_{iq})C_{2}(\Lambda_{tp})\)` `\(\\\)` where 
+`\(C_{1}(\Delta_{iq}) = \frac{1}{\Gamma(\lambda)2^{\lambda-1}}(\kappa||s_{i}-s_{q}||)^{\lambda} K_{\lambda}(\kappa||s_{i}-s_{q}||)\)`  and `\(C_{2}(\Lambda_{tp})\)` is an autoregressive order 1 (AR(1)) model with a temporal lag of `\(||t-p||\)` 
+
+
+where `\(\sigma^2_{c}\)` is the variance component, `\(\lambda\)` is the smoothness parameter, `\(\kappa\)` the scaling parameter related to the range, and `\(K_{\lambda}()\)` the Bessel function of the second kind.
+]
+
+
+Separability can speed up computations if no missing data, but we do...
+
+---
+class:primary
+#Simulation Study
+
++ Create Underlying Process Grid 
+  - Simulating movement of ocean that causes observations to move
+  - First generate a fine grid (40x40)
+  - To simulated a covariance matrix, the initial grid over seven days was used in the Matern Space-Time covariance Function.
+  - This data is then used to create the covariance matrix, `\(C_{d,c}(\theta)\)`
+  - Covariance parameters and defined mean trend ( `\(\mu_{d,c}\)` ) is different for each cluster `\(\\\)`
+
+.center[
+`\(H_{c}(s,t) \sim GP(\mu_{c}, C_{c}(\theta))\)` `\(\\\)`
+
+where `\(H_{c}(s,t)\)` is the joint displacement at location `\(s\)` &amp; time `\(t\)` `\(\\\)` for cluster `\(c\)`
+
+]
+
+**Note**: Only 2 clusters for simplicity
+
+---
+class:primary
+
+#Simulation Study
+
++ Create Observed Grid
+  - Movement of an observed point is determined by the value of the nearest point of the underlying process for that day ($r$)
+  - Obtained a week's worth of simulated data
+  
+.center[
+  `\((x_{t,j}, y_{t,j}) = (H_{t-1,c,r}, H_{t-1,c,r}) + (x_{t-1,j}, y_{t-1,j})\)` `\(\\\)`
+  where t=1,...,7 (time), j = 1,...,121 (id), `\(\\\)` H is the underlying process value at `\(t-1\)` for cluster ( `\(c\)` ) and grid id ( `\(r\)` )
+]
+
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imggridcombo' src='images/grid-combo.png' alt='Underlying and Observed Grid Plotted Together' width='40%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalgridcombo' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalgridcombo'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captiongridcombo' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+
+---
+class:primary
+#Simulated Data
+
+Created 3 different scenarios, each with different parameter values.
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgsimtraj' src='images/sim-traj.png' alt='Simulated Trajectories for Each Simulation' width='90%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalsimtraj' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalsimtraj'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionsimtraj' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+---
+class:primary
+
+#Simulated Clustering Results
+
++ Results are shown at two different time points
+  - On initial grid ( `\(t=0\)` )
+  - On last day of the week ( `\(t=7\)` )
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgsimclustresults' src='images/sim-clust-results.png' alt='Clusters for each Simulation at t=0 and t=7' width='80%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalsimclustresults' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalsimclustresults'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionsimclustresults' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+---
+class:primary
+
+#Simulated Interpolation Results
+
++ Simulated and clustered another week of data.
++ 10% of the data for the first week are randomly assigned to be missing.
+
+&lt;br&gt;
+  
+&lt;table style="width:80%;"&gt;
+&lt;caption&gt;RMSE for Interpolation Methods&lt;/caption&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="empty-cells: hide;border-bottom:hidden;" colspan="1"&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Linear&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Spatial Model&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;ST Model&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Stationary Model&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Simulation &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.160 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.263 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.192 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.307 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.167 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.418 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.197 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.599 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.173 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.281 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.172 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.229 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.172 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.480 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.201 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.670 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.375 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.558 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.399 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.598 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.303 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.659 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.402 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1.050 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+class:primary
+
+#Simulated Interpolation Results
+
+
+&lt;table&gt;
+&lt;caption&gt;RMSE for Interpolation Methods by cluster&lt;/caption&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="empty-cells: hide;border-bottom:hidden;" colspan="2"&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Linear&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Spatial Model&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;ST Model&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Stationary&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Simulation &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Cluster &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.154 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.252 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.159 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.305 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.077 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.272 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.182 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.667 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.163 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.269 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.208 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.308 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.201 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.481 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.206 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.555 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.148 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.256 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.137 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.195 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.119 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.381 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.164 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.774 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.185 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.293 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.186 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.244 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.192 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.522 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.219 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.600 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.408 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.448 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.315 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.737 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.193 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.785 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.330 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1.290 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.304 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.721 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.443 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.493 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.354 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.569 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.439 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.872 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+class:primary
+
+#Simulated Interpolation Results
+
++ A benefit of using a model-based approach is that are able to determine the uncertainty of the estimate. 
+
+&lt;table style="width:80%;"&gt;
+&lt;caption&gt;Coverage&lt;/caption&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="empty-cells: hide;border-bottom:hidden;" colspan="1"&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Spatial Model&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;ST Model&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Stationary&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Simulation &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; X &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Y &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.610 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.597 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.716 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.313 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.615 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.205 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.829 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.658 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.829 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.357 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.769 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.320 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.579 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.697 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.817 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.507 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.654 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0.256 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+class:primary
+#Finding Spatio-Temporal Neighbors
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgintexamp' src='images/int-examp.png' alt='Comparison of Our Results to a Kinematic Crack Algorithm' width='80%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalintexamp' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalintexamp'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionintexamp' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+---
+class:primary
+
+#Clustering Using All Data - Comparison
+
++  Can compare our results with deformation data found using a kinematic crack algorithm calculated using the RGPS data (Peterson and Sulsky, 2011)
+  - Note that this image does not represent the true ice cracks, just the cracks determined by this method.
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgallweekscomp' src='images/all-weeks-comp.png' alt='Comparison of Our Results to a Kinematic Crack Algorithm' width='80%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalallweekscomp' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalallweekscomp'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionallweekscomp' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+]
+
+---
+class:primary
+
+#Ice Data Results: Clustering by Week
+
+.center[
+&lt;!-- Trigger the Modal --&gt;
+&lt;img id='imgclust_by_week' src='images/clust_by_week.png' alt='Results of Clustering by Week' width='90%'&gt;
+&lt;!-- The Modal --&gt;
+&lt;div id='modalclust_by_week' class='modal'&gt;
+  &lt;!-- Modal Content (The Image) --&gt;
+  &lt;img class='modal-content' id='imgmodalclust_by_week'&gt;
+  &lt;!-- Modal Caption (Image Text) --&gt;
+  &lt;div id='captionclust_by_week' class='modal-caption'&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+]
+
+---
+class:primary
+# Existing Trajectory Clustering
+
++ Combination of geographic location with time introduces new challenges in clustering, where a cluster is now determined based on spatial and temporal similarity `\(\\\)` `\(\\\)`
++ Similarity Measures
+  - One of the components of a clustering algorithm is to determine how to measure similarity
+  - Similarity measures have been developed for spatio-temporal data, but many rely on having trajectories of the same length or are sensitive to noise
++ Density-Based Clustering
+  - Objects that are densely packed in a region should be grouped together in a cluster
+  - Can cluster objects into any shape and number of clusters do not need to be pre-defined
+  - However, since our data is based on a grid, point density will be consistent across the domain
++ Model-Based Clustering
+  - Can assume a model for each cluster, where the best fitting data for the model is found in order to determine cluster membership
+  - Can be difficulty in finding the assume model
+
+
+(Info from (Ansari, Ahmad, Khan, et al., 2020))
 
 
 
+---
+class:primary
+# Exisiting Spatio-Temporal Interpolation
+
++ Trajectory Interpolation
+  - Linear
+  - Kinematic
+  - Curved
+  - Constrained Random Walk
++ Dynamic Spatio-Temporal Interpolation
+  - Reconstruct spatio-temporal dynamics during interpolation
+  - Mostly assume stationarity which is often inappropriate
+  - Example: Optimal Interpolation models the covariance function of the spatio-temporal field dynamics. Then a linear combination of the observations results in an interpolated field, assuming stationarity (Fablet, Huynh Viet, and Lguensat, 2017; Ouala, Fablet, Herzet, Chapron, Pascual, Collard, and Gaultier, 2018)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -5483,6 +5936,125 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
           /* When the user clicks on the modalImg, close it*/
           modalImgIceChunk.onclick = function() {
             modalIceChunk.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalboth_grid2 = document.getElementById('modalboth_grid2');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgboth_grid2 = document.getElementById('imgboth_grid2');
+          var modalImgboth_grid2 = document.getElementById('imgmodalboth_grid2');
+          var captionTextboth_grid2 = document.getElementById('captionboth_grid2');
+          imgboth_grid2.onclick = function(){
+            modalboth_grid2.style.display = 'block';
+            modalImgboth_grid2.src = this.src;
+            captionTextboth_grid2.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgboth_grid2.onclick = function() {
+            modalboth_grid2.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalsimclustresults = document.getElementById('modalsimclustresults');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgsimclustresults = document.getElementById('imgsimclustresults');
+          var modalImgsimclustresults = document.getElementById('imgmodalsimclustresults');
+          var captionTextsimclustresults = document.getElementById('captionsimclustresults');
+          imgsimclustresults.onclick = function(){
+            modalsimclustresults.style.display = 'block';
+            modalImgsimclustresults.src = this.src;
+            captionTextsimclustresults.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgsimclustresults.onclick = function() {
+            modalsimclustresults.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalsimtraj = document.getElementById('modalsimtraj');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgsimtraj = document.getElementById('imgsimtraj');
+          var modalImgsimtraj = document.getElementById('imgmodalsimtraj');
+          var captionTextsimtraj = document.getElementById('captionsimtraj');
+          imgsimtraj.onclick = function(){
+            modalsimtraj.style.display = 'block';
+            modalImgsimtraj.src = this.src;
+            captionTextsimtraj.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgsimtraj.onclick = function() {
+            modalsimtraj.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalsimclustresults = document.getElementById('modalsimclustresults');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgsimclustresults = document.getElementById('imgsimclustresults');
+          var modalImgsimclustresults = document.getElementById('imgmodalsimclustresults');
+          var captionTextsimclustresults = document.getElementById('captionsimclustresults');
+          imgsimclustresults.onclick = function(){
+            modalsimclustresults.style.display = 'block';
+            modalImgsimclustresults.src = this.src;
+            captionTextsimclustresults.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgsimclustresults.onclick = function() {
+            modalsimclustresults.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalsimclustresults = document.getElementById('modalsimclustresults');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgsimclustresults = document.getElementById('imgsimclustresults');
+          var modalImgsimclustresults = document.getElementById('imgmodalsimclustresults');
+          var captionTextsimclustresults = document.getElementById('captionsimclustresults');
+          imgsimclustresults.onclick = function(){
+            modalsimclustresults.style.display = 'block';
+            modalImgsimclustresults.src = this.src;
+            captionTextsimclustresults.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgsimclustresults.onclick = function() {
+            modalsimclustresults.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalgridcombo = document.getElementById('modalgridcombo');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imggridcombo = document.getElementById('imggridcombo');
+          var modalImggridcombo = document.getElementById('imgmodalgridcombo');
+          var captionTextgridcombo = document.getElementById('captiongridcombo');
+          imggridcombo.onclick = function(){
+            modalgridcombo.style.display = 'block';
+            modalImggridcombo.src = this.src;
+            captionTextgridcombo.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImggridcombo.onclick = function() {
+            modalgridcombo.style.display = 'none';
+          }
+</script>
+<script>
+        /* Get the modal*/
+          var modalintexamp = document.getElementById('modalintexamp');
+        /* Get the image and insert it inside the modal - use its 'alt' text as a caption*/
+          var imgintexamp = document.getElementById('imgintexamp');
+          var modalImgintexamp = document.getElementById('imgmodalintexamp');
+          var captionTextintexamp = document.getElementById('captionintexamp');
+          imgintexamp.onclick = function(){
+            modalintexamp.style.display = 'block';
+            modalImgintexamp.src = this.src;
+            captionTextintexamp.innerHTML = this.alt;
+          }
+          /* When the user clicks on the modalImg, close it*/
+          modalImgintexamp.onclick = function() {
+            modalintexamp.style.display = 'none';
           }
 </script>
 
