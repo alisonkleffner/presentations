@@ -989,7 +989,7 @@ class:primary
 
 # Importance of Studying Sea Ice
 
-+ Sea ice acts insulates the warm ocean from the colder atmosphere (Peterson and Sulsky, 2011)
++ Sea ice insulates the warm ocean from the colder atmosphere (Peterson and Sulsky, 2011)
 + Cracks, or leads, may form in the ice pack due to dynamic processes
   - Allows for heat from the ocean to be transferred to the atmosphere (Schreyer, Sulsky, Munday, Coon, and Kwok, 2006). 
   - Accounts for half of the heat flux between the ocean and atmosphere (Badgley, 1961)
@@ -1071,14 +1071,14 @@ class:primary
 
 #INLA: Continuously Indexed GF
 
-Bivariate Data can be defined by the joint process: `$$\left\{H(s,t), (s,t) \in \mathcal{D} \in \mathcal{R}\right\}$$` where there are `\(n\)` spatial locations at `\(t\)` time points.
+We can represent `\(u\)` and `\(v\)` by the joint process: `$$\left\{H(s,t), (s,t) \in \mathcal{D} \in \mathcal{R}^3\right\}$$` where there are `\(n\)` spatial locations at `\(t\)` time points.
 
 The process is assumed Gaussian, where the model can be rewritten as 
 `$$H_{{i,t}} \sim BivN(\eta_{i,t}, \sigma^2_e)$$` 
 with `\(\sigma^2_e\)` representing the nugget effect and the linear predictor is defined as 
 
 `$$\eta_{i,t} = \alpha + w_{i,t}$$` 
-with `\(\alpha\)` denoting the intercept and the realization of the latent ST Gaussian Field (GF) is represented by `\(w \sim GF(0,\Sigma)\)`. The covariance function `\((\Sigma)\)` is the separable Matern ST covariance function (Blangiardo, Cameletti, Baio, and Rue, 2013). 
+with `\(\alpha\)` denoting the intercept and the realization of the latent ST Gaussian Field (GF) is represented by `\(w \sim BiGF(0,\Sigma)\)`. The covariance function `\((\Sigma)\)` is the separable Matern ST covariance function (Blangiardo, Cameletti, Baio, and Rue, 2013). 
 
 ???
 
@@ -1107,8 +1107,8 @@ Instead used stochastic partial differential equations (SPDE)- represent a GF wi
 ]].pull-right[
   
 The linear predictor can then be rewritten as 
-`$$\eta_{i,t} = \alpha + \sum^{G}_{g=1}\tilde{A}\tilde{w}$$` 
-where `\(\tilde{A}\)` is a sparse precision matrix mapping the GMRF, `\(\tilde{w}\)`, from `\(N\)` locations to the `\(G\)` nodes in the triangulation
+`$$\eta_{i,t} = \alpha + \sum^{G}_{g=1}\tilde{A}_{itg}\tilde{w}$$` 
+where `\(\tilde{A}_{itg}\)` is a sparse precision matrix mapping the GMRF, `\(\tilde{w}\)`, from `\(n\)` locations to the `\(G\)` nodes in the triangulation
 ]
 
 ???
