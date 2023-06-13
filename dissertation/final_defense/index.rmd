@@ -922,10 +922,10 @@ class:primary
 
 #INLA: Continuously Indexed GF
 
-We can represent $u$ and $v$ by the joint process: $$\left\{H(s,t), (s,t) \in \mathcal{D} \in \mathcal{R}^3\right\}$$ where there are $n$ spatial locations at $t$ time points.
+Let's first begin by introducing a univariate process: $$\left\{H(s,t), (s,t) \in \mathcal{D} \in \mathcal{R}^3\right\}$$ where there are $n$ spatial locations at $t$ time points.
 
 The process is assumed Gaussian, where the model can be rewritten as 
-$$H_{{i,t}} \sim BivN(\eta_{i,t}, \sigma^2_e)$$ 
+$$H_{{i,t}} \sim N(\eta_{i,t}, \sigma^2_e)$$ 
 with $\sigma^2_e$ representing the nugget effect and the linear predictor is defined as 
 
 $$\eta_{i,t} = \alpha + w_{i,t}$$ 
@@ -940,7 +940,7 @@ class:primary
 
 #INLA: SPDE
 
-When working with point data (like our trajectories), assuming a continuously indexed GF for $w_{i,t}$ is not a computationally efficient approach.
+When working with point data, assuming a continuously indexed GF for $w_{i,t}$ is not a computationally efficient approach.
 
 Instead used stochastic partial differential equations (SPDE)- represent a GF with Matern Covariance Function through a discretely indexed process called a GMRF `r Citep(bib[[c("spde-book")]])`
 .pull-left[
@@ -971,17 +971,28 @@ Since we are using the stochastic partial differential equations, the linear pre
 
 ---
 class:primary
-#Final Model
+#Final Model: Bivariate Process
 
-Specifically for our model to jointly measure the underlying process, the linear predictor is written as
+We can represent $u$ and $v$ by the joint process $$\left\{B(s,t), (s,t) \in \mathcal{D} \in \mathcal{R}^3\right\}$$
+
+The process is assumed Gaussian, where the model can be rewritten as 
+$$B_{{i,t}} \sim N(\eta_{i,t}, \sigma^2_e)$$ 
+
+The linear predictor is written as
 $$\eta_{it} = \alpha_u + \alpha_{v} + z_{u}(s,t) + z_{v}(s,t) + z_{uv}(s,t)$$
 
 where $\alpha_u$ and $\alpha_{v}$ are the intercepts for each response and the $z$ functions represent the SPDE model for the $u$ and $v$ spatio-temporal effects, along with their interaction.
 
+---
+class:primary
+#Using Model
+
 We developed a model within each intersection to account for the non-stationary aspect of our data using only the data from t − 1, t, and t + 1. 
 
-**Using Model**: Create a spatial grid encompassing the sea ice. 
-  + The underlying process should be smooth within an intersection, so should have a similar value of the underlying process. 
+Create a spatial grid encompassing the sea ice. 
+  + Use the centroid of each grid cell to obtain estimated values for the underlying process
+  + Use last known location to determine which grid cell to use as an estimate
+  
   
 ???
 
