@@ -1071,7 +1071,7 @@ class:primary
 
 #INLA: Continuously Indexed GF
 
-Let's first begin by introducing a univariate process: `$$\left\{H(s,t), (s,t) \in \mathcal{D} \in \mathcal{R}^3\right\}$$` where there are `\(n\)` spatial locations at `\(t\)` time points.
+Let's first begin by introducing a univariate process: `$$\left\{H(s,t), (s,t) \in \mathcal{D} \in \mathcal{R}^3\right\}$$` where there are `\(N\)` spatial locations at `\(t\)` time points.
 
 The process is assumed Gaussian, where the model can be rewritten as 
 `$$H_{{i,t}} \sim N(\eta_{i,t}, \sigma^2_e)$$` 
@@ -1108,7 +1108,7 @@ Instead used stochastic partial differential equations (SPDE)- represent a GF wi
   
 The linear predictor can then be rewritten as 
 `$$\eta_{i,t} = \alpha + \sum^{G}_{g=1}\tilde{A}_{itg}\tilde{w}$$` 
-where `\(\tilde{A}_{itg}\)` is a sparse precision matrix mapping the GMRF, `\(\tilde{w}\)`, from `\(n\)` locations to the `\(G\)` nodes in the triangulation
+where `\(\tilde{A}_{itg}\)` is a sparse precision matrix mapping the GMRF, `\(\tilde{w}\)`, from `\(N\)` locations to the `\(G\)` nodes in the triangulation
 ]
 
 ???
@@ -1124,7 +1124,7 @@ class:primary
 We can represent `\(u\)` and `\(v\)` by the joint process `$$\left\{B(s,t), (s,t) \in \mathcal{D} \in \mathcal{R}^3\right\}$$`
 
 The process is assumed Gaussian, where the model can be rewritten as 
-`$$B_{{i,t}} \sim N(\eta_{i,t}, \sigma^2_e)$$` 
+`$$B_{{i,t}} \sim BiN(\eta_{i,t}, \sigma^2_e)$$` 
 
 The linear predictor is written as
 `$$\eta_{it} = \alpha_u + \alpha_{v} + z_{u}(s,t) + z_{v}(s,t) + z_{uv}(s,t)$$`
