@@ -150,8 +150,6 @@ class:primary
 # Spatial Data
 
 Spatial data relates to a geographical area or location.
-+ Patterns in spatial data follow Tobler’s first law of geography, meaning everything is
-related but near things are more related than distant things `r Citep(bib[[c("klippel-tobler-2011")]])` 
 + Often, more than one attribute is measured at a location. 
 
 **Focus:** However, due to the variables occupying the same space, multivariate spatial data is complex
@@ -323,7 +321,7 @@ class:primary
 
 .pull-left[
 + Red-green color blindness
-  - Experienced by approximately 8% of men and 0.5% of Northern European Ancestory `r Citep(bib[[c("wong2011color")]])`
+  - Experienced by approximately 8% of men and 0.5% of women of Northern European Ancestory `r Citep(bib[[c("wong2011color")]])`
   - Difficult to discriminate between these colors `r Citep(bib[[c("wong2011color")]])` 
   
 
